@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <>
+    <div className="container0">
       <header>
         Header
       </header>
@@ -51,22 +51,26 @@ export default function Home() {
         <h2>Research Experience</h2>
           <h3>Virginia Tech, Dr. Vito Scarola</h3>
           <i>Jan 2021 &mdash; Dec 2021</i>
-            <h2>Research Assistant</h2>
-              <p>Using Python, I simulated the Hubbard model, then developed a combinatorial optimization algorithm to dynamically implement the Gutzwiller Projection</p>
-              <p>Utilized numpy for complex analysis, mpi4py for high-performance computing, and matplotlib for data visualizations</p>
-              <p>Algorithm optimization resulting in an 8-fold speed up</p>
+            <h3>Research Assistant</h3>
+              <ul>
+                <li>Using Python, I simulated the Hubbard model, then developed a combinatorial optimization algorithm to dynamically implement the Gutzwiller Projection</li>
+                <li>Utilized numpy for complex analysis, mpi4py for high-performance computing, and matplotlib for data visualizations</li>
+                <li>Algorithm optimization resulting in an 8-fold speed up</li>
+              </ul>
           <h3>Virginia Tech, Dr. Bob White</h3>
           <i>Aug 2017 &mdash; Dec 2019</i>
-            <h2>Research Assistant</h2>
-              <p>Wet lab and Computational Biochemistry research experience</p>
-              <p>Studied metalloprotein families, radical SAM enzymes, and novel thiol molecules</p>
-              <p>Conducted protein homology modeling, molecular docking simulations, comparative genomics, gas chromatography-mass spectrometry (GCMS), liquid chromatography, and chemical assays</p>
+            <h3>Research Assistant</h3>
+            <ul>
+                <li>Wet lab and Computational Biochemistry research experience</li>
+                <li>Studied metalloprotein families, radical SAM enzymes, and novel thiol molecules</li>
+                <li>Conducted protein homology modeling, molecular docking simulations, comparative genomics, gas chromatography-mass spectrometry (GCMS), liquid chromatography, and chemical assays</li>
+            </ul>
         <h2>Technical Skills</h2>
           <p>Python: flask, pytorch, pyspark, pandas, sklearn, statsmodel, numpy, scipy, mpi4py, beautiful soup, selenium, matplotlib, langchain, transformers</p>
           <p>Databricks, Splunk, R and Tidyverse, C, C++, Go, Java, JavaScript, Next.js, Node.js, React.js, HTML, CSS, MPI, OpenMP, Microsoft &mdash; 365, Power Apps, Power Automate, Power BI, Qiskit, SQL, MySQL, Git, and command-line scripting</p>
         <h2>Certificates</h2>
           <p>Booz Allen Hamilton Technical Badges &mdash; AI Aware, Angular, Docker, CSS, Java, JavaScript, Machine Learning, Python, React, Spring Boot, SQL (2023)</p>
       </main>
-    </>
+    </div>
   );
 }
