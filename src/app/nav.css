@@ -1,0 +1,17 @@
+nav {
+    /* position */
+    order: -1;
+    
+    /* size */
+    height: 100%;
+    flex: 1;
+
+    /* outlines */
+    margin: 0;
+    border: 0;
+    padding: 0;
+
+    /* styles */
+    list-style-type: none;
+    overflow: auto;
+}
