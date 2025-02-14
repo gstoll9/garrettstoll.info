@@ -1,22 +1,22 @@
 header {
-    position: relative;
-  
-    /* position */
-    order: 0;
-  
-    /* size */
-    height: 10%;
-    width: 100%;
-  
-    /* outlines */
-    margin: 0;
-    border: 6px solid rgb(15, 165, 77);
-    padding: 0;
-  
-    /* interior */
-    background-color: #3E7B27;
-  
-    /* text */
-    color: white;
-    text-align: center;
-  }
+  position: relative;
+
+  /* position */
+  order: 0;
+
+  /* size */
+  height: 10%;
+  width: 100%;
+
+  /* outlines */
+  margin: 0;
+  border: 6px solid var(--darkgreen);
+  padding: 0;
+
+  /* interior */
+  background-color: #3E7B27;
+
+  /* text */
+  color: white;
+  text-align: center;
+}

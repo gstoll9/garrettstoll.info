@@ -1,10 +1,12 @@
 //import Dropdown from "./Dropdown.js";
+import Link from "next/link";
 import "./Nav.css";
 
 function Nav() {
     return (
         <nav>
             Nav
+            <Link href="/about">About</Link> 
         </nav>
     )
 }

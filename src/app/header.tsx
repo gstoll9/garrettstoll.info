@@ -1,11 +1,19 @@
 import "./Header.css";
+import Nav from "./nav";
 
-function Header() {
+function getPage(main: React.ReactNode) {
   return (
-    <header>
-      Header
-    </header>
+    <div className="container0">
+      <header>
+        <button>NAV</button>
+        Header
+      </header>
+      <main>
+        <Nav />
+        {main}
+      </main>
+    </div>
   );
 }
 
-export default Header;
+export default getPage;
