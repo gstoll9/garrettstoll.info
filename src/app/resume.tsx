@@ -1,63 +1,133 @@
+"use client"
+
+import { useEffect, useState } from 'react';
 import Image from "next/image";
 import "./resume.css";
 import getPage from "./header";
 
+function getImageAspectRatio(src: string): Promise<number> {
+  return new Promise((resolve) => {
+    if (typeof window !== "undefined") {
+      const img = new window.Image();
+      img.src = src;
+      img.onload = () => {
+        resolve(img.naturalWidth / img.naturalHeight);
+      };
+    } else {
+      resolve(1); // Default aspect ratio if window is not defined
+    }
+  });
+}
+
+let profileRatio: number;
+let vtRatio: number;
+let bahRatio: number;
+let summitRatio: number;
+
+profileRatio = await getImageAspectRatio("/profilePic.jpeg");
+vtRatio = await getImageAspectRatio("/VTLogo.png");
+bahRatio = await getImageAspectRatio("/BAHLogo.png");
+summitRatio = await getImageAspectRatio("/SummitConsultingLogo.png");
+
 function Resume() {
+
+  const [profileRatio, setProfileRatio] = useState(1);
+  const [vtRatio, setVtRatio] = useState(1);
+  const [bahRatio, setBahRatio] = useState(1);
+  const [summitRatio, setSummitRatio] = useState(1);
+
+  useEffect(() => {
+    async function fetchImageRatios() {
+      const profile = await getImageAspectRatio("/profilePic.jpeg");
+      const vt = await getImageAspectRatio("/VTLogo.png");
+      const bah = await getImageAspectRatio("/BAHLogo.png");
+      const summit = await getImageAspectRatio("/SummitConsultingLogo.png");
+
+      setProfileRatio(profile);
+      setVtRatio(vt);
+      setBahRatio(bah);
+      setSummitRatio(summit);
+    }
+
+    fetchImageRatios();
+  }, []);
+
+
+    console.log(vtRatio);
+    console.log(bahRatio);
+    console.log(summitRatio);
     const page = (
         <>
         <h1>Garrett Stoll</h1>
         <div className="headerDivider" />
           <div className="sameLine" id="intro">
-              <p className="introText">Hello! My name is Garrett and I like to learn and create.  I made this website to display some things I am interested in and stuff I have put together.  I hope you enjoy!</p>
-              <div className="picContainer">
-                <Image className="introPic" src="/profilePic.jpeg" width={200} height={200} alt="Next.js" />
-              </div>
+            <p className="introText">Hello! My name is Garrett and I like to learn and create.  I made this website to display some things I am interested in and stuff I have put together.  I hope you enjoy!</p>
+            <div className="picContainer">
+              <Image className="introPic" src="/profilePic.jpeg" alt="Picture of Garrett Stoll" width={profileRatio} height={1} layout="responsive" />
+            </div>
           </div>
+
           <h2>Education</h2>
           <div className="subheaderDivider" />
             <div className="sameLine">
-              <h3>Virginia Tech College of Science</h3>
-              <i>Aug 2016 &mdash; Dec 2021</i>
+              <Image className="logo" src="/VTLogo.png" alt="Virginia Tech Logo" width={vtRatio} height={1} layout="responsive" />
+              <div className="jobText">
+                <div className="sameLine">
+                  <h3>Virginia Tech College of Science</h3>
+                  <i>Aug 2016 &mdash; Dec 2021</i>
+                </div>
+                <p>BS in Computational Modeling and Data Analytics</p>
+                <p>Minors: Computer Science, Mathematics</p>
+              </div>
             </div>
-              <p>BS in Computational Modeling and Data Analytics</p>
-              <p>Minors: Computer Science, Mathematics</p>
+
           <h2>Professional Experience</h2>
           <div className="subheaderDivider" />
-            <div className="sameLine">
-              <h3>Booz Allen Hamilton &mdash; Data Scientist</h3>
-              <i>Nov 2022 &mdash; Sep 2024</i>
+          <div className="sameLine">
+            <Image className="logo" src="/BAHLogo.png" alt="Virginia Tech Logo" width={bahRatio} height={1} layout="responsive" />
+            <div className="jobText">
+              <div className="sameLine">
+                <h3>Booz Allen Hamilton &mdash; Data Scientist</h3>
+                <i>Nov 2022 &mdash; Sep 2024</i>
+              </div>
+              <h4>Web Scraping AI Pipeline</h4>
+              <ul>
+                <li>Lead a team of three to automate the process of collecting news articles, identifying target articles, and parsing those articles for information to be stored in a database</li>
+                <li>Utilized Selenium, Pandas, Langchain, Transformers, and Mistral</li>
+              </ul>
+              <h4>Locally Hosted Fine-Tuned Installable LLM</h4>
+              <ul>
+                <li>Co-led the design and development of an installable program that incorporated a locally hosted fine-tuned LLM and a responsive frontend interface</li>
+                <li>The tool rewrites job postings to Defense Cyber Workforce standards</li>
+                <li>Utilized Python, PyTorch, Transformers, JavaScript, React.js, and Qt Creator</li>
+              </ul>
+              <h4>User Productivity Team</h4>
+              <ul>
+                <li>Created a dashboard in Databricks to visualize device inventory and individual user patterns</li>
+                <li>Utilized Python, SQL, Databricks, and Splunk</li>
+              </ul>
+              <h4>Internal PowerApp</h4>
+              <ul>
+                <li>Developed a Microsoft PowerApp to automate onboarding processes and improve cross-contract communications to reduce project timelines</li>
+                <li>Utilized PowerApps, PowerAutomate, PowerBI, Dataverse, Sharepoint, and Microsoft Teams</li>
+              </ul>
             </div>
-            <h4>Web Scraping AI Pipeline</h4>
-            <ul>
-              <li>Lead a team of three to automate the process of collecting news articles, identifying target articles, and parsing those articles for information to be stored in a database</li>
-              <li>Utilized Selenium, Pandas, Langchain, Transformers, and Mistral</li>
-            </ul>
-            <h4>Locally Hosted Fine-Tuned Installable LLM</h4>
-            <ul>
-              <li>Co-led the design and development of an installable program that incorporated a locally hosted fine-tuned LLM and a responsive frontend interface</li>
-              <li>The tool rewrites job postings to Defense Cyber Workforce standards</li>
-              <li>Utilized Python, PyTorch, Transformers, JavaScript, React.js, and Qt Creator</li>
-            </ul>
-            <h4>User Productivity Team</h4>
-            <ul>
-              <li>Created a dashboard in Databricks to visualize device inventory and individual user patterns</li>
-              <li>Utilized Python, SQL, Databricks, and Splunk</li>
-            </ul>
-            <h4>Internal PowerApp</h4>
-            <ul>
-              <li>Developed a Microsoft PowerApp to automate onboarding processes and improve cross-contract communications to reduce project timelines</li>
-              <li>Utilized PowerApps, PowerAutomate, PowerBI, Dataverse, Sharepoint, and Microsoft Teams</li>
-            </ul>
-            <div className="sameLine">
-            <h3>Summit Consulting, LLC &mdash; Intern</h3>
-            <i>Aug 2021 &mdash; Dec 2021</i>
+          </div>
+          <div className="sameLine">
+            <Image className="logo" src="/SummitConsultingLogo.png" alt="Virginia Tech Logo" width={summitRatio} height={1} layout="responsive" />
+            <div className="jobText">
+              <div className="sameLine">
+              <h3>Summit Consulting, LLC &mdash; Intern</h3>
+              <i>Aug 2021 &mdash; Dec 2021</i>
+              </div>
+              <ul>
+                <li>Lead a team of three to implement an ETL pipeline on Amazon Web Services</li>
+                <li>Worked with the federal database management system, IPEDS</li>
+                <li>Web-scraped 5 websites using beautiful soup and selenium</li>
+                <li>Data Processing using pandas and statistical modeling using sklearn</li>
+              </ul>
             </div>
-            <ul>
-              <li>Lead a team of three to implement an ETL pipeline on Amazon Web Services</li>
-              <li>Worked with the federal database management system, IPEDS</li>
-              <li>Web-scraped 5 websites using beautiful soup and selenium</li>
-              <li>Data Processing using pandas and statistical modeling using sklearn</li>
-            </ul>
+          </div>
           <h2>Research Experience</h2>
           <div className="subheaderDivider" />
             <div className="sameLine">
