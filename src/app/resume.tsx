@@ -58,33 +58,42 @@ function Resume() {
     console.log(summitRatio);
     const page = (
         <>
-        <h1>Garrett Stoll</h1>
-        <div className="headerDivider" />
+          <h1>Garrett Stoll</h1>
+          <div className="headerDivider" />
+          
           <div className="sameLine" id="intro">
             <p className="introText">Hello! My name is Garrett and I like to learn and create.  I made this website to display some things I am interested in and stuff I have put together.  I hope you enjoy!</p>
-            <div className="picContainer">
+            <div className="profilePicContainer">
               <Image className="introPic" src="/profilePic.jpeg" alt="Picture of Garrett Stoll" width={profileRatio} height={1} layout="responsive" />
             </div>
           </div>
 
           <h2>Education</h2>
           <div className="subheaderDivider" />
-            <div className="sameLine">
+
+          {/* Virginia Tech */}
+          <div className="sameLine">
+            <div className="resumePicContainer">
               <Image className="logo" src="/VTLogo.png" alt="Virginia Tech Logo" width={vtRatio} height={1} layout="responsive" />
-              <div className="jobText">
-                <div className="sameLine">
-                  <h3>Virginia Tech College of Science</h3>
-                  <i>Aug 2016 &mdash; Dec 2021</i>
-                </div>
-                <p>BS in Computational Modeling and Data Analytics</p>
-                <p>Minors: Computer Science, Mathematics</p>
-              </div>
             </div>
+            <div className="jobText">
+              <div className="sameLine">
+                <h3>Virginia Tech College of Science</h3>
+                <i>Aug 2016 &mdash; Dec 2021</i>
+              </div>
+              <p>BS in Computational Modeling and Data Analytics</p>
+              <p>Minors: Computer Science, Mathematics</p>
+            </div>
+          </div>
 
           <h2>Professional Experience</h2>
           <div className="subheaderDivider" />
+
+          {/* Booz */}
           <div className="sameLine">
-            <Image className="logo" src="/BAHLogo.png" alt="Virginia Tech Logo" width={bahRatio} height={1} layout="responsive" />
+            <div className="resumePicContainer">
+              <Image className="logo" src="/BAHLogo.png" alt="Virginia Tech Logo" width={bahRatio} height={1} layout="responsive" />
+            </div>
             <div className="jobText">
               <div className="sameLine">
                 <h3>Booz Allen Hamilton &mdash; Data Scientist</h3>
@@ -113,8 +122,12 @@ function Resume() {
               </ul>
             </div>
           </div>
-          <div className="sameLine">
-            <Image className="logo" src="/SummitConsultingLogo.png" alt="Virginia Tech Logo" width={summitRatio} height={1} layout="responsive" />
+
+          {/* Summit */}
+          <div className="sameLine" style={{ marginTop: "1%" }}>
+            <div className="resumePicContainer">
+              <Image className="logo" src="/SummitConsultingLogo.png" alt="Virginia Tech Logo" width={summitRatio} height={1} layout="responsive" />
+            </div>
             <div className="jobText">
               <div className="sameLine">
               <h3>Summit Consulting, LLC &mdash; Intern</h3>
@@ -128,34 +141,55 @@ function Resume() {
               </ul>
             </div>
           </div>
+
           <h2>Research Experience</h2>
           <div className="subheaderDivider" />
-            <div className="sameLine">
-            <h3>Virginia Tech, Dr. Vito Scarola &mdash; Research Assistant</h3>
-            <i>Jan 2021 &mdash; Dec 2021</i>
+
+          <div className="sameLine">
+            <div className="resumePicContainer">
+              <Image className="logo" src="/VTLogo.png" alt="Virginia Tech Logo" width={vtRatio} height={1} layout="responsive" />
             </div>
-            <ul>
-              <li>Using Python, I simulated the Hubbard model, then developed a combinatorial optimization algorithm to dynamically implement the Gutzwiller Projection</li>
-              <li>Utilized numpy for complex analysis, mpi4py for high-performance computing, and matplotlib for data visualizations</li>
-              <li>Algorithm optimization resulting in an 8-fold speed up</li>
-            </ul>
-            <div className="sameLine">
-            <h3>Virginia Tech, Dr. Bob White &mdash; Research Assistant</h3>
-            <i>Aug 2017 &mdash; Dec 2019</i>
+            <div className="research">
+              {/* Dr. Scarola */}
+              <div className="sameLine">
+                <div className="jobText">
+                  <div className="sameLine">
+                  <h3>Virginia Tech, Dr. Vito Scarola &mdash; Research Assistant</h3>
+                  <i>Jan 2021 &mdash; Dec 2021</i>
+                  </div>
+                  <ul>
+                    <li>Using Python, I simulated the Hubbard model, then developed a combinatorial optimization algorithm to dynamically implement the Gutzwiller Projection</li>
+                    <li>Utilized numpy for complex analysis, mpi4py for high-performance computing, and matplotlib for data visualizations</li>
+                    <li>Algorithm optimization resulting in an 8-fold speed up</li>
+                  </ul>
+                </div>
+              </div>
+              {/* Dr. White */}
+              <div className="sameLine">  
+                <div className="jobText">
+                  <div className="sameLine">
+                    <h3>Virginia Tech, Dr. Bob White &mdash; Research Assistant</h3>
+                    <i>Aug 2017 &mdash; Dec 2019</i>
+                  </div>
+                  <ul>
+                    <li>Wet lab and Computational Biochemistry research experience</li>
+                    <li>Studied metalloprotein families, radical SAM enzymes, and novel thiol molecules</li>
+                    <li>Conducted protein homology modeling, molecular docking simulations, comparative genomics, gas chromatography-mass spectrometry (GCMS), liquid chromatography, and chemical assays</li>
+                  </ul>
+                </div>
+              </div>
             </div>
-            <ul>
-                <li>Wet lab and Computational Biochemistry research experience</li>
-                <li>Studied metalloprotein families, radical SAM enzymes, and novel thiol molecules</li>
-                <li>Conducted protein homology modeling, molecular docking simulations, comparative genomics, gas chromatography-mass spectrometry (GCMS), liquid chromatography, and chemical assays</li>
-            </ul>
+          </div>
+          
           <h2>Technical Skills</h2>
           <div className="subheaderDivider" />
-            <p>Python: flask, pytorch, pyspark, pandas, sklearn, statsmodel, numpy, scipy, mpi4py, beautiful soup, selenium, matplotlib, langchain, transformers</p>
-            <p>Databricks, Splunk, R and Tidyverse, C, C++, Go, Java, JavaScript, Next.js, Node.js, React.js, HTML, CSS, MPI, OpenMP, Microsoft &mdash; 365, Power Apps, Power Automate, Power BI, Qiskit, SQL, MySQL, Git, and command-line scripting</p>
+          <p>Python: flask, pytorch, pyspark, pandas, sklearn, statsmodel, numpy, scipy, mpi4py, beautiful soup, selenium, matplotlib, langchain, transformers</p>
+          <p>Databricks, Splunk, R and Tidyverse, C, C++, Go, Java, JavaScript, Next.js, Node.js, React.js, HTML, CSS, MPI, OpenMP, Microsoft &mdash; 365, Power Apps, Power Automate, Power BI, Qiskit, SQL, MySQL, Git, and command-line scripting</p>
+          
           <h2>Certificates</h2>
           <div className="subheaderDivider" />
-            <p>Booz Allen Hamilton Technical Badges &mdash; AI Aware, Angular, Docker, CSS, Java, JavaScript, Machine Learning, Python, React, Spring Boot, SQL (2023)</p>
-        
+          <p>Booz Allen Hamilton Technical Badges &mdash; AI Aware, Angular, Docker, CSS, Java, JavaScript, Machine Learning, Python, React, Spring Boot, SQL (2023)</p>
+          
         </>
     );
     return getPage(page);

@@ -53,6 +53,7 @@ header {
   width: 100%;
 
   color: white;
+  z-index: 1;
 }
 
 nav {
