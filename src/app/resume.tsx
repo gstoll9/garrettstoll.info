@@ -2,30 +2,37 @@
 
 import { useEffect, useState } from 'react';
 import Image from "next/image";
-import "./resume.css";
-import { getPage, getImageAspectRatio } from "./header";
+import Link from "next/link";
+import "./styles/resume.css";
+import StandardLayout from "./standardLayout";
+import { getImageAspectRatio } from "./util";
+import { profile } from 'console';
 
 // Get image aspect ratios
-let profileRatio: number;
-let vtRatio: number;
-let bahRatio: number;
-let summitRatio: number;
-let tools: number;
+let init_profileRatio: number;
+let init_vtRatio: number;
+let init_bahRatio: number;
+let init_summitRatio: number;
+let init_toolsRatio: number;
+let init_tyroRatio: number;
+let init_certsRatio: number;
 
-profileRatio = await getImageAspectRatio("/profilePic.jpeg");
-vtRatio = await getImageAspectRatio("/VTLogo.png");
-bahRatio = await getImageAspectRatio("/BAHLogo.png");
-summitRatio = await getImageAspectRatio("/SummitConsultingLogo.png");
-tools = await getImageAspectRatio("/toolsLogo.png");
+init_profileRatio = await getImageAspectRatio("/profilePic.jpeg");
+init_vtRatio = await getImageAspectRatio("/VTLogo.png");
+init_bahRatio = await getImageAspectRatio("/BAHLogo.png");
+init_summitRatio = await getImageAspectRatio("/SummitConsultingLogo.png");
+init_toolsRatio = await getImageAspectRatio("/toolsLogo.png");
+init_tyroRatio = await getImageAspectRatio("/Tyro.png");
+init_certsRatio = await getImageAspectRatio("/BAHIBMLogo.png");
 
 function Resume() {
 
-  const [profileRatio, setProfileRatio] = useState(1);
-  const [vtRatio, setVtRatio] = useState(1);
-  const [bahRatio, setBahRatio] = useState(1);
-  const [summitRatio, setSummitRatio] = useState(1);
-  const [toolsRatio, setToolsRatio] = useState(1);
-
+  const [profileRatio, setProfileRatio] = useState(0);
+  const [vtRatio, setVtRatio] = useState(0);
+  const [bahRatio, setBahRatio] = useState(0);
+  const [summitRatio, setSummitRatio] = useState(0);
+  const [toolsRatio, setToolsRatio] = useState(0);
+  const [certsRatio, setCertsRatio] = useState(0);
 
   useEffect(() => {
     async function fetchImageRatios() {
@@ -34,7 +41,7 @@ function Resume() {
       const bah = await getImageAspectRatio("/BAHLogo.png");
       const summit = await getImageAspectRatio("/SummitConsultingLogo.png");
       const tools = await getImageAspectRatio("/toolsLogo.png");
-
+      const certs = await getImageAspectRatio("/BAHIBMLogo.png");
 
       setProfileRatio(profile);
       setVtRatio(vt);
@@ -50,9 +57,16 @@ function Resume() {
       <>
         <div className="sameLine">
 
+          {/* Projects */}
           <div className="projects">
             <h2 className="projectsTitle">My Projects</h2>
             <div className="headerDivider" />
+            <Link className="projectItem" href="/hubbardmodel">
+              <p className="projectText">Hubbard Model</p>
+            </Link>
+            <Link className="projectItem" href="/minesweeper">
+              <p className="projectText">Minesweeper</p>
+            </Link>
           </div>
 
           <div className="resume">
@@ -193,15 +207,22 @@ function Resume() {
 
             <h2>Certificates</h2>
             <div className="subheaderDivider" />
-            <ul>
-              <li>Booz Allen Hamilton Technical Badges &mdash; AI Aware, Angular, Docker, CSS, Java, JavaScript, Machine Learning, Python, React, Spring Boot, SQL (2023)</li>
-            </ul>
+            <div className="sameLine">
+              <div className="resumePicContainer">
+                <Image className="logo" src="/BAHIBMLogo.png" alt="Booz Allen Hamilton and IBM logos side by side" width={toolsRatio} height={1} layout="responsive" />
+              </div>
+              <div className="jobText"> 
+                <ul>
+                  <li>Booz Allen Hamilton Technical Badges &mdash; AI Aware, Angular, Docker, CSS, Java, JavaScript, Machine Learning, Python, React, Spring Boot, SQL (2023)</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>  
       </>
   );
 
-  return getPage(page);
+  return StandardLayout(page);
         
 }
 

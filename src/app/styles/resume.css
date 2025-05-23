@@ -53,6 +53,29 @@ img:not(.introPic) {
     text-align: center;
 }
 
+.projectItem {
+    height: 2%;
+    width: 100%;
+    background-color: beige;
+    text-align: center;
+    border-bottom: 1px solid black;
+
+    /* Center content */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Remove link styling */
+    text-decoration: none;
+    color: inherit;
+}
+
+.projectText {
+    color: black;
+    font-size: large !important; /* Adjust the size as needed */
+    font-weight: bold;
+}
+
 #intro {
     height: var(--intro-height);
 }
