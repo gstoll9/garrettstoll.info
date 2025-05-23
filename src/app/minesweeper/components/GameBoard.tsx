@@ -1,11 +1,11 @@
 // components/GameBoard.tsx
 import React from "react";
-import { useMinesweeper } from "../useMinesweeper";
+import { useMinesweeper } from "../hooks/useMinesweeper";
 import { Cell } from "./Cell";
 import "../styles/GameBoard.css";
 
 export const GameBoard = () => {
-  const { board, revealCell, flagCell, gameState } = useMinesweeper(10, 10, 10);
+  const { board, clickCell, flagCell, gameState } = useMinesweeper(10, 10, 10);
 
   return (
     <div className="game-container">
@@ -16,7 +16,7 @@ export const GameBoard = () => {
             <Cell
               key={`${x}-${y}`}
               cell={cell}
-              onClick={() => revealCell(x, y)}
+              onClick={() => clickCell(x, y)}
               onRightClick={e => {
                 e.preventDefault();
                 flagCell(x, y);

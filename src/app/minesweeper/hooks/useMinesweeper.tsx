@@ -1,14 +1,29 @@
 "use client"
 // hooks/useMinesweeper.ts
 import { useState, useEffect } from "react";
-import type { Cell, GameState } from "./types";
+import type { Cell, GameState } from "../types";
 
 // Count adjacent mines
 const directions: [number, number][] = [
     [-1, -1], [-1, 0], [-1, 1],
-    [0, -1],          [0, 1],
-    [1, -1], [1, 0], [1, 1],
+    [0, -1],           [0, 1],
+    [1, -1],  [1, 0],  [1, 1],
 ];
+
+function getNeighbors(board: Cell[][], x: number, y: number): Cell[] {
+  const neighbors: Cell[] = [];
+  for (let dx = -1; dx <= 1; dx++) {
+    for (let dy = -1; dy <= 1; dy++) {
+      if (dx === 0 && dy === 0) continue;
+      const nx = x + dx;
+      const ny = y + dy;
+      if (nx >= 0 && ny >= 0 && nx < board[0].length && ny < board.length) {
+        neighbors.push(board[ny][nx]);
+      }
+    }
+  }
+  return neighbors;
+}
 
 const generateBoard = (rows: number, cols: number, mines: number): Cell[][] => {
   const board: Cell[][] = Array.from({ length: rows }, (_, y) =>
@@ -53,10 +68,24 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
   const [board, setBoard] = useState<Cell[][]>(() => generateBoard(rows, cols, mines));
   const [gameState, setGameState] = useState<GameState>("playing");
 
-  const revealCell = (x: number, y: number) => {
-    if (gameState !== "playing") return;
+  function chordCell(x: number, y: number, newBoard: Cell[][]) {
+    const cell = newBoard[y][x];
+    if (!cell.isRevealed || cell.adjacentMines === 0) return;
 
-    const newBoard = board.map(row => row.map(cell => ({ ...cell })));
+    const neighbors = getNeighbors(board, x, y);
+    const flagged = neighbors.filter(n => n.isFlagged);
+    const covered = neighbors.filter(n => !n.isRevealed && !n.isFlagged);
+
+    if (flagged.length === cell.adjacentMines) {
+      // Safe to reveal the rest
+      for (let neighbor of covered) {
+        revealCell(neighbor.x, neighbor.y, newBoard);
+      }
+    }
+  }
+
+  const revealCell = (x: number, y: number , newBoard: Cell[][]) => {
+    
     const cell = newBoard[y][x];
     if (cell.isRevealed || cell.isFlagged) return;
 
@@ -93,6 +122,18 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
       }
     }
 
+    return newBoard;
+  };
+
+  const clickCell = (x: number, y: number) => {
+    if (gameState !== "playing") return;
+    const newBoard = board.map(row => row.map(cell => ({ ...cell })));
+    const cell = board[y][x];
+    if (cell.isRevealed && cell.adjacentMines > 0) {
+      chordCell(cell.x, cell.y, newBoard);
+    } else {
+      revealCell(cell.x, cell.y, newBoard);
+    }
     setBoard(newBoard);
   };
 
@@ -104,5 +145,5 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
     setBoard(newBoard);
   };
 
-  return { board, revealCell, flagCell, gameState };
+  return { board, clickCell, flagCell, gameState };
 };

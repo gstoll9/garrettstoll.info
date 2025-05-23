@@ -1,57 +1,12 @@
 "use client"
-
 import { useEffect, useState } from 'react';
 import Image from "next/image";
 import Link from "next/link";
 import "./styles/resume.css";
 import StandardLayout from "./standardLayout";
 import { getImageAspectRatio } from "./util";
-import { profile } from 'console';
-
-// Get image aspect ratios
-let init_profileRatio: number;
-let init_vtRatio: number;
-let init_bahRatio: number;
-let init_summitRatio: number;
-let init_toolsRatio: number;
-let init_tyroRatio: number;
-let init_certsRatio: number;
-
-init_profileRatio = await getImageAspectRatio("/profilePic.jpeg");
-init_vtRatio = await getImageAspectRatio("/VTLogo.png");
-init_bahRatio = await getImageAspectRatio("/BAHLogo.png");
-init_summitRatio = await getImageAspectRatio("/SummitConsultingLogo.png");
-init_toolsRatio = await getImageAspectRatio("/toolsLogo.png");
-init_tyroRatio = await getImageAspectRatio("/Tyro.png");
-init_certsRatio = await getImageAspectRatio("/BAHIBMLogo.png");
 
 function Resume() {
-
-  const [profileRatio, setProfileRatio] = useState(0);
-  const [vtRatio, setVtRatio] = useState(0);
-  const [bahRatio, setBahRatio] = useState(0);
-  const [summitRatio, setSummitRatio] = useState(0);
-  const [toolsRatio, setToolsRatio] = useState(0);
-  const [certsRatio, setCertsRatio] = useState(0);
-
-  useEffect(() => {
-    async function fetchImageRatios() {
-      const profile = await getImageAspectRatio("/profilePic.jpeg");
-      const vt = await getImageAspectRatio("/VTLogo.png");
-      const bah = await getImageAspectRatio("/BAHLogo.png");
-      const summit = await getImageAspectRatio("/SummitConsultingLogo.png");
-      const tools = await getImageAspectRatio("/toolsLogo.png");
-      const certs = await getImageAspectRatio("/BAHIBMLogo.png");
-
-      setProfileRatio(profile);
-      setVtRatio(vt);
-      setBahRatio(bah);
-      setSummitRatio(summit);
-      setToolsRatio(tools);
-    }
-
-    fetchImageRatios();
-  }, []);
 
   const page = (
       <>
@@ -67,13 +22,23 @@ function Resume() {
             <Link className="projectItem" href="/minesweeper">
               <p className="projectText">Minesweeper</p>
             </Link>
+            <Link className="projectItem" href="/solarsystem">
+              <p className="projectText">Solar System</p>
+            </Link>
           </div>
 
           <div className="resume">
             <div className="sameLine" id="intro">
               <p className="introText">Salutations, and welcome to my website! As of now, this site is just my resume, but soon I will be connecting things I am interested in and projects I have put together. For data science contracting or employment inquiries, please email me at garrettstoll@gmail.com. Have fun, and enjoy this website responsibly!</p>
               <div className="profilePicContainer">
-                <Image className="introPic" src="/profilePic.jpeg" alt="Picture of Garrett Stoll" width={profileRatio} height={1} layout="responsive" />
+                <Image
+                  className="introPic"
+                  src="/resumeImages/profilePic.png"
+                  alt="Picture of Garrett Stoll"
+                  width={256}
+                  height={256}
+                  sizes="10vw"
+                />
               </div>
             </div>
 
@@ -83,7 +48,14 @@ function Resume() {
             {/* Virginia Tech */}
             <div className="sameLine">
               <div className="resumePicContainer">
-                <Image className="logo" src="/VTLogo.png" alt="Virginia Tech Logo" width={vtRatio} height={1} layout="responsive" />
+                <Image
+                  className="logo"
+                  src="/resumeImages/VTLogo.png"
+                  alt="Virginia Tech Logo"
+                  width={0}
+                  height={0}
+                  sizes="100%"
+                />
               </div>
               <div className="jobText">
                 <div className="sameLine">
@@ -101,7 +73,14 @@ function Resume() {
             {/* Booz */}
             <div className="sameLine">
               <div className="resumePicContainer">
-                <Image className="logo" src="/BAHLogo.png" alt="Booz Allen Hamilton Logo" width={bahRatio} height={1} layout="responsive" />
+                <Image
+                  className="logo"
+                  src="/resumeImages/BAHLogo.png"
+                  alt="Booz Allen Hamilton Logo"
+                  width={0}
+                  height={0}
+                  sizes="100%"
+                />
               </div>
               <div className="jobText">
                 <div className="sameLine">
@@ -135,7 +114,14 @@ function Resume() {
             {/* Summit */}
             <div className="sameLine" style={{ marginTop: "1%" }}>
               <div className="resumePicContainer">
-                <Image className="logo" src="/SummitConsultingLogo.png" alt="Summit Consulting Logo" width={summitRatio} height={1} layout="responsive" />
+                <Image
+                  className="logo"
+                  src="/resumeImages/SummitConsultingLogo.png"
+                  alt="Summit Consulting Logo"
+                  width={0}
+                  height={0}
+                  sizes="100%"
+                />
               </div>
               <div className="jobText">
                 <div className="sameLine">
@@ -156,7 +142,14 @@ function Resume() {
 
             <div className="sameLine">
               <div className="resumePicContainer">
-                <Image className="logo" src="/VTLogo.png" alt="Virginia Tech Logo" width={vtRatio} height={1} layout="responsive" />
+                <Image
+                  className="logo"
+                  src="/resumeImages/VTLogo.png"
+                  alt="Virginia Tech Logo"
+                  width={0}
+                  height={0}
+                  sizes="100%"
+                />
               </div>
               <div className="research">
                 {/* Dr. Scarola */}
@@ -195,7 +188,14 @@ function Resume() {
 
             <div className="sameLine">
               <div className="resumePicContainer">
-                <Image className="logo" src="/toolsLogo.png" alt="Python, JavaScript, and SQL Logos" width={toolsRatio} height={1} layout="responsive" />
+                <Image
+                  className="logo"
+                  src="/resumeImages/toolsLogo.png"
+                  alt="Python, JavaScript, and SQL Logos"
+                  width={0}
+                  height={0}
+                  sizes="100%"
+                />
               </div>
               <div className="jobText"> 
                 <ul>
@@ -209,11 +209,19 @@ function Resume() {
             <div className="subheaderDivider" />
             <div className="sameLine">
               <div className="resumePicContainer">
-                <Image className="logo" src="/BAHIBMLogo.png" alt="Booz Allen Hamilton and IBM logos side by side" width={toolsRatio} height={1} layout="responsive" />
+                <Image
+                  className="logo"
+                  src="/resumeImages/BAHIBMLogo.png"
+                  alt="Booz Allen Hamilton and IBM logos side by side"
+                  width={0}
+                  height={0}
+                  sizes="100%"
+                />
               </div>
               <div className="jobText"> 
                 <ul>
                   <li>Booz Allen Hamilton Technical Badges &mdash; AI Aware, Angular, Docker, CSS, Java, JavaScript, Machine Learning, Python, React, Spring Boot, SQL (2023)</li>
+                  <li>IBM Associate Developer &mdash Quantum Computation using Qiskit (2022)</li>
                 </ul>
               </div>
             </div>

@@ -1,0 +1,68 @@
+const distanceFactor = 12
+
+export const planets = [
+  {
+    name: 'Mercury',
+    size: 0.383,
+    distance: .467 * distanceFactor,
+    textureUrl: '/solarsystemImages/MercuryTexture.jpg',
+    orbitSpeed: 1.76,
+    rotationalSpeed: 0.006,
+  },
+  {
+    name: 'Venus',
+    size: 0.95,
+    distance: .728 * distanceFactor,
+    textureUrl: '/solarsystemImages/VenusTexture.jpg',
+    orbitSpeed: 1.626,
+    rotationalSpeed: -.009,
+  },
+  {
+    name: 'Earth',
+    size: 1,
+    distance: 1 * distanceFactor,
+    textureUrl: '/solarsystemImages/EarthTexture.jpg',
+    orbitSpeed: 1,
+    rotationalSpeed: 1,
+  },
+  {
+    name: 'Mars',
+    size: 0.532,
+    distance: 1.666 * distanceFactor,
+    textureUrl: '/solarsystemImages/MarsTexture.jpg',
+    orbitSpeed: .532,
+    rotationalSpeed: 1.027,
+  },
+  {
+    name: 'Jupiter',
+    size: 10.973,
+    distance: 5.457 * distanceFactor,
+    textureUrl: '/solarsystemImages/JupiterTexture.jpg',
+    orbitSpeed: 0.916,
+    rotationalSpeed: 2.418,
+  },
+  {
+    name: 'Saturn',
+    size: 9.14,
+    distance: 10.124 * distanceFactor,
+    textureUrl: '/solarsystemImages/SaturnTexture.jpg',
+    orbitSpeed: 0.034,
+    rotationalSpeed: .439,
+  },
+  {
+    name: 'Uranus',
+    size: 4,
+    distance: 20.097 * distanceFactor,
+    textureUrl: '/solarsystemImages/UranusTexture.jpg',
+    orbitSpeed: 0.012,
+    rotationalSpeed: -1.719,
+  },
+  {
+    name: 'Neptune',
+    size: 3.88,
+    distance: 30.33 * distanceFactor,
+    textureUrl: '/solarsystemImages/NeptuneTexture.jpg',
+    orbitSpeed: 0.006,
+    rotationalSpeed: 1.49,
+  },
+]

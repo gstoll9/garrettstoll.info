@@ -91,7 +91,7 @@ img:not(.introPic) {
     margin: 0% 0% 1%;
     background-color: black;
     width: 25%;
-    border: 1.5px solid black;
+    border: 1px solid black;
 }
 
 p:not(.introText) {
@@ -126,7 +126,8 @@ p:not(.introText) {
 }
 
 .logo {
-    height: 100%;
+    width: 100%;
+    height: auto;
     flex: 1;
 }
 
