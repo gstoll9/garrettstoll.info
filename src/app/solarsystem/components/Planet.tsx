@@ -30,7 +30,12 @@ export default function Planet({
 
   useFrame((_, delta) => {
   if (groupRef.current) {
-    groupRef.current.rotation.y += orbitSpeed * delta
+    // Orbit calculation
+    const elapsedTime = performance.now() / 1000; // Time in seconds
+    const angle = elapsedTime * orbitSpeed; // Angle based on orbital speed
+    const x = distance * Math.cos(angle); // X position
+    const z = distance * Math.sin(angle); // Z position
+    groupRef.current.position.set(x, 0, z); // Update position
   }
   if (ref.current) {
     ref.current.rotation.y += rotationalSpeed * delta // self-rotation speed
@@ -43,7 +48,6 @@ export default function Planet({
       {/* Planet Mesh */}
       <mesh
         ref={ref}
-        position={[distance, 0, 0]}
         onClick={() => onClick?.(name)}
       >
         <sphereGeometry args={[size, 32, 32]} />
@@ -58,9 +62,16 @@ export default function Planet({
 
       {/* Saturn's Rings */}
       {name === 'Saturn' && (
-        <mesh position={[distance, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
-            <ringGeometry args={[size + 2, size + 4, 64]} />
-            <meshBasicMaterial color="goldenrod" side={THREE.DoubleSide} transparent opacity={0.5} />
+        <mesh 
+          rotation={[Math.PI / 2, 0, 0]}
+        >
+          <ringGeometry args={[size + 2, size + 4, 64]} />
+          <meshBasicMaterial
+            color="goldenrod"
+            side={THREE.DoubleSide}
+            transparent
+            opacity={0.5}
+          />
         </mesh>
       )}
 

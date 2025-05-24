@@ -1,16 +1,30 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Planet from './Planet'
 import Orbit from './Orbit'
 import { planets } from '../data/planets'
 import InfoPopup from './InfoPopup'
 import { AsteroidBelt } from './AsteroidBelt'
-
-// Inside the return block of SolarSystem
-
+import * as dat from 'dat.gui';
 
 
 export default function SolarSystem() {
   const [selectedPlanet, setSelectedPlanet] = useState<string | null>(null)
+  const [showOrbits, setShowOrbits] = useState(true);
+
+  useEffect(() => {
+    // Initialize dat.GUI
+    const gui = new dat.GUI();
+
+    // Add a button to toggle orbits
+    gui.add({ toggleOrbits: () => setShowOrbits((prev) => !prev) }, 'toggleOrbits').name(
+      showOrbits ? 'Hide Orbits' : 'Show Orbits'
+    );
+
+    // Cleanup GUI on component unmount
+    return () => {
+      gui.destroy();
+    };
+  }, [showOrbits]);
 
   return (
     <>
@@ -18,9 +32,9 @@ export default function SolarSystem() {
       <AsteroidBelt />
 
       {/* Planets and orbits */}
-      {planets.reverse().map((planet) => (
+      {planets.map((planet) => (
         <group key={planet.name}>
-          <Orbit radius={planet.distance} />
+          {showOrbits && <Orbit radius={planet.distance} />}
           <Planet {...planet} onClick={setSelectedPlanet} />
         </group>
       ))}

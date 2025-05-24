@@ -1,5 +1,5 @@
 // types/types.ts
-export type Cell = {
+export type CellType = {
     x: number;
     y: number;
     hasMine: boolean;
@@ -9,4 +9,4 @@ export type Cell = {
     mineProbability?: number; // Optional property for mine probability
   };
   
-  export type GameState = "playing" | "won" | "lost";
+  export type GameState = "starting" | "playing" | "won" | "lost";

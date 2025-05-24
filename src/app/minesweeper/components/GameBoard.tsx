@@ -1,11 +1,19 @@
 // components/GameBoard.tsx
 import React from "react";
-import { useMinesweeper } from "../hooks/useMinesweeper";
 import { Cell } from "./Cell";
+import { CellType } from "../types";
 import "../styles/GameBoard.css";
 
-export const GameBoard = () => {
-  const { board, clickCell, flagCell, gameState } = useMinesweeper(10, 10, 10);
+type GameBoardProps = {
+    board: CellType[][];
+    clickCell: (x: number, y: number) => void;
+    flagCell: (x: number, y: number) => void;
+    gameState: string;
+    defaultMineProbability: number;
+    hintsEnabled: boolean;
+};
+
+export const GameBoard: React.FC<GameBoardProps> = ({board, clickCell, flagCell, gameState, defaultMineProbability, hintsEnabled }) => {
 
   return (
     <div className="game-container">
@@ -21,6 +29,8 @@ export const GameBoard = () => {
                 e.preventDefault();
                 flagCell(x, y);
               }}
+              mineProbability={defaultMineProbability}
+              hintsEnabled={hintsEnabled}
             />
           ))
         )}

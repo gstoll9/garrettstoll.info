@@ -37,7 +37,8 @@ export function UniverseCanvas() {
         powerPreference: 'high-performance',
         antialias: false, // Disable for better performance
         stencil: false,
-        depth: false
+        depth: false,
+        logarithmicDepthBuffer: true,
       }}
     >
       <ambientLight intensity={0.4} />
