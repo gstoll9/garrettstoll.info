@@ -14,6 +14,17 @@ export default function SolarSystem() {
 
   return (
     <>
+      {/* Asteroid Belt */}
+      <AsteroidBelt />
+
+      {/* Planets and orbits */}
+      {planets.reverse().map((planet) => (
+        <group key={planet.name}>
+          <Orbit radius={planet.distance} />
+          <Planet {...planet} onClick={setSelectedPlanet} />
+        </group>
+      ))}
+
       {/* Sun */}
       <Planet
         name="Sun"
@@ -22,17 +33,6 @@ export default function SolarSystem() {
         textureUrl={'/solarsystemImages/SunTexture.jpg'}
         rotationalSpeed={.04}
       />
-
-      {/* Asteroid Belt */}
-      <AsteroidBelt />
-
-      {/* Planets and orbits */}
-      {planets.map((planet) => (
-        <group key={planet.name}>
-          <Orbit radius={planet.distance} />
-          <Planet {...planet} onClick={setSelectedPlanet} />
-        </group>
-      ))}
 
       {selectedPlanet && (
         <InfoPopup name={selectedPlanet} onClose={() => setSelectedPlanet(null)} />

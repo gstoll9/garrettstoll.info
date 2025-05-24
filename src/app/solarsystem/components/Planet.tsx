@@ -39,21 +39,33 @@ export default function Planet({
 
   return (
     <group ref={groupRef}>
+
+      {/* Planet Mesh */}
       <mesh
         ref={ref}
         position={[distance, 0, 0]}
         onClick={() => onClick?.(name)}
       >
         <sphereGeometry args={[size, 32, 32]} />
-        <meshStandardMaterial map={texture} color={color} />
+        <meshStandardMaterial 
+          map={texture}
+          color={color}
+          transparent={false}
+          depthWrite={true}
+          depthTest={true}
+        />
       </mesh>
+
+      {/* Saturn's Rings */}
       {name === 'Saturn' && (
         <mesh position={[distance, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
             <ringGeometry args={[size + 2, size + 4, 64]} />
             <meshBasicMaterial color="goldenrod" side={THREE.DoubleSide} transparent opacity={0.5} />
         </mesh>
-    )}
-      <Label text={name} position={[distance, size + 1.2, 0]} />
+      )}
+
+      {/* Label */}
+      <Label text={name} position={[distance, size+1, 0]} />
     </group>
   )
 }

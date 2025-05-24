@@ -10,7 +10,7 @@ header {
 
   /* outlines */
   margin: 0;
-  border: 6px solid var(--darkgreen);
+  border: 0;
   padding: 0;
 
   /* interior */
