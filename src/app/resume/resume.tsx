@@ -2,9 +2,9 @@
 import { useEffect, useState } from 'react';
 import Image from "next/image";
 import Link from "next/link";
-import "./styles/resume.css";
-import StandardLayout from "./standardLayout";
-import { getImageAspectRatio } from "./util";
+import "./resume.css";
+import StandardLayout from "../../layouts/standardLayout";
+import { getImageAspectRatio } from "../util";
 
 function Resume() {
 
@@ -24,6 +24,9 @@ function Resume() {
             </Link>
             <Link className="projectItem" href="/solarsystem">
               <p className="projectText">Solar System</p>
+            </Link>
+            <Link className="projectItem" href="/hydrogen">
+              <p className="projectText">Hydrogen Atom</p>
             </Link>
           </div>
 

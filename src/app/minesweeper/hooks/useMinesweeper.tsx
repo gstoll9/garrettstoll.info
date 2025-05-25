@@ -195,45 +195,94 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
 
   // calculate new mine probabilities
   const newMineProbabilities = (newBoard: CellType[][]) => {
+    
     // let subsets: [CellType[], number][] = [];
     // let coveredCells: CellType[] = [];
+    // // get all subsets and covered cells
     // newBoard.forEach(row => {
     //   row.forEach(cell => {
         
     //     if (!cell.isRevealed && !cell.isFlagged) coveredCells.push(cell);
 
-    //     // use the revealed numbers to calculate mine probabilities
+    //     // use the revealed numbers to find subsets
     //     if (cell.isRevealed && cell.adjacentMines > 0) {
     //       const neighbors = getNeighbors(board, cell.x, cell.y);
-    //       const flagged = neighbors.filter(n => n.isFlagged);
     //       let covered = neighbors.filter(n => !n.isRevealed && !n.isFlagged);
 
-    //       // there are mines to be found
-    //       if (flagged.length < cell.adjacentMines) {
-            
-    //         let adjacentMines = cell.adjacentMines - flagged.length;
-
-    //         // check subsets for overlapping cells
-    //         subsets.forEach(subset => {
-    //           const cells = subset[0]
-    //           // every cell in the subset is this cell's neighbor
-    //           if (cells.every(n => covered.includes(n))) {
-    //             const subsetMines = subset[1];
-    //             adjacentMines -= subsetMines;
-    //             // remove the subset from the covered cells
-    //             covered = covered.filter(n => !cells.includes(n));
-    //           }
-    //         });
-
-    //         // calculate mine probability
-    //         covered.forEach(n => {
-    //           const probability = covered.length > 0 ? adjacentMines / covered.length : 0;
-    //           newBoard[n.y][n.x].mineProbability = Math.max(probability, n.mineProbability ?? 0);
-    //         })
+    //       // there are cells to reveal, add to subsets
+    //       if (covered.length != 0) {
+    //         const flagged = neighbors.filter(n => n.isFlagged);
+    //         let unfoundMines = cell.adjacentMines - flagged.length;
+    //         subsets.push([covered, unfoundMines]);           
     //       }
     //     }
     //   })
     // });
+
+    // // find overlapping subsets
+    // let subsetGroups: [CellType[], number][][] = [];
+    // // mark ones we've found
+    // let processedIndices = new Set<number>();
+
+    // for (let i = 0; i < subsets.length; i++) {
+    //   if (processedIndices.has(i)) continue;
+    //   if (i < subsets.length - 1) {
+    //     // upper triangle search
+    //     for (let j = i + 1; j < subsets.length; j++) {
+    //       if (processedIndices.has(j)) continue;
+          
+    //       const subset1 = subsets[i];
+    //       const subset2 = subsets[j];
+          
+    //       if (
+    //         subset1[0].some(cell1 =>
+    //           subset2[0].some(cell2 => cell1.x === cell2.x && cell1.y === cell2.y)
+    //         )
+    //       ) {
+    //         // Find all subsets that overlap with either subset1 or subset2
+    //         const group = [subset1, subset2];
+    //         const groupIndices = [i, j];
+            
+    //         if (j < subsets.length - 1) {
+    //           for (let k = j + 1; k < subsets.length; k++) {
+    //             if (processedIndices.has(k)) continue;
+                
+    //             const subset = subsets[k];
+    //             if (
+    //               subset[0].some(cell1 =>
+    //                 subset1[0].some(cell2 => cell1.x === cell2.x && cell1.y === cell2.y)
+    //               ) ||
+    //               subset[0].some(cell1 =>
+    //                 subset2[0].some(cell2 => cell1.x === cell2.x && cell1.y === cell2.y)
+    //               )
+    //             ) {
+    //               group.push(subset);
+    //               groupIndices.push(k);
+    //             }
+    //           }
+    //         }
+            
+    //         subsetGroups.push(group);
+    //         groupIndices.forEach(index => processedIndices.add(index));
+    //       }
+    //     }
+    //   } else {
+    //     subsetGroups.push([subsets[i]]);
+    //   }
+    // }
+
+    // subsetGroups.forEach(group => {
+    //   const cells = group.reduce((acc, subset) => acc.concat(subset[0]), []);
+    //   const totalCells = cells.length;
+      
+
+    //   // find all the possible states of the mines
+    //   group.forEach(subset => {
+
+    //   });
+    // });
+
+
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
         const cell = board[y][x];

@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  height: 100vh;
+}
+.leftPane {
+  width: 40%;
+  padding: 2rem;
+  overflow-y: auto;
+}
+.rightPane {
+  width: 60%;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+}
