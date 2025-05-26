@@ -11,6 +11,8 @@ type PlanetProps = {
   textureUrl?: string
   orbitSpeed?: number
   rotationalSpeed?: number
+  eccentricity?: number
+  orbitMode?: string
   onClick?: (name: string) => void
 }
 
@@ -22,6 +24,8 @@ export default function Planet({
   textureUrl,
   orbitSpeed = 0,
   rotationalSpeed = 0,
+  eccentricity = 0.1,
+  orbitMode = "Simple",
   onClick,
 }: PlanetProps) {
   const ref = useRef<THREE.Mesh>(null!)
@@ -33,8 +37,26 @@ export default function Planet({
       // Orbit calculation
       const elapsedTime = performance.now() / 1000; // Time in seconds
       const angle = elapsedTime * orbitSpeed; // Angle based on orbital speed
-      const x = distance * Math.cos(angle); // X position
-      const z = distance * Math.sin(angle); // Z position
+      
+      let x: number, z: number;
+
+      if (orbitMode === "Elliptical") {
+        // Elliptical orbit calculation
+        const a = distance; // Semi-major axis
+        const e = eccentricity; // Eccentricity
+        const b = a * Math.sqrt(1 - e * e); // Semi-minor axis
+        
+        // Calculate elliptical position
+        const r = (a * (1 - e * e)) / (1 + e * Math.cos(angle));
+        x = r * Math.cos(angle);
+        z = r * Math.sin(angle) * (b / a); // Scale z by b/a ratio
+      } else {
+
+        // Circular orbit
+        x = distance * Math.cos(angle);
+        z = distance * Math.sin(angle);
+      }
+
       groupRef.current.position.set(x, 0, z); // Update position
     }
     if (ref.current) {
