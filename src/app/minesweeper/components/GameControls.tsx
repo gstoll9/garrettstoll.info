@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 interface GameControlsProps {
   remainingMines: number;
+  elapsedTime: number; // Add this prop
   onRestart: () => void;
   onHint: () => void;
   onSettings: () => void;
 }
 
-export const GameControls: React.FC<GameControlsProps> = ({ remainingMines, onRestart, onHint, onSettings }) => {
-  const [time, setTime] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => setTime((prev) => prev + 1), 1000);
-    return () => clearInterval(timer); // Cleanup on unmount
-  }, []);
-
+export const GameControls: React.FC<GameControlsProps> = ({ 
+  remainingMines, 
+  elapsedTime, // Use the prop instead of local state
+  onRestart, 
+  onHint, 
+  onSettings 
+}) => {
   return (
     <div className="game-controls">
       <button className="minesweeper-button" onClick={onHint}>
         💡 Hint
       </button>
-      <div className="timer">⏱️ {time}s</div>
+      <div className="timer">⏱️ {elapsedTime}s</div>
       <button className="minesweeper-button" onClick={onRestart}>
         🔄 Restart
       </button>

@@ -29,18 +29,18 @@ export default function Planet({
   const texture = textureUrl ? useLoader(THREE.TextureLoader, textureUrl) : null
 
   useFrame((_, delta) => {
-  if (groupRef.current) {
-    // Orbit calculation
-    const elapsedTime = performance.now() / 1000; // Time in seconds
-    const angle = elapsedTime * orbitSpeed; // Angle based on orbital speed
-    const x = distance * Math.cos(angle); // X position
-    const z = distance * Math.sin(angle); // Z position
-    groupRef.current.position.set(x, 0, z); // Update position
-  }
-  if (ref.current) {
-    ref.current.rotation.y += rotationalSpeed * delta // self-rotation speed
-  }
-})
+    if (groupRef.current) {
+      // Orbit calculation
+      const elapsedTime = performance.now() / 1000; // Time in seconds
+      const angle = elapsedTime * orbitSpeed; // Angle based on orbital speed
+      const x = distance * Math.cos(angle); // X position
+      const z = distance * Math.sin(angle); // Z position
+      groupRef.current.position.set(x, 0, z); // Update position
+    }
+    if (ref.current) {
+      ref.current.rotation.y += rotationalSpeed * delta // self-rotation speed
+    }
+  })
 
   return (
     <group ref={groupRef}>
@@ -76,7 +76,7 @@ export default function Planet({
       )}
 
       {/* Label */}
-      <Label text={name} position={[distance, size+1, 0]} />
+      <Label text={name} position={[0, size+1, 0]} />
     </group>
   )
 }

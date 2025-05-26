@@ -69,11 +69,31 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
   const [board, setBoard] = useState<CellType[][]>(() => generateBoard(rows, cols, mines));
   const [gameState, setGameState] = useState<GameState>("starting");
   const [remainingMines, setRemainingMines] = useState(mines);
+  const [startTime, setStartTime] = useState<number | null>(null);
+  const [elapsedTime, setElapsedTime] = useState(0);
+
+  // Timer effect
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    
+    if (gameState === "playing" && startTime) {
+      interval = setInterval(() => {
+        setElapsedTime(Math.floor((Date.now() - startTime) / 1000));
+      }, 1000);
+    }
+    
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [gameState, startTime]);
 
   const resetGame = () => {
-    setBoard(generateBoard(rows, cols, mines)); // Regenerate the board
-    setGameState("starting"); // Reset the game state
-    setRemainingMines(mines); // Reset the mine counter
+    setBoard(generateBoard(rows, cols, mines));
+    setGameState("starting");
+    setRemainingMines(mines);
+    // Reset clock state
+    setStartTime(null);
+    setElapsedTime(0);
   };
 
   function chordCell(x: number, y: number, newBoard: CellType[][]) {
@@ -134,11 +154,14 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
   };
 
   const firstClick = (x: number, y: number, newBoard: CellType[][]) => {
+
+    setStartTime(Date.now());
     
     const cell = newBoard[y][x];
 
-    function moveMine(x: number, y: number, newBoard: CellType[][]) {
+    function moveMine(x: number, y: number, newBoard: CellType[][], exclude: CellType[] = []) {
 
+      console.log("Moving mine at", x, y);
       const oldNeighbors = getNeighbors(newBoard, x, y);
       const adjacentMines = oldNeighbors.filter(n => n.hasMine).length;
 
@@ -149,13 +172,16 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
         const newX = Math.floor(Math.random() * cols);
         const newY = Math.floor(Math.random() * rows);
         
-        // no mine already there
-        if (newBoard[newY][newX].hasMine) continue;
-        
+        // make sure there's not a mine there and it's not in the excluded cells
+        if (
+          newBoard[newY][newX].hasMine ||
+          exclude.some(cell => cell.x === newX && cell.y === newY)
+        ) continue;
+
+        console.log("New mine at", newX, newY);
         // swap mines
         newBoard[newY][newX].hasMine = true;
         newBoard[y][x].hasMine = false;
-        newBoard[y][x].adjacentMines = adjacentMines;
 
         // update adjacent mines for the new mine
         const newNeighbors = getNeighbors(newBoard, newX, newY);
@@ -171,6 +197,11 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
             newBoard[neighbor.y][neighbor.x].adjacentMines--;
           }
         });
+
+        // update the cell that had the mine moved
+        newBoard[y][x].adjacentMines = adjacentMines;
+
+        // complete
         newMinePlaced = true;
       }
     }
@@ -180,13 +211,13 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
         moveMine(x, y, newBoard);
       }
 
-      // open on an empty cell
+      // move any neighbor mines
       if (cell.adjacentMines > 0 && cell.adjacentMines < (rows * cols) - mines - 9) {
         const startingNeighbors = getNeighbors(newBoard, x, y);
         // move adjacent mines
         startingNeighbors.forEach(neighbor => {
           if (neighbor.hasMine) {
-            moveMine(neighbor.x, neighbor.y, newBoard);
+            moveMine(neighbor.x, neighbor.y, newBoard, [cell, ...startingNeighbors]);
           }
         });
         newBoard[y][x].adjacentMines = 0;
@@ -285,9 +316,9 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
 
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
-        const cell = board[y][x];
+        const cell = newBoard[y][x];
         if (cell.isRevealed && cell.adjacentMines > 0) {
-          const neighbors = getNeighbors(board, x, y);
+          const neighbors = getNeighbors(newBoard, x, y);
           const flagged = neighbors.filter(n => n.isFlagged);
           const covered = neighbors.filter(n => !n.isRevealed && !n.isFlagged);
           if (flagged.length < cell.adjacentMines) {
@@ -331,6 +362,6 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
     setBoard(newBoard);
   };
 
-  return { board, clickCell, flagCell, gameState, remainingMines, resetGame };
+  return { board, clickCell, flagCell, gameState, remainingMines, resetGame, elapsedTime };
 };
 

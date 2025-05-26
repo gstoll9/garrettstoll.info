@@ -9,7 +9,7 @@ export default function Home() {
   const [rows, setRows] = useState(10);
   const [cols, setCols] = useState(10);
   const [mines, setMines] = useState(10);
-  const {board, clickCell, flagCell, gameState, remainingMines, resetGame } = useMinesweeper(rows, cols, mines);
+  const {board, clickCell, flagCell, gameState, remainingMines, resetGame, elapsedTime } = useMinesweeper(rows, cols, mines);
 
   const [hintsEnabled, setHintsEnabled] = useState(false); // New state for hints
 
@@ -33,6 +33,7 @@ export default function Home() {
       </Head>
       <GameControls
         remainingMines={remainingMines}
+        elapsedTime={elapsedTime}
         onRestart={handleRestart}
         onHint={handleHint}
         onSettings={handleSettings}

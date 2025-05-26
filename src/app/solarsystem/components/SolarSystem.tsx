@@ -5,20 +5,34 @@ import { planets } from '../data/planets'
 import InfoPopup from './InfoPopup'
 import { AsteroidBelt } from './AsteroidBelt'
 import * as dat from 'dat.gui';
+import Sun from './Sun'
 
+type OrbitMode = 'Simple' | 'Elliptical' | 'To Scale';
 
 export default function SolarSystem() {
   const [selectedPlanet, setSelectedPlanet] = useState<string | null>(null)
   const [showOrbits, setShowOrbits] = useState(true);
+  const [orbitMode, setOrbitMode] = useState<OrbitMode>('Simple');
 
   useEffect(() => {
     // Initialize dat.GUI
     const gui = new dat.GUI();
 
-    // Add a button to toggle orbits
-    gui.add({ toggleOrbits: () => setShowOrbits((prev) => !prev) }, 'toggleOrbits').name(
-      showOrbits ? 'Hide Orbits' : 'Show Orbits'
-    );
+    // Controls object for dat.GUI
+    const controls = {
+      showOrbits: showOrbits,
+      orbitMode: orbitMode
+    };
+
+    // Add orbit visibility toggle
+    gui.add(controls, 'showOrbits').name('Show Orbits').onChange((value: boolean) => {
+      setShowOrbits(value);
+    });
+
+    // Add orbit mode dropdown
+    gui.add(controls, 'orbitMode', ['Simple', 'Elliptical', 'To Scale']).name('Orbit Mode').onChange((value: OrbitMode) => {
+      setOrbitMode(value);
+    });
 
     // Cleanup GUI on component unmount
     return () => {
@@ -40,12 +54,11 @@ export default function SolarSystem() {
       ))}
 
       {/* Sun */}
-      <Planet
-        name="Sun"
-        size={3}
-        distance={0}
-        textureUrl={'/solarsystemImages/SunTexture.jpg'}
-        rotationalSpeed={.04}
+      <Sun 
+        size={4} 
+        textureUrl="/solarsystemImages/SunTexture.jpg"
+        rotationalSpeed={0.005}
+        onClick={() => setSelectedPlanet('Sun')}
       />
 
       {selectedPlanet && (
