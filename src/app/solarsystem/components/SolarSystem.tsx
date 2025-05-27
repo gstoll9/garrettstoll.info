@@ -66,7 +66,7 @@ export default function SolarSystem() {
       <Sun 
         size={4} 
         textureUrl="/solarsystemImages/SunTexture.jpg"
-        rotationalSpeed={0.005}
+        rotationalSpeed={0.5}
         onClick={() => setSelectedPlanet('Sun')}
       />
 

@@ -18,16 +18,17 @@ export default function Orbit({ orbitMode, orbitData, segments = 128 }: OrbitCom
       for (let i = 0; i <= segments; i++) {
         const t = (i / segments) * orbitData.orbitalPeriod; // Time step
         const [x, y, z] = orbitalPosition(t, orbitData);
-        orbitPoints.push(new THREE.Vector3(x, 0, z))
+        orbitPoints.push(new THREE.Vector3(x, y, z))
       }
     } else {
       // Circular orbit
-      // for (let i = 0; i <= segments; i++) {
-      //   const angle = (i / segments) * Math.PI * 2
-      //   const x = radius * Math.cos(angle)
-      //   const z = radius * Math.sin(angle)
-      //   orbitPoints.push(new THREE.Vector3(x, 0, z))
-      // }
+      const radius = orbitData.semimajorAxis;
+      for (let i = 0; i <= segments; i++) {
+        const angle = (i / segments) * Math.PI * 2
+        const x = radius * Math.cos(angle)
+        const z = radius * Math.sin(angle)
+        orbitPoints.push(new THREE.Vector3(x, 0, z))
+      }
     }
     
     return orbitPoints
