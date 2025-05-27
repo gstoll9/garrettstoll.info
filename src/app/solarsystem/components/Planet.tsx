@@ -2,16 +2,25 @@ import { useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useRef, useState } from 'react'
 import Label from './Label'
+import { orbitalPosition } from '../utils'
 
 type PlanetProps = {
   name: string
   size: number
   distance: number
   color?: string
-  textureUrl?: string
+  texture?: string
   orbitSpeed?: number
   rotationalSpeed?: number
-  eccentricity?: number
+  orbitData: {
+    semimajorAxis: number
+    eccentricity: number
+    inclination: number
+    longitudeOfAscendingNode: number
+    argumentOfPerihelion: number
+    meanAnomaly: number
+    orbitalPeriod: number
+  }
   orbitMode?: string
   onClick?: (name: string) => void
 }
@@ -21,16 +30,16 @@ export default function Planet({
   size,
   distance,
   color = 'white',
-  textureUrl,
+  texture,
   orbitSpeed = 0,
   rotationalSpeed = 0,
-  eccentricity = 0.1,
+  orbitData,
   orbitMode = "Simple",
   onClick,
 }: PlanetProps) {
   const ref = useRef<THREE.Mesh>(null!)
   const groupRef = useRef<THREE.Group>(null!)
-  const texture = textureUrl ? useLoader(THREE.TextureLoader, textureUrl) : null
+  const textureUrl = texture ? useLoader(THREE.TextureLoader, texture) : null
 
   useFrame((_, delta) => {
     if (groupRef.current) {
@@ -39,25 +48,28 @@ export default function Planet({
       const angle = elapsedTime * orbitSpeed; // Angle based on orbital speed
       
       let x: number, z: number;
-
+      let position: [number, number, number];
       if (orbitMode === "Elliptical") {
-        // Elliptical orbit calculation
-        const a = distance; // Semi-major axis
-        const e = eccentricity; // Eccentricity
-        const b = a * Math.sqrt(1 - e * e); // Semi-minor axis
+
+        position = orbitalPosition(elapsedTime, orbitData)
+        // // Elliptical orbit calculation
+        // const a = distance; // Semi-major axis
+        // const e = eccentricity; // Eccentricity
+        // const b = a * Math.sqrt(1 - e * e); // Semi-minor axis
         
-        // Calculate elliptical position
-        const r = (a * (1 - e * e)) / (1 + e * Math.cos(angle));
-        x = r * Math.cos(angle);
-        z = r * Math.sin(angle) * (b / a); // Scale z by b/a ratio
+        // // Calculate elliptical position
+        // const r = (a * (1 - e * e)) / (1 + e * Math.cos(angle));
+        // x = r * Math.cos(angle);
+        // z = r * Math.sin(angle) * (b / a); // Scale z by b/a ratio
       } else {
 
         // Circular orbit
         x = distance * Math.cos(angle);
         z = distance * Math.sin(angle);
+        position = [x,0,z];
       }
 
-      groupRef.current.position.set(x, 0, z); // Update position
+      groupRef.current.position.set(...position); // Update position
     }
     if (ref.current) {
       ref.current.rotation.y += rotationalSpeed * delta // self-rotation speed
@@ -74,7 +86,7 @@ export default function Planet({
       >
         <sphereGeometry args={[size, 32, 32]} />
         <meshStandardMaterial 
-          map={texture}
+          map={textureUrl}
           color={color}
           transparent={false}
           depthWrite={true}
@@ -101,8 +113,5 @@ export default function Planet({
       <Label text={name} position={[0, size+1, 0]} />
     </group>
   )
-}
-function useThree(): { camera: any } {
-    throw new Error('Function not implemented.')
 }
 

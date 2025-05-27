@@ -1,42 +1,37 @@
 import { useMemo } from 'react'
 import * as THREE from 'three'
+import { OrbitProps, orbitalPosition } from '../utils'
 
-type OrbitProps = {
-  radius: number
-  orbitMode?: string
-  eccentricity?: number
-}
+type OrbitComponentProps = {
+  orbitMode: string;
+  orbitData: OrbitProps;
+  segments?: number;
+};
 
-export default function Orbit({ radius, orbitMode = "Simple", eccentricity = 0.1 }: OrbitProps) {
+export default function Orbit({ orbitMode, orbitData, segments = 128 }: OrbitComponentProps) {
   const points = useMemo(() => {
     const orbitPoints: THREE.Vector3[] = []
     const segments = 128
     
     if (orbitMode === "Elliptical") {
-      // Elliptical orbit
-      const a = radius; // Semi-major axis
-      const e = eccentricity; // Eccentricity
-      const b = a * Math.sqrt(1 - e * e); // Semi-minor axis
       
       for (let i = 0; i <= segments; i++) {
-        const angle = (i / segments) * Math.PI * 2
-        const r = (a * (1 - e * e)) / (1 + e * Math.cos(angle))
-        const x = r * Math.cos(angle)
-        const z = r * Math.sin(angle) * (b / a)
+        const t = (i / segments) * orbitData.orbitalPeriod; // Time step
+        const [x, y, z] = orbitalPosition(t, orbitData);
         orbitPoints.push(new THREE.Vector3(x, 0, z))
       }
     } else {
       // Circular orbit
-      for (let i = 0; i <= segments; i++) {
-        const angle = (i / segments) * Math.PI * 2
-        const x = radius * Math.cos(angle)
-        const z = radius * Math.sin(angle)
-        orbitPoints.push(new THREE.Vector3(x, 0, z))
-      }
+      // for (let i = 0; i <= segments; i++) {
+      //   const angle = (i / segments) * Math.PI * 2
+      //   const x = radius * Math.cos(angle)
+      //   const z = radius * Math.sin(angle)
+      //   orbitPoints.push(new THREE.Vector3(x, 0, z))
+      // }
     }
     
     return orbitPoints
-  }, [radius, orbitMode, eccentricity])
+  }, [orbitMode, orbitData, segments])
 
   const lineGeometry = useMemo(() => {
     const geometry = new THREE.BufferGeometry().setFromPoints(points)

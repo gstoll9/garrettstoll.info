@@ -73,7 +73,7 @@ export function UniverseCanvas() {
       // }}
     >
       <ambientLight intensity={0.2} />
-      <pointLight position={[0, 0, 0]} intensity={300} />
+      <pointLight position={[0, 0, 0]} intensity={800} />
       <Stars radius={200} depth={50} count={500} factor={4} fade /> {/* Reduced count */}
       <SolarSystem />
       <OrbitControls />

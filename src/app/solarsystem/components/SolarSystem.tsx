@@ -49,10 +49,9 @@ export default function SolarSystem() {
       {planets.map((planet) => (
         <group key={planet.name}>
           {showOrbits && (
-            <Orbit 
-              radius={planet.distance} 
+            <Orbit
               orbitMode={orbitMode}
-              eccentricity={planet.eccentricity || 0.1}
+              orbitData={planet.orbitData}
             />
           )}
           <Planet 
