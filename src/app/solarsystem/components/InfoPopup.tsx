@@ -1,10 +1,12 @@
+import ReactDOM from 'react-dom';
+
 type InfoPopupProps = {
-  name: string
-  onClose: () => void
-}
+  name: string;
+  onClose: () => void;
+};
 
 export default function InfoPopup({ name, onClose }: InfoPopupProps) {
-  return (
+  return ReactDOM.createPortal(
     <div
       style={{
         position: 'absolute',
@@ -20,6 +22,7 @@ export default function InfoPopup({ name, onClose }: InfoPopupProps) {
       <strong>{name}</strong>
       <p>Click again to dismiss</p>
       <button onClick={onClose}>Close</button>
-    </div>
-  )
+    </div>,
+    document.body // Render the popup in the <body> element
+  );
 }

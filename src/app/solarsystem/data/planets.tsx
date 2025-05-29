@@ -1,4 +1,5 @@
 const distanceFactor = 12;
+const orbitalPeriodFactor = 5; // days in a year, used for converting orbital periods to Julian years
 
 export const planets = [
   { 
@@ -19,7 +20,7 @@ export const planets = [
       longitudeOfAscendingNode: 48.331,   // in degrees
       argumentOfPerihelion: 29.124,       // in degrees
       meanAnomaly: 174.796,               // in degrees
-      orbitalPeriod: .241,                // in Julian years (sidereal)
+      orbitalPeriod: .241 * orbitalPeriodFactor,                // in Julian years (sidereal)
     }
   },
   { 
@@ -40,7 +41,7 @@ export const planets = [
       longitudeOfAscendingNode: 76.680,   // in degrees
       argumentOfPerihelion: 54.884,       // in degrees
       meanAnomaly: 50.115,                // in degrees
-      orbitalPeriod: .615,                // in Julian years (sidereal)
+      orbitalPeriod: .615 * orbitalPeriodFactor,                // in Julian years (sidereal)
     }
   },
   { 
@@ -62,7 +63,7 @@ export const planets = [
       longitudeOfAscendingNode: -11.261,  // in degrees
       argumentOfPerihelion: 114.208,      // in degrees
       meanAnomaly: 358.617,               // in degrees
-      orbitalPeriod: 1,                   // in Julian years (sidereal)
+      orbitalPeriod: 1 * orbitalPeriodFactor,                   // in Julian years (sidereal)
     }
   },
   { 
@@ -83,7 +84,7 @@ export const planets = [
       longitudeOfAscendingNode: 49.579,   // in degrees
       argumentOfPerihelion: 286.5,        // in degrees
       meanAnomaly: 19.412,                // in degrees
-      orbitalPeriod: 1.881,               // in Julian years (sidereal)
+      orbitalPeriod: 1.881 * orbitalPeriodFactor,               // in Julian years (sidereal)
     }
   },
   { 
@@ -104,7 +105,7 @@ export const planets = [
       longitudeOfAscendingNode: 100.464,  // in degrees
       argumentOfPerihelion: 273.867,      // in degrees
       meanAnomaly: 20.020,                // in degrees
-      orbitalPeriod: 11.862,              // in Julian years (sidereal)
+      orbitalPeriod: 11.862 * orbitalPeriodFactor,              // in Julian years (sidereal)
     }
   },
   { 
@@ -125,7 +126,7 @@ export const planets = [
       longitudeOfAscendingNode: 113.665,  // in degrees
       argumentOfPerihelion: 339.392,      // in degrees
       meanAnomaly: 317.020,               // in degrees
-      orbitalPeriod: 29.448,              // in Julian years (sidereal)
+      orbitalPeriod: 29.448 * orbitalPeriodFactor,              // in Julian years (sidereal)
     }
   },
   { 
@@ -146,7 +147,7 @@ export const planets = [
       longitudeOfAscendingNode: 74.006,   // in degrees
       argumentOfPerihelion: 96.999,       // in degrees
       meanAnomaly: 142.284,               // in degrees
-      orbitalPeriod: 84.021,              // in Julian years (sidereal)
+      orbitalPeriod: 84.021 * orbitalPeriodFactor,              // in Julian years (sidereal)
     }
   },
   { 
@@ -167,7 +168,7 @@ export const planets = [
       longitudeOfAscendingNode: 131.783,  // in degrees
       argumentOfPerihelion: 273.187,      // in degrees
       meanAnomaly: 259.883,               // in degrees
-      orbitalPeriod: 164.8,               // in Julian years (sidereal)
+      orbitalPeriod: 164.8 * orbitalPeriodFactor,               // in Julian years (sidereal)
     }
   }
 ];

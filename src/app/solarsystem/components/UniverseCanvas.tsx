@@ -1,11 +1,16 @@
 'use client'
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, Stars } from '@react-three/drei'
 import SolarSystem from './SolarSystem'
 import { useEffect, useState, useRef } from 'react'
+import InfoPopup from './InfoPopup';
+import {PlanetProps} from './Planet';
 
 export function UniverseCanvas() {
   const [contextLost, setContextLost] = useState(false);
+  const [selectedPlanet, setSelectedPlanet] = useState<string | null>(null);
+  const [planetData, setPlanetData] = useState<PlanetProps | null>(null);
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -54,29 +59,60 @@ export function UniverseCanvas() {
   }
 
   return (
-    <Canvas 
-      ref={canvasRef}
-      camera={{ position: [0, 10, 40], fov: 60 }}
-      gl={{ 
-        powerPreference: 'default', // Changed from 'high-performance'
-        antialias: false,
-        stencil: false,
-        depth: true, // Changed from false
-        alpha: false,
-        preserveDrawingBuffer: false,
-        failIfMajorPerformanceCaveat: false,
-        // Remove logarithmicDepthBuffer as it can cause issues
+    <div style={{ display: 'flex', height: '100vh' }}>
+      {/* Left Column: Text Information */}
+      <div
+      style={{
+        flex: selectedPlanet ? 1 : 0, // Dynamically adjust width
+        padding: selectedPlanet ? '20px' : '0', // Add padding only when visible
+        backgroundColor: selectedPlanet ? '#f0f0f0' : 'transparent', // Background only when visible
+        overflowY: 'auto',
+        transition: 'flex 0.3s ease, padding 0.3s ease, background-color 0.3s ease', // Smooth transition
       }}
-      // onCreated={({ gl }) => {
-      //   console.log('WebGL Renderer created successfully');
-      //   console.log('WebGL Version:', gl.getParameter(gl.VERSION));
-      // }}
-    >
-      <ambientLight intensity={0.2} />
-      <pointLight position={[0, 0, 0]} intensity={800} />
-      <Stars radius={200} depth={50} count={500} factor={4} fade /> {/* Reduced count */}
-      <SolarSystem />
-      <OrbitControls />
-    </Canvas>
+      >
+        {selectedPlanet ? (
+          <>
+            <h1>{selectedPlanet}</h1>
+            <div>
+              {/* Replace this with actual planet data */}
+                {planetData
+                ? Object.entries(planetData).map(([key, value]) => (
+                  <div key={key}>
+                    <strong>{key}: some data</strong>
+                  </div>
+                  ))
+                : 'Click on a planet to see more information.'}
+            </div>
+          </>
+        ) : <></>}
+      </div>
+      {/* Right Column: Three.js Scene */}
+      <div style={{ flex: 2, position: 'relative' }}>
+        <Canvas
+          ref={canvasRef}
+          camera={{ position: [0, 10, 40], fov: 60 }}
+          gl={{
+            powerPreference: 'default',
+            antialias: false,
+            stencil: false,
+            depth: true,
+            alpha: false,
+            preserveDrawingBuffer: false,
+            failIfMajorPerformanceCaveat: false,
+          }}
+        >
+          <ambientLight intensity={0.2} />
+          <pointLight position={[0, 0, 0]} intensity={5000} />
+          <Stars radius={500} depth={50} count={500} factor={4} fade />
+          <SolarSystem
+            setSelectedPlanet={(planetName: string | null, planetDetails: PlanetProps | null) => {
+              setSelectedPlanet(planetName);
+              setPlanetData(planetDetails); // Pass planet details
+            }}
+          />
+          <OrbitControls />
+        </Canvas>
+      </div>
+    </div>
   )
 }

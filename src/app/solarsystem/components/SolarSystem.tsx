@@ -6,11 +6,15 @@ import InfoPopup from './InfoPopup'
 import { AsteroidBelt } from './AsteroidBelt'
 import * as dat from 'dat.gui';
 import Sun from './Sun'
+import { PlanetProps } from './Planet'
 
 type OrbitMode = 'Simple' | 'Elliptical' | 'To Scale';
 
-export default function SolarSystem() {
-  const [selectedPlanet, setSelectedPlanet] = useState<string | null>(null)
+type SolarSystemProps = {
+  setSelectedPlanet: (planetName: string | null, planetData: PlanetProps | null) => void;
+};
+
+export default function SolarSystem({ setSelectedPlanet }: SolarSystemProps) {
   const [showOrbits, setShowOrbits] = useState(true);
   const [orbitMode, setOrbitMode] = useState<OrbitMode>('Simple');
 
@@ -56,7 +60,7 @@ export default function SolarSystem() {
           )}
           <Planet 
             {...planet} 
-            onClick={setSelectedPlanet}
+            onClick={(name) => setSelectedPlanet(name, planet)} // Pass planet details
             orbitMode={orbitMode}
           />
         </group>
@@ -64,15 +68,11 @@ export default function SolarSystem() {
 
       {/* Sun */}
       <Sun 
-        size={4} 
+        size={2} 
         textureUrl="/solarsystemImages/SunTexture.jpg"
         rotationalSpeed={0.5}
-        onClick={() => setSelectedPlanet('Sun')}
+        onClick={() => setSelectedPlanet('Sun', null)}
       />
-
-      {selectedPlanet && (
-        <InfoPopup name={selectedPlanet} onClose={() => setSelectedPlanet(null)} />
-      )}
     </>
   )
 }

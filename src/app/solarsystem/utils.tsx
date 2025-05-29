@@ -8,13 +8,20 @@ export type OrbitProps = {
     orbitalPeriod: number
 }
 
-export function orbitalPosition(t: number, orbitData: OrbitProps): [number, number, number] {
+export function orbitalPosition(orbitMode: string, t: number, orbitData: OrbitProps): [number, number, number] {
     const { 
         semimajorAxis, eccentricity, inclination, 
         longitudeOfAscendingNode, argumentOfPerihelion, 
         meanAnomaly, orbitalPeriod 
     } = orbitData
 
+    if (orbitMode === 'Simple') {
+        // Simple circular orbit
+        const angle = (t / orbitalPeriod) * 2 * Math.PI
+        const x = semimajorAxis * Math.cos(angle)
+        const z = semimajorAxis * Math.sin(angle)
+        return [x, 0, -z] // Adjust for three.js Z-up camera
+    }
 
     const M = meanAnomaly + (2 * Math.PI * t) / orbitalPeriod
   

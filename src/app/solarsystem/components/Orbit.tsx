@@ -17,22 +17,24 @@ export default function Orbit({ orbitMode, orbitData, segments = 128 }: OrbitCom
       
       for (let i = 0; i <= segments; i++) {
         const t = (i / segments) * orbitData.orbitalPeriod; // Time step
-        const [x, y, z] = orbitalPosition(t, orbitData);
+        const [x, y, z] = orbitalPosition(orbitMode, t, orbitData);
         orbitPoints.push(new THREE.Vector3(x, y, z))
       }
     } else {
       // Circular orbit
       const radius = orbitData.semimajorAxis;
       for (let i = 0; i <= segments; i++) {
-        const angle = (i / segments) * Math.PI * 2
-        const x = radius * Math.cos(angle)
-        const z = radius * Math.sin(angle)
+        const t = (i / segments) * orbitData.orbitalPeriod; // Time step
+        const [x, y, z] = orbitalPosition(orbitMode, t, orbitData);
+        // const angle = (i / segments) * Math.PI * 2
+        // const x = radius * Math.cos(angle)
+        // const z = radius * Math.sin(angle)
         orbitPoints.push(new THREE.Vector3(x, 0, z))
       }
     }
     
     return orbitPoints
-  }, [orbitMode, orbitData, segments])
+  }, [orbitMode, orbitData])
 
   const lineGeometry = useMemo(() => {
     const geometry = new THREE.BufferGeometry().setFromPoints(points)

@@ -4,7 +4,7 @@ import { useRef, useState } from 'react'
 import Label from './Label'
 import { orbitalPosition } from '../utils'
 
-type PlanetProps = {
+export type PlanetProps = {
   name: string
   size: number
   distance: number
@@ -47,27 +47,8 @@ export default function Planet({
       const elapsedTime = performance.now() / 1000; // Time in seconds
       const angle = elapsedTime * orbitSpeed; // Angle based on orbital speed
       
-      let x: number, z: number;
       let position: [number, number, number];
-      if (orbitMode === "Elliptical") {
-
-        position = orbitalPosition(elapsedTime, orbitData)
-        // // Elliptical orbit calculation
-        // const a = distance; // Semi-major axis
-        // const e = eccentricity; // Eccentricity
-        // const b = a * Math.sqrt(1 - e * e); // Semi-minor axis
-        
-        // // Calculate elliptical position
-        // const r = (a * (1 - e * e)) / (1 + e * Math.cos(angle));
-        // x = r * Math.cos(angle);
-        // z = r * Math.sin(angle) * (b / a); // Scale z by b/a ratio
-      } else {
-
-        // Circular orbit
-        x = distance * Math.cos(angle);
-        z = distance * Math.sin(angle);
-        position = [x,0,z];
-      }
+      position = orbitalPosition(orbitMode, elapsedTime, orbitData)
 
       groupRef.current.position.set(...position); // Update position
     }
