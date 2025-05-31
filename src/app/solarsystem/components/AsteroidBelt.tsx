@@ -1,6 +1,4 @@
 import { useMemo } from 'react'
-import * as THREE from 'three'
-import { useFrame } from '@react-three/fiber'
 
 const ASTEROID_COUNT = 300
 

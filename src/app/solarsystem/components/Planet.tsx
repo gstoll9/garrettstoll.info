@@ -1,16 +1,14 @@
 import { useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import Label from './Label'
 import { orbitalPosition } from '../utils'
 
 export type PlanetProps = {
   name: string
   size: number
-  distance: number
   color?: string
   texture?: string
-  orbitSpeed?: number
   rotationalSpeed?: number
   orbitData: {
     semimajorAxis: number
@@ -28,10 +26,8 @@ export type PlanetProps = {
 export default function Planet({
   name,
   size,
-  distance,
   color = 'white',
   texture,
-  orbitSpeed = 0,
   rotationalSpeed = 0,
   orbitData,
   orbitMode = "Simple",
@@ -39,17 +35,18 @@ export default function Planet({
 }: PlanetProps) {
   const ref = useRef<THREE.Mesh>(null!)
   const groupRef = useRef<THREE.Group>(null!)
-  const textureUrl = texture ? useLoader(THREE.TextureLoader, texture) : null
+
+  const textureUrl = useLoader(
+    THREE.TextureLoader,
+    texture ?? '/solarstsremImages/UranusTexture.jpg'
+  );
 
   useFrame((_, delta) => {
     if (groupRef.current) {
       // Orbit calculation
-      const elapsedTime = performance.now() / 1000; // Time in seconds
-      const angle = elapsedTime * orbitSpeed; // Angle based on orbital speed
-      
+      const elapsedTime = performance.now() / 1000; // Time in seconds      
       let position: [number, number, number];
       position = orbitalPosition(orbitMode, elapsedTime, orbitData)
-
       groupRef.current.position.set(...position); // Update position
     }
     if (ref.current) {

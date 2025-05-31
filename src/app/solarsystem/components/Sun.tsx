@@ -16,7 +16,10 @@ export default function Sun({
   onClick,
 }: SunProps) {
   const ref = useRef<THREE.Mesh>(null!)
-  const texture = textureUrl ? useLoader(THREE.TextureLoader, textureUrl) : null
+  const texture = useLoader(
+      THREE.TextureLoader,
+      textureUrl ?? '/solarstsremImages/SunTexture.jpg'
+    );
 
   useFrame((_, delta) => {
     if (ref.current) {

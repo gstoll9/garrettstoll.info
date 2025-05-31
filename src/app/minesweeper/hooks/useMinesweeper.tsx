@@ -2,7 +2,6 @@
 // hooks/useMinesweeper.ts
 import { useState, useEffect } from "react";
 import type { CellType, GameState } from "../types";
-import { cover } from "three/src/extras/TextureUtils.js";
 
 // Count adjacent mines
 const directions: [number, number][] = [
@@ -106,7 +105,7 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
 
     if (flagged.length === cell.adjacentMines) {
       // Safe to reveal the rest
-      for (let neighbor of covered) {
+      for (const neighbor of covered) {
         revealCell(neighbor.x, neighbor.y, newBoard);
       }
     }

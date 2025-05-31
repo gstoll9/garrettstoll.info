@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import Planet from './Planet'
 import Orbit from './Orbit'
 import { planets } from '../data/planets'
-import InfoPopup from './InfoPopup'
 import { AsteroidBelt } from './AsteroidBelt'
 import * as dat from 'dat.gui';
 import Sun from './Sun'
@@ -42,7 +41,7 @@ export default function SolarSystem({ setSelectedPlanet }: SolarSystemProps) {
     return () => {
       gui.destroy();
     };
-  }, [showOrbits]);
+  }, [showOrbits, orbitMode]);
 
   return (
     <>

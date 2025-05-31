@@ -5,8 +5,8 @@ export default function SchrodingEquation() {
 
     return (<>
         <h1>Hydrogen Atom: Electron Probability Cloud</h1>
-        <p>Mathematical formulation of hydrogen atom states using Schrödinger's equation...</p>
-        <h2>Time-Independent Schrödinger's Equation</h2>
+        <p>Mathematical formulation of hydrogen atom states using Schrodinger's equation...</p>
+        <h2>Time-Independent Schrodinger's Equation</h2>
         <BlockMath math="
             \frac{\hbar^2}{2m}
             \bigg(

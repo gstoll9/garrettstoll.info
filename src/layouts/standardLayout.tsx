@@ -4,7 +4,7 @@ interface StandardLayoutProps {
   main: React.ReactNode;
 }
 
-function StandardLayout(main: React.ReactNode): JSX.Element {
+function StandardLayout({ main }: StandardLayoutProps) {
   return (
     <div className="container0">
       <Header/>

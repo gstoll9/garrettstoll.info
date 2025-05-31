@@ -1,4 +1,4 @@
-import Resume from "./resume/resume";
+import Resume from "./resume/page";
 
 export default function Home() {
   return (

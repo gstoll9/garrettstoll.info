@@ -11,7 +11,6 @@ type OrbitComponentProps = {
 export default function Orbit({ orbitMode, orbitData, segments = 128 }: OrbitComponentProps) {
   const points = useMemo(() => {
     const orbitPoints: THREE.Vector3[] = []
-    const segments = 128
     
     if (orbitMode === "Elliptical") {
       
@@ -22,10 +21,9 @@ export default function Orbit({ orbitMode, orbitData, segments = 128 }: OrbitCom
       }
     } else {
       // Circular orbit
-      const radius = orbitData.semimajorAxis;
       for (let i = 0; i <= segments; i++) {
         const t = (i / segments) * orbitData.orbitalPeriod; // Time step
-        const [x, y, z] = orbitalPosition(orbitMode, t, orbitData);
+        const [x, _, z] = orbitalPosition(orbitMode, t, orbitData);
         // const angle = (i / segments) * Math.PI * 2
         // const x = radius * Math.cos(angle)
         // const z = radius * Math.sin(angle)

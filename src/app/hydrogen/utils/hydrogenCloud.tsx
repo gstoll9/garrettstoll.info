@@ -19,10 +19,12 @@ export function generateCloudData(n: number, l: number, m: number, sampleCount =
 
 function generate1sCloud(sampleCount: number): number[] {
   const points: number[] = [];
-  const a0 = 1; // Bohr radius, in atomic units
+  //const a0 = 1; // Bohr radius, in atomic units
 
   for (let i = 0; i < sampleCount; i++) {
-    let r: number, theta: number, phi: number;
+    let r: number;
+    const theta = Math.acos(1 - 2 * Math.random());;
+    const phi = 2 * Math.PI * Math.random();
 
     // Rejection sampling based on radial probability density: P(r) ~ r^2 * e^(-2r/a0)
     while (true) {
@@ -35,11 +37,6 @@ function generate1sCloud(sampleCount: number): number[] {
         break;
       }
     }
-
-    // Uniform sampling of direction on a sphere
-    theta = Math.acos(1 - 2 * Math.random());
-    phi = 2 * Math.PI * Math.random();
-
     // Convert spherical to Cartesian
     const x = r * Math.sin(theta) * Math.cos(phi);
     const y = r * Math.sin(theta) * Math.sin(phi);

@@ -1,10 +1,8 @@
 "use client"
-import { useEffect, useState } from 'react';
 import Image from "next/image";
 import Link from "next/link";
 import "./resume.css";
 import StandardLayout from "../../layouts/standardLayout";
-import { getImageAspectRatio } from "../util";
 
 function Resume() {
 
@@ -233,7 +231,7 @@ function Resume() {
       </>
   );
 
-  return StandardLayout(page);
+  return StandardLayout({main: page});
         
 }
 
