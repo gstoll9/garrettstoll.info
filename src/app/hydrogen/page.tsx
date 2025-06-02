@@ -2,9 +2,10 @@ import './styles/HydrogenAtom.css';
 import ElectronCloud from './components/ElectronCloud';
 import SchrodingEquation from './components/SchrodingEquation';
 import HydrogenSpectrum from './components/HydrogenSpectrum';
+import StandardLayout from '@/layouts/standardLayout';
 
 export default function Home() {
-  return (
+  const main = (
     <div className="container">
       <div className="leftPane">
         <SchrodingEquation />
@@ -15,4 +16,6 @@ export default function Home() {
       </div>
     </div>
   );
+
+  return StandardLayout({title: "Hydrogen Atom", main });
 }

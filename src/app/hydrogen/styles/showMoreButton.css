@@ -1,0 +1,17 @@
+.showMore-container {
+    display: flex;
+    height: 1%;
+}
+
+.showMore-divider {
+    flex: 2;
+    height: auto;
+    border: 1px #85A947 solid;
+}
+
+.showMore-button {
+    flex: 1;
+    cursor: 'pointer';
+    color: --foreground;
+}
+

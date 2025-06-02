@@ -3,7 +3,11 @@ import "./styles/header.css";
 import Image from "next/image";
 import * as React from "react";
 
-function Header() {
+type HeaderProps = {
+  title?: string;
+}
+
+function Header({ title = "Garrett Stoll" }: HeaderProps) {
   return (
     <header>
       <div className="leftTyroContainer">
@@ -16,7 +20,7 @@ function Header() {
           sizes="100%"
         />
       </div>
-      <h1 className="headerText">Garrett Stoll</h1>
+      <h1 className="headerText">{title}</h1>
       <div className="rightTyroContainer">
         <Image
           className="logo"

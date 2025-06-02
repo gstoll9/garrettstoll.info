@@ -1,13 +1,14 @@
 import Header from "./header";
 
 interface StandardLayoutProps {
+  title?: string;
   main: React.ReactNode;
 }
 
-function StandardLayout({ main }: StandardLayoutProps) {
+function StandardLayout({ title, main }: StandardLayoutProps) {
   return (
     <div className="container0">
-      <Header/>
+      <Header title={title} />
       <main>
         {main}
       </main>

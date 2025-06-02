@@ -1,7 +1,8 @@
 'use client'
+import StandardLayout from '@/layouts/standardLayout';
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
-
+// 
 const UniverseCanvas = dynamic(() => import('./components/UniverseCanvas').then(mod => mod.UniverseCanvas), {
   ssr: false,
   loading: () => (
@@ -19,7 +20,7 @@ const UniverseCanvas = dynamic(() => import('./components/UniverseCanvas').then(
 })
 
 export default function Home() {
-  return (
+  const main =(
     <main style={{ height: '100vh', backgroundColor: 'black' }}>
       <Suspense fallback={
         <div style={{ 
@@ -36,5 +37,7 @@ export default function Home() {
         <UniverseCanvas />
       </Suspense>
     </main>
-  )
+  );
+
+  return StandardLayout({title: "Solar System", main });
 }

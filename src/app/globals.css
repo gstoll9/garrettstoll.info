@@ -24,7 +24,6 @@
 }
 
 body {
-  height: 100vh;
   width: 100vw;
   /* color: var(--foreground);
   background: var(--background);
@@ -117,3 +116,4 @@ ul {
 li {
   list-style: circle;
 }
+
