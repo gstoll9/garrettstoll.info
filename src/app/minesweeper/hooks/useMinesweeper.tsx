@@ -67,9 +67,14 @@ const generateBoard = (rows: number, cols: number, mines: number): CellType[][] 
 export const useMinesweeper = (rows: number, cols: number, mines: number) => {
   const [board, setBoard] = useState<CellType[][]>(() => generateBoard(rows, cols, mines));
   const [gameState, setGameState] = useState<GameState>("starting");
+  const [flagging, setFlagging] = useState(false);
   const [remainingMines, setRemainingMines] = useState(mines);
   const [startTime, setStartTime] = useState<number | null>(null);
   const [elapsedTime, setElapsedTime] = useState(0);
+
+  const toggleFlagging = () => {
+    setFlagging((prev) => !prev);
+  };
 
   // Timer effect
   useEffect(() => {
@@ -95,6 +100,7 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
     setElapsedTime(0);
   };
 
+  // click a number with all its flags to reveal the rest
   function chordCell(x: number, y: number, newBoard: CellType[][]) {
     const cell = newBoard[y][x];
     if (!cell.isRevealed || cell.adjacentMines === 0) return;
@@ -337,30 +343,64 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
     const newBoard = board.map(row => row.map(cell => ({ ...cell })));
     const cell = board[y][x];
 
-    if (gameState == "starting") firstClick(x, y, newBoard);
-    if (gameState !== "starting" && gameState !== "playing") return;
-    
-    if (cell.isRevealed && cell.adjacentMines > 0) {
-      chordCell(x, y, newBoard);
+    if (flagging) {
+      // Place or remove a flag
+      if (!cell.isRevealed) {
+        cell.isFlagged = !cell.isFlagged;
+        setRemainingMines((prev) => prev + (cell.isFlagged ? -1 : 1));
+      }
     } else {
-      revealCell(x, y, newBoard);
+      if (gameState == "starting") firstClick(x, y, newBoard);
+      if (gameState !== "starting" && gameState !== "playing") return;
+      
+      if (cell.isRevealed && cell.adjacentMines > 0) {
+        chordCell(x, y, newBoard);
+      } else {
+        revealCell(x, y, newBoard);
+      }
     }
+
     newMineProbabilities(newBoard);
     setBoard(newBoard);
     if (gameState === "starting") setGameState("playing");
   };
 
-  const flagCell = (x: number, y: number) => {
-    if (gameState !== "playing") return;
+  const rightClickCell = (x: number, y: number) => {
     const newBoard = board.map(row => row.map(cell => ({ ...cell })));
-    const cell = newBoard[y][x];
-    if (!cell.isRevealed) {
-      cell.isFlagged = !cell.isFlagged;
-      setRemainingMines((prev) => prev + (cell.isFlagged ? -1 : 1));
+    const cell = board[y][x];
+
+    if (!flagging) {
+      // Place or remove a flag
+      if (!cell.isRevealed) {
+        cell.isFlagged = !cell.isFlagged;
+        setRemainingMines((prev) => prev + (cell.isFlagged ? -1 : 1));
+      }
+    } else {
+      if (gameState == "starting") firstClick(x, y, newBoard);
+      if (gameState !== "starting" && gameState !== "playing") return;
+      
+      if (cell.isRevealed && cell.adjacentMines > 0) {
+        chordCell(x, y, newBoard);
+      } else {
+        revealCell(x, y, newBoard);
+      }
     }
+
+    newMineProbabilities(newBoard);
     setBoard(newBoard);
+    if (gameState === "starting") setGameState("playing");
   };
 
-  return { board, clickCell, flagCell, gameState, remainingMines, resetGame, elapsedTime };
+  return { 
+    board,
+    clickCell,
+    rightClickCell,
+    gameState, 
+    remainingMines, 
+    resetGame, 
+    elapsedTime,
+    flagging,
+    toggleFlagging,
+  };
 };
 

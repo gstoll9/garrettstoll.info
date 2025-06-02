@@ -2,7 +2,7 @@ import './styles/HydrogenAtom.css';
 import ElectronCloud from './components/ElectronCloud';
 import SchrodingEquation from './components/SchrodingEquation';
 import HydrogenSpectrum from './components/HydrogenSpectrum';
-import StandardLayout from '@/layouts/standardLayout';
+import StandardLayout from '@/layouts/StandardLayout';
 
 export default function Home() {
   const main = (

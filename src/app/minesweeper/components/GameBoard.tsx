@@ -7,17 +7,16 @@ import "../styles/GameBoard.css";
 type GameBoardProps = {
     board: CellType[][];
     clickCell: (x: number, y: number) => void;
-    flagCell: (x: number, y: number) => void;
     gameState: string;
     defaultMineProbability: number;
     hintsEnabled: boolean;
+    rightClickCell: (x: number, y: number) => void;
 };
 
-export const GameBoard: React.FC<GameBoardProps> = ({board, clickCell, flagCell, gameState, defaultMineProbability, hintsEnabled }) => {
+export const GameBoard: React.FC<GameBoardProps> = ({board, clickCell, gameState, defaultMineProbability, hintsEnabled, rightClickCell }) => {
 
   return (
     <div className="game-container">
-      <h2 className="game-title">Minesweeper ({gameState})</h2>
       <div className="board">
         {board.map((row, y) =>
           row.map((cell, x) => (
@@ -27,7 +26,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({board, clickCell, flagCell,
               onClick={() => clickCell(x, y)}
               onRightClick={e => {
                 e.preventDefault();
-                flagCell(x, y);
+                rightClickCell(x, y);
               }}
               mineProbability={defaultMineProbability}
               hintsEnabled={hintsEnabled}

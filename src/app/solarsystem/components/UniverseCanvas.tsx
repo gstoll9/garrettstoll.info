@@ -1,9 +1,8 @@
 'use client'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Stars } from '@react-three/drei'
 import SolarSystem from './SolarSystem'
 import { useEffect, useState, useRef } from 'react'
-import InfoPopup from './InfoPopup';
 import {PlanetProps} from './Planet';
 
 export function UniverseCanvas() {

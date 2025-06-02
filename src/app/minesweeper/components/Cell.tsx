@@ -35,6 +35,9 @@ export const Cell: React.FC<CellProps> = ({ cell, onClick, onRightClick, hintsEn
         content = cell.hasMine ? "💣" : cell.adjacentMines ? cell.adjacentMines.toString() : "";
     } else if (cell.isFlagged) {
         content = "🚩";
+    } else if (hintsEnabled && cell.mineProbability && cell.mineProbability > 0) {
+        // Show probability as percentage when hints are enabled
+        content = `${Math.round(cell.mineProbability * 100)}%`;
     }
 
     return (
@@ -47,6 +50,9 @@ export const Cell: React.FC<CellProps> = ({ cell, onClick, onRightClick, hintsEn
                     hintsEnabled && !cell.isRevealed && !cell.isFlagged
                         ? getProbabilityColor(cell.mineProbability ?? 0)
                         : undefined,
+                fontSize: hintsEnabled && !cell.isRevealed && !cell.isFlagged ? '10px' : '16px', // Smaller font for percentages
+                color: hintsEnabled && !cell.isRevealed && !cell.isFlagged ? 'white' : undefined, // White text for visibility
+                fontWeight: hintsEnabled && !cell.isRevealed && !cell.isFlagged ? 'bold' : 'bold',
               }}
         >
             {content}

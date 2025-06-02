@@ -1,17 +1,29 @@
 "use client"
-import Head from "next/head";
 import { GameBoard } from "./components/GameBoard";
 import { GameControls } from "./components/GameControls";
 import { useState } from "react";
 import { useMinesweeper } from "./hooks/useMinesweeper";
+import StandardLayout from "@/layouts/StandardLayout";
 
 export default function Home() {
   const [rows, setRows] = useState(10);
   const [cols, setCols] = useState(10);
   const [mines, setMines] = useState(10);
-  const {board, clickCell, flagCell, gameState, remainingMines, resetGame, elapsedTime } = useMinesweeper(rows, cols, mines);
+  const [hintsEnabled, setHintsEnabled] = useState(false);
 
-  const [hintsEnabled, setHintsEnabled] = useState(false); // New state for hints
+  const { 
+    board, 
+    clickCell, 
+    rightClickCell, 
+    flagCell,
+    gameState, 
+    remainingMines, 
+    resetGame, 
+    elapsedTime,
+    flagging,
+    toggleFlagging,
+  } = useMinesweeper(rows, cols, mines);
+
 
   const handleRestart = () => {
     resetGame()
@@ -26,17 +38,16 @@ export default function Home() {
     // Add logic to open settings
   };
 
-  return (
-    <div className="app">
-      <Head>
-        <title>Minesweeper</title>
-      </Head>
+  const main = (
+    <div className="minesweeper-container">
       <GameControls
         remainingMines={remainingMines}
         elapsedTime={elapsedTime}
         onRestart={handleRestart}
         onHint={handleHint}
         onSettings={handleSettings}
+        flagging={flagging}
+        onFlagging={toggleFlagging}
       />
       <GameBoard 
         board={board}
@@ -48,5 +59,10 @@ export default function Home() {
       />
     </div>
   );
+
+  return StandardLayout({
+    title: "Minesweeper",   
+    main
+  });
 }
   

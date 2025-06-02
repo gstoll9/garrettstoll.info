@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import "./resume.css";
-import StandardLayout from "../../layouts/standardLayout";
+import StandardLayout from "../../layouts/StandardLayout";
 
 function Resume() {
 
