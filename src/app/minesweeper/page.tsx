@@ -15,7 +15,6 @@ export default function Home() {
     board, 
     clickCell, 
     rightClickCell, 
-    flagCell,
     gameState, 
     remainingMines, 
     resetGame, 
@@ -52,7 +51,7 @@ export default function Home() {
       <GameBoard 
         board={board}
         clickCell={clickCell}
-        flagCell={flagCell}
+        rightClickCell={rightClickCell}
         gameState={gameState}
         defaultMineProbability={mines / (rows * cols)}
         hintsEnabled={hintsEnabled}
