@@ -8,19 +8,29 @@ export default function Card({ card, index }: { card: CardType; index: number })
 
   const style = {
     transform: transform ? `translate(${transform.x}px, ${transform.y}px)` : undefined,
-    top: `${index * 16}px`,
+    top: `${index * 20}px`,
     zIndex: index,
   };
+
+  const className = `card ${card.faceUp ? (card.suit === '♥' || card.suit === '♦' ? 'red' : 'black') : 'card-back'}`;
 
   return (
     <div
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      className="absolute w-16 h-24 border rounded bg-white text-black text-sm text-center shadow"
+      className={className}
       style={style}
     >
-      {card.faceUp ? `${card.rank} ${card.suit}` : '🂠'}
+      {card.faceUp ? (
+        <>
+          <div>{card.rank}</div>
+          <div style={{ textAlign: 'center', fontSize: '20px' }}>{card.suit}</div>
+          <div style={{ alignSelf: 'flex-end', transform: 'rotate(180deg)' }}>{card.rank}</div>
+        </>
+      ) : (
+        <span>🂠</span>
+      )}
     </div>
   );
 }

@@ -4,6 +4,11 @@ import { useEffect, useState } from 'react';
 import { createDeck } from '../lib/gameLogic';
 import { Card as CardType } from '../lib/types';
 import Pile from './Pile';
+import { canStack, canScore } from '../lib/utils';
+
+function getPileIndex(pileId: string): number {
+    return parseInt(String(pileId).replace('pile-', ''), 10);
+}
 
 export default function Board() {
   const [tableau, setTableau] = useState<CardType[][]>([]);
@@ -28,51 +33,81 @@ export default function Board() {
     setStock(deck.slice(deckIndex));
   }, []);
 
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-    if (!over || !active) return;
 
-    const sourcePileIndex = tableau.findIndex(pile =>
-      pile.find(card => card.id === active.id)
-    );
-    const destinationPileIndex = parseInt(String(over.id).replace('pile-', ''), 10);
+    function handleDragEnd(event: DragEndEvent) {
+        const { active, over } = event;
+        if (!over) return;
 
-    if (sourcePileIndex === -1 || isNaN(destinationPileIndex)) return;
-    if (sourcePileIndex === destinationPileIndex) return;
+        const sourceId = active.data.current?.fromPile;
+        const targetId = over.id as string;
 
-    const sourcePile = [...tableau[sourcePileIndex]];
-    const destinationPile = [...tableau[destinationPileIndex]];
-    const cardIndex = sourcePile.findIndex(c => c.id === active.id);
-    const movedCards = sourcePile.splice(cardIndex);
+        
+        
 
-    // Basic move (no Solitaire rules enforced yet)
-    const newTableau = [...tableau];
-    newTableau[sourcePileIndex] = sourcePile;
-    newTableau[destinationPileIndex] = [...destinationPile, ...movedCards];
-    setTableau(newTableau);
-  };
+        const sourceIdx = getPileIndex(sourceId);
+        const targetIdx = getPileIndex(targetId);
+
+        if (sourceId === targetId) return;
+
+        const sourcePile = tableau[sourceIdx];
+        const targetPile = tableau[targetIdx];
+        const card = sourcePile[sourcePile.length - 1];
+        const topTargetCard = targetPile[targetPile.length - 1];
+
+        // trying to score
+        let canMove = (targetId.includes('score-') && targetPile.length == 0) 
+            ? card.rank === 'A' // empty score pile must start with Ace
+            : canScore(topTargetCard, card);
+
+        // moving on board
+        canMove = targetPile.length === 0
+            ? card.rank === 'K' // empty tableau must start with King
+            : canStack(topTargetCard, card);
+
+        if (!canMove) return;
+
+        // Move card
+        const cardIndex = sourcePile.findIndex(c => c.id === active.id);
+        const movedCards = sourcePile.splice(cardIndex);
+
+        // Basic move (no Solitaire rules enforced yet)
+        const newTableau = [...tableau];
+        newTableau[sourceIdx] = sourcePile;
+        newTableau[targetIdx] = [...targetPile, ...movedCards];
+
+        // Flip card beneath if face-down
+        const sourceAfterMove = newTableau[sourceIdx];
+        const last = sourceAfterMove[sourceAfterMove.length - 1];
+        if (last && !last.faceUp) {
+            last.faceUp = true;
+        }
+
+        setTableau(newTableau);
+    }
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
-      <div className="p-4 space-y-4">
-        <div className="flex justify-between">
-          <div className="flex space-x-4">
-            <Pile cards={stock} title="Stock" pileId="stock" />
-            <Pile cards={[]} title="Waste" pileId="waste" />
-          </div>
-          <div className="flex space-x-4">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <Pile key={i} cards={[]} title={`Foundation ${i + 1}`} pileId={`foundation-${i}`} />
-            ))}
-          </div>
+        <div className="board">
+            <div className="row">
+                {/* stock and waste */}
+                <Pile cards={stock} title="Stock" pileId="stock" stacked />
+                <Pile cards={[]} title="Waste" pileId="waste" />
+                {[1, 2, 3, 4].map(i => (
+                    <Pile 
+                        key={i} 
+                        cards={[]} 
+                        title={["Hearts", "Diamonds", "Clubs", "Spades"][i - 1]} 
+                        pileId={`score-${i}`} 
+                        stacked />
+                ))}
+            </div>
+            <div className="row">
+                {/* tableau piles */}
+                {tableau.map((pile, i) => (
+                    <Pile key={i} cards={pile} title={`Pile ${i + 1}`} pileId={`pile-${i}`} />
+                ))}
+            </div>
         </div>
-
-        <div className="flex space-x-4">
-          {tableau.map((pile, i) => (
-            <Pile key={i} cards={pile} title={`Pile ${i + 1}`} pileId={`pile-${i}`} />
-          ))}
-        </div>
-      </div>
     </DndContext>
   );
 }
