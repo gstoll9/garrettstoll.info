@@ -49,3 +49,14 @@ header {
   vertical-align: middle;
   transform: scaleX(-1);
 }
+
+.logo.pop-image {
+  opacity: 0;
+  transform: scale(0.7) rotate(0deg);
+  transition: opacity 0.3s, transform 0.3s;
+  will-change: opacity, transform;
+}
+.logo.pop-image.visible {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
