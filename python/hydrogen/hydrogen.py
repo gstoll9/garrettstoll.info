@@ -3,6 +3,12 @@ import numpy as np
 from scipy.special import assoc_laguerre, sph_harm
 
 a0 = 5.291772108e-11  # Bohr radius in meters
+radialFunctions = pd.DataFrame({
+    'n': [1, 2, 2, 3, 3, 3],
+    'l': [0, 0, 1, 0, 1, 2],
+    'm': [0, 0, -1, 0, 1, 0],
+    'Z': [1] * 6
+})
 
 def R(r, n, l, Z):
     rho = 2 * Z * r / (n * a0)
