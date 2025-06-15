@@ -21,7 +21,6 @@ const UniverseCanvas = dynamic(() => import('./components/UniverseCanvas').then(
 
 export default function Home() {
   const main =(
-    <main style={{ height: '100vh', backgroundColor: 'black' }}>
       <Suspense fallback={
         <div style={{ 
           display: 'flex', 
@@ -36,7 +35,6 @@ export default function Home() {
       }>
         <UniverseCanvas />
       </Suspense>
-    </main>
   );
 
   return StandardLayout({title: "Solar System", main });

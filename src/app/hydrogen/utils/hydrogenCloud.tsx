@@ -113,3 +113,18 @@ function generate2p0Cloud(sampleCount: number): number[] {
 
   return points;
 }
+
+function radialFunction(Z: number, n: number, l: number, r: number): number {
+  const a0 = 1;
+  const rho = (2 * Z * r) / (n * a0);
+
+  let cj: number[] = [1];
+  let R: number = 0;
+  for (let j = 0; j <= n - l - 1; j++) {
+    const cj1 = (j + l + 1 - n) * cj[cj.length - 1] / ((j + 1) * (j + 2 * l + 2));
+    R += cj1 * Math.pow(rho, j) * Math.exp(-rho / 2);
+    cj.push(cj1);
+  }
+
+  return Math.pow(rho, l) * R;
+}

@@ -84,6 +84,8 @@ main {
 
   /* position */
   order: 0;
+  position: relative;
+  z-index: 1;
 
   /* size */
   height: 100%;

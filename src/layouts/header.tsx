@@ -37,35 +37,35 @@ function Header({ title = "Garrett Stoll" }: HeaderProps) {
     visible: true,
   });
 
-  React.useEffect(() => {
-    let leftTimeout: NodeJS.Timeout;
-    let rightTimeout: NodeJS.Timeout;
+  // React.useEffect(() => {
+  //   let leftTimeout: NodeJS.Timeout;
+  //   let rightTimeout: NodeJS.Timeout;
 
-    function schedulePop(setter: typeof setLeft, getCurrent: () => { src: string }) {
-      const delay = 1000 + Math.random() * 3000;
-      setTimeout(() => {
-        const currentSrc = getCurrent().src;
-        setter(prev => ({ ...prev, visible: false }));
-        setTimeout(() => {
-          setter({
-            src: getRandomImage(currentSrc),
-            angle: getRandomAngle(),
-            visible: true,
-          });
-          schedulePop(setter, getCurrent); // Schedule next pop using latest state
-        }, 300); // match CSS transition duration
-      }, delay);
-    }
+  //   function schedulePop(setter: typeof setLeft, getCurrent: () => { src: string }) {
+  //     const delay = 1000 + Math.random() * 3000;
+  //     setTimeout(() => {
+  //       const currentSrc = getCurrent().src;
+  //       setter(prev => ({ ...prev, visible: false }));
+  //       setTimeout(() => {
+  //         setter({
+  //           src: getRandomImage(currentSrc),
+  //           angle: getRandomAngle(),
+  //           visible: true,
+  //         });
+  //         schedulePop(setter, getCurrent); // Schedule next pop using latest state
+  //       }, 300); // match CSS transition duration
+  //     }, delay);
+  //   }
 
-    leftTimeout = setTimeout(() => schedulePop(setLeft, () => left), 1000);
-    rightTimeout = setTimeout(() => schedulePop(setRight, () => right), 2000);
+  //   leftTimeout = setTimeout(() => schedulePop(setLeft, () => left), 1000);
+  //   rightTimeout = setTimeout(() => schedulePop(setRight, () => right), 2000);
 
-    return () => {
-      clearTimeout(leftTimeout);
-      clearTimeout(rightTimeout);
-    };
-    // eslint-disable-next-line
-  }, []);
+  //   return () => {
+  //     clearTimeout(leftTimeout);
+  //     clearTimeout(rightTimeout);
+  //   };
+  //   // eslint-disable-next-line
+  // }, []);
 
   return (
     <header>

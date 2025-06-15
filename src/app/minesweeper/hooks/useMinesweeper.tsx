@@ -366,6 +366,7 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
   };
 
   const rightClickCell = (x: number, y: number) => {
+    
     const newBoard = board.map(row => row.map(cell => ({ ...cell })));
     const cell = board[y][x];
 

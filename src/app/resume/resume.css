@@ -46,6 +46,7 @@ img:not(.introPic) {
 .projects {
     flex: 1;
     order: 1;
+    margin: 0% 1%;
 }
 
 .projectsTitle {

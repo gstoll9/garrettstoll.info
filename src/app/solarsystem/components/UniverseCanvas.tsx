@@ -1,9 +1,12 @@
 'use client'
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls, Stars } from '@react-three/drei'
+import { OrbitControls, Plane, Stars } from '@react-three/drei'
 import SolarSystem from './SolarSystem'
 import { useEffect, useState, useRef } from 'react'
 import {PlanetProps} from './Planet';
+import PlanetText from './text/PlanetText';
+import SolarSystemText from './text/SolarSystemText'
+import { planets } from '../data/planets'
 
 export function UniverseCanvas() {
   const [contextLost, setContextLost] = useState(false);
@@ -59,32 +62,12 @@ export function UniverseCanvas() {
 
   return (
     <div style={{ display: 'flex', height: '100vh' }}>
+      
       {/* Left Column: Text Information */}
-      <div
-      style={{
-        flex: selectedPlanet ? 1 : 0, // Dynamically adjust width
-        padding: selectedPlanet ? '20px' : '0', // Add padding only when visible
-        backgroundColor: selectedPlanet ? '#f0f0f0' : 'transparent', // Background only when visible
-        overflowY: 'auto',
-        transition: 'flex 0.3s ease, padding 0.3s ease, background-color 0.3s ease', // Smooth transition
-      }}
-      >
-        {selectedPlanet ? (
-          <>
-            <h1>{selectedPlanet}</h1>
-            <div>
-              {/* Replace this with actual planet data */}
-                {planetData
-                ? Object.entries(planetData).map(([key, value]) => (
-                  <div key={key}>
-                    <strong>{key}: some data</strong>
-                  </div>
-                  ))
-                : 'Click on a planet to see more information.'}
-            </div>
-          </>
-        ) : <></>}
-      </div>
+      {selectedPlanet && planetData ? (
+          <PlanetText {...planetData} />
+      ) : <SolarSystemText />}
+
       {/* Right Column: Three.js Scene */}
       <div style={{ flex: 2, position: 'relative' }}>
         <Canvas

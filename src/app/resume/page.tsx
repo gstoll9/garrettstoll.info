@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import "./resume.css";
-import StandardLayout from "../../layouts/StandardLayout";
+import StandardLayout from "@/layouts/StandardLayout";
 
 function Resume() {
 
@@ -17,14 +17,19 @@ function Resume() {
             <Link className="projectItem" href="/hubbardmodel">
               <p className="projectText">Hubbard Model</p>
             </Link>
-            <Link className="projectItem" href="/minesweeper">
-              <p className="projectText">Minesweeper</p>
-            </Link>
             <Link className="projectItem" href="/solarsystem">
               <p className="projectText">Solar System</p>
             </Link>
             <Link className="projectItem" href="/hydrogen">
               <p className="projectText">Hydrogen Atom</p>
+            </Link>
+            <h2 className="projectsTitle" style={{paddingTop: "10%"}}>Games</h2>
+            <div className="headerDivider" />
+            <Link className="projectItem" href="/minesweeper">
+              <p className="projectText">Minesweeper</p>
+            </Link>
+            <Link className="projectItem" href="/solitaire">
+              <p className="projectText">Solitaire</p>
             </Link>
           </div>
 
