@@ -4,25 +4,11 @@
 
 .sameLine {display: flex;}
 
-main {
-    padding: 1.25%;
+.resume-container {
     overflow: scroll;
 }
 
-h2, h3 {
-    width: 50%;
-    margin: 0% 1%;
-}
-
-h2 {
-    padding-top: 1%;
-}
-
-h4 {
-    margin: 0% 2%;
-}
-
-i {
+.date {
     /* padding-right: 2%; */
     width: 50%;
     text-align: right;
@@ -35,6 +21,21 @@ img:not(.introPic) {
     display: inline-block;
     vertical-align: bottom;
     object-fit: scale-down;
+}
+
+.section-header {
+    width: 50%;
+    margin: 0% 1%;
+    padding-top: 1%;
+}
+
+.job-header {
+    width: 50%;
+    margin: 0% 1%;
+}
+
+.task-header {
+    margin: 0% 2%;
 }
 
 .resume {
@@ -52,6 +53,8 @@ img:not(.introPic) {
 .projectsTitle {
     width: 100%;
     text-align: center;
+    padding-top: 1%;
+    margin: 0 1%;
 }
 
 .projectItem {
@@ -111,6 +114,10 @@ p:not(.introText) {
     display: flex;
     align-items: center;
     box-shadow: 0 0 3px 3px gray inset;
+}
+
+.resume-list {
+  list-style-type: circle;
 }
 
 .introText {

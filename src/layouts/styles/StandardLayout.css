@@ -1,0 +1,21 @@
+.standardlayout-main {
+  /* children */
+  display: flex;
+  flex-direction: column;
+
+  /* position */
+  order: 0;
+  position: relative;
+
+  /* size */
+  height: 100%;
+  flex: 9;
+
+  /* edges */
+  margin: 0;
+  border: 0;
+  padding: 1.25%;
+  box-shadow: 0 0 5px 3px gray inset;
+
+  background-color: #EFE3C2;
+}

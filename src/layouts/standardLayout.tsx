@@ -1,4 +1,5 @@
 import Header from "./header";
+import "./styles/StandardLayout.css";
 
 interface StandardLayoutProps {
   title?: string;
@@ -7,12 +8,12 @@ interface StandardLayoutProps {
 
 function StandardLayout({ title, main }: StandardLayoutProps) {
   return (
-    <div className="container0">
+    <>
       <Header title={title} />
-      <main>
+      <main className="standardlayout-main">
         {main}
       </main>
-    </div>
+    </>
   );
 }
 

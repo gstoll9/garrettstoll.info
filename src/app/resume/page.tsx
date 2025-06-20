@@ -7,7 +7,7 @@ import StandardLayout from "@/layouts/StandardLayout";
 function Resume() {
 
   const page = (
-      <>
+      <div className="resume-container">
         <div className="sameLine">
 
           {/* Projects */}
@@ -48,7 +48,7 @@ function Resume() {
               </div>
             </div>
 
-            <h2>Education</h2>
+            <h2 className="section-header">Education</h2>
             <div className="subheaderDivider" />
 
             {/* Virginia Tech */}
@@ -65,19 +65,43 @@ function Resume() {
               </div>
               <div className="jobText">
                 <div className="sameLine">
-                  <h3>Virginia Tech College of Science</h3>
-                  <i>Aug 2016 &mdash; Dec 2021</i>
+                  <h3 className="job-header">Virginia Tech College of Science</h3>
+                  <i className="date">Aug 2016 &mdash; Dec 2021</i>
                 </div>
                 <p>BS in Computational Modeling and Data Analytics</p>
                 <p>Minors: Computer Science, Mathematics</p>
               </div>
             </div>
 
-            <h2>Professional Experience</h2>
+            <h2  className="section-header">Professional Experience</h2>
             <div className="subheaderDivider" />
 
-            {/* Booz */}
+            {/* Data Annotation */}
             <div className="sameLine">
+              <div className="resumePicContainer">
+                <Image
+                  className="logo"
+                  src="/resumeImages/DataAnnotationLogo.svg"
+                  alt="Data Annotation Logo"
+                  width={0}
+                  height={0}
+                  sizes="100%"
+                />
+              </div>
+              <div className="jobText">
+                <div className="sameLine">
+                  <h3 className="job-header">Data Annotation &mdash; Programming Analyst/AI Trainer</h3>
+                  <i className="date">Jan 2025 &mdash; Present</i>
+                </div>
+                <ul className="resume-list">
+                  <li>Evaluating AI responses for correctness and instruction following for programming, math, physics, and biology prompts</li>
+                  <li>Creating reasoning problems in math and biology that AI is unable to answer</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Booz */}
+            <div className="sameLine" style={{ marginTop: "1%" }}>
               <div className="resumePicContainer">
                 <Image
                   className="logo"
@@ -90,27 +114,27 @@ function Resume() {
               </div>
               <div className="jobText">
                 <div className="sameLine">
-                  <h3>Booz Allen Hamilton &mdash; Data Scientist</h3>
-                  <i>Nov 2022 &mdash; Sep 2024</i>
+                  <h3 className="job-header">Booz Allen Hamilton &mdash; Data Scientist</h3>
+                  <i className="date">Nov 2022 &mdash; Sep 2024</i>
                 </div>
-                <h4>Web Scraping AI Pipeline</h4>
-                <ul>
+                <h4 className="task-header">Web Scraping AI Pipeline</h4>
+                <ul className="resume-list">
                   <li>Lead a team of three to automate the process of collecting news articles, identifying target articles, and parsing those articles for information to be stored in a database</li>
                   <li>Utilized Selenium, Pandas, Langchain, Transformers, and Mistral</li>
                 </ul>
-                <h4>Locally Hosted Fine-Tuned Installable LLM</h4>
-                <ul>
+                <h4 className="task-header">Locally Hosted Fine-Tuned Installable LLM</h4>
+                <ul className="resume-list">
                   <li>Co-led the design and development of an installable program that incorporated a locally hosted fine-tuned LLM and a responsive frontend interface</li>
                   <li>The tool rewrites job postings to Defense Cyber Workforce standards</li>
                   <li>Utilized Python, PyTorch, Transformers, JavaScript, React.js, and Qt Creator</li>
                 </ul>
-                <h4>User Productivity Team</h4>
-                <ul>
+                <h4 className="task-header">User Productivity Team</h4>
+                <ul className="resume-list">
                   <li>Created a dashboard in Databricks to visualize device inventory and individual user patterns</li>
                   <li>Utilized Python, SQL, Databricks, and Splunk</li>
                 </ul>
-                <h4>Internal PowerApp</h4>
-                <ul>
+                <h4 className="task-header">Internal PowerApp</h4>
+                <ul className="resume-list">
                   <li>Developed a Microsoft PowerApp to automate onboarding processes and improve cross-contract communications to reduce project timelines</li>
                   <li>Utilized PowerApps, PowerAutomate, PowerBI, Dataverse, Sharepoint, and Microsoft Teams</li>
                 </ul>
@@ -131,10 +155,10 @@ function Resume() {
               </div>
               <div className="jobText">
                 <div className="sameLine">
-                <h3>Summit Consulting, LLC &mdash; Intern</h3>
-                <i>Aug 2021 &mdash; Dec 2021</i>
+                <h3 className="job-header">Summit Consulting, LLC &mdash; Intern</h3>
+                <i className="date">Aug 2021 &mdash; Dec 2021</i>
                 </div>
-                <ul>
+                <ul className="resume-list">
                   <li>Lead a team of three to implement an ETL pipeline on Amazon Web Services</li>
                   <li>Worked with the federal database management system, IPEDS</li>
                   <li>Web-scraped 5 websites using beautiful soup and selenium</li>
@@ -143,7 +167,7 @@ function Resume() {
               </div>
             </div>
 
-            <h2>Research Experience</h2>
+            <h2 className="section-header">Research Experience</h2>
             <div className="subheaderDivider" />
 
             <div className="sameLine">
@@ -162,10 +186,10 @@ function Resume() {
                 <div className="sameLine">
                   <div className="jobText">
                     <div className="sameLine">
-                    <h3>Virginia Tech, Dr. Vito Scarola &mdash; Research Assistant</h3>
-                    <i>Jan 2021 &mdash; Dec 2021</i>
+                    <h3 className="job-header">Virginia Tech, Dr. Vito Scarola &mdash; Research Assistant</h3>
+                    <i className="date">Jan 2021 &mdash; Dec 2021</i>
                     </div>
-                    <ul>
+                    <ul className="resume-list">
                       <li>Using Python, I simulated the Hubbard model, then developed a combinatorial optimization algorithm to dynamically implement the Gutzwiller Projection</li>
                       <li>Utilized numpy for complex analysis, mpi4py for high-performance computing, and matplotlib for data visualizations</li>
                       <li>Algorithm optimization resulting in an 8-fold speed up</li>
@@ -176,10 +200,10 @@ function Resume() {
                 <div className="sameLine">  
                   <div className="jobText">
                     <div className="sameLine">
-                      <h3>Virginia Tech, Dr. Bob White &mdash; Research Assistant</h3>
-                      <i>Aug 2017 &mdash; Dec 2019</i>
+                      <h3 className="job-header">Virginia Tech, Dr. Bob White &mdash; Research Assistant</h3>
+                      <i className="date">Aug 2017 &mdash; Dec 2019</i>
                     </div>
-                    <ul>
+                    <ul className="resume-list">
                       <li>Wet lab and Computational Biochemistry research experience</li>
                       <li>Studied metalloprotein families, radical SAM enzymes, and novel thiol molecules</li>
                       <li>Conducted protein homology modeling, molecular docking simulations, comparative genomics, gas chromatography-mass spectrometry (GCMS), liquid chromatography, and chemical assays</li>
@@ -189,7 +213,7 @@ function Resume() {
               </div>
             </div>
             
-            <h2>Technical Skills</h2>
+            <h2 className="section-header">Technical Skills</h2>
             <div className="subheaderDivider" />
 
             <div className="sameLine">
@@ -204,14 +228,14 @@ function Resume() {
                 />
               </div>
               <div className="jobText"> 
-                <ul>
+                <ul className="resume-list">
                   <li>Python: flask, pytorch, pyspark, pandas, sklearn, statsmodel, numpy, scipy, mpi4py, beautiful soup, selenium, matplotlib, langchain, transformers</li>
                   <li>SQL, C, C++, Databricks, Go, Git, Java, JavaScript, Next.js, Node.js, React.js, HTML, CSS, MPI, OpenMP, MySQL, Microsoft &mdash; 365, Power Apps, Power Automate, Power BI, Qiskit, R and Tidyverse, Splunk, and command-line scripting</li>
                 </ul>
               </div>
             </div>
 
-            <h2>Certificates</h2>
+            <h2 className="section-header">Certificates</h2>
             <div className="subheaderDivider" />
             <div className="sameLine">
               <div className="resumePicContainer">
@@ -225,15 +249,40 @@ function Resume() {
                 />
               </div>
               <div className="jobText"> 
-                <ul>
+                <ul className="resume-list">
                   <li>Booz Allen Hamilton Technical Badges &mdash; AI Aware, Angular, Docker, CSS, Java, JavaScript, Machine Learning, Python, React, Spring Boot, SQL (2023)</li>
                   <li>IBM Associate Developer &mdash Quantum Computation using Qiskit (2022)</li>
                 </ul>
               </div>
             </div>
+
+            <h2 className="section-header">Volunteer Work</h2>
+            <div className="subheaderDivider" />
+            <div className="sameLine">
+              <div className="resumePicContainer">
+                <Image
+                  className="logo"
+                  src="/resumeImages/PeteyGreeneLogo.png"
+                  alt="Petey Greene Program Logo"
+                  width={0}
+                  height={0}
+                  sizes="100%"
+                />
+              </div>
+              <div className="jobText">
+                <div className="sameLine">
+                <h3 className="job-header">The Petey Greene Program &mdash; Tutor</h3>
+                <i className="date">Jun 2025 &mdash; Present</i>
+                </div>
+                <ul className="resume-list">
+                  <li>Tutoring incarcerated people in reading and math in preparation for their GEDs</li>
+                </ul>
+              </div>
+            </div>
+
           </div>
         </div>  
-      </>
+      </div>
   );
 
   return StandardLayout({main: page});
