@@ -23,6 +23,7 @@ header {
 
   /* display */
   display: flex;
+  align-items: center;
 }
 
 .leftTyroContainer {
@@ -38,7 +39,6 @@ header {
   order: 1;
   height: 100%;
   text-align: center;
-  font-size: 100%;
   vertical-align: middle;
 }
 

@@ -4,6 +4,8 @@ import "./hubbardmodel.css";
 import { useState } from "react";
 import { BlockMath, InlineMath } from 'react-katex';
 import Image from "next/image";
+import 'katex/dist/katex.min.css';
+
 
 function HubbardModelPage() {
 
@@ -27,7 +29,7 @@ function HubbardModelPage() {
                         The Hubbard model is a useful approximation for particles in a periodic potential at sufficiently low temperatures... and long-range interactions between the particles can be ignored.
                     </blockquote>
                     <br />
-                    <p>You can find my code on Github <a href="https://github.com/gstoll9/Hubbard-Model">here.</a></p>
+                    <p>You can find my code on Github <a href="https://github.com/gstoll9/Hubbard-Model">here.</a> (Check out ExampleScript.ipynb for more solutions than what's presented here)</p>
                 </div>
                 <div style={{ order: 1, flex: 1, display: "flex", flexDirection: "row", alignItems: "center", margin: "0% 10%" }}>
                     <div style={{ order: 0, flex: 1, textAlign: "center", alignItems: "center"}}>
@@ -39,7 +41,7 @@ function HubbardModelPage() {
                             height={256}
                             sizes="100%"
                         />
-                        <p style={{ order: 1, flex: 1}}>Dr. Vito Scarola</p>
+                        <p style={{ order: 1, flex: 1}}><a href="https://scarola.phys.vt.edu/">Dr. Vito Scarola</a></p>
                     </div>
                     <div style={{ order: 0, flex: 1, textAlign: "center", alignItems: "center"}}>
                         <Image
@@ -52,17 +54,6 @@ function HubbardModelPage() {
                         />
                         <p style={{ order: 1, flex: 1}}>Garrett Stoll</p>
                     </div>
-
-                    {/* <img
-                        style={{ order: 1, flex: 1 }}
-                        src={`/hubbardmodelImages/scarola.png`}
-                        alt="Hubbard Model graph"
-                    />
-                    <img
-                        style={{ order: 1, flex: 1 }}
-                        src={`/resumeImages/profilePic.png`}
-                        alt="Hubbard Model graph"
-                    /> */}
                 </div>
             </div>
             
@@ -84,13 +75,14 @@ function HubbardModelPage() {
             <p>or in matrix notation...</p>
             <BlockMath math="
                 H = \begin{bmatrix}
-                    U_{i} - \mu & (0,-t) & \cdots & (0,-t) \\
-                    (0,-t) & U_{i} - \mu & \cdots & (0,-t) \\
+                    U_{i} - \mu & -t(c_{i,\sigma}^\dagger c_{j,\sigma}) & \cdots & -t(c_{i,\sigma}^\dagger c_{j,\sigma}) \\
+                    -t(c_{i,\sigma}^\dagger c_{j,\sigma}) & U_{i} - \mu & \cdots & -t(c_{i,\sigma}^\dagger c_{j,\sigma}) \\
                     \vdots & \vdots & \ddots & \vdots \\
-                    (0,-t) & (0,-t) & \cdots & U_{i} - \mu \\
+                    -t(c_{i,\sigma}^\dagger c_{j,\sigma}) & -t(c_{i,\sigma}^\dagger c_{j,\sigma}) & \cdots & U_{i} - \mu \\
                 \end{bmatrix}
             " />
-            <p>The off diagonals depend on how you define the state vector <InlineMath math="\Psi" />. You may also note, <InlineMath math="U_i=0" /> if <InlineMath math="\psi_i" /> is a singly occupied state. For this research, we set <InlineMath math="\mu=0" />.</p>
+            <p>The off diagonals depend on how you define the state vector <InlineMath math="\Psi" />. They will either equal <InlineMath math="-t" /> or <InlineMath math="0" /></p>
+            <p>You may also note, <InlineMath math="U_i=0" /> if <InlineMath math="\psi_i" /> is a singly occupied state. For this research, we set <InlineMath math="\mu=0" />.</p>
             {/* <p>For the three-site Hubbard Model,</p>
             <BlockMath math="
                 \Psi = 
@@ -203,7 +195,7 @@ function HubbardModelPage() {
         </div>
     );
 
-    return StandardLayout({main: page});
+    return StandardLayout({title: "Hubbard Model", main: page});
 }
 
 export default HubbardModelPage

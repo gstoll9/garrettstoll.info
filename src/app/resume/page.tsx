@@ -35,7 +35,7 @@ function Resume() {
 
           <div className="resume">
             <div className="sameLine" id="intro">
-              <p className="introText">Salutations, and welcome to my website! As of now, this site is just my resume, but soon I will be connecting things I am interested in and projects I have put together. For data science contracting or employment inquiries, please email me at garrettstoll@gmail.com. Have fun, and enjoy this website responsibly!</p>
+              <p className="introText">Welcome to garrettstoll.info! I will be using this website to share projects I have put together. They will span my various interests including data science, biochemistry, physics, and AI. Right now you can check out my undergraduate research on simulating the Hubbard Model, explore our solar system, or see how the Schrodinger equation can visualize atoms. You can expect regular updates to these pages and more! For consulting or employment inquiries, please email me at <a href="mailto:garrettstoll@gmail.com">garrettstoll@gmail.com</a>. Have fun, and enjoy this site responsibly!</p>
               <div className="profilePicContainer">
                 <Image
                   className="introPic"
