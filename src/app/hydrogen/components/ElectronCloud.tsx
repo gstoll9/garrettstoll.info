@@ -9,7 +9,7 @@ export default function ElectronCloud() {
   const points = generateCloudData(2, 1, 0); // n=2, l=0, m=0
 
   return (
-    <Canvas camera={{ position: [0, 0, 5] }} style={{ backgroundColor: "black" }}>
+    <Canvas camera={{ position: [50, 0, 0] }} style={{ backgroundColor: "black" }}>
       <Suspense fallback={null}>
         <OrbitControls />
 

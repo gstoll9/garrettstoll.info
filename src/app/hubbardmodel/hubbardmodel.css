@@ -1,0 +1,17 @@
+.divider {
+    margin: 0% 0% 1%;
+    background-color: black;
+    width: 50%;
+    border: 1px solid black;
+}
+
+blockquote {
+    margin: 0% 33% 0% 3%;
+    padding: 0% 1%;
+    border-left: 2px solid #ccc;
+    color: #444444;
+}
+
+p {
+    margin: 1%;
+}

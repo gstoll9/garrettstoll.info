@@ -24,8 +24,9 @@
 }
 
 body {
-  width: 100vw;
-  height: 100vh;
+  height: 100%;
+  width: 100%;
+  
   background-color: #3E7B27;
 }
 

@@ -1,3 +1,8 @@
+.container0 {
+  height: 100%;
+  width: 100%;
+}
+
 .standardlayout-main {
   /* children */
   display: flex;
@@ -8,8 +13,9 @@
   position: relative;
 
   /* size */
-  height: 100%;
+  height: 90%;
   flex: 9;
+  overflow: hidden;
 
   /* edges */
   margin: 0;

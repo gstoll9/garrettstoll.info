@@ -64,9 +64,9 @@ export function UniverseCanvas() {
     <div style={{ display: 'flex', height: '100vh' }}>
       
       {/* Left Column: Text Information */}
-      {selectedPlanet && planetData ? (
+      {/* {selectedPlanet && planetData ? (
           <PlanetText {...planetData} />
-      ) : <SolarSystemText />}
+      ) : <SolarSystemText />} */}
 
       {/* Right Column: Three.js Scene */}
       <div style={{ flex: 2, position: 'relative' }}>

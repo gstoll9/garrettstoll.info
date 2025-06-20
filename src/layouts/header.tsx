@@ -2,6 +2,7 @@
 import "./styles/header.css";
 import Image from "next/image";
 import * as React from "react";
+import Link from "next/link";
 
 const images = [
   "/TyroImages/PuppyEyes.png",
@@ -68,6 +69,7 @@ function Header({ title = "Garrett Stoll" }: HeaderProps) {
   // }, []);
 
   return (
+    <Link href="/resume">
     <header>
       <div className="leftTyroContainer">
         <Image
@@ -104,6 +106,7 @@ function Header({ title = "Garrett Stoll" }: HeaderProps) {
         />
       </div>
     </header>
+    </Link>
   );
 }
 

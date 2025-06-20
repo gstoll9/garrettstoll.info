@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import "./resume.css";
-import StandardLayout from "@/layouts/StandardLayout";
+import StandardLayout from "@/layouts/standardLayout";
 
 function Resume() {
 
@@ -251,7 +251,7 @@ function Resume() {
               <div className="jobText"> 
                 <ul className="resume-list">
                   <li>Booz Allen Hamilton Technical Badges &mdash; AI Aware, Angular, Docker, CSS, Java, JavaScript, Machine Learning, Python, React, Spring Boot, SQL (2023)</li>
-                  <li>IBM Associate Developer &mdash Quantum Computation using Qiskit (2022)</li>
+                  <li>IBM Associate Developer &mdash; Quantum Computation using Qiskit (2022)</li>
                 </ul>
               </div>
             </div>
