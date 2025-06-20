@@ -4,7 +4,7 @@ import ElectronCloud from './components/ElectronCloud';
 import SchrodingEquation from './components/text/SchrodingEquation';
 import Hydrogen from './components/text/Hydrogen';
 import HydrogenSpectrum from './components/HydrogenSpectrum';
-import StandardLayout from '@/layouts/StandardLayout';
+import StandardLayout from '@/layouts/standardLayout';
 import { useState } from 'react';
 
 

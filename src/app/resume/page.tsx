@@ -23,14 +23,14 @@ function Resume() {
             <Link className="projectItem" href="/hydrogen">
               <p className="projectText">Hydrogen Atom</p>
             </Link>
-            <h2 className="projectsTitle" style={{paddingTop: "10%"}}>Games</h2>
+            {/* <h2 className="projectsTitle" style={{paddingTop: "10%"}}>Games</h2>
             <div className="headerDivider" />
             <Link className="projectItem" href="/minesweeper">
               <p className="projectText">Minesweeper</p>
             </Link>
             <Link className="projectItem" href="/solitaire">
               <p className="projectText">Solitaire</p>
-            </Link>
+            </Link> */}
           </div>
 
           <div className="resume">

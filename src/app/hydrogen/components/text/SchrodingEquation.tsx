@@ -3,10 +3,11 @@ import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
 import { useState } from 'react';
 import ShowMoreButton from '../showMoreButton';
+import "./hydrogenText.css";
 
 export default function SchrodingEquation() {
-    const [n, setN] = useState(1);
-    const [l, setL] = useState(0);
+    const [n, setN] = useState(2);
+    const [l, setL] = useState(1);
     const [m, setM] = useState(0);
 
     const [showMore, setShowMore] = useState(false);
@@ -49,11 +50,11 @@ export default function SchrodingEquation() {
 
     return (<>
         <div className="sameLine">
-            
+
         </div>
-        <h1>Hydrogen Atom: Electron Probability Cloud</h1>
-        <p>Mathematical formulation of hydrogen atom states using Schrodinger's equation...</p>
-        <h2>Time-Independent Schrodinger's Equation</h2>
+        <h1>Schrodinger's Equation</h1>
+        <div className="divider" />
+        <h2>Time-Independent</h2>
         <BlockMath math="
             \frac{\hbar^2}{2m}
             \nabla^2\Psi
@@ -61,7 +62,7 @@ export default function SchrodingEquation() {
             = E\Psi"
         />
         {/* showMore Separation of Variable */}
-        <ShowMoreButton 
+        {/* <ShowMoreButton 
             expanded={showMore}
             onClick={() => setShowMore(!showMore)}
         />
@@ -131,8 +132,8 @@ export default function SchrodingEquation() {
         <h2>Separation of Variable</h2>
         <BlockMath math="
             \Psi_{n,l,m}(r, \theta, \phi) = R_{n,l}(r) Y_{l,m}(\theta, \phi)
-        "/>
-        <h2>Time-Dependent Schrodinger's Equation</h2>
+        "/> */}
+        <h2>Time-Dependent</h2>
         <BlockMath math="
             \Psi(\mathbf{r}, t) = 
             \sum c_n \psi_n(\mathbf{r}) 
@@ -161,6 +162,8 @@ export default function SchrodingEquation() {
             \left|\Psi(t)\right\rangle = e^{-iHt/\hbar}\left|\Psi(0)\right\rangle
         "/>
         
+        <h1>The Hydrogen Atom</h1>
+        <div className="divider" />
         {stateInput}
         
         <h2>General Wavefunction</h2>

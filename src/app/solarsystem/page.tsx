@@ -1,5 +1,5 @@
 'use client'
-import StandardLayout from '@/layouts/StandardLayout';
+import StandardLayout from '@/layouts/standardLayout';
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 // 

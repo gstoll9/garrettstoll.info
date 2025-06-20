@@ -20,8 +20,8 @@ function HubbardModelPage() {
             <div className="divider" />
             <div style={{ display: "flex" }}>
                 <div style={{ order: 0, flex: 1 }}>
-                    <p>This page is a summary of the undergraduate research I did with <a href="https://scarola.phys.vt.edu/">Dr. Vito Scarola</a> (2021). Our goal was to create code that simulated the three-site Hubbard Model and find solutions that minimize U(t) while keeping the system in a singly occupied state (or the Heisenberg state). I was able to accomplish this for the n and n,n-site Hubbard Model.</p>
-                    <p>The Hubbard Model is useful in quantum computing when very cold particles are trapped in a laser lattice. To perform computational operations on these particles, you would want them to be in singly occupied states. This research aims to do that while minimizing the energy input.</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;This page is a summary of the undergraduate research I did with <a href="https://scarola.phys.vt.edu/">Dr. Vito Scarola</a> (2021). Our goal was to create code that simulated the three-site Hubbard Model and find solutions that minimize U(t) while keeping the system in a singly occupied state (or the Heisenberg state). I was able to accomplish this for the n and n,n-site Hubbard Model.</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;The Hubbard Model is useful in quantum computing when very cold particles are trapped in a laser lattice. To perform computational operations on these particles, you would want them to be in singly occupied states. This research aims to do that while minimizing the energy input.</p>
                     <p>From Wikipedia, <a href="https://en.wikipedia.org/wiki/Hubbard_model">Hubbard Model</a>:</p>
                     <blockquote cite="https://en.wikipedia.org/wiki/Hubbard_model">
                         The Hubbard model is a useful approximation for particles in a periodic potential at sufficiently low temperatures... and long-range interactions between the particles can be ignored.
@@ -29,7 +29,30 @@ function HubbardModelPage() {
                     <br />
                     <p>You can find my code on Github <a href="https://github.com/gstoll9/Hubbard-Model">here.</a></p>
                 </div>
-                <div style={{ order: 1, flex: 1 }}>
+                <div style={{ order: 1, flex: 1, display: "flex", flexDirection: "row", alignItems: "center", margin: "0% 10%" }}>
+                    <div style={{ order: 0, flex: 1, textAlign: "center", alignItems: "center"}}>
+                        <Image
+                            style={{ order: 0, flex: 4, margin: "1% 3%", objectFit: "cover" }}
+                            src={`/hubbardmodelImages/scarola.png`}
+                            alt="Dr. Vito Scarola "
+                            width={256}
+                            height={256}
+                            sizes="100%"
+                        />
+                        <p style={{ order: 1, flex: 1}}>Dr. Vito Scarola</p>
+                    </div>
+                    <div style={{ order: 0, flex: 1, textAlign: "center", alignItems: "center"}}>
+                        <Image
+                            style={{ order: 1, flex: 4, margin: "1% 3%", objectFit: "scale-down" }}
+                            src={`/resumeImages/profilePic.png`}
+                            alt="Garrett Stoll"
+                            width={256}
+                            height={256}
+                            sizes="100%"
+                        />
+                        <p style={{ order: 1, flex: 1}}>Garrett Stoll</p>
+                    </div>
+
                     {/* <img
                         style={{ order: 1, flex: 1 }}
                         src={`/hubbardmodelImages/scarola.png`}

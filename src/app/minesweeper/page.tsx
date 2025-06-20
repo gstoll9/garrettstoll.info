@@ -3,7 +3,7 @@ import { GameBoard } from "./components/GameBoard";
 import { GameControls } from "./components/GameControls";
 import { useState } from "react";
 import { useMinesweeper } from "./hooks/useMinesweeper";
-import StandardLayout from "@/layouts/StandardLayout";
+import StandardLayout from "@/layouts/standardLayout";
 
 export default function Home() {
   const [rows, setRows] = useState(10);
