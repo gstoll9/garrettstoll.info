@@ -5,7 +5,7 @@ import { useState } from 'react';
 import ShowMoreButton from '../showMoreButton';
 import "./hydrogenText.css";
 
-export default function SchrodingEquation() {
+export default function SchrodingerEquation() {
     const [n, setN] = useState(2);
     const [l, setL] = useState(1);
     const [m, setM] = useState(0);
