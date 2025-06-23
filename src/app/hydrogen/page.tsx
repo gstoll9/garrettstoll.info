@@ -1,7 +1,7 @@
 'use client'
 import './styles/HydrogenAtom.css';
 import ElectronCloud from './components/ElectronCloud';
-import SchrodingEquation from './components/text/SchrodingEquation';
+import SchrodingerEquation from './components/text/SchrodingerEquation';
 import Hydrogen from './components/text/Hydrogen';
 import HydrogenSpectrum from './components/HydrogenSpectrum';
 import StandardLayout from '@/layouts/standardLayout';
@@ -15,7 +15,7 @@ export default function Home() {
   const main = (
     <div className="container">
       <div className="leftPane">
-        {text === "Hydrogen" ? <Hydrogen /> : <SchrodingEquation />}
+        {text === "Hydrogen" ? <Hydrogen /> : <SchrodingerEquation />}
       </div>
       <div className="rightPane">
         <ElectronCloud />

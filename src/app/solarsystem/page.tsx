@@ -21,12 +21,19 @@ const UniverseCanvas = dynamic(() => import('./components/UniverseCanvas').then(
 
 export default function Home() {
   const main =(
+    <div style={{ display: 'flex', height: '100%' }}>
+      {/* Left Column: Text Information */}
+      {/* {selectedPlanet && planetData ? (
+          <PlanetText {...planetData} />
+      ) : <SolarSystemText />} */}
       <Suspense fallback={
         <div style={{ 
+          flex: 2, 
+          position: 'relative',
           display: 'flex', 
           justifyContent: 'center', 
           alignItems: 'center', 
-          height: '100vh',
+          height: '100%',
           backgroundColor: 'black',
           color: 'white' 
         }}>
@@ -35,7 +42,7 @@ export default function Home() {
       }>
         <UniverseCanvas />
       </Suspense>
-  );
+  </div>);
 
   return StandardLayout({title: "Solar System", main });
 }

@@ -61,40 +61,29 @@ export function UniverseCanvas() {
   }
 
   return (
-    <div style={{ display: 'flex', height: '100vh' }}>
-      
-      {/* Left Column: Text Information */}
-      {/* {selectedPlanet && planetData ? (
-          <PlanetText {...planetData} />
-      ) : <SolarSystemText />} */}
-
-      {/* Right Column: Three.js Scene */}
-      <div style={{ flex: 2, position: 'relative' }}>
-        <Canvas
-          ref={canvasRef}
-          camera={{ position: [0, 10, 40], fov: 60 }}
-          gl={{
-            powerPreference: 'default',
-            antialias: false,
-            stencil: false,
-            depth: true,
-            alpha: false,
-            preserveDrawingBuffer: false,
-            failIfMajorPerformanceCaveat: false,
-          }}
-        >
-          <ambientLight intensity={0.2} />
-          <pointLight position={[0, 0, 0]} intensity={5000} />
-          <Stars radius={500} depth={50} count={500} factor={4} fade />
-          <SolarSystem
-            setSelectedPlanet={(planetName: string | null, planetDetails: PlanetProps | null) => {
-              setSelectedPlanet(planetName);
-              setPlanetData(planetDetails); // Pass planet details
-            }}
-          />
-          <OrbitControls />
-        </Canvas>
-      </div>
-    </div>
+    <Canvas
+      ref={canvasRef}
+      camera={{ position: [0, 10, 40], fov: 60 }}
+      gl={{
+        powerPreference: 'default',
+        antialias: false,
+        stencil: false,
+        depth: true,
+        alpha: false,
+        preserveDrawingBuffer: false,
+        failIfMajorPerformanceCaveat: false,
+      }}
+    >
+      <ambientLight intensity={0.2} />
+      <pointLight position={[0, 0, 0]} intensity={5000} />
+      <Stars radius={500} depth={50} count={500} factor={4} fade />
+      <SolarSystem
+        setSelectedPlanet={(planetName: string | null, planetDetails: PlanetProps | null) => {
+          setSelectedPlanet(planetName);
+          setPlanetData(planetDetails); // Pass planet details
+        }}
+      />
+      <OrbitControls />
+    </Canvas>
   )
 }
