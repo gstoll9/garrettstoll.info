@@ -4,14 +4,9 @@ import { OrbitControls, Plane, Stars } from '@react-three/drei'
 import SolarSystem from './SolarSystem'
 import { useEffect, useState, useRef } from 'react'
 import {PlanetProps} from './Planet';
-import PlanetText from './text/PlanetText';
-import SolarSystemText from './text/SolarSystemText'
-import { planets } from '../data/planets'
 
-export function UniverseCanvas() {
+export function UniverseCanvas({ setFocus }: { setFocus: (focus: string) => void }) {
   const [contextLost, setContextLost] = useState(false);
-  const [selectedPlanet, setSelectedPlanet] = useState<string | null>(null);
-  const [planetData, setPlanetData] = useState<PlanetProps | null>(null);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -74,13 +69,16 @@ export function UniverseCanvas() {
         failIfMajorPerformanceCaveat: false,
       }}
     >
+      {/* lighting */}
       <ambientLight intensity={0.2} />
       <pointLight position={[0, 0, 0]} intensity={5000} />
+
+      {/* background */}
       <Stars radius={500} depth={50} count={500} factor={4} fade />
+
       <SolarSystem
-        setSelectedPlanet={(planetName: string | null, planetDetails: PlanetProps | null) => {
-          setSelectedPlanet(planetName);
-          setPlanetData(planetDetails); // Pass planet details
+        setFocus={(focus: string) => {
+          setFocus(focus);
         }}
       />
       <OrbitControls />

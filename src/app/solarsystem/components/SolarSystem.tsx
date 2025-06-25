@@ -10,10 +10,10 @@ import { PlanetProps } from './Planet'
 type OrbitMode = 'Simple' | 'Elliptical' | 'To Scale';
 
 type SolarSystemProps = {
-  setSelectedPlanet: (planetName: string | null, planetData: PlanetProps | null) => void;
+  setFocus: (focus: string, planetData: PlanetProps | null) => void;
 };
 
-export default function SolarSystem({ setSelectedPlanet }: SolarSystemProps) {
+export default function SolarSystem({ setFocus }: SolarSystemProps) {
   const [showOrbits, setShowOrbits] = useState(true);
   const [orbitMode, setOrbitMode] = useState<OrbitMode>('Simple');
 
@@ -59,7 +59,7 @@ export default function SolarSystem({ setSelectedPlanet }: SolarSystemProps) {
           )}
           <Planet 
             {...planet} 
-            onClick={(name) => setSelectedPlanet(name, planet)} // Pass planet details
+            onClick={(name) => setFocus(name, planet)} // Pass planet details
             orbitMode={orbitMode}
           />
         </group>
@@ -70,7 +70,7 @@ export default function SolarSystem({ setSelectedPlanet }: SolarSystemProps) {
         size={2} 
         textureUrl="/solarsystemImages/SunTexture.jpg"
         rotationalSpeed={0.5}
-        onClick={() => setSelectedPlanet('Sun', null)}
+        onClick={() => setFocus('Sun', null)}
       />
     </>
   )
