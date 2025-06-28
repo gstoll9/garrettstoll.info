@@ -23,6 +23,9 @@ function Resume() {
             <Link className="projectItem" href="/hydrogen">
               <p className="projectText">Hydrogen Atom</p>
             </Link>
+            <Link className="projectItem" href="/numericalmethods">
+              <p className="projectText">Numerical Methods</p>
+            </Link>
             {/* <h2 className="projectsTitle" style={{paddingTop: "10%"}}>Games</h2>
             <div className="headerDivider" />
             <Link className="projectItem" href="/minesweeper">
@@ -227,11 +230,21 @@ function Resume() {
                   sizes="100%"
                 />
               </div>
-              <div className="jobText"> 
-                <ul className="resume-list">
-                  <li>Python: flask, pytorch, pyspark, pandas, sklearn, statsmodel, numpy, scipy, mpi4py, beautiful soup, selenium, matplotlib, langchain, transformers</li>
-                  <li>SQL, C, C++, Databricks, Go, Git, Java, JavaScript, Next.js, Node.js, React.js, HTML, CSS, MPI, OpenMP, MySQL, Microsoft &mdash; 365, Power Apps, Power Automate, Power BI, Qiskit, R and Tidyverse, Splunk, and command-line scripting</li>
-                </ul>
+              <div className="jobText">
+                <h3 className="job-header">Programming Languages</h3>
+                <p>Python, C, C++, Go, Java, JavaScript, TypeScript, HTML, CSS, SQL, R and Tidyverse</p>
+                
+                <h3 className="job-header">Python Libraries</h3>
+                <p>flask, pytorch, pyspark, pandas, sklearn, statsmodel, numpy, scipy, mpi4py, beautiful soup, selenium, matplotlib, langchain, transformers</p>
+                
+                <h3 className="job-header">JavaScript Packages/Frameworks</h3>
+                <p>Node.js, React.js, Next.js, d3.js, three.js</p>
+                
+                <h3 className="job-header">Databases</h3>
+                <p>Databricks, MySQL, Splunk</p>
+                
+                <h3 className="job-header">Other Tools</h3>
+                <p>Bash, Git, MPI, OpenMP, Qiskit, Microsoft &mdash; 365, Power Apps, Power Automate, Power BI</p>
               </div>
             </div>
 
