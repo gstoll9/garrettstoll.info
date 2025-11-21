@@ -26,6 +26,9 @@ function Resume() {
             <Link className="projectItem" href="/numericalmethods">
               <p className="projectText">Numerical Methods</p>
             </Link>
+            <Link className="projectItem" href="/structuralbioinformatics">
+              <p className="projectText">Structural Bioinformatics (Proteins)</p>
+            </Link>
             {/* <h2 className="projectsTitle" style={{paddingTop: "10%"}}>Games</h2>
             <div className="headerDivider" />
             <Link className="projectItem" href="/minesweeper">
@@ -53,6 +56,27 @@ function Resume() {
 
             <h2 className="section-header">Education</h2>
             <div className="subheaderDivider" />
+
+            {/* Temple University */}
+            <div className="sameLine">
+              <div className="resumePicContainer">
+                <Image
+                  className="logo"
+                  src="/resumeImages/VTLogo.png"
+                  alt="Virginia Tech Logo"
+                  width={0}
+                  height={0}
+                  sizes="100%"
+                />
+              </div>
+              <div className="jobText">
+                <div className="sameLine">
+                  <h3 className="job-header">Temple University College of Science and Technology</h3>
+                  <i className="date">Aug 2025 &mdash; Present</i>
+                </div>
+                <p>PSM in High-Performance Computing for Scientific Applications</p>
+              </div>
+            </div>
 
             {/* Virginia Tech */}
             <div className="sameLine">
