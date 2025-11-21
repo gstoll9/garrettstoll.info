@@ -34,6 +34,9 @@ function Resume() {
             <Link className="projectItem" href="/solitaire">
               <p className="projectText">Solitaire</p>
             </Link>
+            <Link className="projectItem" href="/freeplay">
+              <p className="projectText">Free Play</p>
+            </Link>
           </div>
 
           <div className="resume">
