@@ -1,5 +1,5 @@
 'use client'
-import { DndContext, DragEndEvent } from '@dnd-kit/core';
+import { DndContext, DragEndEvent, DragStartEvent } from '@dnd-kit/core';
 import { useEffect, useState } from 'react';
 import { createDeck } from '../lib/gameLogic';
 import { Card as CardType } from '../lib/types';
@@ -13,9 +13,12 @@ function getPileIndex(pileId: string): number {
 export default function Board() {
   const [tableau, setTableau] = useState<CardType[][]>([]);
   const [stock, setStock] = useState<CardType[]>([]);
+  const [draggingId, setDraggingId] = useState<string | null>(null);
 
   useEffect(() => {
     const deck = createDeck();
+
+    // Deal the cards
     const tableauInit: CardType[][] = Array.from({ length: 7 }, () => []);
     let deckIndex = 0;
 
@@ -33,6 +36,9 @@ export default function Board() {
     setStock(deck.slice(deckIndex));
   }, []);
 
+    function handleDragStart(event: DragStartEvent) {
+      setDraggingId(event.active.id as string);
+    }
 
     function handleDragEnd(event: DragEndEvent) {
         const { active, over } = event;
@@ -41,15 +47,15 @@ export default function Board() {
         const sourceId = active.data.current?.fromPile;
         const targetId = over.id as string;
 
-        
-        
-
         const sourceIdx = getPileIndex(sourceId);
+        console.log("sourceId", sourceId);
+        console.log("sourceIdx", sourceIdx);
         const targetIdx = getPileIndex(targetId);
 
         if (sourceId === targetId) return;
 
         const sourcePile = tableau[sourceIdx];
+        console.log("sourcePile", sourcePile);
         const targetPile = tableau[targetIdx];
         const card = sourcePile[sourcePile.length - 1];
         const topTargetCard = targetPile[targetPile.length - 1];
@@ -93,12 +99,13 @@ export default function Board() {
                 <Pile cards={stock} title="Stock" pileId="stock" stacked />
                 <Pile cards={[]} title="Waste" pileId="waste" />
                 {[1, 2, 3, 4].map(i => (
-                    <Pile 
-                        key={i} 
-                        cards={[]} 
-                        title={["Hearts", "Diamonds", "Clubs", "Spades"][i - 1]} 
-                        pileId={`score-${i}`} 
-                        stacked />
+                  <Pile 
+                      key={i} 
+                      cards={[]} 
+                      title={["Hearts", "Diamonds", "Clubs", "Spades"][i - 1]} 
+                      pileId={`score-${i}`} 
+                      stacked
+                  />
                 ))}
             </div>
             <div className="row">
