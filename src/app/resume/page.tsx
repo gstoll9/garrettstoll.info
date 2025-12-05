@@ -69,8 +69,8 @@ function Resume() {
               <div className="resumePicContainer">
                 <Image
                   className="logo"
-                  src="/resumeImages/VTLogo.png"
-                  alt="Virginia Tech Logo"
+                  src="/resumeImages/templeLogo.png"
+                  alt="Temple Logo"
                   width={0}
                   height={0}
                   sizes="100%"
@@ -86,7 +86,7 @@ function Resume() {
             </div>
 
             {/* Virginia Tech */}
-            <div className="sameLine">
+            <div className="sameLine" style={{ marginTop: "1%" }}>
               <div className="resumePicContainer">
                 <Image
                   className="logo"
