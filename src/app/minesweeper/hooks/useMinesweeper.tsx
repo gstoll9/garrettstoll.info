@@ -12,16 +12,14 @@ const directions: [number, number][] = [
 
 function getNeighbors(board: CellType[][], x: number, y: number): CellType[] {
   const neighbors: CellType[] = [];
-  for (let dx = -1; dx <= 1; dx++) {
-    for (let dy = -1; dy <= 1; dy++) {
-      if (dx === 0 && dy === 0) continue;
-      const nx = x + dx;
-      const ny = y + dy;
-      if (nx >= 0 && ny >= 0 && nx < board[0].length && ny < board.length) {
-        neighbors.push(board[ny][nx]);
-      }
+  directions.forEach(([dy, dx]) => {
+    const nx = x + dx;
+    const ny = y + dy;
+    if (nx >= 0 && ny >= 0 && nx < board[0].length && ny < board.length) {
+      neighbors.push(board[ny][nx]);
     }
-  }
+  });
+
   return neighbors;
 }
 
@@ -34,6 +32,7 @@ const generateBoard = (rows: number, cols: number, mines: number): CellType[][] 
       isRevealed: false,
       isFlagged: false,
       adjacentMines: 0,
+      mineProbability: mines / (rows * cols),
     }))
   );
 
@@ -100,27 +99,45 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
     setElapsedTime(0);
   };
 
+  const checkWin = (board: CellType[][]) => {
+    return board.every(row => 
+      row.every(cell => 
+        cell.hasMine ? cell.isFlagged : cell.isRevealed
+      )
+    );
+  };
+
   // click a number with all its flags to reveal the rest
-  function chordCell(x: number, y: number, newBoard: CellType[][]) {
+  const chordCell = (x: number, y: number, newBoard: CellType[][]) => {
     const cell = newBoard[y][x];
     if (!cell.isRevealed || cell.adjacentMines === 0) return;
 
-    const neighbors = getNeighbors(board, x, y);
+    const neighbors = getNeighbors(newBoard, x, y);
     const flagged = neighbors.filter(n => n.isFlagged);
     const covered = neighbors.filter(n => !n.isRevealed && !n.isFlagged);
 
+    // all mines are flagged
     if (flagged.length === cell.adjacentMines) {
-      // Safe to reveal the rest
-      for (const neighbor of covered) {
-        revealCell(neighbor.x, neighbor.y, newBoard);
+      // reveal the rest
+      for (const covered_i of covered) {
+        revealCell(covered_i.x, covered_i.y, newBoard);
       }
+    }
+
+    if (checkWin(newBoard)) {
+      setGameState("won");
     }
   }
 
   const revealCell = (x: number, y: number , newBoard: CellType[][]) => {
     
     const cell = newBoard[y][x];
-    if (cell.isRevealed || cell.isFlagged) return;
+    
+    if (cell.isFlagged) return;
+    else if (cell.isRevealed) {
+      chordCell(x, y, newBoard);
+      return;
+    }
 
     cell.isRevealed = true;
     if (cell.hasMine) {
@@ -128,6 +145,7 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
       return;
     }
 
+    // reveal white space
     if (cell.adjacentMines === 0) {
       const queue = [[y, x]];
       const visited = new Set();
@@ -153,6 +171,10 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
           }
         });
       }
+    }
+
+    if (checkWin(newBoard)) {
+      setGameState("won");
     }
 
     return newBoard;
@@ -318,7 +340,11 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
     //   });
     // });
 
-
+    let probabilityBoard = newBoard.map(row => row.map(cell => ({ 
+      probabilities: [] as number[], // Empty array for floats
+      currentProbability: cell.mineProbability
+    })));
+    // first loop to gather all probabilities
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
         const cell = newBoard[y][x];
@@ -326,65 +352,102 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
           const neighbors = getNeighbors(newBoard, x, y);
           const flagged = neighbors.filter(n => n.isFlagged);
           const covered = neighbors.filter(n => !n.isRevealed && !n.isFlagged);
-          if (flagged.length < cell.adjacentMines) {
-            // calculate mine probability
-            covered.forEach(n => {
-              const probability = (cell.adjacentMines - flagged.length) / covered.length;
-              newBoard[n.y][n.x].mineProbability = Math.max(probability, n.mineProbability ?? 0);
-            })
+          const mines = cell.adjacentMines - flagged.length;
+          for (let c of covered) {
+            const probability = mines / covered.length;
+            probabilityBoard[c.y][c.x].probabilities.push(probability);
+          }
+        }
+      }
+    }
+
+    // second loop, look for 1s and 0s
+    for (let y = 0; y < rows; y++) {
+      for (let x = 0; x < cols; x++) {
+        const cell = newBoard[y][x];
+        if (!cell.isRevealed && !cell.isFlagged) {
+          const probs = probabilityBoard[y][x].probabilities;
+          if (probs.length > 0) {
+            
+            if (probs.includes(1) && probs.includes(0)) {
+              console.error("Conflicting probabilities for cell", x, y, probs);
+            }
+            
+            if (probs.includes(1)) {
+              cell.mineProbability = 1;
+            } else if (probs.includes(0)) {
+              cell.mineProbability = 0;
+            } else {
+              // average the probabilities
+              const avg = probs.reduce((a, b) => a + b, 0) / probs.length;
+              const max = Math.max(...probs);
+              cell.mineProbability = max;
+            }
           }
         }
       }
     }
   }
 
+  const flagCell = (cell: CellType) => {
+    cell.isFlagged = !cell.isFlagged;
+    setRemainingMines((prev) => prev + (cell.isFlagged ? -1 : 1));
+  };  
+
   const clickCell = (x: number, y: number) => {
 
     const newBoard = board.map(row => row.map(cell => ({ ...cell })));
-    const cell = board[y][x];
+    const cell = newBoard[y][x];
 
     if (flagging) {
-      // Place or remove a flag
+      // not revealed
       if (!cell.isRevealed) {
-        cell.isFlagged = !cell.isFlagged;
-        setRemainingMines((prev) => prev + (cell.isFlagged ? -1 : 1));
+        // flag it
+        flagCell(cell);
+
+        // dont start the game with a flag
+        if (gameState == "starting") {
+          newMineProbabilities(newBoard);
+          setBoard(newBoard);
+          return;
+        }
+      // is revealed and not blank
+      } else if (cell.adjacentMines > 0) {
+        chordCell(x, y, newBoard);
       }
     } else {
       if (gameState == "starting") firstClick(x, y, newBoard);
       if (gameState !== "starting" && gameState !== "playing") return;
-      
-      if (cell.isRevealed && cell.adjacentMines > 0) {
-        chordCell(x, y, newBoard);
-      } else {
-        revealCell(x, y, newBoard);
-      }
+      revealCell(x, y, newBoard);
     }
 
     newMineProbabilities(newBoard);
     setBoard(newBoard);
     if (gameState === "starting") setGameState("playing");
-  };
+  };  
 
   const rightClickCell = (x: number, y: number) => {
     
     const newBoard = board.map(row => row.map(cell => ({ ...cell })));
-    const cell = board[y][x];
+    const cell = newBoard[y][x];
 
     if (!flagging) {
-      // Place or remove a flag
+      // not revealed
       if (!cell.isRevealed) {
-        cell.isFlagged = !cell.isFlagged;
-        setRemainingMines((prev) => prev + (cell.isFlagged ? -1 : 1));
+        // flag it
+        flagCell(cell);
+
+        // dont start the game with a flag
+        if (gameState == "starting") {
+          newMineProbabilities(newBoard);
+          setBoard(newBoard);
+          return;
+        }
       }
     } else {
       if (gameState == "starting") firstClick(x, y, newBoard);
       if (gameState !== "starting" && gameState !== "playing") return;
-      
-      if (cell.isRevealed && cell.adjacentMines > 0) {
-        chordCell(x, y, newBoard);
-      } else {
-        revealCell(x, y, newBoard);
-      }
+      revealCell(x, y, newBoard);
     }
 
     newMineProbabilities(newBoard);
