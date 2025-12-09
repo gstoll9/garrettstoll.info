@@ -49,10 +49,8 @@ export default function StructuralBioinformaticsPage() {
       <ul>
         <li><h4>Alpha Helix</h4></li>
         <ul>
-            <li><h5>HLH</h5></li>
-            <ul>
-                <li>helix - loop - helix (HLH)</li>
-                <li>Examples:</li>
+            <li><h5>Helix - Loop - Helix (HLH)</h5></li>
+                <p>Examples:</p>
                 <ul>
                   <li>EF-hand in Ca<sup>2+</sup> binding proteins</li>
                   <ul>
@@ -65,7 +63,6 @@ export default function StructuralBioinformaticsPage() {
                       <li>The interacting residues are basic, hence <b>b</b>HLH</li>
                   </ul>
                 </ul>
-            </ul>
         </ul>
         <li><h4>Beta Sheets</h4></li>
         <ul>
@@ -149,12 +146,10 @@ export default function StructuralBioinformaticsPage() {
           </ol>
           <BlockMath math="\Delta G = \Delta H - T\Delta S_{sys}"></BlockMath>
           <BlockMath math="\Delta H = \Delta E - \Delta (PV)"></BlockMath>
-          <BlockMath math="\Delta E = \Delta U - \Delta K"></BlockMath>
-          <BlockMath math="\Delta E = \Delta U - \Delta K"></BlockMath>
+          <BlockMath math="\Delta E = \Delta U + \Delta K"></BlockMath>
           <p>In biological systems: <InlineMath math="\Delta K = \frac{3}{2} k_B T" /> and we don't worry about <InlineMath math="\Delta (PV)" /></p>
-          <BlockMath math="\Delta G = \Delta U + \frac{3}{2} k_B T - T\Delta S_{sys}"></BlockMath>
+          <BlockMath math="\Delta G = \Delta U + T(\frac{3}{2} k_B - \Delta S_{sys})"></BlockMath>
           <li>Force-field based calculations calculate U using <b>molecular mechanics</b></li>
-          <p>U=</p>
           <table><tbody>
             <tr>
               <td>covalent bond length</td>
