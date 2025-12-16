@@ -39,17 +39,6 @@ export default function Sun({
         color={texture ? "#FFFFFF" : "#FDB813"} // White if texture exists, yellow if no texture
         toneMapped={false} // Prevent tone mapping from dimming
       />
-      
-      {/* Add a subtle glow effect with a slightly larger sphere */}
-      <mesh scale={1.02}>
-        <sphereGeometry args={[size, 32, 32]} />
-        <meshBasicMaterial 
-          color="#CF7A00"
-          transparent
-          opacity={0.05}
-          blending={THREE.AdditiveBlending}
-        />
-      </mesh>
     </mesh>
   )
 }

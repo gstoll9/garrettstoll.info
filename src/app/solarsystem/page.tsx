@@ -3,6 +3,7 @@ import StandardLayout from '@/layouts/standardLayout';
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 import { useEffect, useState, useRef } from 'react';
+import { PlanetProps } from './components/Planet';
 
 // Importing the UniverseCanvas component dynamically to avoid SSR issues 
 const UniverseCanvas = dynamic(() => import('./components/UniverseCanvas').then(mod => mod.UniverseCanvas), {
@@ -24,6 +25,12 @@ const UniverseCanvas = dynamic(() => import('./components/UniverseCanvas').then(
 export default function Home() {
 
     const [focus, setFocus] = useState<string>("solarsystem");
+    const [focusedPlanet, setFocusedPlanet] = useState<PlanetProps | null>(null);
+
+    const handleFocusChange = (newFocus: string, planetData: PlanetProps | null) => {
+      setFocus(newFocus);
+      setFocusedPlanet(planetData);
+    };
   
   const main =(
     <div style={{ display: 'flex', height: '100%' }}>
@@ -45,7 +52,11 @@ export default function Home() {
           Initializing 3D Scene...
         </div>
       }>
-        <UniverseCanvas setFocus={setFocus} />
+        <UniverseCanvas 
+          focus={focus}
+          focusedPlanet={focusedPlanet}
+          setFocus={handleFocusChange} 
+        />
       </Suspense>
   </div>);
 

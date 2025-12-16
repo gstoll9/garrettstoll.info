@@ -3,15 +3,18 @@ import * as THREE from 'three'
 import { useRef } from 'react'
 import Label from './Label'
 import { orbitalPosition } from '../utils'
+import { getPlanetSize } from '../data/planets'
 
 export type PlanetProps = {
   name: string
   size: number
+  realDiameter: number
   color?: string
   texture?: string
   rotationalSpeed?: number
   orbitData: {
     semimajorAxis: number
+    semimajorAxisSimplified: number
     eccentricity: number
     inclination: number
     longitudeOfAscendingNode: number
@@ -21,17 +24,22 @@ export type PlanetProps = {
   }
   orbitMode?: string
   onClick?: (name: string) => void
+  useSimplifiedDistance?: boolean
+  useRealisticSizes?: boolean
 }
 
 export default function Planet({
   name,
   size,
+  realDiameter,
   color = 'white',
   texture,
   rotationalSpeed = 0,
   orbitData,
   orbitMode = "Simple",
   onClick,
+  useSimplifiedDistance = false,
+  useRealisticSizes = false,
 }: PlanetProps) {
   const ref = useRef<THREE.Mesh>(null!)
   const groupRef = useRef<THREE.Group>(null!)
@@ -41,12 +49,14 @@ export default function Planet({
     texture ?? '/solarstsremImages/UranusTexture.jpg'
   );
 
+  const planetSize = useRealisticSizes ? getPlanetSize({ size, realDiameter } as any, true) : size;
+
   useFrame((_, delta) => {
     if (groupRef.current) {
       // Orbit calculation
       const elapsedTime = performance.now() / 1000; // Time in seconds      
       let position: [number, number, number];
-      position = orbitalPosition(orbitMode, elapsedTime, orbitData)
+      position = orbitalPosition(orbitMode, elapsedTime, orbitData, useSimplifiedDistance)
       groupRef.current.position.set(...position); // Update position
     }
     if (ref.current) {
@@ -62,7 +72,7 @@ export default function Planet({
         ref={ref}
         onClick={() => onClick?.(name)}
       >
-        <sphereGeometry args={[size, 32, 32]} />
+        <sphereGeometry args={[planetSize, 32, 32]} />
         <meshStandardMaterial 
           map={textureUrl}
           color={color}
@@ -77,7 +87,7 @@ export default function Planet({
         <mesh 
           rotation={[Math.PI / 2, 0, 0]}
         >
-          <ringGeometry args={[size + 2, size + 4, 64]} />
+          <ringGeometry args={[planetSize + 2, planetSize + 4, 64]} />
           <meshBasicMaterial
             color="goldenrod"
             side={THREE.DoubleSide}
@@ -88,7 +98,7 @@ export default function Planet({
       )}
 
       {/* Label */}
-      <Label text={name} position={[0, size+1, 0]} />
+      <Label text={name} position={[0, planetSize+1, 0]} />
     </group>
   )
 }

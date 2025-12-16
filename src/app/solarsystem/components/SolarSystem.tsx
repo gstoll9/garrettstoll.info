@@ -1,52 +1,26 @@
-import { useEffect, useState } from 'react'
 import Planet from './Planet'
 import Orbit from './Orbit'
 import { planets } from '../data/planets'
 import { AsteroidBelt } from './AsteroidBelt'
-import * as dat from 'dat.gui';
 import Sun from './Sun'
 import { PlanetProps } from './Planet'
 
-type OrbitMode = 'Simple' | 'Elliptical' | 'To Scale';
+type OrbitMode = 'Simple' | 'Elliptical';
 
 type SolarSystemProps = {
   setFocus: (focus: string, planetData: PlanetProps | null) => void;
+  showOrbits: boolean;
+  orbitMode: OrbitMode;
+  useSimplifiedDistance: boolean;
+  useRealisticSizes: boolean;
 };
 
-export default function SolarSystem({ setFocus }: SolarSystemProps) {
-  const [showOrbits, setShowOrbits] = useState(true);
-  const [orbitMode, setOrbitMode] = useState<OrbitMode>('Simple');
-
-  useEffect(() => {
-    // Initialize dat.GUI
-    const gui = new dat.GUI();
-
-    // Controls object for dat.GUI
-    const controls = {
-      showOrbits: showOrbits,
-      orbitMode: orbitMode
-    };
-
-    // Add orbit visibility toggle
-    gui.add(controls, 'showOrbits').name('Show Orbits').onChange((value: boolean) => {
-      setShowOrbits(value);
-    });
-
-    // Add orbit mode dropdown
-    gui.add(controls, 'orbitMode', ['Simple', 'Elliptical', 'To Scale']).name('Orbit Mode').onChange((value: OrbitMode) => {
-      setOrbitMode(value);
-    });
-
-    // Cleanup GUI on component unmount
-    return () => {
-      gui.destroy();
-    };
-  }, [showOrbits, orbitMode]);
+export default function SolarSystem({ setFocus, showOrbits, orbitMode, useSimplifiedDistance, useRealisticSizes }: SolarSystemProps) {
 
   return (
     <>
       {/* Asteroid Belt */}
-      <AsteroidBelt />
+      <AsteroidBelt useSimplifiedDistance={useSimplifiedDistance} />
 
       {/* Planets and orbits */}
       {planets.map((planet) => (
@@ -55,12 +29,15 @@ export default function SolarSystem({ setFocus }: SolarSystemProps) {
             <Orbit
               orbitMode={orbitMode}
               orbitData={planet.orbitData}
+              useSimplifiedDistance={useSimplifiedDistance}
             />
           )}
           <Planet 
             {...planet} 
             onClick={(name) => setFocus(name, planet)} // Pass planet details
             orbitMode={orbitMode}
+            useSimplifiedDistance={useSimplifiedDistance}
+            useRealisticSizes={useRealisticSizes}
           />
         </group>
       ))}

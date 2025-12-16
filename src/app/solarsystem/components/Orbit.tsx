@@ -6,9 +6,10 @@ type OrbitComponentProps = {
   orbitMode: string;
   orbitData: OrbitProps;
   segments?: number;
+  useSimplifiedDistance?: boolean;
 };
 
-export default function Orbit({ orbitMode, orbitData, segments = 128 }: OrbitComponentProps) {
+export default function Orbit({ orbitMode, orbitData, segments = 128, useSimplifiedDistance = false }: OrbitComponentProps) {
   const points = useMemo(() => {
     const orbitPoints: THREE.Vector3[] = []
     
@@ -16,14 +17,14 @@ export default function Orbit({ orbitMode, orbitData, segments = 128 }: OrbitCom
       
       for (let i = 0; i <= segments; i++) {
         const t = (i / segments) * orbitData.orbitalPeriod; // Time step
-        const [x, y, z] = orbitalPosition(orbitMode, t, orbitData);
+        const [x, y, z] = orbitalPosition(orbitMode, t, orbitData, useSimplifiedDistance);
         orbitPoints.push(new THREE.Vector3(x, y, z))
       }
     } else {
       // Circular orbit
       for (let i = 0; i <= segments; i++) {
         const t = (i / segments) * orbitData.orbitalPeriod; // Time step
-        const [x, _, z] = orbitalPosition(orbitMode, t, orbitData);
+        const [x, _, z] = orbitalPosition(orbitMode, t, orbitData, useSimplifiedDistance);
         // const angle = (i / segments) * Math.PI * 2
         // const x = radius * Math.cos(angle)
         // const z = radius * Math.sin(angle)
@@ -32,7 +33,7 @@ export default function Orbit({ orbitMode, orbitData, segments = 128 }: OrbitCom
     }
     
     return orbitPoints
-  }, [orbitMode, orbitData])
+  }, [orbitMode, orbitData, useSimplifiedDistance])
 
   const lineGeometry = useMemo(() => {
     const geometry = new THREE.BufferGeometry().setFromPoints(points)

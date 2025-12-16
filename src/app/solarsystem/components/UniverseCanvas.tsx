@@ -1,12 +1,28 @@
 'use client'
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls, Plane, Stars } from '@react-three/drei'
+import { Stars } from '@react-three/drei'
 import SolarSystem from './SolarSystem'
 import { useEffect, useState, useRef } from 'react'
 import {PlanetProps} from './Planet';
+import OrbitControlsMenu from './OrbitControls';
+import CameraController from './CameraController';
+import { OrbitControls } from '@react-three/drei';
 
-export function UniverseCanvas({ setFocus }: { setFocus: (focus: string) => void }) {
+type OrbitMode = 'Simple' | 'Elliptical';
+
+type UniverseCanvasProps = {
+  focus: string;
+  focusedPlanet: PlanetProps | null;
+  setFocus: (focus: string, planetData: PlanetProps | null) => void;
+};
+
+export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanvasProps) {
   const [contextLost, setContextLost] = useState(false);
+  const [showOrbits, setShowOrbits] = useState(true);
+  const [orbitMode, setOrbitMode] = useState<OrbitMode>('Simple');
+  const [useSimplifiedDistance, setUseSimplifiedDistance] = useState(false);
+  const [useRealisticSizes, setUseRealisticSizes] = useState(false);
+  const orbitControlsRef = useRef<any>(null);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -56,32 +72,56 @@ export function UniverseCanvas({ setFocus }: { setFocus: (focus: string) => void
   }
 
   return (
-    <Canvas
-      ref={canvasRef}
-      camera={{ position: [0, 10, 40], fov: 60 }}
-      gl={{
-        powerPreference: 'default',
-        antialias: false,
-        stencil: false,
-        depth: true,
-        alpha: false,
-        preserveDrawingBuffer: false,
-        failIfMajorPerformanceCaveat: false,
-      }}
-    >
-      {/* lighting */}
-      <ambientLight intensity={0.2} />
-      <pointLight position={[0, 0, 0]} intensity={5000} />
-
-      {/* background */}
-      <Stars radius={500} depth={50} count={500} factor={4} fade />
-
-      <SolarSystem
-        setFocus={(focus: string) => {
-          setFocus(focus);
-        }}
+    <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+      <OrbitControlsMenu
+        orbitMode={orbitMode}
+        setOrbitMode={setOrbitMode}
+        showOrbits={showOrbits}
+        setShowOrbits={setShowOrbits}
+        useSimplifiedDistance={useSimplifiedDistance}
+        setUseSimplifiedDistance={setUseSimplifiedDistance}
+        useRealisticSizes={useRealisticSizes}
+        setUseRealisticSizes={setUseRealisticSizes}
       />
-      <OrbitControls />
-    </Canvas>
+      <Canvas
+        ref={canvasRef}
+        camera={{ position: [0, 10, 40], fov: 60, near: 0.1, far: 10000 }}
+        gl={{
+          powerPreference: 'default',
+          antialias: false,
+          stencil: false,
+          depth: true,
+          alpha: false,
+          preserveDrawingBuffer: false,
+          failIfMajorPerformanceCaveat: false,
+        }}
+      >
+        {/* lighting */}
+        <ambientLight intensity={0.2} />
+        <pointLight position={[0, 0, 0]} intensity={5000} />
+
+        {/* background */}
+        <CameraController 
+          focus={focus}
+          planetData={focusedPlanet ? {
+            name: focusedPlanet.name,
+            orbitData: focusedPlanet.orbitData,
+            orbitMode: orbitMode
+          } : null}
+          orbitControlsRef={orbitControlsRef}
+          useSimplifiedDistance={useSimplifiedDistance}
+        />
+        <SolarSystem
+          setFocus={(focus: string, planetData: PlanetProps | null) => {
+            setFocus(focus, planetData);
+          }}
+          showOrbits={showOrbits}
+          orbitMode={orbitMode}
+          useSimplifiedDistance={useSimplifiedDistance}
+          useRealisticSizes={useRealisticSizes}
+        />
+        <OrbitControls ref={orbitControlsRef} />
+      </Canvas>
+    </div>
   )
 }

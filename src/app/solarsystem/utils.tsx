@@ -1,5 +1,6 @@
 export type OrbitProps = {
     semimajorAxis: number
+    semimajorAxisSimplified: number
     eccentricity: number
     inclination: number
     longitudeOfAscendingNode: number
@@ -8,18 +9,20 @@ export type OrbitProps = {
     orbitalPeriod: number
 }
 
-export function orbitalPosition(orbitMode: string, t: number, orbitData: OrbitProps): [number, number, number] {
+export function orbitalPosition(orbitMode: string, t: number, orbitData: OrbitProps, useSimplifiedDistance: boolean = false): [number, number, number] {
     const { 
-        semimajorAxis, eccentricity, inclination, 
+        semimajorAxis, semimajorAxisSimplified, eccentricity, inclination, 
         longitudeOfAscendingNode, argumentOfPerihelion, 
         meanAnomaly, orbitalPeriod 
     } = orbitData
 
+    const radius = useSimplifiedDistance ? semimajorAxisSimplified : semimajorAxis
+
     if (orbitMode === 'Simple') {
         // Simple circular orbit
         const angle = (t / orbitalPeriod) * 2 * Math.PI
-        const x = semimajorAxis * Math.cos(angle)
-        const z = semimajorAxis * Math.sin(angle)
+        const x = radius * Math.cos(angle)
+        const z = radius * Math.sin(angle)
         return [x, 0, -z] // Adjust for three.js Z-up camera
     }
 
@@ -32,8 +35,8 @@ export function orbitalPosition(orbitMode: string, t: number, orbitData: OrbitPr
     }
   
     // Position in orbital plane
-    const x = semimajorAxis * (Math.cos(E) - eccentricity)
-    const y = semimajorAxis * Math.sqrt(1 - eccentricity ** 2) * Math.sin(E)
+    const x = radius * (Math.cos(E) - eccentricity)
+    const y = radius * Math.sqrt(1 - eccentricity ** 2) * Math.sin(E)
   
     // Convert angles to radians
     const cos = Math.cos

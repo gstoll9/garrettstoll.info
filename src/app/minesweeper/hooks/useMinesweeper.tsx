@@ -2,6 +2,8 @@
 // hooks/useMinesweeper.ts
 import { useState, useEffect } from "react";
 import type { CellType, GameState } from "../types";
+import { number } from "framer-motion";
+import { sum } from "d3";
 
 // Count adjacent mines
 const directions: [number, number][] = [
@@ -21,6 +23,43 @@ function getNeighbors(board: CellType[][], x: number, y: number): CellType[] {
   });
 
   return neighbors;
+}
+
+// binary linear programming solver for mine probabilities
+function solveMinesweeperProbabilities(A: number[][], b: number[]): number[] {
+  const m = A.length;
+  const n = A[0].length;
+
+  const counts = Array(n).fill(0);
+  let totalSolutions = 0;
+
+  // Iterate over all binary assignments
+  for (let mask = 0; mask < (1 << n); mask++) {
+    let valid = true;
+
+    // Check constraints
+    for (let i = 0; i < m && valid; i++) {
+      let sum = 0;
+      for (let j = 0; j < n; j++) {
+        if (A[i][j] === 1 && (mask & (1 << j))) {
+          sum++;
+        }
+      }
+      if (sum !== b[i]) valid = false;
+    }
+
+    if (valid) {
+      totalSolutions++;
+      for (let j = 0; j < n; j++) {
+        if (mask & (1 << j)) {
+          counts[j]++;
+        }
+      }
+    }
+  }
+
+  // Convert counts to probabilities
+  return counts.map(c => c / totalSolutions);
 }
 
 const generateBoard = (rows: number, cols: number, mines: number): CellType[][] => {
@@ -340,53 +379,434 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
     //   });
     // });
 
-    let probabilityBoard = newBoard.map(row => row.map(cell => ({ 
-      probabilities: [] as number[], // Empty array for floats
-      currentProbability: cell.mineProbability
-    })));
-    // first loop to gather all probabilities
+
+    //
+    //
+    // THIS CODE
+    //
+    //
+
+    type numberedTileInfo = {
+      numberTile: CellType,
+      coveredNeighbors: CellType[],
+      minesLeft: number,
+    };
+
+    let numberedTiles: numberedTileInfo[] = [];
+    // let updatingCells: CellType[] = [];
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
+        
         const cell = newBoard[y][x];
+
+        // update default probability
+        if (!cell.isRevealed && !cell.isFlagged) {
+          const revealedCells = newBoard.flat().filter(c => c.isRevealed).length;
+          const flaggedCells = newBoard.flat().filter(c => c.isFlagged).length;
+          const totalCells = rows * cols;
+          const coveredCells = totalCells - revealedCells - flaggedCells;
+          const remainingMines = mines - flaggedCells;
+          cell.mineProbability = coveredCells > 0 ? remainingMines / coveredCells : 0;
+        }
+
         if (cell.isRevealed && cell.adjacentMines > 0) {
+          
           const neighbors = getNeighbors(newBoard, x, y);
-          const flagged = neighbors.filter(n => n.isFlagged);
+          
           const covered = neighbors.filter(n => !n.isRevealed && !n.isFlagged);
-          const mines = cell.adjacentMines - flagged.length;
-          for (let c of covered) {
-            const probability = mines / covered.length;
-            probabilityBoard[c.y][c.x].probabilities.push(probability);
-          }
+          if (covered.length === 0) continue;
+
+          const flagged = neighbors.filter(n => n.isFlagged);
+          const minesLeft = cell.adjacentMines - flagged.length;
+
+          numberedTiles.push({
+            numberTile: cell,
+            coveredNeighbors: covered,
+            minesLeft,
+          });
+          // covered.forEach(c => {
+          //   if (!updatingCells.includes(c)) {
+          //     updatingCells.push(c);
+          //   }
+          // });
         }
       }
     }
 
-    // second loop, look for 1s and 0s
-    for (let y = 0; y < rows; y++) {
-      for (let x = 0; x < cols; x++) {
-        const cell = newBoard[y][x];
-        if (!cell.isRevealed && !cell.isFlagged) {
-          const probs = probabilityBoard[y][x].probabilities;
-          if (probs.length > 0) {
+    // get chains of overlapping numbered tiles
+    let chains: numberedTileInfo[][] = [];
+    for (let numberTile1 of numberedTiles) {
+      
+      let thisChain: numberedTileInfo[] = [numberTile1];
+      numberedTiles = numberedTiles.filter(nt => nt !== numberTile1);
+
+      for (let numberTile2 of numberedTiles) {
+        if (numberTile1 === numberTile2) continue;
+        
+        // check for overlap
+        if (numberTile1.coveredNeighbors.some(c1 => 
+          numberTile2.coveredNeighbors.some(c2 => c1.x === c2.x && c1.y === c2.y)
+        )) {
+          thisChain.push(numberTile2);
+          numberedTiles = numberedTiles.filter(nt => nt !== numberTile2);
+        }
+      }
+      chains.push(thisChain);
+    }
+
+
+    for (let chain of chains) {
+      let A: number[][] = [];
+      let b: number[] = [];
+      let cellIndexMap: Map<string, number> = new Map();
+      let cellList: CellType[] = [];
+      
+      // Build the system of equations
+      chain.forEach((nt, rowIndex) => {
+        let row = Array(cellList.length).fill(0);
+        nt.coveredNeighbors.forEach(c => {
+          const key = `${c.x},${c.y}`;
+          if (!cellIndexMap.has(key)) {
+            cellIndexMap.set(key, cellList.length);
+            cellList.push(c);
+            // expand existing rows
+            A.forEach(r => r.push(0));
+            row.push(1);
+          } else {
+            const colIndex = cellIndexMap.get(key)!;
+            row[colIndex] = 1;
+          }
+        });
+        A.push(row);
+        b.push(nt.minesLeft);
+      });
+
+      // reduce for known bombs
+      let changed = true;
+      while (changed) {
+        changed = false;
+        for (let i = 0; i < A.length; i++) {
+          
+          // all covered cells are mines
+          if (sum(A[i]) === b[i]) {
             
-            if (probs.includes(1) && probs.includes(0)) {
-              console.error("Conflicting probabilities for cell", x, y, probs);
+            // remove from the column and reduce b
+            for (let j = 0; j < A[i].length; j++) {
+              if (A[i][j] === 1) {
+                A[i][j] = 0;
+                b[i]--;
+                
+                // set probability to 1 and mark changed
+                // remove from cellList
+                cellList.splice((i*A.length) + j, 1);
+                newBoard[i][j].mineProbability = 1;
+                changed = true;
+              }
             }
-            
-            if (probs.includes(1)) {
-              cell.mineProbability = 1;
-            } else if (probs.includes(0)) {
-              cell.mineProbability = 0;
-            } else {
-              // average the probabilities
-              const avg = probs.reduce((a, b) => a + b, 0) / probs.length;
-              const max = Math.max(...probs);
-              cell.mineProbability = max;
+          // all covered cells are safe
+          } else if (b[i] === 0) {
+
+            // remove from the column and reduce b
+            for (let j = 0; j < A[i].length; j++) {
+              if (A[i][j] === 1) {
+                A[i][j] = 0;
+
+                // set probability to 0 and mark changed
+                // remove from cellList
+                cellList.splice((i*A.length) + j, 1);
+                newBoard[i][j].mineProbability = 0;
+                changed = true;
+              }
             }
           }
         }
+
       }
+
+      // Solve for probabilities
+      const probabilities = solveMinesweeperProbabilities(A, b);
+
+      // Update cell probabilities
+      cellList.forEach((cell, index) => {
+        cell.mineProbability = probabilities[index];
+      });
     }
+
+
+    // let certainBombs: CellType[] = [];
+    // let certainSafe: CellType[] = [];
+    // for (let chain of chains) {
+    //   for (let nt of chain) {
+    //     // check for 1s and 0s
+    //     if (nt.minesLeft === 0) {
+    //       nt.coveredNeighbors.forEach(c => {
+    //         if (!certainSafe.includes(c)) {
+    //           c.mineProbability = 0;
+    //           certainSafe.push(c);
+    //         }
+    //       });
+    //     } else if (nt.minesLeft === nt.coveredNeighbors.length) {
+    //       nt.coveredNeighbors.forEach(c => {
+    //         if (!certainBombs.includes(c)) {
+    //           c.mineProbability = 1;
+    //           certainBombs.push(c);
+    //         }
+    //       });
+    //     }
+    //   }
+    // }
+
+    // for (let chain of chains) {
+    //   // process each chain
+    //   for (let numberTile of chain) {
+    //     for (let covered_cell of numberTile.coveredNeighbors) {
+    //       // check for 1s and 0s
+    //       if (numberTile.minesLeft === 0) {
+    //         covered_cell.mineProbability = 0;
+    //       } else if (numberTile.minesLeft === numberTile.coveredNeighbors.length) {
+    //         covered_cell.mineProbability = 1;
+    //       }
+    //     }
+    //   }
+    // }
+
+    // let mineMap: {loc: {info: numberedTileInfo[], cell: CellType}} = {};
+
+
+    // for (let covered_cell of updatingCells) {
+    //   let numbers: {numberTile: CellType, coveredNeighbors: CellType[], minesLeft: number}[] = [];
+    //   numberedTiles.forEach(nt => {
+    //     if (nt.coveredNeighbors.some(c => c.x === covered_cell.x && c.y === covered_cell.y)) {
+    //       numbers.push(nt);
+    //     }
+    //   });
+
+    //   // check for 1s and 0s
+    //   for (let n of numbers) {
+    //     if (n.minesLeft === 0) {
+    //       covered_cell.mineProbability = 0;
+    //       break;
+    //     } else if (n.minesLeft === n.coveredNeighbors.length) {
+    //       covered_cell.mineProbability = 1;
+    //       break;
+    //     }
+    //   }
+
+    // };
+
+    //
+    //
+    // THIS CODE
+    //
+    //
+
+    // type ProbabilityInfo = {
+    //   probabilities: number[];
+    //   currentProbability: number;
+    // };
+
+    // let probabilityBoard: ProbabilityInfo[][] = newBoard.map(row => 
+    //   row.map(cell => ({ 
+    //     probabilities: [] as number[],
+    //     currentProbability: cell.mineProbability ?? 0
+    //   }))
+    // );
+
+    // // Process each chain to find all valid mine configurations
+    // for (let chain of chains) {
+    //   // Get all unique cells in this chain
+    //   const allCells = new Map<string, CellType>();
+    //   chain.forEach(nt => {
+    //     nt.coveredNeighbors.forEach(cell => {
+    //       const key = `${cell.x},${cell.y}`;
+    //       if (!allCells.has(key)) {
+    //         allCells.set(key, cell);
+    //       }
+    //     });
+    //   });
+
+    //   const cellsArray = Array.from(allCells.values());
+    //   const numCells = cellsArray.length;
+      
+    //   // Generate all possible mine configurations (2^n possibilities)
+    //   const maxConfigurations = Math.pow(2, numCells);
+    //   const validConfigurations: boolean[][] = [];
+
+    //   // Check each possible configuration
+    //   for (let config = 0; config < maxConfigurations; config++) {
+    //     const mineConfig: boolean[] = [];
+        
+    //     // Convert number to binary representation
+    //     for (let i = 0; i < numCells; i++) {
+    //       mineConfig.push((config & (1 << i)) !== 0);
+    //     }
+
+    //     // Check if this configuration satisfies all constraints
+    //     let isValid = true;
+    //     for (let nt of chain) {
+    //       // Count mines in this numbered tile's neighbors
+    //       let mineCount = 0;
+    //       for (let neighbor of nt.coveredNeighbors) {
+    //         const cellIndex = cellsArray.findIndex(c => c.x === neighbor.x && c.y === neighbor.y);
+    //         if (cellIndex !== -1 && mineConfig[cellIndex]) {
+    //           mineCount++;
+    //         }
+    //       }
+
+    //       // Check if mine count matches the constraint
+    //       if (mineCount !== nt.minesLeft) {
+    //         isValid = false;
+    //         break;
+    //       }
+    //     }
+
+    //     if (isValid) {
+    //       validConfigurations.push(mineConfig);
+    //     }
+    //   }
+
+    //   // Calculate probabilities based on valid configurations
+    //   if (validConfigurations.length > 0) {
+    //     for (let i = 0; i < numCells; i++) {
+    //       const cell = cellsArray[i];
+    //       let mineCount = 0;
+          
+    //       // Count how many valid configurations have a mine at this position
+    //       for (let config of validConfigurations) {
+    //         if (config[i]) {
+    //           mineCount++;
+    //         }
+    //       }
+
+    //       const probability = mineCount / validConfigurations.length;
+    //       probabilityBoard[cell.y][cell.x].probabilities.push(probability);
+    //     }
+    //   } else {
+    //     // No valid configurations found - might indicate incorrect flags
+    //     console.warn("No valid configurations found for chain", chain);
+    //     for (let cell of cellsArray) {
+    //       probabilityBoard[cell.y][cell.x].probabilities.push(-1); // Error marker
+    //     }
+    //   }
+    // }
+
+    // // Update cell probabilities
+    // for (let y = 0; y < rows; y++) {
+    //   for (let x = 0; x < cols; x++) {
+    //     const cell = newBoard[y][x];
+        
+    //     if (!cell.isRevealed && !cell.isFlagged) {
+    //       const probs = probabilityBoard[y][x].probabilities;
+          
+    //       if (probs.length === 0) {
+    //         // No information - use baseline probability
+    //         const revealedCells = newBoard.flat().filter(c => c.isRevealed).length;
+    //         const flaggedCells = newBoard.flat().filter(c => c.isFlagged).length;
+    //         const totalCells = rows * cols;
+    //         const coveredCells = totalCells - revealedCells - flaggedCells;
+    //         const remainingMines = mines - flaggedCells;
+            
+    //         cell.mineProbability = coveredCells > 0 ? remainingMines / coveredCells : 0;
+    //       } else if (probs.includes(-1)) {
+    //         // Error state - conflicting information
+    //         cell.mineProbability = -1;
+    //       } else {
+    //         // Use the calculated probability
+    //         // All probabilities should be the same if calculated from valid configurations
+    //         cell.mineProbability = probs[0];
+    //       }
+    //     }
+    //   }
+    // }
+
+    //
+    //
+    // THAT CODE
+    //
+    //
+
+    // let infoSets: {informer: CellType, targets: CellType[], probability: number}[] = [];
+    // let probabilityBoard = newBoard.map(row => row.map(cell => ({ 
+    //   probabilities: [] as number[], // Empty array for floats
+    //   currentProbability: cell.mineProbability
+    // })));
+
+    // // first loop to gather all probabilities
+    // for (let y = 0; y < rows; y++) {
+    //   for (let x = 0; x < cols; x++) {
+    //     const cell = newBoard[y][x];
+    //     if (cell.isRevealed && cell.adjacentMines > 0) {
+
+    //       const neighbors = getNeighbors(newBoard, x, y);
+    //       const flagged = neighbors.filter(n => n.isFlagged);
+    //       const covered = neighbors.filter(n => !n.isRevealed && !n.isFlagged);
+    //       const minesLeft = cell.adjacentMines - flagged.length;
+
+    //       // add to info sets
+    //       infoSets.push({
+    //         informer: cell,
+    //         targets: covered,
+    //         probability: minesLeft / covered.length,
+    //       });
+
+    //       // add to probability board
+    //       for (let c of covered) {
+    //         const probability = minesLeft / covered.length;
+    //         probabilityBoard[c.y][c.x].probabilities.push(probability);
+    //       }
+    //     }
+    //   }
+    // }
+
+    // // second loop, look for 1s and 0s
+    // for (let y = 0; y < rows; y++) {
+    //   for (let x = 0; x < cols; x++) {
+    //     const cell = newBoard[y][x];
+
+    //     if (cell.isRevealed && cell.adjacentMines > 0) {
+    //       const neighbors = getNeighbors(newBoard, x, y);
+    //       const flagged = neighbors.filter(n => n.isFlagged);
+    //       const covered = neighbors.filter(n => !n.isRevealed && !n.isFlagged);
+    //       const probNeighbors = covered.map(n => probabilityBoard[n.y][n.x]);
+    //       let minesLeft = cell.adjacentMines - flagged.length;
+    //       let zeros = 0;
+    //       for (let n of probNeighbors) {
+    //         if (n.probabilities.includes(1)) {
+    //           minesLeft--;
+    //           const index = probNeighbors.indexOf(n);
+    //           if (index > -1) {
+    //             probNeighbors.splice(index, 1);
+    //           }
+    //         } else if (n.probabilities.includes(0)) {
+    //           zeros++;
+    //         }
+    //       }
+
+    //     };
+
+    //     if (!cell.isRevealed && !cell.isFlagged) {
+    //       const probs = probabilityBoard[y][x].probabilities;
+    //       if (probs.length > 0) {
+            
+    //         // handle incorrect falgs
+    //         if (probs.includes(1) && probs.includes(0)) {
+    //           console.error("Conflicting probabilities for cell", x, y, probs);
+    //         }
+            
+    //         if (probs.includes(1)) {
+    //           cell.mineProbability = 1;
+    //         } else if (probs.includes(0)) {
+    //           cell.mineProbability = 0;
+    //         } else {
+    //           // average the probabilities
+    //           const avg = probs.reduce((a, b) => a + b, 0) / probs.length;
+    //           const max = Math.max(...probs);
+    //           cell.mineProbability = max;
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
   }
 
   const flagCell = (cell: CellType) => {
