@@ -2,8 +2,6 @@
 // hooks/useMinesweeper.ts
 import { useState, useEffect } from "react";
 import type { CellType, GameState } from "../types";
-import { number } from "framer-motion";
-import { sum } from "d3";
 
 // Count adjacent mines
 const directions: [number, number][] = [
@@ -215,6 +213,8 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
     if (checkWin(newBoard)) {
       setGameState("won");
     }
+
+    // calculate new probabilities
 
     return newBoard;
   };
@@ -487,8 +487,11 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
         changed = false;
         for (let i = 0; i < A.length; i++) {
           
+          // sum row
+          const n_covered = A[i].reduce((acc, val) => acc + val, 0);
+          
           // all covered cells are mines
-          if (sum(A[i]) === b[i]) {
+          if (n_covered === b[i]) {
             
             // remove from the column and reduce b
             for (let j = 0; j < A[i].length; j++) {

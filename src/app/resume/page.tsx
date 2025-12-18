@@ -30,6 +30,9 @@ function Resume() {
             <Link className="projectItem" href="/structuralbioinformatics">
               <p className="projectText">Structural Bioinformatics</p>
             </Link>
+            <Link className="projectItem" href="/threeBody">
+              <p className="projectText">Three-Body Problem</p>
+            </Link>
 
             {/* Games Header */}
             <h2 className="projectsTitle" style={{paddingTop: "10%"}}>Games</h2>
