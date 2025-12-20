@@ -61,17 +61,17 @@ export default function OrbitControlsMenu({
           <div className="control-group">
             <label className="control-label">Distance Mode</label>
             <div className="button-group">
+             <button
+                className={`mode-button ${useSimplifiedDistance ? 'active' : ''}`}
+                onClick={() => setUseSimplifiedDistance(true)}
+              >
+                Even Spacing
+              </button>
               <button
                 className={`mode-button ${!useSimplifiedDistance ? 'active' : ''}`}
                 onClick={() => setUseSimplifiedDistance(false)}
               >
                 Realistic
-              </button>
-              <button
-                className={`mode-button ${useSimplifiedDistance ? 'active' : ''}`}
-                onClick={() => setUseSimplifiedDistance(true)}
-              >
-                Even Spacing
               </button>
             </div>
           </div>

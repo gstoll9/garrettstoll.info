@@ -20,7 +20,7 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
   const [contextLost, setContextLost] = useState(false);
   const [showOrbits, setShowOrbits] = useState(true);
   const [orbitMode, setOrbitMode] = useState<OrbitMode>('Simple');
-  const [useSimplifiedDistance, setUseSimplifiedDistance] = useState(false);
+  const [useSimplifiedDistance, setUseSimplifiedDistance] = useState(true);
   const [useRealisticSizes, setUseRealisticSizes] = useState(false);
   const orbitControlsRef = useRef<any>(null);
 
