@@ -13,11 +13,12 @@ export default function Orbit({ orbitMode, orbitData, segments = 128, useSimplif
   const points = useMemo(() => {
     const orbitPoints: THREE.Vector3[] = []
     
-    if (orbitMode === "Elliptical") {
+    if (orbitMode === "Elliptical" || orbitMode === "RealLive") {
       
       for (let i = 0; i <= segments; i++) {
         const t = (i / segments) * orbitData.orbitalPeriod; // Time step
-        const [x, y, z] = orbitalPosition(orbitMode, t, orbitData, useSimplifiedDistance);
+        // Pass 'Elliptical' so we get the theoretical full path from orbitalPosition
+        const [x, y, z] = orbitalPosition("Elliptical", t, orbitData, useSimplifiedDistance);
         orbitPoints.push(new THREE.Vector3(x, y, z))
       }
     } else {

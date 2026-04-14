@@ -9,7 +9,12 @@ export type OrbitProps = {
     orbitalPeriod: number
 }
 
-export function orbitalPosition(orbitMode: string, t: number, orbitData: OrbitProps, useSimplifiedDistance: boolean = false): [number, number, number] {
+export const simulationState = {
+    elapsed: 0,
+    dateMs: Date.now()
+};
+
+export function orbitalPosition(orbitMode: string, t: number, orbitData: OrbitProps, useSimplifiedDistance: boolean = false, name?: string, dateMs?: number): [number, number, number] {
     const { 
         semimajorAxis, semimajorAxisSimplified, eccentricity, inclination, 
         longitudeOfAscendingNode, argumentOfPerihelion, 
@@ -17,6 +22,56 @@ export function orbitalPosition(orbitMode: string, t: number, orbitData: OrbitPr
     } = orbitData
 
     const radius = useSimplifiedDistance ? semimajorAxisSimplified : semimajorAxis
+
+    if (orbitMode === 'RealLive' && name) {
+        try {
+            // dynamically require 'astronomy-engine' since we cannot import at top of this file without modifying more heavily
+            const { Body, HelioVector, Rotation_EQJ_ECL, RotateVector } = require('astronomy-engine');
+            const now = new Date(dateMs ?? Date.now());
+            const bodyMap: Record<string, any> = {
+                'Mercury': Body.Mercury,
+                'Venus': Body.Venus,
+                'Earth': Body.Earth,
+                'Mars': Body.Mars,
+                'Jupiter': Body.Jupiter,
+                'Saturn': Body.Saturn,
+                'Uranus': Body.Uranus,
+                'Neptune': Body.Neptune
+            };
+            const body = bodyMap[name];
+            if (body) {
+                // Get J2000 equatorial coordinates
+                const vecEqj = HelioVector(body, now);
+                // Rotate to J2000 ecliptic coordinates (x, y = ecliptic plane, z = perpendicular)
+                const rotMatrix = Rotation_EQJ_ECL();
+                const vecEcl = RotateVector(rotMatrix, vecEqj);
+
+                // Map to three.js coordinates: Y is up!
+                // vecEcl.x, vecEcl.y form the ecliptic plane mapped to three.js XZ plane.
+                let X = vecEcl.x;
+                let Y = vecEcl.z;
+                let Z = -vecEcl.y;
+                
+                if (useSimplifiedDistance) {
+                    const currentDist = Math.sqrt(X*X + Y*Y + Z*Z);
+                    const targetDist = semimajorAxisSimplified;
+                    const rScale = targetDist / currentDist;
+                    X *= rScale;
+                    Y *= rScale;
+                    Z *= rScale;
+                } else {
+                    const distanceFactor = 12; // 1 AU = 12 units
+                    X *= distanceFactor;
+                    Y *= distanceFactor;
+                    Z *= distanceFactor;
+                }
+                return [X, Y, Z];
+            }
+        } catch (e) {
+            console.error(e);
+            // fallback below
+        }
+    }
 
     if (orbitMode === 'Simple') {
         // Simple circular orbit

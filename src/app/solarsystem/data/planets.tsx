@@ -66,6 +66,8 @@ export const planets = [
     rotationalSpeed: 0.02, 
     textureUrl: '/solarsystemImages/EarthTexture.jpg',
     
+    moons: [{ name: 'Moon', size: 0.27, distance: 2, orbitSpeed: 2, color: '#ccc' }],
+
     // elliptical
     orbitData: {
       semimajorAxis: 1 * distanceFactor,  // in AU (realistic)
@@ -74,6 +76,7 @@ export const planets = [
       inclination: 0,                     // in degrees to ecliptic
       longitudeOfAscendingNode: -11.261,  // in degrees
       argumentOfPerihelion: 114.208,      // in degrees
+
       meanAnomaly: 358.617,               // in degrees
       orbitalPeriod: 1 * orbitalPeriodFactor,                   // in Julian years (sidereal)
     }
@@ -88,6 +91,11 @@ export const planets = [
     distance: 25, 
     orbitSpeed: 0.4, 
     rotationalSpeed: 0.018,
+
+    moons: [
+      { name: 'Phobos', size: 0.1, distance: 1.2, orbitSpeed: 3, color: '#aaa' },
+      { name: 'Deimos', size: 0.08, distance: 1.8, orbitSpeed: 2.2, color: '#bbb' }
+    ],
     
     // elliptical
     orbitData: {
@@ -112,6 +120,13 @@ export const planets = [
     orbitSpeed: 0.2, 
     rotationalSpeed: 0.04,
     
+    moons: [
+      { name: 'Io', size: 0.3, distance: 3.5, orbitSpeed: 4, color: '#ffcc00' },
+      { name: 'Europa', size: 0.28, distance: 4.5, orbitSpeed: 2, color: '#e6e6e6' },
+      { name: 'Ganymede', size: 0.4, distance: 6, orbitSpeed: 1, color: '#a09f98' },
+      { name: 'Callisto', size: 0.38, distance: 8, orbitSpeed: 0.4, color: '#888' }
+    ],
+
     // elliptical
     orbitData: {
       semimajorAxis: 5.204 * distanceFactor,  // in AU (realistic)

@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import Label from './Label'
 import { orbitalPosition } from '../utils'
 import { getPlanetSize } from '../data/planets'
+import { simulationState } from '../utils'
 
 export type PlanetProps = {
   name: string
@@ -22,10 +23,19 @@ export type PlanetProps = {
     meanAnomaly: number
     orbitalPeriod: number
   }
+  moons?: {
+    name: string
+    size: number
+    distance: number
+    orbitSpeed: number
+    color: string
+  }[]
   orbitMode?: string
   onClick?: (name: string) => void
   useSimplifiedDistance?: boolean
   useRealisticSizes?: boolean
+  timeScale?: number
+  isFocused?: boolean
 }
 
 export default function Planet({
@@ -36,10 +46,13 @@ export default function Planet({
   texture,
   rotationalSpeed = 0,
   orbitData,
+  moons,
   orbitMode = "Simple",
   onClick,
   useSimplifiedDistance = false,
   useRealisticSizes = false,
+  timeScale = 1,
+  isFocused = false,
 }: PlanetProps) {
   const ref = useRef<THREE.Mesh>(null!)
   const groupRef = useRef<THREE.Group>(null!)
@@ -53,14 +66,37 @@ export default function Planet({
 
   useFrame((_, delta) => {
     if (groupRef.current) {
-      // Orbit calculation
-      const elapsedTime = performance.now() / 1000; // Time in seconds      
-      let position: [number, number, number];
-      position = orbitalPosition(orbitMode, elapsedTime, orbitData, useSimplifiedDistance)
+      // Orbit calculation uses the globally accumulated time
+      const position = orbitalPosition(orbitMode, simulationState.elapsed, orbitData, useSimplifiedDistance, name, simulationState.dateMs)
+      
       groupRef.current.position.set(...position); // Update position
     }
     if (ref.current) {
-      ref.current.rotation.y += rotationalSpeed * delta // self-rotation speed
+      if (orbitMode === 'RealLive') {
+        const realRoationPeriodsDays: Record<string, number> = {
+          'Mercury': 58.6,
+          'Venus': -243,
+          'Earth': 0.997,
+          'Mars': 1.026,
+          'Jupiter': 0.41,
+          'Saturn': 0.44,
+          'Uranus': -0.72,
+          'Neptune': 0.67
+        };
+        const period = realRoationPeriodsDays[name];
+        if (period) {
+            const periodMs = period * 24 * 60 * 60 * 1000;
+            // The angular velocity per millisecond:
+            const angularVelocity = (2 * Math.PI) / periodMs;
+            // Delta is in seconds, so delta ms is delta * 1000
+            // DO NOT apply timescale to rotation, keep it real-time or constant visual rate
+            ref.current.rotation.y += angularVelocity * (delta * 1000);
+        } else {
+            ref.current.rotation.y += rotationalSpeed * delta;
+        }
+      } else {
+        ref.current.rotation.y += rotationalSpeed * delta // self-rotation speed
+      }
     }
   })
 
@@ -97,9 +133,39 @@ export default function Planet({
         </mesh>
       )}
 
+      {/* Moons */}
+      {isFocused && moons && moons.map(moon => (
+        <Moon key={moon.name} moon={moon} planetSize={planetSize} />
+      ))}
+
       {/* Label */}
       <Label text={name} position={[0, planetSize+1, 0]} />
     </group>
   )
 }
 
+
+function Moon({ moon, planetSize }: { moon: any, planetSize: number }) {
+  const ref = useRef<THREE.Mesh>(null!)
+  
+  useFrame((_, delta) => {
+    if (ref.current) {
+        // Orbit speed in rad/sec
+        // For simplicity, using simulation elapsed time roughly translated
+        const angle = simulationState.elapsed * moon.orbitSpeed * 0.5
+        ref.current.position.set(
+            Math.cos(angle) * (planetSize + moon.distance),
+            0,
+            Math.sin(angle) * (planetSize + moon.distance)
+        )
+    }
+  })
+
+  return (
+    <mesh ref={ref}>
+      <sphereGeometry args={[moon.size, 16, 16]} />
+      <meshStandardMaterial color={moon.color} />
+      <Label text={moon.name} position={[0, moon.size + 0.5, 0]} fontSize={0.2} />
+    </mesh>
+  )
+}

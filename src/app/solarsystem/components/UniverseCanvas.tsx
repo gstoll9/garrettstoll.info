@@ -1,5 +1,5 @@
 'use client'
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { Stars } from '@react-three/drei'
 import SolarSystem from './SolarSystem'
 import { useEffect, useState, useRef } from 'react'
@@ -7,8 +7,23 @@ import {PlanetProps} from './Planet';
 import OrbitControlsMenu from './OrbitControls';
 import CameraController from './CameraController';
 import { OrbitControls } from '@react-three/drei';
+import { simulationState } from '../utils';
 
-type OrbitMode = 'Simple' | 'Elliptical';
+type OrbitMode = 'Simple' | 'Elliptical' | 'RealLive';
+
+function TimeUpdater({ timeScale }: { timeScale: number }) {
+  useEffect(() => {
+    simulationState.dateMs = Date.now();
+    simulationState.elapsed = performance.now() / 1000;
+  }, []);
+
+  useFrame((_, delta) => {
+    simulationState.elapsed += delta * timeScale;
+    simulationState.dateMs += delta * 1000 * timeScale;
+  });
+  
+  return null;
+}
 
 type UniverseCanvasProps = {
   focus: string;
@@ -22,6 +37,7 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
   const [orbitMode, setOrbitMode] = useState<OrbitMode>('Simple');
   const [useSimplifiedDistance, setUseSimplifiedDistance] = useState(true);
   const [useRealisticSizes, setUseRealisticSizes] = useState(false);
+  const [timeScale, setTimeScale] = useState(1);
   const orbitControlsRef = useRef<any>(null);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -82,6 +98,8 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
         setUseSimplifiedDistance={setUseSimplifiedDistance}
         useRealisticSizes={useRealisticSizes}
         setUseRealisticSizes={setUseRealisticSizes}
+        timeScale={timeScale}
+        setTimeScale={setTimeScale}
       />
       <Canvas
         ref={canvasRef}
@@ -100,6 +118,8 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
         <ambientLight intensity={0.2} />
         <pointLight position={[0, 0, 0]} intensity={5000} />
 
+        <TimeUpdater timeScale={timeScale} />
+
         {/* background */}
         <CameraController 
           focus={focus}
@@ -115,10 +135,12 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
           setFocus={(focus: string, planetData: PlanetProps | null) => {
             setFocus(focus, planetData);
           }}
+          focus={focus}
           showOrbits={showOrbits}
           orbitMode={orbitMode}
           useSimplifiedDistance={useSimplifiedDistance}
           useRealisticSizes={useRealisticSizes}
+          timeScale={timeScale}
         />
         <OrbitControls ref={orbitControlsRef} />
       </Canvas>

@@ -5,17 +5,19 @@ import { AsteroidBelt } from './AsteroidBelt'
 import Sun from './Sun'
 import { PlanetProps } from './Planet'
 
-type OrbitMode = 'Simple' | 'Elliptical';
+type OrbitMode = 'Simple' | 'Elliptical' | 'RealLive';
 
 type SolarSystemProps = {
   setFocus: (focus: string, planetData: PlanetProps | null) => void;
+  focus: string;
   showOrbits: boolean;
   orbitMode: OrbitMode;
   useSimplifiedDistance: boolean;
   useRealisticSizes: boolean;
+  timeScale: number;
 };
 
-export default function SolarSystem({ setFocus, showOrbits, orbitMode, useSimplifiedDistance, useRealisticSizes }: SolarSystemProps) {
+export default function SolarSystem({ setFocus, focus, showOrbits, orbitMode, useSimplifiedDistance, useRealisticSizes, timeScale }: SolarSystemProps) {
 
   return (
     <>
@@ -38,6 +40,8 @@ export default function SolarSystem({ setFocus, showOrbits, orbitMode, useSimpli
             orbitMode={orbitMode}
             useSimplifiedDistance={useSimplifiedDistance}
             useRealisticSizes={useRealisticSizes}
+            timeScale={timeScale}
+            isFocused={focus === planet.name}
           />
         </group>
       ))}
@@ -48,6 +52,7 @@ export default function SolarSystem({ setFocus, showOrbits, orbitMode, useSimpli
         textureUrl="/solarsystemImages/SunTexture.jpg"
         rotationalSpeed={0.5}
         onClick={() => setFocus('Sun', null)}
+        timeScale={timeScale}
       />
     </>
   )
