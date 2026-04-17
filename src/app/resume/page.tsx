@@ -30,9 +30,9 @@ function Resume() {
             <Link className="projectItem" href="/structuralbioinformatics">
               <p className="projectText">Structural Bioinformatics</p>
             </Link>
-            <Link className="projectItem" href="/threeBody">
+            {/* <Link className="projectItem" href="/threeBody">
               <p className="projectText">Three-Body Problem</p>
-            </Link>
+            </Link> */}
 
             {/* Games Header */}
             <h2 className="projectsTitle" style={{paddingTop: "10%"}}>Games</h2>
@@ -41,18 +41,40 @@ function Resume() {
             <Link className="projectItem" href="/minesweeper">
               <p className="projectText">Minesweeper</p>
             </Link>
-            <Link className="projectItem" href="/solitaire">
+            {/* <Link className="projectItem" href="/solitaire">
               <p className="projectText">Solitaire</p>
             </Link>
             <Link className="projectItem" href="/freeplay">
               <p className="projectText">Free Play</p>
-            </Link>
+            </Link> */}
           </div>
 
           <div className="resume">
             <div className="sameLine" id="intro">
-              <p className="introText">Welcome to garrettstoll.info! I will be using this website to share projects I have put together. They will span my various interests including data science, biochemistry, physics, and AI. Right now you can check out my undergraduate research on simulating the Hubbard Model, explore our solar system, or see how the Schrodinger equation can visualize atoms. You can expect regular updates to these pages and more! For consulting or employment inquiries, please email me at <a href="mailto:garrettstoll@gmail.com">garrettstoll@gmail.com</a>. Have fun, and enjoy this site responsibly!</p>
-              <div className="profilePicContainer">
+              {/* <p className="introText">Welcome to garrettstoll.info! I will be using this website to share projects I have put together. They will span my various interests including data science, biochemistry, physics, and AI. Right now you can check out my undergraduate research on simulating the Hubbard Model, explore our solar system, or see how the Schrodinger equation can visualize atoms. You can expect regular updates to these pages and more! For consulting or employment inquiries, please email me at <a href="mailto:garrettstoll@gmail.com">garrettstoll@gmail.com</a>. Have fun, and enjoy this site responsibly!</p> */}
+              <div style={{ flex: '3' }}>  
+                <h2 className="section-header" style={{ width: '100%' }}>Summary of Qualifications</h2>
+                <div className="subheaderDivider" style={{ width: '100%' }} />
+                <div className="sameLine">
+                  <div style={{ flex: '1' }}>
+                    <ul className="resume-list">
+                      <li style={{marginBottom: "1.5%"}}>Implementing AI, ML, and ETL pipelines</li>
+                      <li style={{marginBottom: "1.5%"}}>Data mining, cleaning, and visualizations</li>
+                      <li style={{marginBottom: "1.5%"}}>Cloud and high-performance computing</li>
+                      <li style={{marginBottom: "1.5%"}}>Frontend development using React.js and Microsoft Power Apps</li>
+                    </ul>
+                  </div>
+                  <div style={{ flex: '1' }}>
+                    <ul className="resume-list">
+                      <li style={{marginBottom: "1.5%"}}>Natural leader</li>
+                      <li style={{marginBottom: "1.5%"}}>Fast learner</li>
+                      <li style={{marginBottom: "1.5%"}}>Creative problem solver</li>
+                      <li style={{marginBottom: "1.5%"}}>Blockchain, Computational Biochemistry, and Quantum Physics research</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div className="profilePicContainer" style={{ flex: '2' }}>
                 <Image
                   className="introPic"
                   src="/resumeImages/profilePic.png"

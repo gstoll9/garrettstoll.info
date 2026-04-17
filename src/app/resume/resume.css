@@ -147,3 +147,63 @@ p:not(.introText) {
 .research {
     flex: 8;
 }
+
+/* Responsive Mobile Layout */
+@media (max-width: 768px) {
+    .sameLine {
+        flex-direction: column !important;
+    }
+    .sameLine > div {
+        flex: auto !important;
+        width: 100% !important;
+    }
+    .section-header, .job-header, .date {
+        width: 100% !important;
+        text-align: left !important;
+        padding-left: 0 !important;
+        margin-left: 0 !important;
+        padding-top: 15px !important;
+    }
+    .subheaderDivider {
+        width: 80% !important;
+        margin-bottom: 20px !important;
+    }
+    .profilePicContainer {
+        justify-content: center !important;
+        margin-top: 1.5rem !important;
+        margin-bottom: 2rem !important;
+        width: 100% !important;
+    }
+    .introPic {
+        padding: 0 !important;
+        border-radius: 50% !important;
+        max-width: 150px !important;
+    }
+    .resumePicContainer {
+        width: 100% !important;
+        max-width: 150px !important;
+        margin: 1.5rem auto 1rem auto !important;
+    }
+    .resume {
+        padding-right: 0 !important;
+        width: 100% !important;
+    }
+    .projects {
+        margin-top: 2.5rem !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    .date {
+        font-style: italic !important;
+        margin-top: 0.25rem !important;
+        margin-bottom: 1rem !important;
+    }
+    p:not(.introText) {
+        margin: 0 !important;
+        margin-bottom: 0.5rem !important;
+    }
+    .jobText {
+        width: 100% !important;
+    }
+}

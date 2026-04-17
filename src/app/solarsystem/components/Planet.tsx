@@ -135,7 +135,7 @@ export default function Planet({
 
       {/* Moons */}
       {isFocused && moons && moons.map(moon => (
-        <Moon key={moon.name} moon={moon} planetSize={planetSize} />
+        <Moon key={moon.name} moon={moon} planetSize={planetSize} planetName={name} orbitMode={orbitMode} />
       ))}
 
       {/* Label */}
@@ -144,14 +144,52 @@ export default function Planet({
   )
 }
 
-
-function Moon({ moon, planetSize }: { moon: any, planetSize: number }) {
+function Moon({ moon, planetSize, planetName, orbitMode }: { moon: any, planetSize: number, planetName: string, orbitMode: string }) {
   const ref = useRef<THREE.Mesh>(null!)
   
   useFrame((_, delta) => {
     if (ref.current) {
-        // Orbit speed in rad/sec
-        // For simplicity, using simulation elapsed time roughly translated
+        if (orbitMode === 'RealLive') {
+           try {
+               const astro = require('astronomy-engine');
+               const now = new Date(simulationState.dateMs ?? Date.now());
+
+               let x = null, y = null, z = null;
+
+               if (planetName === 'Earth' && moon.name === 'Moon') {
+                   const mm = astro.GeoMoon(now);
+                   x = mm.x; y = mm.y; z = mm.z;
+               } else if (planetName === 'Jupiter') {
+                   const jm = astro.JupiterMoons(now);
+                   const ms = jm[moon.name.toLowerCase()];
+                   if (ms) {
+                       x = ms.x; y = ms.y; z = ms.z;
+                   }
+               }
+
+               if (x !== null && y !== null && z !== null) {
+                   const rotMatrix = astro.Rotation_EQJ_ECL();
+                   const vecEqj = { x, y, z };
+                   const vecEcl = astro.RotateVector(rotMatrix, vecEqj);
+                   
+                   let X = vecEcl.x;
+                   let Y = vecEcl.z;
+                   let Z = -vecEcl.y;
+
+                   const currentDist = Math.sqrt(X * X + Y * Y + Z * Z);
+                   if (currentDist > 0) {
+                       // Normalize the true astronomical positioning to our visual component scale
+                       const scale = (planetSize + moon.distance) / currentDist;
+                       ref.current.position.set(X * scale, Y * scale, Z * scale);
+                       return;
+                   }
+               }
+           } catch(e) {
+               console.error(e);
+           }
+        }
+        
+        // Simple fallback for moons without direct astronomy-engine positioning support
         const angle = simulationState.elapsed * moon.orbitSpeed * 0.5
         ref.current.position.set(
             Math.cos(angle) * (planetSize + moon.distance),

@@ -149,6 +149,11 @@ export const planets = [
     distance: 55, 
     orbitSpeed: 0.15, 
     rotationalSpeed: 0.038,
+
+    moons: [
+      { name: 'Titan', size: 0.4, distance: 6.5, orbitSpeed: 1.2, color: '#f2cd6f' },
+      { name: 'Enceladus', size: 0.2, distance: 4.5, orbitSpeed: 3, color: '#ececec' }
+    ],
     
     // elliptical
       orbitData: {
@@ -172,6 +177,14 @@ export const planets = [
     distance: 65, 
     orbitSpeed: 0.1, 
     rotationalSpeed: 0.03,
+
+    moons: [
+      { name: 'Titania', size: 0.25, distance: 4.0, orbitSpeed: 1.5, color: '#e0e0e0' },
+      { name: 'Oberon', size: 0.24, distance: 5.0, orbitSpeed: 1.2, color: '#d0d0d0' },
+      { name: 'Umbriel', size: 0.2, distance: 3.5, orbitSpeed: 1.8, color: '#c0c0c0' },
+      { name: 'Ariel', size: 0.2, distance: 3.0, orbitSpeed: 2.1, color: '#b0b0b0' },
+      { name: 'Miranda', size: 0.15, distance: 2.5, orbitSpeed: 2.5, color: '#a0a0a0' }
+    ],
     
     // elliptical
     orbitData: {
@@ -195,6 +208,10 @@ export const planets = [
     distance: 75, 
     orbitSpeed: 0.08, 
     rotationalSpeed: 0.032,
+
+    moons: [
+      { name: 'Triton', size: 0.28, distance: 4.5, orbitSpeed: -1.7, color: '#aabccc' },
+    ],
     
     // elliptical
     orbitData: {
