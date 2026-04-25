@@ -150,11 +150,11 @@ function Resume() {
               <div className="jobText">
                 <div className="sameLine">
                   <h3 className="job-header">Data Annotation &mdash; Programming Analyst/AI Trainer</h3>
-                  <i className="date">Jan 2025 &mdash; Present</i>
+                  <i className="date">Jan 2025 &mdash; Aug 2025</i>
                 </div>
                 <ul className="resume-list">
-                  <li>Evaluating AI responses for correctness and instruction following for programming, math, physics, and biology prompts</li>
-                  <li>Creating reasoning problems in math and biology that AI is unable to answer</li>
+                  <li>Evaluated AI responses for correctness and instruction following for programming, math, physics, and biology prompts</li>
+                  <li>Created reasoning problems in math and biology that AI is unable to answer</li>
                 </ul>
               </div>
             </div>

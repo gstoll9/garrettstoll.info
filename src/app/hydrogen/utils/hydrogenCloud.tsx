@@ -110,7 +110,7 @@ function radialWavefunction(n: number, l: number, r: number, Z: number = 1): num
 }
 
 // Full wavefunction ψ_nlm(r, θ, φ)
-function wavefunction(
+export function wavefunction(
   r: number,
   theta: number,
   phi: number,

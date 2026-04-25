@@ -1,3 +1,151 @@
+/* ── Neutralise standardlayout-main when it wraps the solar system page ───── */
+:has(.solarPage) .standardlayout-main,
+:has(.solarPage) .container0 {
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  background-color: #000 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  overflow: hidden !important;
+}
+
+/* ── Full-screen page shell ─────────────────────────────────────────────── */
+.solarPage {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+  color: #e8e8e8;
+  overflow: hidden;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* ── Dot-and-line tab nav ───────────────────────────────────────────────── */
+.solarNav {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 64px;
+  padding: 8px 1rem;
+  background: transparent;
+}
+
+.solarTrack {
+  position: relative;
+  width: 200px;
+  height: 20px;
+}
+
+.solarLine {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.solarNode {
+  position: absolute;
+  top: calc(50% - 7px);
+  transform: translateX(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.solarDot {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  background: transparent;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.solarNode.active .solarDot {
+  background: #fff;
+  border-color: #fff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.45);
+}
+
+.solarLabel {
+  color: rgba(255, 255, 255, 0.32);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: color 0.2s;
+  user-select: none;
+}
+
+.solarNode.active .solarLabel {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.solarNode:hover .solarDot {
+  border-color: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.25);
+}
+
+.solarNode:hover .solarLabel {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* ── Content area below nav ─────────────────────────────────────────────── */
+.solarWorkArea {
+  flex: 10;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Planet picker strip ────────────────────────────────────────────────── */
+.planetPicker {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 2rem;
+}
+
+.planetPickBtn {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  white-space: nowrap;
+}
+
+.planetPickBtn:hover {
+  border-color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.planetPickBtn.active {
+  border-color: #fff;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
 .orbitButton {
     padding: 10px 20px;
     font-size: 16px;

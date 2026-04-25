@@ -2,15 +2,12 @@
 import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
 import { useState } from 'react';
-import ShowMoreButton from '../showMoreButton';
 import "./hydrogenText.css";
 
 export default function SchrodingerEquation() {
     const [n, setN] = useState(2);
     const [l, setL] = useState(1);
     const [m, setM] = useState(0);
-
-    const [showMore, setShowMore] = useState(false);
 
     const stateInput = (
          <div style={{ display: 'flex', gap: '1rem', margin: '1rem 0' }}>
@@ -61,78 +58,40 @@ export default function SchrodingerEquation() {
             + U\Psi
             = E\Psi"
         />
-        {/* showMore Separation of Variable */}
-        {/* <ShowMoreButton 
-            expanded={showMore}
-            onClick={() => setShowMore(!showMore)}
-        />
-        {showMore && (
-            <div className="showMore">
-                <p>In radial coordinates...</p>
-                <BlockMath math="
-                    \nabla^2 = 
-                    \frac{1}{r^2}\frac{\partial}{\partial r}
-                    \bigg( 
-                        r^2\frac{\partial}{\partial r}
-                    \bigg) +
-                    \frac{1}{r^2sin\theta}\frac{\partial}{\partial \theta}
-                    \bigg( 
-                        sin\theta\frac{\partial}{\partial \theta}
-                    \bigg) +
-                    \frac{1}{r^2 sin^2\theta}\frac{\partial^2}{\partial \phi^2}
-                "/>
-                <p>Plug in <InlineMath math="\nabla^2" />...</p>
-                <BlockMath math="
-                    \frac{\hbar^2}{2m}
-                    \bigg[\bigg( 
-                        r^2\frac{\partial}{\partial r}
-                    \bigg) +
-                    \frac{1}{r^2sin\theta}\frac{\partial}{\partial \theta}
-                    \bigg( 
-                        sin\theta\frac{\partial}{\partial \theta}
-                    \bigg)\bigg]
-                    \Psi
-                    + U\Psi
-                    = E\Psi"
-                />
-                <p>Assuming <InlineMath math="\Psi(r,\theta,\phi)=R(r)Y(\theta,\phi)" />...</p>
-                <BlockMath math="
-                    \frac{\hbar^2}{2m}
-                    \bigg[
-                        \frac{Y}{r^2}\frac{\partial}{\partial r}
-                        \bigg( 
-                            r^2\frac{\partial R}{\partial r}
-                        \bigg) +
-                        \frac{R}{r^2sin\theta}\frac{\partial}{\partial\theta}
-                        \bigg( 
-                            sin\theta\frac{\partial Y}{\partial\theta}
-                        \bigg) +
-                        \frac{R}{r^2 sin^2\theta}\frac{\partial^2Y}{\partial \phi^2}
-                    \bigg]
-                    + URY
-                    = ERY
-                "/>
-                <p>Divide by <InlineMath math="YR" />, multiply by <InlineMath math="\frac{-2mr^2}{\hbar^2}" />, and separate terms...</p>
-                <BlockMath math="
-                    \frac{1}{R}\frac{d}{dr}
-                    \bigg[
-                        r^2\frac{dR}{dr} - \frac{2mr^2}{\hbar^2}\bigg(U(r)-E\bigg)
-                    \bigg] =
-                    \frac{1}{Y}
-                    \bigg[
-                        \frac{1}{sin\theta}\frac{\partial}{\partial\theta}
-                        \bigg( 
-                            sin\theta\frac{\partial Y}{\partial\theta}
-                        \bigg) +
-                        \frac{1}{sin^2\theta}\frac{\partial^2 Y}{\partial \phi^2}
-                    \bigg]
-                "/>
-            </div>
-        )}
-        <h2>Separation of Variable</h2>
+        <h2>Separation of Variables</h2>
+        <p>In spherical coordinates, the Laplacian expands as:</p>
         <BlockMath math="
-            \Psi_{n,l,m}(r, \theta, \phi) = R_{n,l}(r) Y_{l,m}(\theta, \phi)
-        "/> */}
+            \nabla^2 = 
+            \frac{1}{r^2}\frac{\partial}{\partial r}
+            \bigg( 
+                r^2\frac{\partial}{\partial r}
+            \bigg) +
+            \frac{1}{r^2\sin\theta}\frac{\partial}{\partial \theta}
+            \bigg( 
+                \sin\theta\frac{\partial}{\partial \theta}
+            \bigg) +
+            \frac{1}{r^2 \sin^2\theta}\frac{\partial^2}{\partial \phi^2}
+        "/>
+        <p>Assuming <InlineMath math="\Psi(r,\theta,\phi)=R(r)Y(\theta,\phi)" /> and dividing by <InlineMath math="RY" />, the equation separates into independent radial and angular parts:</p>
+        <BlockMath math="
+            \frac{1}{R}\frac{d}{dr}
+            \bigg[
+                r^2\frac{dR}{dr}
+            \bigg] - \frac{2mr^2}{\hbar^2}\bigg(U(r)-E\bigg)
+            =
+            -\frac{1}{Y}
+            \bigg[
+                \frac{1}{\sin\theta}\frac{\partial}{\partial\theta}
+                \bigg( 
+                    \sin\theta\frac{\partial Y}{\partial\theta}
+                \bigg) +
+                \frac{1}{\sin^2\theta}\frac{\partial^2 Y}{\partial \phi^2}
+            \bigg]
+        "/>
+        <p>Each side equals the same separation constant <InlineMath math="\ell(\ell+1)" />, giving the factored wavefunction:</p>
+        <BlockMath math="
+            \Psi_{n,\ell,m}(r, \theta, \phi) = R_{n,\ell}(r)\, Y_{\ell,m}(\theta, \phi)
+        "/>
         <h2>Time-Dependent</h2>
         <BlockMath math="
             \Psi(\mathbf{r}, t) = 
@@ -175,12 +134,10 @@ export default function SchrodingerEquation() {
             \bigg[L_{n-\ell-1}^{2\ell+1}\bigg(\frac{2r}{na}\bigg)\bigg]
             Y_{\ell,m}(\theta,\phi)
         "/>
-        where the associated Laguerre polynomial is defind by Laguerre polynomial...
-        <BlockMath math="
-            L_{q}^{p}(x) \equiv (-1)^p \bigg(\frac{d}{dx}\bigg)^p L_{p+q}(x)
-        \qquad\text{and}\qquad
-            L_{q}(x) \equiv \frac{e^x}{q!} \bigg(\frac{d}{dx}\bigg)^q (e^{-x} x^q)
-        "/>
+        where the associated Laguerre polynomial is defined by Laguerre polynomial
+        <BlockMath math="L_{q}^{p}(x) \equiv (-1)^p \bigg(\frac{d}{dx}\bigg)^p L_{p+q}(x)"/>
+        <BlockMath math="\text{and}" />
+        <BlockMath math="L_{q}(x) \equiv \frac{e^x}{q!} \bigg(\frac{d}{dx}\bigg)^q (e^{-x} x^q)" />
     </>);
 }
     

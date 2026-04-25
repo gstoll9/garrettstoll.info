@@ -59,8 +59,11 @@ export default function CameraController({ focus, planetData, orbitControlsRef, 
         const camDir = camera.position.clone().sub(orbitControlsRef.current.target).normalize()
         if (camDir.lengthSq() === 0) camDir.set(0, 0, 1)
         
-        const zoomDist = 8
+        const zoomDist = 5
         camera.position.copy(pPos.clone().add(camDir.multiplyScalar(zoomDist)))
+        // Update target NOW so the motion-tracking block below adds zero delta this frame
+        orbitControlsRef.current.target.copy(pPos)
+        orbitControlsRef.current.update()
         isJumpPending.current = false
       }
 
