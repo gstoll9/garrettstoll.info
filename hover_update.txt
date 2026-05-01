@@ -1,0 +1,201 @@
+49:export default function Planet({
+50-  name,
+51-  size,
+52-  realDiameter,
+53-  color = 'white',
+54-  texture,
+55-  rotationalSpeed = 0,
+56-  orbitData,
+57-  moons,
+58-  orbitMode = "Simple",
+59-  onClick,
+60-  useSimplifiedDistance = false,
+61-  useRealisticSizes = false,
+62-  timeScale = 1,
+63-  isFocused = false,
+64-  structure,
+65-}: PlanetProps) {
+66-  const ref = useRef<THREE.Group>(null!)
+67-  const groupRef = useRef<THREE.Group>(null!)
+68-
+69-  const textureUrl = useLoader(
+70-    THREE.TextureLoader,
+71-    texture ?? '/solarstsremImages/UranusTexture.jpg'
+72-  );
+73-
+74-  const planetSize = useRealisticSizes ? getPlanetSize({ size, realDiameter } as any, true) : size;
+75-
+76-  useFrame((_, delta) => {
+77-    if (groupRef.current) {
+78-      // Orbit calculation uses the globally accumulated time
+79-      const position = orbitalPosition(orbitMode, simulationState.elapsed, orbitData, useSimplifiedDistance, name, simulationState.dateMs)
+80-      
+81-      groupRef.current.position.set(...position); // Update position
+82-    }
+83-    if (ref.current) {
+84-      if (isFocused) {
+85-        // Freeze and align the cut to face our specific camera angle
+86-        ref.current.rotation.y = 0;
+87-        ref.current.rotation.x = 0;
+88-        ref.current.rotation.z = 0;
+89-      } else if (orbitMode === 'RealLive') {
+90-        const realRoationPeriodsDays: Record<string, number> = {
+91-          'Mercury': 58.6,
+92-          'Venus': -243,
+93-          'Earth': 0.997,
+94-          'Mars': 1.026,
+95-          'Jupiter': 0.41,
+96-          'Saturn': 0.44,
+97-          'Uranus': -0.72,
+98-          'Neptune': 0.67
+99-        };
+100-        const period = realRoationPeriodsDays[name];
+101-        if (period) {
+102-            const periodMs = period * 24 * 60 * 60 * 1000;
+103-            const angularVelocity = (2 * Math.PI) / periodMs;
+104-            ref.current.rotation.y += angularVelocity * (delta * 1000);
+105-        } else {
+106-            ref.current.rotation.y += rotationalSpeed * delta;
+107-        }
+108-      } else {
+109-        ref.current.rotation.y += rotationalSpeed * delta; // self-rotation speed
+110-      }
+111-    }
+112-  })
+113-
+114-  return (
+115-    <group ref={groupRef}>
+116-
+117-      {/* Planet Mesh/Group */}
+118-      <group
+119-        ref={ref}
+120-        onClick={(e) => {
+121-          e.stopPropagation();
+122-          onClick?.(name);
+123-        }}
+124-      >
+125-        {/* Crust */}
+126-        {isFocused && structure ? (
+127-          <>
+128-            <mesh>
+129-              {/* Top half with 1/4 cutout */}
+130-              <sphereGeometry args={[planetSize, 32, 16, 0, Math.PI * 1.5, 0, Math.PI / 2]} />
+131-              <meshStandardMaterial 
+132-                map={textureUrl}
+133-                color={color}
+134-                side={THREE.DoubleSide}
+135-                emissive={color}
+136-                emissiveIntensity={0.05}
+137-              />
+138-            </mesh>
+139-            <mesh>
+140-              {/* Bottom half full */}
+141-              <sphereGeometry args={[planetSize, 32, 16, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2]} />
+142-              <meshStandardMaterial 
+143-                map={textureUrl}
+144-                color={color}
+145-                side={THREE.DoubleSide}
+146-                emissive={color}
+147-                emissiveIntensity={0.05}
+148-              />
+149-            </mesh>
+150-          </>
+151-        ) : (
+152-          <mesh>
+153-            <sphereGeometry args={[planetSize, 32, 32]} />
+154-            <meshStandardMaterial 
+155-              map={textureUrl}
+156-              color={color}
+157-            />
+158-          </mesh>
+159-        )}
+160-
+161-        {/* Interior Structure */}
+162-        {isFocused && structure && (
+163-          <>
+164-            {/* Core */}
+165-            <mesh>
+166-              <sphereGeometry args={[planetSize * structure.coreRadius, 32, 16, 0, Math.PI * 1.5, 0, Math.PI / 2]} />
+167-              <meshStandardMaterial color={structure.coreColor || "#ececec"} emissive={structure.coreColor || "#ececec"} emissiveIntensity={0.2} side={THREE.DoubleSide} />
+168-            </mesh>
+169-            <mesh>
+170-              <sphereGeometry args={[planetSize * structure.coreRadius, 32, 16, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2]} />
+171-              <meshStandardMaterial color={structure.coreColor || "#ececec"} emissive={structure.coreColor || "#ececec"} emissiveIntensity={0.2} side={THREE.DoubleSide} />
+172-            </mesh>
+173-            
+174-            {/* Mantle */}
+175-            <mesh>
+176-              <sphereGeometry args={[planetSize * structure.mantleRadius, 32, 16, 0, Math.PI * 1.5, 0, Math.PI / 2]} />
+177-              <meshStandardMaterial color={structure.mantleColor || "#ffaa00"} emissive={structure.mantleColor || "#ffaa00"} emissiveIntensity={0.2} side={THREE.DoubleSide} />
+178-            </mesh>
+179-            <mesh>
+180-              <sphereGeometry args={[planetSize * structure.mantleRadius, 32, 16, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2]} />
+181-              <meshStandardMaterial color={structure.mantleColor || "#ffaa00"} emissive={structure.mantleColor || "#ffaa00"} emissiveIntensity={0.2} side={THREE.DoubleSide} />
+182-            </mesh>
+183-
+184-            {/* Flat cut faces - Cut 1 (phi = 0 / 2pi) */}
+185-            <mesh rotation={[0, Math.PI, 0]} position={[0, 0, 0]}>
+186-              <ringGeometry args={[planetSize * structure.mantleRadius, planetSize, 32, 1, 0, Math.PI / 2]} />
+187-              <meshStandardMaterial color={color} side={THREE.DoubleSide} emissive={color} emissiveIntensity={0.05} />
+188-            </mesh>
+189-            
+190-            <mesh rotation={[0, Math.PI, 0]} position={[0, 0, 0]}>
+191-              <ringGeometry args={[planetSize * structure.coreRadius, planetSize * structure.mantleRadius, 32, 1, 0, Math.PI / 2]} />
+192-              <meshStandardMaterial color={structure.mantleColor || "#ffaa00"} emissive={structure.mantleColor || "#ffaa00"} emissiveIntensity={0.2} side={THREE.DoubleSide} />
+193-            </mesh>
+194-
+195-            <mesh rotation={[0, Math.PI, 0]} position={[0, 0, 0]}>
+196-              <circleGeometry args={[planetSize * structure.coreRadius, 32, 0, Math.PI / 2]} />
+197-              <meshStandardMaterial color={structure.coreColor || "#ececec"} emissive={structure.coreColor || "#ececec"} emissiveIntensity={0.2} side={THREE.DoubleSide} />
+198-            </mesh>
+199-
+200-            {/* Flat cut faces - Cut 2 (phi = 1.5pi) */}
+201-            <mesh rotation={[0, Math.PI / 2, 0]} position={[0, 0, 0]}>
+202-              <ringGeometry args={[planetSize * structure.mantleRadius, planetSize, 32, 1, 0, Math.PI / 2]} />
+203-              <meshStandardMaterial color={color} side={THREE.DoubleSide} emissive={color} emissiveIntensity={0.05} />
+204-            </mesh>
+205-            
+206-            <mesh rotation={[0, Math.PI / 2, 0]} position={[0, 0, 0]}>
+207-              <ringGeometry args={[planetSize * structure.coreRadius, planetSize * structure.mantleRadius, 32, 1, 0, Math.PI / 2]} />
+208-              <meshStandardMaterial color={structure.mantleColor || "#ffaa00"} emissive={structure.mantleColor || "#ffaa00"} emissiveIntensity={0.2} side={THREE.DoubleSide} />
+209-            </mesh>
+210-
+211-            <mesh rotation={[0, Math.PI / 2, 0]} position={[0, 0, 0]}>
+212-              <circleGeometry args={[planetSize * structure.coreRadius, 32, 0, Math.PI / 2]} />
+213-              <meshStandardMaterial color={structure.coreColor || "#ececec"} emissive={structure.coreColor || "#ececec"} emissiveIntensity={0.2} side={THREE.DoubleSide} />
+214-            </mesh>
+215-
+216-            {/* Flat cut faces - Cut 3 (Horizontal face at equator) */}
+217-            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
+218-              <ringGeometry args={[planetSize * structure.mantleRadius, planetSize, 32, 1, Math.PI / 2, Math.PI / 2]} />
+219-              <meshStandardMaterial color={color} side={THREE.DoubleSide} emissive={color} emissiveIntensity={0.05} />
+220-            </mesh>
+221-            
+222-            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
+223-              <ringGeometry args={[planetSize * structure.coreRadius, planetSize * structure.mantleRadius, 32, 1, Math.PI / 2, Math.PI / 2]} />
+224-              <meshStandardMaterial color={structure.mantleColor || "#ffaa00"} emissive={structure.mantleColor || "#ffaa00"} emissiveIntensity={0.2} side={THREE.DoubleSide} />
+225-            </mesh>
+226-
+227-            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
+228-              <circleGeometry args={[planetSize * structure.coreRadius, 32, Math.PI / 2, Math.PI / 2]} />
+229-              <meshStandardMaterial color={structure.coreColor || "#ececec"} emissive={structure.coreColor || "#ececec"} emissiveIntensity={0.2} side={THREE.DoubleSide} />
+230-            </mesh>
+231-
+232-            {/* Atmosphere */}
+233-            {structure.atmosphereRadius && (
+234-              <>
+235-                <mesh>
+236-                  <sphereGeometry args={[planetSize * structure.atmosphereRadius, 32, 16, 0, Math.PI * 1.5, 0, Math.PI / 2]} />
+237-                  <meshStandardMaterial 
+238-                    color={structure.atmosphereColor || "#aaaaaa"} 
+239-                    emissive={structure.atmosphereColor || "#aaaaaa"}
+240-                    emissiveIntensity={0.1}
+241-                    transparent 
+242-                    opacity={0.4} 
+243-                    side={THREE.DoubleSide} 
+244-                    depthWrite={false}
+245-                  />
+246-                </mesh>
+247-                <mesh>
+248-                  <sphereGeometry args={[planetSize * structure.atmosphereRadius, 32, 16, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2]} />
+249-                  <meshStandardMaterial 

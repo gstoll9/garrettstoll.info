@@ -15,6 +15,17 @@ type Tab = typeof TABS[number]['id'];
 
 const EARTH = planets.find(p => p.name === 'Earth')! as unknown as PlanetProps;
 
+const PLANET_SYMBOLS: Record<string, string> = {
+  Mercury: "☿",
+  Venus: "♀",
+  Earth: "♁",
+  Mars: "♂",
+  Jupiter: "♃",
+  Saturn: "♄",
+  Uranus: "⛢",
+  Neptune: "♆"
+};
+
 // Importing the UniverseCanvas component dynamically to avoid SSR issues 
 const UniverseCanvas = dynamic(() => import('./components/UniverseCanvas').then(mod => mod.UniverseCanvas), {
   ssr: false,
@@ -82,14 +93,18 @@ export default function Home() {
 
         {/* Planet picker — visible only when Planet tab is active */}
         {activeTab === 'planet' && (
-          <div className="planetPicker">
+          <div className="planetPicker" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '8px' }}>
             {planets.map(p => (
               <button
                 key={p.name}
                 className={`planetPickBtn${activePlanetName === p.name ? ' active' : ''}`}
                 onClick={() => handlePlanetPick(p.name)}
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '4px 10px', gap: '2px' }}
               >
-                {p.name}
+                <span style={{ fontSize: '1.4em', lineHeight: '1em' }}>
+                  {PLANET_SYMBOLS[p.name] || '•'}
+                </span>
+                <span>{p.name}</span>
               </button>
             ))}
           </div>
@@ -120,5 +135,5 @@ export default function Home() {
     </div>
   );
 
-  return StandardLayout({ title: "Solar System", main });
+  return StandardLayout({ title: "Solar System", main, headerMode: "tyro-only" });
 }

@@ -18,6 +18,37 @@ function emRegion(nm: number): string {
   return 'Far-IR (FIR)';
 }
 
+function wavelengthToHex(wavelength: number): string {
+  let r = 0, g = 0, b = 0;
+  if (wavelength >= 380 && wavelength < 440) {
+    r = -(wavelength - 440) / (440 - 380); g = 0; b = 1;
+  } else if (wavelength >= 440 && wavelength < 490) {
+    r = 0; g = (wavelength - 440) / (490 - 440); b = 1;
+  } else if (wavelength >= 490 && wavelength < 510) {
+    r = 0; g = 1; b = -(wavelength - 510) / (510 - 490);
+  } else if (wavelength >= 510 && wavelength < 580) {
+    r = (wavelength - 510) / (580 - 510); g = 1; b = 0;
+  } else if (wavelength >= 580 && wavelength < 645) {
+    r = 1; g = -(wavelength - 645) / (645 - 580); b = 0;
+  } else if (wavelength >= 645 && wavelength <= 780) {
+    r = 1; g = 0; b = 0;
+  }
+  
+  let factor = 1.0;
+  if (wavelength >= 380 && wavelength < 420) {
+    factor = 0.3 + 0.7 * (wavelength - 380) / (420 - 380);
+  } else if (wavelength >= 701 && wavelength <= 780) {
+    factor = 0.3 + 0.7 * (780 - wavelength) / (780 - 700);
+  }
+
+  const toHex = (c: number) => {
+    // using a standard gamma correction of 0.8
+    const val = c === 0 ? 0 : Math.max(0, Math.min(255, Math.round(Math.pow(c * factor, 0.8) * 255)));
+    return val.toString(16).padStart(2, '0').toUpperCase();
+  };
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+}
+
 // ── Hydrogen series ────────────────────────────────────────────────────────────
 const SERIES_DEFS = [
   { n1: 1, name: 'Lyman',     labelColor: '#CC88FF' },
@@ -302,7 +333,7 @@ export default function HydrogenSpectrum() {
           const left = tooltipPos.x + 16 + tooltipW > containerW
             ? tooltipPos.x - tooltipW - 12
             : tooltipPos.x + 16;
-          const rows: [string, string][] = [
+          const rows: [string, React.ReactNode][] = [
             ['Region',     hovered.emRegion],
             ['Wavelength', hovered.wavelength < 1000
               ? `${hovered.wavelength.toFixed(1)} nm`
@@ -310,6 +341,33 @@ export default function HydrogenSpectrum() {
             ['Frequency',  `${(hovered.frequency / 1e12).toFixed(2)} THz`],
             ['Energy',     `${hovered.energy.toFixed(3)} eV`],
           ];
+
+          if (hovered.wavelength >= 380 && hovered.wavelength <= 750) {
+            let colorName = '';
+            const wl = hovered.wavelength;
+            if (wl < 400) { colorName = 'Deep Violet'; }
+            else if (wl < 425) { colorName = 'Violet'; }
+            else if (wl < 450) { colorName = 'Indigo'; }
+            else if (wl < 480) { colorName = 'Blue'; }
+            else if (wl < 495) { colorName = 'Cyan'; }
+            else if (wl < 550) { colorName = 'Green'; }
+            else if (wl < 570) { colorName = 'Yellow-Green'; }
+            else if (wl < 590) { colorName = 'Yellow'; }
+            else if (wl < 620) { colorName = 'Orange'; }
+            else if (wl < 650) { colorName = 'Red'; }
+            else { colorName = 'Deep Red'; }
+
+            const colorHex = wavelengthToHex(hovered.wavelength);
+
+            rows.push(['Color', (
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'flex-end' }}>
+                {colorName} 
+                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '10px' }}>({colorHex})</span>
+                <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: colorHex, display: 'inline-block' }} />
+              </span>
+            )]);
+          }
+
           return (
             <div style={{
               position: 'absolute',

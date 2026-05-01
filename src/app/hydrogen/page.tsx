@@ -84,6 +84,6 @@ export default function Home() {
     </div>
   );
 
-  return StandardLayout({ title: "Hydrogen Atom", main });
+  return StandardLayout({ title: "Hydrogen Atom", main, headerMode: "tyro-only" });
 }
 

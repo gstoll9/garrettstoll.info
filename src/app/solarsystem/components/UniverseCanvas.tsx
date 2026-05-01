@@ -115,8 +115,8 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
         }}
       >
         {/* lighting */}
-        <ambientLight intensity={0.2} />
-        <pointLight position={[0, 0, 0]} intensity={5000} />
+        <ambientLight intensity={focus === 'solarsystem' ? 0.2 : 2.0} />
+        <pointLight position={[0, 0, 0]} intensity={focus === 'solarsystem' ? 5000 : 500} />
 
         <TimeUpdater timeScale={timeScale} />
 
@@ -126,10 +126,14 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
           planetData={focusedPlanet ? {
             name: focusedPlanet.name,
             orbitData: focusedPlanet.orbitData,
-            orbitMode: orbitMode
+            orbitMode: orbitMode,
+            moons: focusedPlanet.moons,
+            size: focusedPlanet.size,
+            realDiameter: focusedPlanet.realDiameter
           } : null}
           orbitControlsRef={orbitControlsRef}
           useSimplifiedDistance={useSimplifiedDistance}
+          useRealisticSizes={useRealisticSizes}
         />
         <SolarSystem
           setFocus={(focus: string, planetData: PlanetProps | null) => {

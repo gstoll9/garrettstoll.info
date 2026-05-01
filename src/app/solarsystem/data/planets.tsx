@@ -13,6 +13,13 @@ export const planets = [
     texture: '/solarsystemImages/MercuryTexture.jpg',
     color: '#8C7853', 
 
+    structure: {
+      coreRadius: 0.8,    // Mercury has a very large core
+      mantleRadius: 0.95,
+      coreColor: '#5c5c5c',
+      mantleColor: '#845e36',
+    },
+
     size: 0.4,  // Display-friendly size
     realDiameter: 0.383, // In Earth diameters
     distance: 10, 
@@ -36,6 +43,15 @@ export const planets = [
     texture: '/solarsystemImages/VenusTexture.jpg',
     color: '#FFC649', 
 
+    structure: {
+      coreRadius: 0.5,
+      mantleRadius: 0.9,
+      atmosphereRadius: 1.15,
+      coreColor: '#c79532',
+      mantleColor: '#db6c25',
+      atmosphereColor: '#ffd782'
+    },
+
     size: 0.9,
     realDiameter: 0.949,
     distance: 15, 
@@ -58,6 +74,15 @@ export const planets = [
     name: 'Earth',
     texture: '/solarsystemImages/EarthTexture.jpg',
     color: '#6B93D6',
+
+    structure: {
+      coreRadius: 0.55,
+      mantleRadius: 0.95,
+      atmosphereRadius: 1.1,
+      coreColor: '#ffda3e',
+      mantleColor: '#ff4d00',
+      atmosphereColor: '#a6e1ff'
+    },
 
     size: 1,
     realDiameter: 1.0, // Reference: 1 Earth diameter
@@ -86,6 +111,15 @@ export const planets = [
     texture: '/solarsystemImages/MarsTexture.jpg',
     color: '#CD5C5C',
 
+    structure: {
+      coreRadius: 0.5,
+      mantleRadius: 0.95,
+      atmosphereRadius: 1.05,
+      coreColor: '#968172',
+      mantleColor: '#cd6d3b',
+      atmosphereColor: '#ffba9e' // thin
+    },
+
     size: 0.5,
     realDiameter: 0.532, 
     distance: 25, 
@@ -113,6 +147,15 @@ export const planets = [
     name: 'Jupiter',
     texture: '/solarsystemImages/JupiterTexture.jpg',
     color: '#D8CA9D', 
+
+    structure: {
+      coreRadius: 0.15,
+      mantleRadius: 0.8, // metallic hydrogen
+      atmosphereRadius: 1.05, 
+      coreColor: '#b4afa3',
+      mantleColor: '#eaab67',
+      atmosphereColor: '#ffe9c0'
+    },
 
     size: 3,
     realDiameter: 10.97,
@@ -144,6 +187,15 @@ export const planets = [
     texture: '/solarsystemImages/SaturnTexture.jpg',
     color: '#FAD5A5', 
 
+    structure: {
+      coreRadius: 0.2,
+      mantleRadius: 0.75, // metallic hydrogen
+      atmosphereRadius: 1.05, 
+      coreColor: '#b4afa3',
+      mantleColor: '#eaab67',
+      atmosphereColor: '#ffeca2'
+    },
+
     size: 2.5,
     realDiameter: 9.14,
     distance: 55, 
@@ -171,6 +223,15 @@ export const planets = [
     name: 'Uranus', 
     texture: '/solarsystemImages/UranusTexture.jpg',
     color: '#4FD0E7', 
+
+    structure: {
+      coreRadius: 0.2, // rock
+      mantleRadius: 0.8, // icy
+      atmosphereRadius: 1.05, 
+      coreColor: '#968172',
+      mantleColor: '#2b96cc',
+      atmosphereColor: '#6af5ff'
+    },
 
     size: 1.8,
     realDiameter: 3.98,
@@ -202,6 +263,15 @@ export const planets = [
     name: 'Neptune',
     texture: '/solarsystemImages/NeptuneTexture.jpg',
     color: '#4B70DD', 
+
+    structure: {
+      coreRadius: 0.2, // rock
+      mantleRadius: 0.8, // icy
+      atmosphereRadius: 1.05, 
+      coreColor: '#968172',
+      mantleColor: '#2b96cc',
+      atmosphereColor: '#6a97ff'
+    },
 
     size: 1.7,
     realDiameter: 3.87,

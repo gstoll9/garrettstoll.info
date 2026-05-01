@@ -1,0 +1,20 @@
+Category,Label,Value,Links,Citations
+General,Age,4.568 billion years,,[b]
+General,Location,"['Local Interstellar Cloud', 'Local Bubble', 'Orion–Cygnus Arm', 'Milky Way']","['https://en.wikipedia.org/wiki/Local_Interstellar_Cloud', 'https://en.wikipedia.org/wiki/Local_Bubble', 'https://en.wikipedia.org/wiki/Orion%E2%80%93Cygnus_Arm', 'https://en.wikipedia.org/wiki/Milky_Way']","[None, '[1]', None, '[2]']"
+General,Nearest star,"['Proxima Centauri', 'Alpha Centauri']","['https://en.wikipedia.org/wiki/Proxima_Centauri', 'https://en.wikipedia.org/wiki/Alpha_Centauri']","['[D 1]', '[D 2]']"
+Population,Stars,Sun,https://en.wikipedia.org/wiki/Sun,
+Population,Planets,"['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']","['https://en.wikipedia.org/wiki/Mercury_(planet)', 'https://en.wikipedia.org/wiki/Venus', 'https://en.wikipedia.org/wiki/Earth', 'https://en.wikipedia.org/wiki/Mars', 'https://en.wikipedia.org/wiki/Jupiter', 'https://en.wikipedia.org/wiki/Saturn', 'https://en.wikipedia.org/wiki/Uranus', 'https://en.wikipedia.org/wiki/Neptune']","[None, None, None, None, None, None, None, None]"
+Population,Knowndwarf planets,"['Ceres', 'Orcus', 'Pluto', 'Haumea', 'Quaoar', 'Makemake', 'Gonggong', 'Eris', 'Sedna', 'more candidates...']","['https://en.wikipedia.org/wiki/Ceres_(dwarf_planet)', 'https://en.wikipedia.org/wiki/Orcus_(dwarf_planet)', 'https://en.wikipedia.org/wiki/Pluto', 'https://en.wikipedia.org/wiki/Haumea', 'https://en.wikipedia.org/wiki/Quaoar', 'https://en.wikipedia.org/wiki/Makemake', 'https://en.wikipedia.org/wiki/Gonggong_(dwarf_planet)', 'https://en.wikipedia.org/wiki/Eris_(dwarf_planet)', 'https://en.wikipedia.org/wiki/Sedna_(dwarf_planet)', 'https://en.wikipedia.org/wiki/List_of_possible_dwarf_planets']","[None, None, None, None, None, None, None, None, None, None]"
+Population,Knownnatural satellites,758,,[D 3]
+Population,Knownminor planets,"1,462,402",,[D 4]
+Population,Knowncomets,"4,629",,[D 4]
+Planetary system,Star spectral type,G2V,,
+Planetary system,Frost line,~5 AU,,[5]
+Planetary system,Semi-major axisof outermost planet,30.07 AU,https://en.wikipedia.org/wiki/Neptune,[D 5]
+Planetary system,Kuiper cliff,50–70 AU,,"[3], [4]"
+Planetary system,Heliopause,detected at 120 AU,,[6]
+Planetary system,Hill sphere,"178,000–227,000 AU",,"[7], [8]"
+Orbit aboutGalactic Center,Invariable-to-galactic planeinclination,"~60°, to the ecliptic",,[c]
+Orbit aboutGalactic Center,Distance toGalactic Center,"24,000–28,000 ly",,[9]
+Orbit aboutGalactic Center,Orbital speed,"720,000 km/h",,[10]
+Orbit aboutGalactic Center,Orbital period,~230 million years,https://en.wikipedia.org/wiki/Million_year,[10]

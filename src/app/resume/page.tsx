@@ -12,18 +12,29 @@ function Resume() {
 
           {/* Projects */}
           <div className="projects">
-            <h2 className="projectsTitle">My Projects</h2>
+            {/* Research */}
+            <h2 className="projectsTitle">Research</h2>
             <div className="headerDivider" />
-            
+
             <Link className="projectItem" href="/hubbardmodel">
               <p className="projectText">Hubbard Model</p>
             </Link>
+
+            {/* Projects */}
+            <h2 className="projectsTitle" style={{paddingTop: "10%"}}>Projects</h2>
+            <div className="headerDivider" />
+            
             <Link className="projectItem" href="/solarsystem">
               <p className="projectText">Solar System</p>
             </Link>
             <Link className="projectItem" href="/hydrogen">
               <p className="projectText">Hydrogen Atom</p>
             </Link>
+
+            {/* Class Notes */}
+            <h2 className="projectsTitle" style={{paddingTop: "10%"}}>Class Notes</h2>
+            <div className="headerDivider" />
+
             <Link className="projectItem" href="/numericalmethods">
               <p className="projectText">Numerical Methods</p>
             </Link>
@@ -34,7 +45,7 @@ function Resume() {
               <p className="projectText">Three-Body Problem</p>
             </Link> */}
 
-            {/* Games Header */}
+            {/* Games */}
             <h2 className="projectsTitle" style={{paddingTop: "10%"}}>Games</h2>
             <div className="headerDivider" />
 
@@ -221,7 +232,8 @@ function Resume() {
                   <li>Lead a team of three to implement an ETL pipeline on Amazon Web Services</li>
                   <li>Worked with the federal database management system, IPEDS</li>
                   <li>Web-scraped 5 websites using beautiful soup and selenium</li>
-                  <li>Data Processing using pandas and statistical modeling using sklearn</li>
+                  <li>Data Processing using pandas</li>
+                  <li>Statistical modeling using sklearn</li>
                 </ul>
               </div>
             </div>
@@ -319,8 +331,26 @@ function Resume() {
               </div>
               <div className="jobText"> 
                 <ul className="resume-list">
-                  <li>Booz Allen Hamilton Technical Badges &mdash; AI Aware, Angular, Docker, CSS, Java, JavaScript, Machine Learning, Python, React, Spring Boot, SQL (2023)</li>
-                  <li>IBM Associate Developer &mdash; Quantum Computation using Qiskit (2022)</li>
+                  <li>IBM Associate Developer</li>
+                    <ul style={{marginBottom: '1%'}}><li style={{listStyle: "disc", color:"black"}}>Quantum Computation using Qiskit</li></ul>
+                  <li>Booz Allen Hamilton Technical Badges</li>
+                      <div style={{ display: 'flex', width: '50%' }}>
+                      <ul style={{ flex: '1' }}>
+                        <li style={{listStyle: "disc", color:"black"}}>Docker</li>
+                        <li style={{listStyle: "disc", color:"black"}}>Angular</li>
+                        <li style={{listStyle: "disc", color:"black"}}>React</li>
+                        <li style={{listStyle: "disc", color:"black"}}>CSS</li>
+                        <li style={{listStyle: "disc", color:"black"}}>JavaScript</li>
+                      </ul>
+                      <ul style={{ flex: '1' }}>
+                        <li style={{listStyle: "disc", color:"black"}}>Java</li>
+                        <li style={{listStyle: "disc", color:"black"}}>Spring Boot</li>
+                        <li style={{listStyle: "disc", color:"black"}}>SQL</li>
+                        <li style={{listStyle: "disc", color:"black"}}>AI Aware</li>
+                        <li style={{listStyle: "disc", color:"black"}}>Machine Learning</li>
+                        <li style={{listStyle: "disc", color:"black"}}>Python</li>
+                      </ul>
+                      </div>
                 </ul>
               </div>
             </div>

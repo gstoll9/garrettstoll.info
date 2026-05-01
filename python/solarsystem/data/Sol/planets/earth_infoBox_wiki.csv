@@ -1,0 +1,38 @@
+Category,Label,Value,Links,Citations
+Designations,Alternative names,"['The world', 'The globe', 'Terra', 'Tellus', 'Gaia']","['https://en.wikipedia.org/wiki/World', 'https://en.wikipedia.org/wiki/Globe', 'https://en.wikipedia.org/wiki/Terra_(mythology)', 'https://en.wikipedia.org/wiki/Terra_(mythology)', 'https://en.wikipedia.org/wiki/Gaia']","[None, None, None, None, None]"
+Designations,Adjectives,"['Earthly', 'Terrestrial', 'Terran', 'Tellurian']","[None, None, None, None]","[None, None, None, None]"
+Designations,Symbol,and,,
+Orbital characteristics,Aphelion,152 097 597 km,,
+Orbital characteristics,Perihelion,147 098 450 km,,[n 2]
+Orbital characteristics,Semi-major axis,149 598 023 km,,[1]
+Orbital characteristics,Eccentricity,0.016 7086,,[1]
+Orbital characteristics,Orbital period (sidereal),365.256 363 004 d,,[2]
+Orbital characteristics,Averageorbital speed,29.7827 km/s,,[3]
+Orbital characteristics,Mean anomaly,358.617°,,
+Orbital characteristics,Inclination,"[""7.155° – Sun 's equator;"", '1.578 69 ° – invariable plane ;', '0.000 05 ° – J2000 ecliptic']","['https://en.wikipedia.org/wiki/Sun', 'https://en.wikipedia.org/wiki/Invariable_plane', 'https://en.wikipedia.org/wiki/Ecliptic']","[None, '[4]', None]"
+Orbital characteristics,Longitude of ascending node,−11.260 64 ° – J2000 ecliptic,,[3]
+Orbital characteristics,Time of perihelion,3 January 2026,,
+Orbital characteristics,Argument of perihelion,114.207 83 °,,[3]
+Orbital characteristics,Satellites,"1, the Moon",https://en.wikipedia.org/wiki/Moon,
+Physical characteristics,Mean radius,6 371 .0 km,,[5]
+Physical characteristics,Equatorialradius,6 378 .137 km,,"[6], [7]"
+Physical characteristics,Polarradius,6 356 .752 km,,[8]
+Physical characteristics,Flattening,1/ 298.257 222 101,,[9]
+Physical characteristics,Circumference,"['40 075 .017\xa0km equatorial', '40 007 .86\xa0km meridional']","['https://en.wikipedia.org/wiki/Equator', 'https://en.wikipedia.org/wiki/Meridian_(geography)']","['[7]', '[10], [n 3]']"
+Physical characteristics,Surface area,"['510 072 000 km 2', 'Land: 148 940 000 km 2', 'Water: 361 132 000 km 2']","[None, None, None]","['[11], [n 4]', None, None]"
+Physical characteristics,Volume,1.083 21 × 10 12 km 3,,[3]
+Physical characteristics,Mass,× 10 24 kg,,[12]
+Physical characteristics,Meandensity,5.513 g/cm 3,,[3]
+Physical characteristics,Surface gravity,9.806 65 m/s 2,,[13]
+Physical characteristics,Moment of inertia factor,0.3307,,[14]
+Physical characteristics,Escape velocity,11.186 km/s,,[3]
+Physical characteristics,Synodic rotation period,1.0 d,,
+Physical characteristics,Sidereal rotation period,0.997 269 68 d,,[15]
+Physical characteristics,Equatorial rotation velocity,1674.4 km/h,,[16]
+Physical characteristics,Axial tilt,23.439 2811 °,,[2]
+Physical characteristics,Albedo,"['0.434 geometric', '0.294 Bond']","['https://en.wikipedia.org/wiki/Geometric_albedo', 'https://en.wikipedia.org/wiki/Bond_albedo']","['[3]', '[3]']"
+Physical characteristics,Temperature,255 K,https://en.wikipedia.org/wiki/Effective_temperature,[17]
+Physical characteristics,Surfaceequivalent doserate,0.274 μSv/h,,[21]
+Physical characteristics,Absolute magnitude(H),−3.99,,
+Atmosphere,Surfacepressure,101.325 kPa,https://en.wikipedia.org/wiki/Pascal_(unit),
+Atmosphere,Composition by volume,"['78.08% nitrogen', '20.95% oxygen', '≤1% water vapor', '0.9340% argon', '0.0415% carbon dioxide', '0.00182% neon', '0.00052% helium', '0.00017% methane', '0.00011% krypton', '0.00006% hydrogen']","['https://en.wikipedia.org/wiki/Nitrogen', 'https://en.wikipedia.org/wiki/Oxygen', 'https://en.wikipedia.org/wiki/Water_vapor', 'https://en.wikipedia.org/wiki/Argon', 'https://en.wikipedia.org/wiki/Carbon_dioxide', 'https://en.wikipedia.org/wiki/Neon', 'https://en.wikipedia.org/wiki/Helium', 'https://en.wikipedia.org/wiki/Methane', 'https://en.wikipedia.org/wiki/Krypton', 'https://en.wikipedia.org/wiki/Hydrogen']","[None, None, None, None, None, None, None, None, None, None]"

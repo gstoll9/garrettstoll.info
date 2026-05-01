@@ -1,0 +1,41 @@
+Category,Label,Value,Links,Citations
+Designations,Adjectives,"['Martian', 'Arean', 'see Name of Mars']","[None, 'https://en.wikipedia.org/wiki/Ares', 'https://en.wikipedia.org/wiki/Name_of_Mars']","[None, None, None]"
+Orbital characteristics[1],Aphelion,249 261 000 km,,[2]
+Orbital characteristics[1],Perihelion,206 650 000 km,,[2]
+Orbital characteristics[1],Semi-major axis,227 939 366 km,,[3]
+Orbital characteristics[1],Eccentricity,0.0934,,[2]
+Orbital characteristics[1],Orbital period (sidereal),686.980 d,https://en.wikipedia.org/wiki/Timekeeping_on_Mars,[2]
+Orbital characteristics[1],Orbital period (synodic),779.94 d,,[3]
+Orbital characteristics[1],Averageorbital speed,24.07 km/s,,[2]
+Orbital characteristics[1],Mean anomaly,19.412°,,[2]
+Orbital characteristics[1],Inclination,"['1.850° to ecliptic', ""5.65° to Sun 's equator"", '1.63° to invariable plane']","['https://en.wikipedia.org/wiki/Ecliptic', 'https://en.wikipedia.org/wiki/Sun, https://en.wikipedia.org/wiki/Equator', 'https://en.wikipedia.org/wiki/Invariable_plane']","[None, None, '[4]']"
+Orbital characteristics[1],Longitude of ascending node,49.578 54 °,,[2]
+Orbital characteristics[1],Time of perihelion,11 February 2028,,[5]
+Orbital characteristics[1],Argument of perihelion,286.5°,,[3]
+Orbital characteristics[1],Satellites,2,"https://en.wikipedia.org/wiki/Phobos_(moon), https://en.wikipedia.org/wiki/Deimos_(moon)",
+Physical characteristics,Mean radius,3 389 .5 ± 0.2 km,,"[b], [6]"
+Physical characteristics,Equatorialradius,3 396 .2 ± 0.1 km,,"[b], [6]"
+Physical characteristics,Polarradius,3 376 .2 ± 0.1 km,,"[b], [6]"
+Physical characteristics,Flattening,0.005 89 ± 0.000 15,,"[5], [6]"
+Physical characteristics,Surface area,1.4437 × 10 8 km 2,,[7]
+Physical characteristics,Volume,1.631 18 × 10 11 km 3,,[8]
+Physical characteristics,Mass,6.4171 × 10 23 kg,,[9]
+Physical characteristics,Meandensity,3.9335 g/cm 3,,[8]
+Physical characteristics,Surface gravity,3.72076 m/s 2,,[10]
+Physical characteristics,Moment of inertia factor,0.3644 ± 0.0005,,[9]
+Physical characteristics,Escape velocity,5.027 km/s,,[11]
+Physical characteristics,Synodic rotation period,1.027 491 25 d 24 h 39 m 36 s,,[12]
+Physical characteristics,Sidereal rotation period,1.025 957 d 24 h 37 m 22.7 s,,[8]
+Physical characteristics,Equatorial rotation velocity,241 m/s,,[2]
+Physical characteristics,Axial tilt,25.19° to its orbital plane,,[2]
+Physical characteristics,North poleright ascension,317.269°,,[13]
+Physical characteristics,North poledeclination,54.432°,,[13]
+Physical characteristics,Albedo,"['0.170 geometric', '0.25 Bond']","['https://en.wikipedia.org/wiki/Geometric_albedo', 'https://en.wikipedia.org/wiki/Bond_albedo']","['[14]', '[2]']"
+Physical characteristics,Temperature,209 K,https://en.wikipedia.org/wiki/Effective_temperature,[15]
+Physical characteristics,Surfaceabsorbed doserate,8.8 μGy/h,,[18]
+Physical characteristics,Surfaceequivalent doserate,27 μSv/h,,[18]
+Physical characteristics,Apparent magnitude,−2.94 to +1.86,,[19]
+Physical characteristics,Absolute magnitude(H),−1.5,,[20]
+Physical characteristics,Angular diameter,3.5–25.1 arcseconds,https://en.wikipedia.org/wiki/Arcsecond,[2]
+Atmosphere[2][21],Surfacepressure,0.636 kPa 0.00628 atm,"https://en.wikipedia.org/wiki/Pascal_(unit), https://en.wikipedia.org/wiki/Atmosphere_(unit)",
+Atmosphere[2][21],Composition by volume,"['95.97% carbon dioxide', '1.93% argon', '1.89% nitrogen', '0.146% oxygen', '0.0557% carbon monoxide', '0.0210% water vapor']","['https://en.wikipedia.org/wiki/Carbon_dioxide', 'https://en.wikipedia.org/wiki/Argon', 'https://en.wikipedia.org/wiki/Nitrogen', 'https://en.wikipedia.org/wiki/Oxygen', 'https://en.wikipedia.org/wiki/Carbon_monoxide', 'https://en.wikipedia.org/wiki/Water_vapor']","[None, None, None, None, None, None]"

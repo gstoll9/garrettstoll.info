@@ -3,18 +3,24 @@ import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { orbitalPosition, OrbitProps, simulationState } from '../utils'
 
+import { getPlanetSize } from '../data/planets'
+
 type CameraControllerProps = {
   focus: string;
   planetData: {
     name: string;
     orbitData: OrbitProps;
     orbitMode: string;
+    moons?: any[];
+    size?: number;
+    realDiameter?: number;
   } | null;
   orbitControlsRef: React.RefObject<any>;
   useSimplifiedDistance: boolean;
+  useRealisticSizes?: boolean;
 }
 
-export default function CameraController({ focus, planetData, orbitControlsRef, useSimplifiedDistance }: CameraControllerProps) {
+export default function CameraController({ focus, planetData, orbitControlsRef, useSimplifiedDistance, useRealisticSizes = false }: CameraControllerProps) {
   const { camera } = useThree()
   const isFollowing = useRef(false)
   const prevFocus = useRef(focus)
@@ -55,16 +61,35 @@ export default function CameraController({ focus, planetData, orbitControlsRef, 
       const pPos = new THREE.Vector3(x, y, z)
       
       if (isJumpPending.current) {
-        // Compute offset from origin or use current camera dir
-        const camDir = camera.position.clone().sub(orbitControlsRef.current.target).normalize()
-        if (camDir.lengthSq() === 0) camDir.set(0, 0, 1)
+        // Calculate max radius including moons
+        let planetSize = 1;
+        if (planetData.size !== undefined && planetData.realDiameter !== undefined) {
+          planetSize = useRealisticSizes ? getPlanetSize({ size: planetData.size, realDiameter: planetData.realDiameter } as any, true) : planetData.size;
+        }
         
-        const zoomDist = 5
-        camera.position.copy(pPos.clone().add(camDir.multiplyScalar(zoomDist)))
+        let maxRadius = planetSize;
+        if (planetData.moons && planetData.moons.length > 0) {
+          const maxMoonDist = Math.max(...planetData.moons.map(m => m.distance));
+          maxRadius = planetSize + maxMoonDist;
+        }
+
+        // We want the zoom distance to comfortably fit maxRadius
+        // Typical fov is 60. So tan(30deg) ~ 0.577. Dist = maxRadius / 0.577 ~ maxRadius * 1.7
+        // Add some padding to envelop everything.
+        const zoomDist = Math.max(maxRadius * 2.5, planetSize * 4);
+
+        // Fixed camera direction looking into the top-half 1/8th slice chunk
+        // A lower, more direct angle helps show off the cross-section layers without being too top-down
+        // Rotated an additional 20 degrees to the left for better visibility
+        const camDir = new THREE.Vector3(-1.0, 0.35, -1.0)
+          .applyAxisAngle(new THREE.Vector3(0, 1, 0), -40 * Math.PI / 180)
+          .normalize();
+        
+        camera.position.copy(pPos.clone().add(camDir.multiplyScalar(zoomDist)));
         // Update target NOW so the motion-tracking block below adds zero delta this frame
-        orbitControlsRef.current.target.copy(pPos)
-        orbitControlsRef.current.update()
-        isJumpPending.current = false
+        orbitControlsRef.current.target.copy(pPos);
+        orbitControlsRef.current.update();
+        isJumpPending.current = false;
       }
 
       // Update target and follow planet motion each frame
