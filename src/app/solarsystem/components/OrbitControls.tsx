@@ -75,6 +75,8 @@ type OrbitControlsMenuProps = {
   setUseRealisticSizes: (use: boolean) => void;
   timeScale: number;
   setTimeScale: (scale: number) => void;
+  showBackground: boolean;
+  setShowBackground: (show: boolean) => void;
 };
 
 export default function OrbitControlsMenu({
@@ -88,6 +90,8 @@ export default function OrbitControlsMenu({
   setUseRealisticSizes,
   timeScale,
   setTimeScale,
+  showBackground,
+  setShowBackground,
 }: OrbitControlsMenuProps) {
   const [isExpanded, setIsExpanded] = useState(true);
 
@@ -193,6 +197,17 @@ export default function OrbitControlsMenu({
                 Realistic
               </button>
             </div>
+          </div>
+
+          <div className="control-group">            
+            <label className="toggle-label">
+              <input
+                type="checkbox"
+                checked={showBackground}
+                onChange={(e) => setShowBackground(e.target.checked)}
+              />
+              <span>Show Background</span>
+            </label>
           </div>
 
           <div className="control-group">            

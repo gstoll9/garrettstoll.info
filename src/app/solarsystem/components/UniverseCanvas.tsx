@@ -1,5 +1,6 @@
 'use client'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas, useFrame, useLoader } from '@react-three/fiber'
+import * as THREE from 'three'
 import { Stars } from '@react-three/drei'
 import SolarSystem from './SolarSystem'
 import { useEffect, useState, useRef } from 'react'
@@ -10,6 +11,33 @@ import { OrbitControls } from '@react-three/drei';
 import { simulationState } from '../utils';
 
 type OrbitMode = 'Simple' | 'Elliptical' | 'RealLive';
+
+function StarMapBackground({ visible }: { visible: boolean }) {
+  const texture = useLoader(THREE.TextureLoader, '/solarsystemImages/StarMap_8k.jpg');
+  texture.mapping = THREE.EquirectangularReflectionMapping;
+  texture.colorSpace = THREE.SRGBColorSpace;
+  if (!visible) return null;
+  return <primitive attach="background" object={texture} />;
+}
+
+function ConstellationsOverlay({ visible }: { visible: boolean }) {
+  const texture = useLoader(THREE.TextureLoader, '/solarsystemImages/constellation_figures.jpg');
+  texture.colorSpace = THREE.SRGBColorSpace;
+  if (!visible) return null;
+  return (
+    <mesh>
+      <sphereGeometry args={[9000, 64, 64]} />
+      <meshBasicMaterial 
+        map={texture} 
+        side={THREE.BackSide} 
+        transparent={true} 
+        opacity={0.3} 
+        blending={THREE.AdditiveBlending}
+        depthWrite={false}
+      />
+    </mesh>
+  );
+}
 
 function TimeUpdater({ timeScale }: { timeScale: number }) {
   useEffect(() => {
@@ -34,6 +62,7 @@ type UniverseCanvasProps = {
 export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanvasProps) {
   const [contextLost, setContextLost] = useState(false);
   const [showOrbits, setShowOrbits] = useState(true);
+  const [showBackground, setShowBackground] = useState(false);
   const [orbitMode, setOrbitMode] = useState<OrbitMode>('Simple');
   const [useSimplifiedDistance, setUseSimplifiedDistance] = useState(true);
   const [useRealisticSizes, setUseRealisticSizes] = useState(false);
@@ -100,6 +129,8 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
         setUseRealisticSizes={setUseRealisticSizes}
         timeScale={timeScale}
         setTimeScale={setTimeScale}
+        showBackground={showBackground}
+        setShowBackground={setShowBackground}
       />
       <Canvas
         ref={canvasRef}
@@ -121,6 +152,9 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
         <TimeUpdater timeScale={timeScale} />
 
         {/* background */}
+        <StarMapBackground visible={showBackground} />
+        <ConstellationsOverlay visible={showBackground} />
+        
         <CameraController 
           focus={focus}
           planetData={focusedPlanet ? {
