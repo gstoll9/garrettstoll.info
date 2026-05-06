@@ -1,4 +1,3 @@
-'use client'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Stars } from '@react-three/drei'
