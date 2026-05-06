@@ -433,25 +433,29 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
       }
     }
 
-    // get chains of overlapping numbered tiles
+    // get chains of overlapping numbered tiles (BFS for transitivity: A-B and B-C → one chain)
+    let remaining = [...numberedTiles];
     let chains: numberedTileInfo[][] = [];
-    for (let numberTile1 of numberedTiles) {
-      
-      let thisChain: numberedTileInfo[] = [numberTile1];
-      numberedTiles = numberedTiles.filter(nt => nt !== numberTile1);
 
-      for (let numberTile2 of numberedTiles) {
-        if (numberTile1 === numberTile2) continue;
-        
-        // check for overlap
-        if (numberTile1.coveredNeighbors.some(c1 => 
-          numberTile2.coveredNeighbors.some(c2 => c1.x === c2.x && c1.y === c2.y)
-        )) {
-          thisChain.push(numberTile2);
-          numberedTiles = numberedTiles.filter(nt => nt !== numberTile2);
+    while (remaining.length > 0) {
+      const chain: numberedTileInfo[] = [remaining.shift()!];
+      let i = 0;
+      while (i < chain.length) {
+        const current = chain[i];
+        const nextRemaining: numberedTileInfo[] = [];
+        for (const nt of remaining) {
+          if (current.coveredNeighbors.some(c1 =>
+            nt.coveredNeighbors.some(c2 => c1.x === c2.x && c1.y === c2.y)
+          )) {
+            chain.push(nt);
+          } else {
+            nextRemaining.push(nt);
+          }
         }
+        remaining = nextRemaining;
+        i++;
       }
-      chains.push(thisChain);
+      chains.push(chain);
     }
 
 
@@ -481,52 +485,8 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
         b.push(nt.minesLeft);
       });
 
-      // reduce for known bombs
-      let changed = true;
-      while (changed) {
-        changed = false;
-        for (let i = 0; i < A.length; i++) {
-          
-          // sum row
-          const n_covered = A[i].reduce((acc, val) => acc + val, 0);
-          
-          // all covered cells are mines
-          if (n_covered === b[i]) {
-            
-            // remove from the column and reduce b
-            for (let j = 0; j < A[i].length; j++) {
-              if (A[i][j] === 1) {
-                A[i][j] = 0;
-                b[i]--;
-                
-                // set probability to 1 and mark changed
-                // remove from cellList
-                cellList.splice((i*A.length) + j, 1);
-                newBoard[i][j].mineProbability = 1;
-                changed = true;
-              }
-            }
-          // all covered cells are safe
-          } else if (b[i] === 0) {
-
-            // remove from the column and reduce b
-            for (let j = 0; j < A[i].length; j++) {
-              if (A[i][j] === 1) {
-                A[i][j] = 0;
-
-                // set probability to 0 and mark changed
-                // remove from cellList
-                cellList.splice((i*A.length) + j, 1);
-                newBoard[i][j].mineProbability = 0;
-                changed = true;
-              }
-            }
-          }
-        }
-
-      }
-
-      // Solve for probabilities
+      // Solve for probabilities (handles 0% and 100% cases correctly via enumeration)
+      if (cellList.length === 0) continue;
       const probabilities = solveMinesweeperProbabilities(A, b);
 
       // Update cell probabilities

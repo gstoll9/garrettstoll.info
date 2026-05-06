@@ -146,7 +146,7 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
         }}
       >
         {/* lighting */}
-        <ambientLight intensity={focus === 'solarsystem' ? 0.2 : 2.0} />
+        <ambientLight intensity={focus === 'solarsystem' ? 0.22 : 1.0} />
         <pointLight position={[0, 0, 0]} intensity={focus === 'solarsystem' ? 5000 : 500} />
 
         <TimeUpdater timeScale={timeScale} />
