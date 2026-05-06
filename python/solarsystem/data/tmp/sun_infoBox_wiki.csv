@@ -1,0 +1,32 @@
+Category,Label,Label Links,Value,Links,Citations
+General,Names,[],"Sun, Sol , Sól , Helios","https://en.wikipedia.org/wiki/Sol_(Roman_mythology), https://en.wikipedia.org/wiki/S%C3%B3l_(Germanic_mythology), https://en.wikipedia.org/wiki/Helios","[1], [2]"
+General,Adjectives,[],Solar,[],[3]
+Observation data,Mean distance from Earth,[],"1 au 149,600,000 km 8 min 19 s, light speed",https://en.wikipedia.org/wiki/Light_speed,[4]
+Observation data,Visual brightness,['https://en.wikipedia.org/wiki/Apparent_magnitude'],−26.74 ( V ),[],[5]
+Observation data,Absolute magnitude,['https://en.wikipedia.org/wiki/Absolute_magnitude'],4.83,[],[5]
+Observation data,Spectral classification,['https://en.wikipedia.org/wiki/Spectral_classification'],G2V,[],[6]
+Observation data,Metallicity,['https://en.wikipedia.org/wiki/Metallicity'],Z = 0.0122,[],[7]
+Observation data,Angular size,['https://en.wikipedia.org/wiki/Angular_size'],0.527°–0.545°,[],[8]
+Orbital characteristics,Mean distance fromMilky Waycore,['https://en.wikipedia.org/wiki/Milky_Way'],"24,000 to 28,000 light-years",https://en.wikipedia.org/wiki/Light-year,[9]
+Orbital characteristics,Galactic period,['https://en.wikipedia.org/wiki/Galactic_year'],225–250 million years,https://en.wikipedia.org/wiki/Julian_year_(astronomy),[]
+Orbital characteristics,Velocity,['https://en.wikipedia.org/wiki/Velocity'],"['251 km/s orbit about Galactic Center', '20 km/s to stellar neighbourhood', '370 km/s to cosmic microwave background']","['https://en.wikipedia.org/wiki/Galactic_Center', [], 'https://en.wikipedia.org/wiki/Cosmic_microwave_background']","[[], [], '[10]']"
+Orbital characteristics,Obliquity,['https://en.wikipedia.org/wiki/Obliquity'],"['7.25° ( ecliptic )', '67.23° ( galactic plane )']","['https://en.wikipedia.org/wiki/Ecliptic', 'https://en.wikipedia.org/wiki/Galactic_plane']","['[5]', []]"
+Orbital characteristics,Right ascensionNorth pole,['https://en.wikipedia.org/wiki/Right_ascension'],286.13° (286° 7′ 48″),[],[5]
+Orbital characteristics,Declinationof North pole,['https://en.wikipedia.org/wiki/Declination'],"+63.87° (63° 52′ 12""N)",[],[5]
+Orbital characteristics,Siderealrotation period,['https://en.wikipedia.org/wiki/Solar_rotation'],"['25.05 days (equator)', '34.4 days (poles)']","[[], []]","[[], '[5]']"
+Orbital characteristics,Equatorial rotation velocity,[],1.997 km/s,[],[11]
+Physical characteristics,Equatorialradius,['https://en.wikipedia.org/wiki/Radius'],"695,700 km 109 × Earth radius",https://en.wikipedia.org/wiki/Earth_radius,"[12], [11]"
+Physical characteristics,Flattening,['https://en.wikipedia.org/wiki/Flattening'],0.00005,[],[5]
+Physical characteristics,Surface area,['https://en.wikipedia.org/wiki/Surface_area'],"6.09 × 10 12 km 2 12,000 × Earth surface area",[],[11]
+Physical characteristics,Volume,['https://en.wikipedia.org/wiki/Volume'],"['1.412 × 10 18 km 3', '1,300,000\xa0× Earth volume']","[[], []]","[[], []]"
+Physical characteristics,Mass,['https://en.wikipedia.org/wiki/Mass'],"['(1.988 475 ± 0.000 092 ) × 10 30 kg', '332,950\xa0× Earth mass']","[[], 'https://en.wikipedia.org/wiki/Earth_mass']","['[13]', '[5]']"
+Physical characteristics,Averagedensity,['https://en.wikipedia.org/wiki/Density'],1.408 g/cm 3 0.255 × Earth density,[],"[5], [11]"
+Physical characteristics,Age,[],4.6 billion years,[],"[14], [15]"
+Physical characteristics,Equatorialsurface gravity,['https://en.wikipedia.org/wiki/Surface_gravity'],274 m/s 2 27.9 g 0,[],"[5], [11]"
+Physical characteristics,Moment of inertia factor,['https://en.wikipedia.org/wiki/Moment_of_inertia_factor'],~ 0.059,[],[5]
+Physical characteristics,Surfaceescape velocity,['https://en.wikipedia.org/wiki/Escape_velocity'],617.7 km/s 55 × Earth escape velocity,[],[11]
+Physical characteristics,Temperature,[],"['15,700,000 K (centre)', '5,772\xa0K ( photosphere )', '5,000,000\xa0K ( corona )']","[[], 'https://en.wikipedia.org/wiki/Photosphere', 'https://en.wikipedia.org/wiki/Solar_corona']","['[5]', '[12]', []]"
+Physical characteristics,Luminosity,['https://en.wikipedia.org/wiki/Luminosity'],"['3.828 × 10 26 W', '3.75 × 10 28 lm', '98\xa0lm/W efficacy']","[[], [], 'https://en.wikipedia.org/wiki/Luminous_efficacy']","['[5]', [], []]"
+Physical characteristics,Colour(B-V),['https://en.wikipedia.org/wiki/Color_index'],0.656,[],[16]
+Physical characteristics,Meanradiance,['https://en.wikipedia.org/wiki/Radiance'],2.009 × 10 7 W·m −2 ·sr −1,[],[]
+Physical characteristics,Photospherecomposition by mass,['https://en.wikipedia.org/wiki/Photosphere'],"['73.46% hydrogen', '24.85% helium', '0.77% oxygen', '0.29% carbon', '0.16% iron', '0.12% neon', '0.09% nitrogen', '0.07% silicon', '0.05% magnesium', '0.04% sulfur']","['https://en.wikipedia.org/wiki/Hydrogen', 'https://en.wikipedia.org/wiki/Helium', 'https://en.wikipedia.org/wiki/Oxygen', 'https://en.wikipedia.org/wiki/Carbon', 'https://en.wikipedia.org/wiki/Iron', 'https://en.wikipedia.org/wiki/Neon', 'https://en.wikipedia.org/wiki/Nitrogen', 'https://en.wikipedia.org/wiki/Silicon', 'https://en.wikipedia.org/wiki/Magnesium', 'https://en.wikipedia.org/wiki/Sulfur']","[[], [], [], [], [], [], [], [], [], '[17]']"
