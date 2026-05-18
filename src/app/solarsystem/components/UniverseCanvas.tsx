@@ -12,7 +12,9 @@ import { simulationState } from '../utils';
 type OrbitMode = 'Simple' | 'Elliptical' | 'RealLive';
 
 function StarMapBackground({ visible }: { visible: boolean }) {
-  const texture = useLoader(THREE.TextureLoader, '/solarsystemImages/StarMap_8k.jpg');
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const imagePath = isMobile ? '/solarsystemImages/StarMap_2k.jpg' : '/solarsystemImages/StarMap_8k.jpg';
+  const texture = useLoader(THREE.TextureLoader, imagePath);
   texture.mapping = THREE.EquirectangularReflectionMapping;
   texture.colorSpace = THREE.SRGBColorSpace;
   if (!visible) return null;
