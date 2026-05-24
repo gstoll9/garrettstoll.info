@@ -1,0 +1,28 @@
+Planet,SourceSection,LayerName,Depth,Density,Composition
+Saturn,Atmosphere,Upper Cloud Layers,0.5-2 bar,unknown,Ammonia Ice
+Saturn,Atmosphere,Water Ice Clouds,2.5-9.5 bar,unknown,"Water Ice, Ammonium Hydrosulfide Ice"
+Saturn,Atmosphere,Lower Layers,10-20 bar,unknown,Water Droplets with Ammonia in Aqueous Solution
+Uranus,Atmosphere,troposphere,-300 to 50 km,unknown,unknown
+Uranus,Atmosphere,stratosphere,"50 to 4,000 km",unknown,unknown
+Uranus,Atmosphere,thermosphere,"4,000 to 50,000 km",unknown,unknown
+Neptune,Atmosphere,Troposphere,0-0.1 bars,unknown,"Hydrogen, Helium, Methane, Ammonia, Ammonium Sulfide, Hydrogen Sulfide, Water Ice"
+Neptune,Atmosphere,Stratosphere,0.1-10^-5 bars,unknown,"Carbon Monoxide, Hydrogen Cyanide, Ethane, Ethyne"
+Neptune,Atmosphere,Thermosphere,10^-5 to 10^-4 bars,unknown,"Carbon Dioxide, Water"
+Neptune,Atmosphere,Exosphere,>10^-4 bars,unknown,unknown
+Venus,Internal structure,Core,"2,900–3,450 km",unknown,likely at least partially liquid
+Venus,Internal structure,Mantle,unknown,unknown,unknown
+Venus,Internal structure,Crust,40-65 km,unknown,unknown
+Venus,Atmosphere and climate,Atmosphere,Surface,65 kg/m3 (4.1 lb/cu ft),"96.5% carbon dioxide, 3.5% nitrogen, traces of other gases including sulfur dioxide"
+Venus,Atmosphere and climate,Cloud Layer,45 to 70 km above the surface,unknown,"mainly sulfuric acid, with possible constituents of ferric chloride, ferric sulfate, aluminum chloride, and phosphoric anhydride"
+Venus,Geography,"Smooth, volcanic plains",unknown,unknown,"70% plains with wrinkle ridges, 10% smooth or lobate plains"
+Venus,Geography,Highland continents,unknown,unknown,"Tessera terrain, possibly more felsic mineral assemblage"
+Venus,Geography,Impact craters,unknown,85%,Pristine condition
+Venus,Geography,Recent lava flows,unknown,unknown,"Olivine, fresh volcanic material"
+Earth,Hydrosphere,Hydrosphere,unknown,unknown,"Water in various forms including global ocean, atmosphere, and land"
+Jupiter,Atmosphere,Cloud Layer,50 km,unknown,"at least two decks of ammonia clouds: a thin, clearer region on top and a thicker, lower deck. There may be a thin layer of water clouds underlying the ammonia clouds."
+Jupiter,Atmosphere,Ammonia-Water Clouds,relatively high in the atmosphere,unknown,water-ammonia slushes covered in ice
+Jupiter,Atmosphere,Tropopause Layer,unknown,unknown,"ammonia crystals, which may contain ammonium hydrosulfide"
+Jupiter,Atmosphere,Great Red Spot,around 300–500 kilometres,unknown,"unknown, but photodissociated ammonia reacting with acetylene is a likely explanation"
+Jupiter,Composition,Atmosphere,unknown,unknown,"76% hydrogen, 24% helium by mass; 90% hydrogen, 10% helium by volume; trace amounts of carbon, oxygen, sulfur, neon, ammonia, water vapor, phosphine, hydrogen sulfide, hydrocarbons (methane, ethane, benzene)"
+Jupiter,Composition,Outermost Layer,unknown,unknown,Frozen ammonia crystals
+Jupiter,Composition,Interior,unknown,unknown,"71% hydrogen, 24% helium, 5% other elements by mass"

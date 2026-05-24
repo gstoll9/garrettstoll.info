@@ -33,9 +33,12 @@ function Resume() {
             <Link className="projectItem" href="/brain">
               <p className="projectText">Human Brain</p>
             </Link>
+            <Link className="projectItem" href="/knowledgegraph">
+              <p className="projectText">Knowledge Graph</p>
+            </Link>
 
             {/* Class Notes */}
-            <h2 className="projectsTitle" style={{paddingTop: "10%"}}>Class Notes</h2>
+            {/* <h2 className="projectsTitle" style={{paddingTop: "10%"}}>Class Notes</h2>
             <div className="headerDivider" />
 
             <Link className="projectItem" href="/numericalmethods">
@@ -44,7 +47,7 @@ function Resume() {
             <Link className="projectItem" href="/structuralbioinformatics">
               <p className="projectText">Structural Bioinformatics</p>
             </Link>
-            {/* <Link className="projectItem" href="/threeBody">
+            <Link className="projectItem" href="/threeBody">
               <p className="projectText">Three-Body Problem</p>
             </Link> */}
 

@@ -63,9 +63,9 @@ type UniverseCanvasProps = {
 export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanvasProps) {
   const [contextLost, setContextLost] = useState(false);
   const [showOrbits, setShowOrbits] = useState(true);
-  const [showBackground, setShowBackground] = useState(false);
-  const [orbitMode, setOrbitMode] = useState<OrbitMode>('Simple');
-  const [useSimplifiedDistance, setUseSimplifiedDistance] = useState(true);
+  const [showBackground, setShowBackground] = useState(true);
+  const [orbitMode, setOrbitMode] = useState<OrbitMode>('RealLive');
+  const [useSimplifiedDistance, setUseSimplifiedDistance] = useState(false);
   const [useRealisticSizes, setUseRealisticSizes] = useState(false);
   const [timeScale, setTimeScale] = useState(1);
   const orbitControlsRef = useRef<any>(null);
@@ -135,7 +135,7 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
       />
       <Canvas
         ref={canvasRef}
-        camera={{ position: [0, 10, 40], fov: 60, near: 0.1, far: 10000 }}
+        camera={{ position: [0, 150, 600], fov: 60, near: 0.1, far: 50000 }}
         gl={{
           powerPreference: 'default',
           antialias: false,
