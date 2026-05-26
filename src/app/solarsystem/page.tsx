@@ -30,14 +30,7 @@ const PLANET_SYMBOLS: Record<string, string> = {
 const UniverseCanvas = dynamic(() => import('./components/UniverseCanvas').then(mod => mod.UniverseCanvas), {
   ssr: false,
   loading: () => (
-    <div style={{ 
-      display: 'flex', 
-      justifyContent: 'center', 
-      alignItems: 'center', 
-      height: '100%',
-      backgroundColor: 'black',
-      color: 'white' 
-    }}>
+    <div className="solarLoading">
       Loading Solar System...
     </div>
   )
@@ -93,15 +86,14 @@ export default function Home() {
 
         {/* Planet picker — visible only when Planet tab is active */}
         {activeTab === 'planet' && (
-          <div className="planetPicker" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '8px' }}>
+          <div className="planetPicker">
             {planets.map(p => (
               <button
                 key={p.name}
                 className={`planetPickBtn${activePlanetName === p.name ? ' active' : ''}`}
                 onClick={() => handlePlanetPick(p.name)}
-                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '4px 10px', gap: '2px' }}
               >
-                <span style={{ fontSize: '1.4em', lineHeight: '1em' }}>
+                <span className="planetPickSymbol">
                   {PLANET_SYMBOLS[p.name] || '•'}
                 </span>
                 <span>{p.name}</span>
@@ -114,13 +106,7 @@ export default function Home() {
       {/* ── Visualization ── */}
       <div className="solarWorkArea">
         <Suspense fallback={
-          <div style={{ 
-            display: 'flex', 
-            justifyContent: 'center', 
-            alignItems: 'center', 
-            height: '100%',
-            color: 'white' 
-          }}>
+          <div className="solarLoading">
             Initializing 3D Scene...
           </div>
         }>

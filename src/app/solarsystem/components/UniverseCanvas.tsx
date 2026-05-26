@@ -9,7 +9,7 @@ import CameraController from './CameraController';
 import { OrbitControls } from '@react-three/drei';
 import { simulationState } from '../utils';
 
-type OrbitMode = 'Simple' | 'Elliptical' | 'RealLive';
+type OrbitMode = 'RealLive';
 
 function StarMapBackground({ visible }: { visible: boolean }) {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
@@ -64,8 +64,6 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
   const [contextLost, setContextLost] = useState(false);
   const [showOrbits, setShowOrbits] = useState(true);
   const [showBackground, setShowBackground] = useState(true);
-  const [orbitMode, setOrbitMode] = useState<OrbitMode>('RealLive');
-  const [useSimplifiedDistance, setUseSimplifiedDistance] = useState(false);
   const [useRealisticSizes, setUseRealisticSizes] = useState(false);
   const [timeScale, setTimeScale] = useState(1);
   const orbitControlsRef = useRef<any>(null);
@@ -104,28 +102,17 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
 
   if (contextLost) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '100vh',
-        color: 'white',
-        backgroundColor: 'black'
-      }}>
+      <div className="solarLoading">
         WebGL Context Lost - Please refresh the page
       </div>
     );
   }
 
   return (
-    <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+    <div className="universeCanvasShell">
       <OrbitControlsMenu
-        orbitMode={orbitMode}
-        setOrbitMode={setOrbitMode}
         showOrbits={showOrbits}
         setShowOrbits={setShowOrbits}
-        useSimplifiedDistance={useSimplifiedDistance}
-        setUseSimplifiedDistance={setUseSimplifiedDistance}
         useRealisticSizes={useRealisticSizes}
         setUseRealisticSizes={setUseRealisticSizes}
         timeScale={timeScale}
@@ -161,13 +148,13 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
           planetData={focusedPlanet ? {
             name: focusedPlanet.name,
             orbitData: focusedPlanet.orbitData,
-            orbitMode: orbitMode,
+            orbitMode: 'RealLive',
             moons: focusedPlanet.moons,
             size: focusedPlanet.size,
             realDiameter: focusedPlanet.realDiameter
           } : null}
           orbitControlsRef={orbitControlsRef}
-          useSimplifiedDistance={useSimplifiedDistance}
+          useSimplifiedDistance={false}
           useRealisticSizes={useRealisticSizes}
         />
         <SolarSystem
@@ -176,8 +163,8 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
           }}
           focus={focus}
           showOrbits={showOrbits}
-          orbitMode={orbitMode}
-          useSimplifiedDistance={useSimplifiedDistance}
+          orbitMode={'RealLive'}
+          useSimplifiedDistance={false}
           useRealisticSizes={useRealisticSizes}
           timeScale={timeScale}
         />

@@ -1,5 +1,6 @@
 "use client"
 import { useEffect, useRef, useState, useMemo, useCallback, Fragment } from 'react';
+import { wavefunction } from '../utils/hydrogenCloud';
 
 // ── Physical constants ─────────────────────────────────────────────────────────
 const C_NM_S   = 2.998e17;   // speed of light in nm/s
@@ -97,9 +98,113 @@ const STRIP_H   = 120;
 const NM_MIN = 80;
 const NM_MAX = 20000;
 
+const SLICE_SIZE = 184;
+
 function nmToX(nm: number): number {
   const t = (Math.log(nm) - Math.log(NM_MIN)) / (Math.log(NM_MAX) - Math.log(NM_MIN));
   return MARGIN_L + t * PLOT_W;
+}
+
+function orbitalLetter(l: number): string {
+  return ['s', 'p', 'd', 'f', 'g'][l] ?? `l${l}`;
+}
+
+function phaseToRgb(phase: number): [number, number, number] {
+  const stops: [number, number, number][] = [
+    [0.106, 0.165, 0.541],
+    [0.533, 0.800, 0.933],
+    [0.902, 0.478, 0.000],
+    [0.988, 0.800, 0.604],
+    [0.106, 0.165, 0.541],
+  ];
+  if (!Number.isFinite(phase)) {
+    return stops[0];
+  }
+
+  const t = Math.max(0, Math.min(1, phase / (2 * Math.PI) + 0.5));
+  const scaled = t * (stops.length - 1);
+  const lo = Math.floor(scaled);
+  const hi = Math.min(lo + 1, stops.length - 1);
+  const frac = scaled - lo;
+  const a = stops[lo];
+  const b = stops[hi];
+  return [
+    a[0] + (b[0] - a[0]) * frac,
+    a[1] + (b[1] - a[1]) * frac,
+    a[2] + (b[2] - a[2]) * frac,
+  ];
+}
+
+function buildCrossSectionDataUrl(n: number, l: number, m: number, size = SLICE_SIZE): string {
+  if (typeof document === 'undefined') return '';
+
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return '';
+
+  const image = ctx.createImageData(size, size);
+  const maxRadius = n * n * 5;
+  const step = (2 * maxRadius) / (size - 1);
+
+  const probs = new Float32Array(size * size);
+  const phases = new Float32Array(size * size);
+  let maxProb = 1e-12;
+
+  for (let j = 0; j < size; j++) {
+    for (let i = 0; i < size; i++) {
+      const x = -maxRadius + i * step;
+      const z = maxRadius - j * step;
+      const r = Math.sqrt(x * x + z * z);
+      const idx = j * size + i;
+
+      if (r > maxRadius) {
+        probs[idx] = 0;
+        phases[idx] = 0;
+        continue;
+      }
+
+      const theta = r > 0 ? Math.acos(Math.max(-1, Math.min(1, z / r))) : 0;
+      const phi = Math.atan2(0, x);
+      const psi = wavefunction(r, theta, phi, n, l, m, 1);
+      const probRaw = psi.real * psi.real + psi.imag * psi.imag;
+      const prob = Number.isFinite(probRaw) ? probRaw : 0;
+      const phaseRaw = Math.atan2(psi.imag, psi.real);
+      const phase = Number.isFinite(phaseRaw) ? phaseRaw : 0;
+
+      probs[idx] = prob;
+      phases[idx] = phase;
+      if (prob > maxProb) maxProb = prob;
+    }
+  }
+
+  for (let idx = 0; idx < probs.length; idx++) {
+    const p = probs[idx];
+    const norm = Math.min(1, p / maxProb);
+    const intensity = Math.pow(norm, 0.34);
+    const [rC, gC, bC] = phaseToRgb(phases[idx]);
+
+    const px = idx * 4;
+    const alpha = intensity < 0.03 ? 0 : Math.round(intensity * 255);
+    image.data[px] = Math.round(rC * 255);
+    image.data[px + 1] = Math.round(gC * 255);
+    image.data[px + 2] = Math.round(bC * 255);
+    image.data[px + 3] = alpha;
+  }
+
+  ctx.fillStyle = '#06090f';
+  ctx.fillRect(0, 0, size, size);
+  ctx.putImageData(image, 0, 0);
+
+  // Nucleus marker
+  const c = size / 2;
+  ctx.beginPath();
+  ctx.arc(c, c, Math.max(2, size * 0.018), 0, 2 * Math.PI);
+  ctx.fillStyle = 'rgba(255, 84, 84, 0.9)';
+  ctx.fill();
+
+  return canvas.toDataURL('image/png');
 }
 
 // ── Canvas drawing (pure function, no hooks) ────────────────────────────────────
@@ -230,6 +335,7 @@ export default function HydrogenSpectrum() {
   const [n2Min, setN2Min] = useState(2);
   const [n2Max, setN2Max] = useState(9);
   const [hovered, setHovered] = useState<SpectralLine | null>(null);
+  const [selectedLine, setSelectedLine] = useState<SpectralLine | null>(ALL_LINES[0] ?? null);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
 
   const visibleLines = useMemo(
@@ -243,21 +349,71 @@ export default function HydrogenSpectrum() {
     if (canvasRef.current) drawCanvas(canvasRef.current, visibleLines, hovered);
   }, [visibleLines, hovered]);
 
+  useEffect(() => {
+    if (!visibleLines.length) {
+      setSelectedLine(null);
+      return;
+    }
+    if (!selectedLine || !visibleLines.includes(selectedLine)) {
+      setSelectedLine(visibleLines[0]);
+    }
+  }, [visibleLines, selectedLine]);
+
+  const getClosestLine = useCallback((logicalX: number): SpectralLine | null => {
+    let closest: SpectralLine | null = null;
+    let minDist = 10;
+    visibleLines.forEach(line => {
+      const dist = Math.abs(nmToX(line.wavelength) - logicalX);
+      if (dist < minDist) {
+        minDist = dist;
+        closest = line;
+      }
+    });
+    return closest;
+  }, [visibleLines]);
+
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (!canvasRef.current) return;
     const rect = canvasRef.current.getBoundingClientRect();
     const logicalX = (e.clientX - rect.left) * (CW / rect.width);
 
-    let closest: SpectralLine | null = null;
-    let minDist = 10;
-    visibleLines.forEach(line => {
-      const dist = Math.abs(nmToX(line.wavelength) - logicalX);
-      if (dist < minDist) { minDist = dist; closest = line; }
-    });
+    const closest = getClosestLine(logicalX);
 
     setHovered(closest);
     setTooltipPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  }, [visibleLines]);
+  }, [getClosestLine]);
+
+  const handleOverlayClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!canvasRef.current) return;
+    const rect = canvasRef.current.getBoundingClientRect();
+    const logicalX = (e.clientX - rect.left) * (CW / rect.width);
+    const closest = getClosestLine(logicalX);
+    if (closest) setSelectedLine(closest);
+  }, [getClosestLine]);
+
+  const activeTransition = hovered ?? selectedLine;
+
+  const upperState = useMemo(() => {
+    if (!activeTransition) return null;
+    const n = activeTransition.n2;
+    return { n, l: Math.min(1, n - 1), m: 0 };
+  }, [activeTransition]);
+
+  const lowerState = useMemo(() => {
+    if (!activeTransition) return null;
+    const n = activeTransition.n1;
+    return { n, l: 0, m: 0 };
+  }, [activeTransition]);
+
+  const upperSliceUrl = useMemo(() => {
+    if (!upperState) return '';
+    return buildCrossSectionDataUrl(upperState.n, upperState.l, upperState.m);
+  }, [upperState]);
+
+  const lowerSliceUrl = useMemo(() => {
+    if (!lowerState) return '';
+    return buildCrossSectionDataUrl(lowerState.n, lowerState.l, lowerState.m);
+  }, [lowerState]);
 
   const toggleSeries = (name: string) => {
     setActiveSeries(prev => {
@@ -321,6 +477,7 @@ export default function HydrogenSpectrum() {
         {/* transparent hit overlay */}
         <div
           onMouseMove={handleMouseMove}
+          onClick={handleOverlayClick}
           onMouseLeave={() => setHovered(null)}
           style={{ position: 'absolute', inset: 0, cursor: hovered ? 'crosshair' : 'default' }}
         />
@@ -404,6 +561,67 @@ export default function HydrogenSpectrum() {
           );
         })()}
       </div>
+
+      {/* ── Transition-state cross-sections ── */}
+      {activeTransition && upperState && lowerState && (
+        <div style={{
+          marginTop: '10px',
+          borderTop: '1px solid rgba(255,255,255,0.08)',
+          paddingTop: '10px'
+        }}>
+          <div style={{ color: 'rgba(255,255,255,0.82)', fontSize: '12px', marginBottom: '8px' }}>
+            Transition Cloud Cross-Sections ({activeTransition.n2}{orbitalLetter(upperState.l)} → {activeTransition.n1}{orbitalLetter(lowerState.l)})
+          </div>
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+            <div style={{
+              border: '1px solid rgba(255,255,255,0.14)',
+              borderRadius: '8px',
+              background: '#04070d',
+              padding: '6px',
+              width: `${SLICE_SIZE + 12}px`
+            }}>
+              {upperSliceUrl && (
+                <img
+                  src={upperSliceUrl}
+                  alt={`Upper state ${upperState.n}${orbitalLetter(upperState.l)} cross-section`}
+                  width={SLICE_SIZE}
+                  height={SLICE_SIZE}
+                  style={{ display: 'block', width: `${SLICE_SIZE}px`, height: `${SLICE_SIZE}px`, borderRadius: '5px' }}
+                />
+              )}
+              <div style={{ marginTop: '5px', fontSize: '11px', color: 'rgba(255,255,255,0.66)', textAlign: 'center' }}>
+                Initial: {upperState.n}{orbitalLetter(upperState.l)}
+              </div>
+            </div>
+
+            <div style={{ color: 'rgba(255,255,255,0.58)', fontSize: '20px', padding: '0 3px' }}>→</div>
+
+            <div style={{
+              border: '1px solid rgba(255,255,255,0.14)',
+              borderRadius: '8px',
+              background: '#04070d',
+              padding: '6px',
+              width: `${SLICE_SIZE + 12}px`
+            }}>
+              {lowerSliceUrl && (
+                <img
+                  src={lowerSliceUrl}
+                  alt={`Lower state ${lowerState.n}${orbitalLetter(lowerState.l)} cross-section`}
+                  width={SLICE_SIZE}
+                  height={SLICE_SIZE}
+                  style={{ display: 'block', width: `${SLICE_SIZE}px`, height: `${SLICE_SIZE}px`, borderRadius: '5px' }}
+                />
+              )}
+              <div style={{ marginTop: '5px', fontSize: '11px', color: 'rgba(255,255,255,0.66)', textAlign: 'center' }}>
+                Final: {lowerState.n}{orbitalLetter(lowerState.l)}
+              </div>
+            </div>
+          </div>
+          <div style={{ marginTop: '7px', color: 'rgba(255,255,255,0.45)', fontSize: '10px' }}>
+            Cross-section plane: y = 0. Click a spectrum line to pin a transition.
+          </div>
+        </div>
+      )}
     </div>
   );
 }

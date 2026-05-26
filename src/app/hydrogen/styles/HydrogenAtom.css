@@ -10,16 +10,33 @@
   overflow: hidden !important;
 }
 
+:has(.hydrogenPage) .standardlayout-main {
+  width: 100% !important;
+  min-height: calc(100dvh - 92px - 1.8rem) !important;
+  height: calc(100dvh - 92px - 1.8rem) !important;
+  border-radius: 0 !important;
+}
+
+@media (max-width: 768px) {
+  :has(.hydrogenPage) .standardlayout-main {
+    min-height: calc(100dvh - 74px - 1.2rem) !important;
+    height: calc(100dvh - 74px - 1.2rem) !important;
+  }
+}
+
 /* ── Fill the main area completely ─────────────────────────────────────────── */
 .hydrogenPage {
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
-  background: #000;
+  gap: 0.4rem;
+  background:
+    radial-gradient(circle at top, rgba(44, 78, 128, 0.14), transparent 34%),
+    linear-gradient(180deg, #03060b 0%, #020305 46%, #000 100%);
   color: #e8e8e8;
   overflow: hidden;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: var(--font-body), system-ui, -apple-system, sans-serif;
 }
 
 /* ── Energy-level tab nav ─────────────────────────────────────────────────── */
@@ -28,13 +45,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 64px;
-  background: #000;
+  min-height: 64px;
+  padding: 0.65rem 0.9rem 0.3rem;
+  background: transparent;
 }
 
 .energyTrack {
   position: relative;
-  width: 200px;
+  width: min(250px, 44vw);
   height: 20px;
 }
 
@@ -104,12 +122,15 @@
 
 /* ── Work area ────────────────────────────────────────────────────────────── */
 .workArea {
-  flex: 8;
+  flex: 1;
   display: flex;
   flex-direction: row;
   min-height: 0;
   position: relative;
   overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 28px 28px 0 0;
+  background: linear-gradient(180deg, rgba(1, 4, 7, 0.2), rgba(1, 4, 7, 0.68));
 }
 
 /* ── Math drawer ──────────────────────────────────────────────────────────── */
@@ -184,6 +205,25 @@
   margin: 0.3rem 0 0.7rem;
 }
 
+/* Ensure math drawer text does not inherit global green text styles */
+.mathDrawerInner,
+.mathDrawerInner span,
+.mathDrawerInner li,
+.mathDrawerInner p,
+.mathDrawerInner h1,
+.mathDrawerInner h2,
+.mathDrawerInner h3,
+.mathDrawerInner h4,
+.mathDrawerInner h5,
+.mathDrawerInner h6 {
+  color: #eef3ffd5;
+}
+
+.mathDrawerInner .katex,
+.mathDrawerInner .katex * {
+  color: #eef3ffd5 !important;
+}
+
 /* KaTeX in the narrow drawer */
 .mathDrawerInner .katex-display {
   overflow-x: auto;
@@ -242,5 +282,180 @@
   height: 100%;
   position: relative;
   overflow: hidden;
+}
+
+.hydrogenSpectrumPane {
+  padding: 1rem;
+  height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.waveVizStack {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.waveCloudPanel {
+  position: relative;
+  flex: 0 0 60%;
+  min-height: 260px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.wavePlotsPanel {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 0.8rem;
+  background: linear-gradient(180deg, rgba(6, 10, 16, 0.62), rgba(4, 8, 13, 0.78));
+}
+
+.wavePlotsGrid {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.wavePlotCard {
+  border: 1px solid rgba(173, 201, 255, 0.16);
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(9, 14, 21, 0.68), rgba(4, 8, 13, 0.72));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  padding: 0.55rem 0.65rem 0.4rem;
+  min-height: 0;
+}
+
+.wavePlotHead h3 {
+  margin: 0;
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #dce7ff;
+}
+
+.wavePlotHead p {
+  margin: 0.16rem 0 0.35rem;
+  font-family: var(--font-mono), "SFMono-Regular", Menlo, monospace;
+  font-size: 0.69rem;
+  color: rgba(226, 234, 251, 0.72);
+}
+
+.wavePlotSvg {
+  width: 100%;
+  height: calc(100% - 2rem);
+  min-height: 150px;
+  display: block;
+}
+
+.waveGridLine {
+  stroke: rgba(176, 196, 229, 0.17);
+  stroke-width: 1;
+}
+
+.waveAxisZero {
+  stroke: rgba(210, 226, 255, 0.55);
+  stroke-width: 1.1;
+}
+
+.waveDataPath {
+  fill: none;
+  stroke: #91b6ff;
+  stroke-width: 2;
+}
+
+.waveTickText {
+  fill: rgba(224, 233, 252, 0.72);
+  font-size: 10px;
+  font-family: var(--font-mono), "SFMono-Regular", Menlo, monospace;
+}
+
+.waveAxisLabel {
+  fill: rgba(224, 233, 252, 0.85);
+  font-size: 11px;
+  font-family: var(--font-mono), "SFMono-Regular", Menlo, monospace;
+}
+
+.hydrogenCloudRoot {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.hydrogenCloudControls {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  z-index: 10;
+  max-width: 255px;
+  max-height: calc(100% - 1.2rem);
+  overflow-y: auto;
+  padding: 0.8rem;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(9, 14, 21, 0.88), rgba(4, 8, 13, 0.78));
+  border: 1px solid rgba(173, 201, 255, 0.14);
+  color: #eef2f8;
+  font-family: var(--font-mono), "SFMono-Regular", Menlo, monospace;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.34);
+}
+
+.hydrogenCloudControls span,
+.hydrogenCloudControls label,
+.hydrogenCloudControls h3,
+.hydrogenCloudControls div {
+  color: #e7ecf5;
+}
+
+@media (max-width: 900px) {
+  .workArea {
+    border-radius: 20px 20px 0 0;
+  }
+
+  .mathDrawer {
+    width: min(420px, 78vw);
+  }
+
+  .mathDrawerInner {
+    width: min(420px, 78vw);
+    padding: 1rem 1rem 2rem;
+  }
+
+  .hydrogenCloudControls {
+    max-width: 220px;
+    max-height: calc(100% - 1rem);
+    padding: 0.65rem;
+  }
+
+  .waveCloudPanel {
+    flex-basis: 55%;
+    min-height: 220px;
+  }
+
+  .wavePlotsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .hydrogenPage {
+    gap: 0.3rem;
+  }
+
+  .energyNav {
+    justify-content: flex-start;
+    padding: 0.55rem 0.7rem 0.2rem;
+  }
+
+  .energyTrack {
+    width: min(220px, 62vw);
+  }
+
+  .hydrogenSpectrumPane {
+    padding: 0.65rem;
+  }
 }
 

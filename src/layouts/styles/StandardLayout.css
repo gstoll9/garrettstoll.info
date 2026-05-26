@@ -1,27 +1,69 @@
 .container0 {
-  height: 100%;
+  min-height: 100dvh;
   width: 100%;
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr;
 }
 
 .standardlayout-main {
-  /* children */
   display: flex;
   flex-direction: column;
-
-  /* position */
-  order: 0;
   position: relative;
-
-  /* size */
-  height: 90%;
-  flex: 9;
+  width: min(1380px, calc(100% - 2rem));
+  margin: 0.9rem auto 1.4rem;
   overflow: scroll;
+  border-radius: 24px;
+  border: 1px solid color-mix(in srgb, var(--brand) 22%, transparent);
+  padding: clamp(0.8rem, 1.2vw, 1.4rem);
+  box-shadow: var(--shadow-soft);
+  background:
+    linear-gradient(180deg, #d4caae, #c2b89a);
+}
 
-  /* edges */
-  margin: 0;
-  border: 0;
-  padding: 1.25%;
-  box-shadow: 0 0 5px 3px gray inset;
+.tyro-home-link {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 10;
+  border-radius: 999px;
+  padding: 0.35rem;
+  background-color: rgba(255, 255, 255, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(5px);
+  transition: transform 170ms ease, background-color 170ms ease;
+}
 
-  background-color: #EFE3C2;
+.tyro-home-link:hover {
+  transform: translateY(-2px);
+  background-color: rgba(255, 255, 255, 0.42);
+}
+
+.tyro-home-image {
+  width: 56px;
+  height: 56px;
+  transition: transform 170ms ease;
+}
+
+.tyro-home-link:hover .tyro-home-image {
+  transform: scale(1.06);
+}
+
+@media (max-width: 768px) {
+  .standardlayout-main {
+    width: calc(100% - 1rem);
+    margin: 0.7rem auto 0.9rem;
+    border-radius: 16px;
+    padding: 0.8rem;
+  }
+
+  .tyro-home-link {
+    top: 0.6rem;
+    left: 0.6rem;
+  }
+
+  .tyro-home-image {
+    width: 48px;
+    height: 48px;
+  }
 }

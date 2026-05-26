@@ -14,6 +14,7 @@ interface ElectronCloudProps {
   n?: number;
   l?: number;
   m?: number;
+  onStateChange?: (state: { n: number; l: number; m: number }) => void;
   gridResolution?: number;
   probabilityThreshold?: number;
 }
@@ -38,15 +39,21 @@ function ScaleBarMeasure({ scaleLen, onWidth }: { scaleLen: number; onWidth: (w:
 }
 
 // Camera auto-framing: orbital radius scales as n²a₀, so pull back proportionally
-function CameraRig({ n }: { n: number }) {
+function CameraRig({ n, controlsRef }: { n: number; controlsRef: React.RefObject<any> }) {
   const { camera } = useThree();
   useEffect(() => {
-    const dist = n * n * 5;      // orbital maxRadius = n²×5; 6.5 gives tighter framing
-    const far  = dist * 6;
-    camera.position.set(dist, 0, 0);
+    const dist = Math.max(5, n * n * 3.2);
+    const far = dist * 16;
+    camera.position.set(dist * 0.78, dist * 0.5, dist * 0.64);
+    camera.lookAt(0, 0, 0);
     (camera as THREE.PerspectiveCamera).far = far;
     camera.updateProjectionMatrix();
-  }, [camera, n]);
+
+    if (controlsRef.current) {
+      controlsRef.current.target.set(0, 0, 0);
+      controlsRef.current.update();
+    }
+  }, [camera, n, controlsRef]);
   return null;
 }
 
@@ -54,8 +61,9 @@ export default function ElectronCloud({
   n: initialN = 2, 
   l: initialL = 1, 
   m: initialM = 0,
+  onStateChange,
   gridResolution = 48,
-  probabilityThreshold = 0.90
+  probabilityThreshold = 0.50
 }: ElectronCloudProps) {
   const [n, setN] = useState(initialN);
   const [l, setL] = useState(initialL);
@@ -71,6 +79,17 @@ export default function ElectronCloud({
   const [nOuter, setNOuter] = useState(2);
   const [lOuter, setLOuter] = useState(0);
   const [mOuter, setMOuter] = useState(0);
+  const orbitControlsRef = useRef<any>(null);
+
+  // Keep local controls in sync when parent-selected state changes from the text panel.
+  useEffect(() => {
+    const nextN = Math.max(1, Math.floor(initialN) || 1);
+    const nextL = Math.max(0, Math.min(Math.floor(initialL) || 0, nextN - 1));
+    const nextM = Math.max(-nextL, Math.min(Math.floor(initialM) || 0, nextL));
+    setN(nextN);
+    setL(nextL);
+    setM(nextM);
+  }, [initialN, initialL, initialM]);
 
   // Variational Z_eff for helium ground state: minimises ⟨E⟩ for ψ = ψ_{1s}^{Z_eff}(r₁)ψ_{1s}^{Z_eff}(r₂)
   // Optimal Z_eff = Z − 5/16 = 2 − 5/16 = 27/16 ≈ 1.6875
@@ -100,6 +119,7 @@ export default function ElectronCloud({
     setNucleus(newNucleus);
     if (newNucleus === 'He') {
       setN(1); setL(0); setM(0);
+      onStateChange?.({ n: 1, l: 0, m: 0 });
       setHeExcited(false);
     }
   };
@@ -215,32 +235,28 @@ export default function ElectronCloud({
   const stateLabel = `${renderN}${orbitalName}${renderM !== 0 ? ` (m=${renderM})` : ''}`;
 
   const handleNChange = (newN: number) => {
-    setN(newN);
-    if (l >= newN) setL(newN - 1);
-    if (Math.abs(m) > l) setM(0);
+    const nextN = newN;
+    const nextL = l >= newN ? newN - 1 : l;
+    const nextM = Math.abs(m) > nextL ? 0 : m;
+    setN(nextN);
+    setL(nextL);
+    setM(nextM);
+    onStateChange?.({ n: nextN, l: nextL, m: nextM });
   };
 
   const handleLChange = (newL: number) => {
-    setL(newL);
-    if (Math.abs(m) > newL) setM(0);
+    const nextL = newL;
+    const nextM = Math.abs(m) > newL ? 0 : m;
+    setL(nextL);
+    setM(nextM);
+    onStateChange?.({ n, l: nextL, m: nextM });
     if (n > 1) setShowLowerOrbital(true);
   };
 
   return (
-    <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+    <div className="hydrogenCloudRoot">
       {/* Controls */}
-      <div style={{
-        position: 'absolute',
-        top: '10px',
-        left: '10px',
-        zIndex: 10,
-        background: 'rgba(0, 0, 0, 0.7)',
-        padding: '15px',
-        borderRadius: '8px',
-        color: 'white',
-        fontFamily: 'monospace',
-        maxWidth: '250px'
-      }}>
+      <div className="hydrogenCloudControls">
         {/* Atom selector */}
         <div style={{ display: 'flex', gap: '6px', marginBottom: '12px' }}>
           {(['H', 'He'] as const).map((atom) => (
@@ -433,7 +449,10 @@ export default function ElectronCloud({
               />
               <DotTrack
                 label="m" values={mValues} selected={m}
-                onSelect={setM} locked={mLocked}
+                onSelect={(newM) => {
+                  setM(newM);
+                  onStateChange?.({ n, l, m: newM });
+                }} locked={mLocked}
                 hint={l === 0 && !heDisabled ? 'm=0' : undefined}
               />
             </>
@@ -536,11 +555,27 @@ export default function ElectronCloud({
       </div>
 
       {/* 3D Canvas */}
-      <Canvas camera={{ position: [9, 0, 0], far: 54 }} style={{ backgroundColor: "black" }}>
+      <Canvas
+        camera={{ position: [10, 4, 10], far: 180 }}
+        gl={{ antialias: true, alpha: true }}
+        onCreated={({ gl }) => {
+          gl.setClearColor(new THREE.Color('#02060f'), 1);
+          gl.toneMapping = THREE.ACESFilmicToneMapping;
+          gl.toneMappingExposure = 1.08;
+        }}
+        style={{ background: 'radial-gradient(circle at 50% 28%, #08162a 0%, #040b16 45%, #010307 100%)' }}
+      >
         <Suspense fallback={null}>
-          <CameraRig n={renderN} />
+          <fog attach="fog" args={['#03070f', 50, 220]} />
+          <CameraRig n={renderN} controlsRef={orbitControlsRef} />
           <ScaleBarMeasure scaleLen={scaleLen} onWidth={setScaleBarPx} />
-          <OrbitControls maxDistance={renderN * renderN * 30} />
+          <OrbitControls
+            ref={orbitControlsRef}
+            enableDamping
+            dampingFactor={0.08}
+            minDistance={Math.max(3.5, renderN * renderN * 1.8)}
+            maxDistance={renderN * renderN * 16}
+          />
 
           {/* Lower orbital — two passes:
                1. renderOrder=0 depthTest=false: faint tint visible everywhere (outside)
@@ -579,16 +614,18 @@ export default function ElectronCloud({
 
           {/* Orbital Surface */}
           <mesh geometry={surfaceGeometry}>
-            <meshStandardMaterial 
+            <meshPhysicalMaterial
               vertexColors={showPhase}
-              color={showPhase ? undefined : "cyan"}
-              emissive={showPhase ? undefined : "cyan"}
-              emissiveIntensity={showPhase ? 0 : 0.2}
+              color={showPhase ? '#b8d6ff' : '#72d9ff'}
+              emissive={showPhase ? '#36527c' : '#4dc6ef'}
+              emissiveIntensity={showPhase ? 0.22 : 0.34}
               transparent
-              opacity={0.8}
+              opacity={0.86}
               side={THREE.DoubleSide}
-              metalness={0.1}
-              roughness={0.5}
+              metalness={0.03}
+              roughness={0.26}
+              clearcoat={0.45}
+              clearcoatRoughness={0.42}
             />
           </mesh>
 
@@ -600,17 +637,18 @@ export default function ElectronCloud({
           {/* Nucleus */}
           <mesh>
             <sphereGeometry args={[nucleus === 'He' ? 0.4 : 0.3, 16, 16]} />
-            <meshStandardMaterial
+            <meshPhysicalMaterial
               color={nucleus === 'He' ? '#FFC107' : 'red'}
-              emissive={nucleus === 'He' ? '#FFC107' : 'red'}
-              emissiveIntensity={0.8}
+              roughness={0.32}
+              metalness={0.08}
             />
           </mesh>
 
           {/* Lighting */}
-          <ambientLight intensity={0.6} />
-          <pointLight position={[20, 20, 20]} intensity={0.8} />
-          <pointLight position={[-20, -20, -20]} intensity={0.4} />
+          <ambientLight intensity={0.42} />
+          <hemisphereLight args={['#9dc4ff', '#05080f', 0.42]} />
+          <pointLight position={[14, 12, 18]} intensity={0.95} color="#c8ddff" />
+          <pointLight position={[-16, -10, -12]} intensity={0.38} color="#98b8ff" />
 
         </Suspense>
       </Canvas>

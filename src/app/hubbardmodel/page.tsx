@@ -23,13 +23,14 @@ function HubbardModelPage() {
             <div style={{ display: "flex" }}>
                 <div style={{ order: 0, flex: 1 }}>
                     <p>&nbsp;&nbsp;&nbsp;&nbsp;This page is a summary of the undergraduate research I did with <a href="https://scarola.phys.vt.edu/">Dr. Vito Scarola</a> (2021). Our goal was to create code that simulated the three-site Hubbard Model and find solutions that minimize U(t) while keeping the system in a singly occupied state (or the Heisenberg state). I was able to accomplish this for the n and n,n-site Hubbard Model.</p>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;The Hubbard Model is useful in quantum computing when very cold particles are trapped in a laser lattice. To perform computational operations on these particles, you would want them to be in singly occupied states. This research aims to do that while minimizing the energy input.</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;The Hubbard Model is useful in quantum computing when very cold particles are trapped in a laser lattice. To perform computational operations on these particles, we need them to be in singly occupied states. This research aims to do that while minimizing the energy input.</p>
                     <p>From Wikipedia, <a href="https://en.wikipedia.org/wiki/Hubbard_model">Hubbard Model</a>:</p>
                     <blockquote cite="https://en.wikipedia.org/wiki/Hubbard_model">
                         The Hubbard model is a useful approximation for particles in a periodic potential at sufficiently low temperatures... and long-range interactions between the particles can be ignored.
                     </blockquote>
                     <br />
-                    <p>You can find my code on Github <a href="https://github.com/gstoll9/Hubbard-Model">here.</a> (Check out ExampleScript.ipynb for more solutions than what's presented here)</p>
+                    <p><b>You can find my code on Github <a href="https://github.com/gstoll9/Hubbard-Model">here.</a></b></p>
+                    <p>(See ExampleScript.ipynb for more solutions)</p>
                 </div>
                 <div style={{ order: 1, flex: 1, display: "flex", flexDirection: "row", alignItems: "center", margin: "0% 10%" }}>
                     <div style={{ order: 0, flex: 1, textAlign: "center", alignItems: "center"}}>
@@ -58,7 +59,7 @@ function HubbardModelPage() {
             </div>
             
             <br />
-            <p>The Hamiltonian looks like</p>
+            <p>The Hubbard Model Hamiltonian</p>
             <BlockMath math="
                 H=
                 -t
@@ -72,17 +73,38 @@ function HubbardModelPage() {
                     n_{i,\uparrow} + n_{i,\downarrow}
                 \bigg)
             " />
-            <p>or in matrix notation...</p>
+            <p>Where</p>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", paddingLeft: "2rem" }}>
+                <div>
+                    <p><InlineMath math="t" /> - hopping parameter (tunneling amplitude)</p>
+                    <p><InlineMath math="c_{i,\sigma}^\dagger" /> - creation operator at site i with spin <InlineMath math="\sigma" /></p>
+                    <p><InlineMath math="c_{j,\sigma}" /> - annihilation operator at site j with spin <InlineMath math="\sigma" /></p>
+                </div>
+                <div>
+                    <p><InlineMath math="U" /> - on-site interaction energy</p>
+                    <p><InlineMath math="n_{i,\uparrow} n_{i,\downarrow}" /> - number operator for doubly occupied sites</p>
+                    <p><InlineMath math="\mu" /> - chemical potential</p>
+                </div>
+            </div>
+            <p>In matrix form</p>
             <BlockMath math="
                 H = \begin{bmatrix}
-                    U_{i} - \mu & -t(c_{i,\sigma}^\dagger c_{j,\sigma}) & \cdots & -t(c_{i,\sigma}^\dagger c_{j,\sigma}) \\
-                    -t(c_{i,\sigma}^\dagger c_{j,\sigma}) & U_{i} - \mu & \cdots & -t(c_{i,\sigma}^\dagger c_{j,\sigma}) \\
-                    \vdots & \vdots & \ddots & \vdots \\
-                    -t(c_{i,\sigma}^\dagger c_{j,\sigma}) & -t(c_{i,\sigma}^\dagger c_{j,\sigma}) & \cdots & U_{i} - \mu \\
+                    U_{0} - \mu & -t(c_{0,\sigma}^\dagger c_{1,\sigma}) & \cdots & -t(c_{0,\sigma}^\dagger c_{n,\sigma}) \\
+                    -t(c_{1,\sigma}^\dagger c_{0,\sigma}) & U_{1} - \mu & \ddots & \vdots \\
+                    \vdots & \ddots & \ddots & -t(c_{n-1,\sigma}^\dagger c_{n,\sigma}) \\
+                    -t(c_{n,\sigma}^\dagger c_{0,\sigma}) & \cdots & -t(c_{n,\sigma}^\dagger c_{n-1,\sigma}) & U_{n} - \mu \\
                 \end{bmatrix}
             " />
-            <p>The off diagonals depend on how you define the state vector <InlineMath math="\Psi" />. They will either equal <InlineMath math="-t" /> or <InlineMath math="0" /></p>
-            <p>You may also note, <InlineMath math="U_i=0" /> if <InlineMath math="\psi_i" /> is a singly occupied state. For this research, we set <InlineMath math="\mu=0" />.</p>
+            <p><InlineMath math="U_i=0" /> if <InlineMath math="\psi_i" /> is a singly occupied state.</p>
+            <p>We set <InlineMath math="\mu=0" />, <InlineMath math="t=1" />, and the spins constant.</p>
+            <p>The nine possible states are</p>
+            <BlockMath math="
+                \begin{matrix}
+                    |\uparrow \quad \downarrow \quad \uparrow| & |\uparrow\downarrow \quad \ \quad \uparrow| & |\ \quad \uparrow\downarrow \quad \uparrow | \\
+                    |\uparrow \quad \uparrow \quad \downarrow| & |\uparrow\downarrow \quad \uparrow \quad \ | & |\uparrow \quad \ \quad \uparrow\downarrow| \\
+                    |\downarrow \quad \uparrow \quad \uparrow| & |\uparrow \quad \uparrow\downarrow \quad \ | & |\ \quad \uparrow \quad \uparrow\downarrow| \\
+                \end{matrix}" 
+            />
             {/* <p>For the three-site Hubbard Model,</p>
             <BlockMath math="
                 \Psi = 
@@ -134,11 +156,10 @@ function HubbardModelPage() {
                 height={0}
                 sizes="100%"
             />
-            <p>It is important to note the Singly Occupied plot's factor on its top left (if present).</p>
-
+{/* 
             <h1>Next Steps</h1>
             <div className="divider" />
-            <p>I would like to implement a Fourier transform and general additive model to find equations for these solutions. It would also be fruitful to zoom in on the pulses in U(t) using the same code with a smaller time step.</p>
+            <p>I would like to implement a Fourier transform and general additive model to find equations for these solutions. It would also be fruitful to zoom in on the pulses in U(t) using the same code with a smaller time step.</p> */}
 
             {/* <div className="parameter-container"
                 style={{ display: "flex", flexDirection: "row", gap: "1rem" }}>

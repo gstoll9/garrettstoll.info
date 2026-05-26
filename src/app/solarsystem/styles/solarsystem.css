@@ -10,16 +10,33 @@
   overflow: hidden !important;
 }
 
+:has(.solarPage) .standardlayout-main {
+  width: 100% !important;
+  min-height: calc(100dvh - 92px - 1.8rem) !important;
+  height: calc(100dvh - 92px - 1.8rem) !important;
+  border-radius: 0 !important;
+}
+
+@media (max-width: 768px) {
+  :has(.solarPage) .standardlayout-main {
+    min-height: calc(100dvh - 74px - 1.2rem) !important;
+    height: calc(100dvh - 74px - 1.2rem) !important;
+  }
+}
+
 /* ── Full-screen page shell ─────────────────────────────────────────────── */
 .solarPage {
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
-  background: #000;
+  gap: 0.5rem;
+  background:
+    radial-gradient(circle at top, rgba(42, 77, 127, 0.16), transparent 36%),
+    linear-gradient(180deg, #040509 0%, #020305 45%, #000 100%);
   color: #e8e8e8;
   overflow: hidden;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: var(--font-body), system-ui, -apple-system, sans-serif;
 }
 
 /* ── Dot-and-line tab nav ───────────────────────────────────────────────── */
@@ -29,15 +46,15 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 0.85rem;
   min-height: 64px;
-  padding: 8px 1rem;
+  padding: 0.8rem 1rem 0.4rem;
   background: transparent;
 }
 
 .solarTrack {
   position: relative;
-  width: 200px;
+  width: min(260px, 42vw);
   height: 20px;
 }
 
@@ -107,43 +124,80 @@
 
 /* ── Content area below nav ─────────────────────────────────────────────── */
 .solarWorkArea {
-  flex: 10;
+  flex: 1;
   min-height: 0;
   position: relative;
   overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 28px 28px 0 0;
+  background: linear-gradient(180deg, rgba(1, 4, 7, 0.2), rgba(1, 4, 7, 0.68));
+}
+
+.universeCanvasShell {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  position: relative;
+}
+
+.solarLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  width: 100%;
+  background: linear-gradient(180deg, rgba(2, 4, 7, 0.98), rgba(1, 3, 5, 1));
+  color: rgba(245, 249, 255, 0.86);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 /* ── Planet picker strip ────────────────────────────────────────────────── */
 .planetPicker {
   display: flex;
   align-items: center;
-  gap: 4px;
-  margin-left: 2rem;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-left: 1rem;
 }
 
 .planetPickBtn {
-  background: none;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 20px;
-  color: rgba(255, 255, 255, 0.45);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  color: #c7ccd4;
   font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 3px 10px;
+  padding: 0.45rem 0.8rem;
   cursor: pointer;
-  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  transition: transform 0.2s, border-color 0.2s, color 0.2s, background 0.2s;
   white-space: nowrap;
 }
 
+.planetPickBtn span {
+  color: #c7ccd4;
+}
+
 .planetPickBtn:hover {
+  transform: translateY(-1px);
   border-color: rgba(255, 255, 255, 0.55);
-  color: rgba(255, 255, 255, 0.8);
+  color: #d7dbe2;
 }
 
 .planetPickBtn.active {
   border-color: #fff;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.08);
+  color: #dfe3e8;
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.08);
+}
+
+.planetPickSymbol {
+  font-size: 1.25rem;
+  line-height: 1;
 }
 
 .orbitButton {
@@ -159,3 +213,31 @@
   .orbitButton:hover {
     background-color: #0056b3;
   }
+
+@media (max-width: 768px) {
+  .solarPage {
+    gap: 0.35rem;
+  }
+
+  .solarNav {
+    justify-content: flex-start;
+    padding: 0.65rem 0.75rem 0.25rem;
+  }
+
+  .solarTrack {
+    width: min(220px, 60vw);
+  }
+
+  .planetPicker {
+    margin-left: 0;
+  }
+
+  .solarWorkArea {
+    border-radius: 20px 20px 0 0;
+  }
+
+  .planetPickBtn {
+    font-size: 10px;
+    padding: 0.4rem 0.7rem;
+  }
+}

@@ -1,5 +1,24 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import "./globals.css";
+
+const geistSans = localFont({
+  src: "../fonts/GeistVF.woff",
+  variable: "--font-body",
+  display: "swap",
+});
+
+const geistMono = localFont({
+  src: "../fonts/GeistMonoVF.woff",
+  variable: "--font-mono",
+  display: "swap",
+});
+
+const displaySerif = localFont({
+  src: "../fonts/GeistVF.woff",
+  variable: "--font-display",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Garrett Stoll",
@@ -13,9 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-      {/* className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      > */}
+      <body className={`${geistSans.variable} ${geistMono.variable} ${displaySerif.variable} antialiased`}>
         {children}
       </body>
     </html>

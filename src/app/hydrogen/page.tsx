@@ -5,6 +5,7 @@ import SchrodingerEquation from './components/text/SchrodingerEquation';
 import Hydrogen from './components/text/Hydrogen';
 import SpectrumMath from './components/text/SpectrumMath';
 import HydrogenSpectrum from './components/HydrogenSpectrum';
+import WaveStatePlots from './components/WaveStatePlots';
 import StandardLayout from '@/layouts/standardLayout';
 import { useState } from 'react';
 
@@ -19,6 +20,7 @@ const DRAWER_W = 480;
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>('wave');
   const [mathOpen, setMathOpen] = useState(true);
+  const [selectedState, setSelectedState] = useState({ n: 2, l: 1, m: 0 });
 
   const main = (
     <div className="hydrogenPage">
@@ -49,8 +51,12 @@ export default function Home() {
           <div className="mathDrawerInner">
             {activeTab === 'wave' ? (
               <>
-                <SchrodingerEquation />
-                <Hydrogen />
+                <SchrodingerEquation
+                  n={selectedState.n}
+                  l={selectedState.l}
+                  m={selectedState.m}
+                  onStateChange={setSelectedState}
+                />
               </>
             ) : (
               <SpectrumMath />
@@ -71,9 +77,27 @@ export default function Home() {
         {/* Visualization */}
         <div className="vizArea">
           {activeTab === 'wave'
-            ? <ElectronCloud />
+            ? (
+              <div className="waveVizStack">
+                <div className="waveCloudPanel">
+                  <ElectronCloud
+                    n={selectedState.n}
+                    l={selectedState.l}
+                    m={selectedState.m}
+                    onStateChange={setSelectedState}
+                  />
+                </div>
+                <div className="wavePlotsPanel">
+                  <WaveStatePlots
+                    n={selectedState.n}
+                    l={selectedState.l}
+                    m={selectedState.m}
+                  />
+                </div>
+              </div>
+            )
             : (
-              <div style={{ padding: '20px', height: '100%', overflowY: 'auto', boxSizing: 'border-box' }}>
+              <div className="hydrogenSpectrumPane">
                 <HydrogenSpectrum />
               </div>
             )
