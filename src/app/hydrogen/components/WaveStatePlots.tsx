@@ -2,11 +2,13 @@
 
 import * as d3 from 'd3';
 import { useMemo } from 'react';
+import { radialWavefunction } from '../utils/hydrogenCloud';
 
 interface WaveStatePlotsProps {
   n: number;
   l: number;
   m: number;
+  Z?: number;
 }
 
 type Point = { x: number; y: number };
@@ -16,21 +18,6 @@ function factorial(value: number): number {
   let out = 1;
   for (let i = 2; i <= value; i++) out *= i;
   return out;
-}
-
-function associatedLaguerre(x: number, n: number, k: number): number {
-  if (n === 0) return 1;
-  if (n === 1) return 1 + k - x;
-
-  let l0 = 1;
-  let l1 = 1 + k - x;
-  let l2 = 0;
-  for (let i = 2; i <= n; i++) {
-    l2 = ((2 * i - 1 + k - x) * l1 - (i - 1 + k) * l0) / i;
-    l0 = l1;
-    l1 = l2;
-  }
-  return l1;
 }
 
 function associatedLegendre(l: number, mAbs: number, x: number): number {
@@ -59,16 +46,6 @@ function associatedLegendre(l: number, mAbs: number, x: number): number {
   }
 
   return pll;
-}
-
-function radialWavefunction(n: number, l: number, r: number): number {
-  const a0 = 1;
-  const rho = (2 * r) / (n * a0);
-  const norm = Math.sqrt(
-    Math.pow(2 / (n * a0), 3) * factorial(n - l - 1) / (2 * n * factorial(n + l))
-  );
-  const laguerre = associatedLaguerre(rho, n - l - 1, 2 * l + 1);
-  return norm * Math.exp(-rho / 2) * Math.pow(rho, l) * laguerre;
 }
 
 function angularPart(l: number, m: number, theta: number): number {
@@ -217,15 +194,15 @@ function Chart({
   );
 }
 
-export default function WaveStatePlots({ n, l, m }: WaveStatePlotsProps) {
+export default function WaveStatePlots({ n, l, m, Z = 1 }: WaveStatePlotsProps) {
   const radialData = useMemo(() => {
-    const rMax = Math.max(8, n * n * 6);
+    const rMax = Math.max(8, (n * n * 6) / Z);
     const samples = 260;
     return d3.range(samples).map((i) => {
       const r = (i / (samples - 1)) * rMax;
-      return { x: r, y: radialWavefunction(n, l, r) };
+      return { x: r, y: radialWavefunction(n, l, r, Z) };
     });
-  }, [n, l]);
+  }, [n, l, Z]);
 
   const radialChart = useMemo(() => {
     const rMax = radialData[radialData.length - 1]?.x ?? 1;

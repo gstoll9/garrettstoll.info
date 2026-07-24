@@ -7,8 +7,12 @@ const C_NM_S   = 2.998e17;   // speed of light in nm/s
 const HC_EV_NM = 1239.8;     // hc in eV·nm
 const RH       = 1.097373e-2; // Rydberg constant in nm⁻¹
 
-function rydbergWl(n1: number, n2: number): number {
-  return 1 / (RH * (1 / (n1 * n1) - 1 / (n2 * n2)));
+// Z^2-scaled Rydberg formula: exact for a hydrogen-like (single-electron) ion of nuclear
+// charge Z, only an approximation for a real multi-electron atom's outermost electron
+// (real multi-electron spectra depend on l too, via shielding — this reuses the same
+// closed-form the rest of this page uses for hydrogen, with Z_eff standing in for Z).
+function rydbergWl(n1: number, n2: number, Z: number = 1): number {
+  return 1 / (RH * Z * Z * (1 / (n1 * n1) - 1 / (n2 * n2)));
 }
 
 function emRegion(nm: number): string {
@@ -70,21 +74,23 @@ interface SpectralLine {
   labelColor: string;
 }
 
-const ALL_LINES: SpectralLine[] = SERIES_DEFS.flatMap(s =>
-  Array.from({ length: 8 }, (_, i) => {
-    const n2 = s.n1 + 1 + i;
-    const wl = rydbergWl(s.n1, n2);
-    return {
-      n1: s.n1, n2,
-      series: s.name,
-      wavelength: wl,
-      frequency: C_NM_S / wl,
-      energy: HC_EV_NM / wl,
-      emRegion: emRegion(wl),
-      labelColor: s.labelColor,
-    };
-  })
-);
+function buildLines(Z: number): SpectralLine[] {
+  return SERIES_DEFS.flatMap(s =>
+    Array.from({ length: 8 }, (_, i) => {
+      const n2 = s.n1 + 1 + i;
+      const wl = rydbergWl(s.n1, n2, Z);
+      return {
+        n1: s.n1, n2,
+        series: s.name,
+        wavelength: wl,
+        frequency: C_NM_S / wl,
+        energy: HC_EV_NM / wl,
+        emRegion: emRegion(wl),
+        labelColor: s.labelColor,
+      };
+    })
+  );
+}
 
 // ── Canvas layout ───────────────────────────────────────────────────────────────
 const CW        = 1000;
@@ -135,7 +141,7 @@ function phaseToRgb(phase: number): [number, number, number] {
   ];
 }
 
-function buildCrossSectionDataUrl(n: number, l: number, m: number, size = SLICE_SIZE): string {
+function buildCrossSectionDataUrl(n: number, l: number, m: number, Z: number = 1, size = SLICE_SIZE): string {
   if (typeof document === 'undefined') return '';
 
   const canvas = document.createElement('canvas');
@@ -145,7 +151,7 @@ function buildCrossSectionDataUrl(n: number, l: number, m: number, size = SLICE_
   if (!ctx) return '';
 
   const image = ctx.createImageData(size, size);
-  const maxRadius = n * n * 5;
+  const maxRadius = (n * n * 5) / Z;
   const step = (2 * maxRadius) / (size - 1);
 
   const probs = new Float32Array(size * size);
@@ -167,7 +173,7 @@ function buildCrossSectionDataUrl(n: number, l: number, m: number, size = SLICE_
 
       const theta = r > 0 ? Math.acos(Math.max(-1, Math.min(1, z / r))) : 0;
       const phi = Math.atan2(0, x);
-      const psi = wavefunction(r, theta, phi, n, l, m, 1);
+      const psi = wavefunction(r, theta, phi, n, l, m, Z);
       const probRaw = psi.real * psi.real + psi.imag * psi.imag;
       const prob = Number.isFinite(probRaw) ? probRaw : 0;
       const phaseRaw = Math.atan2(psi.imag, psi.real);
@@ -326,8 +332,14 @@ function drawCanvas(
 }
 
 // ── Component ─────────────────────────────────────────────────────────────────
-export default function HydrogenSpectrum() {
+interface HydrogenSpectrumProps {
+  Z?: number;
+}
+
+export default function HydrogenSpectrum({ Z = 1 }: HydrogenSpectrumProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const allLines = useMemo(() => buildLines(Z), [Z]);
 
   const [activeSeries, setActiveSeries] = useState<Set<string>>(
     () => new Set(SERIES_DEFS.map(s => s.name))
@@ -335,14 +347,14 @@ export default function HydrogenSpectrum() {
   const [n2Min, setN2Min] = useState(2);
   const [n2Max, setN2Max] = useState(9);
   const [hovered, setHovered] = useState<SpectralLine | null>(null);
-  const [selectedLine, setSelectedLine] = useState<SpectralLine | null>(ALL_LINES[0] ?? null);
+  const [selectedLine, setSelectedLine] = useState<SpectralLine | null>(null);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
 
   const visibleLines = useMemo(
-    () => ALL_LINES.filter(l =>
+    () => allLines.filter(l =>
       activeSeries.has(l.series) && l.n2 >= n2Min && l.n2 <= n2Max
     ),
-    [activeSeries, n2Min, n2Max]
+    [allLines, activeSeries, n2Min, n2Max]
   );
 
   useEffect(() => {
@@ -407,13 +419,13 @@ export default function HydrogenSpectrum() {
 
   const upperSliceUrl = useMemo(() => {
     if (!upperState) return '';
-    return buildCrossSectionDataUrl(upperState.n, upperState.l, upperState.m);
-  }, [upperState]);
+    return buildCrossSectionDataUrl(upperState.n, upperState.l, upperState.m, Z);
+  }, [upperState, Z]);
 
   const lowerSliceUrl = useMemo(() => {
     if (!lowerState) return '';
-    return buildCrossSectionDataUrl(lowerState.n, lowerState.l, lowerState.m);
-  }, [lowerState]);
+    return buildCrossSectionDataUrl(lowerState.n, lowerState.l, lowerState.m, Z);
+  }, [lowerState, Z]);
 
   const toggleSeries = (name: string) => {
     setActiveSeries(prev => {

@@ -92,7 +92,7 @@ function sphericalHarmonic(l: number, m: number, theta: number, phi: number): { 
 }
 
 // Radial wavefunction R_nl(r)
-function radialWavefunction(n: number, l: number, r: number, Z: number = 1): number {
+export function radialWavefunction(n: number, l: number, r: number, Z: number = 1): number {
   const a0 = 1; // Bohr radius in atomic units
   const rho = (2 * Z * r) / (n * a0);
   

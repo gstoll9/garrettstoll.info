@@ -2,6 +2,7 @@ import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Stars } from '@react-three/drei'
 import SolarSystem from './SolarSystem'
+import GalaxyField from './GalaxyField'
 import { useEffect, useState, useRef } from 'react'
 import {PlanetProps} from './Planet';
 import OrbitControlsMenu from './OrbitControls';
@@ -19,25 +20,6 @@ function StarMapBackground({ visible }: { visible: boolean }) {
   texture.colorSpace = THREE.SRGBColorSpace;
   if (!visible) return null;
   return <primitive attach="background" object={texture} />;
-}
-
-function ConstellationsOverlay({ visible }: { visible: boolean }) {
-  const texture = useLoader(THREE.TextureLoader, '/solarsystemImages/constellation_figures.jpg');
-  texture.colorSpace = THREE.SRGBColorSpace;
-  if (!visible) return null;
-  return (
-    <mesh>
-      <sphereGeometry args={[9000, 64, 64]} />
-      <meshBasicMaterial 
-        map={texture} 
-        side={THREE.BackSide} 
-        transparent={true} 
-        opacity={0.3} 
-        blending={THREE.AdditiveBlending}
-        depthWrite={false}
-      />
-    </mesh>
-  );
 }
 
 function TimeUpdater({ timeScale }: { timeScale: number }) {
@@ -64,6 +46,8 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
   const [contextLost, setContextLost] = useState(false);
   const [showOrbits, setShowOrbits] = useState(true);
   const [showBackground, setShowBackground] = useState(true);
+  const [showHeliosphere, setShowHeliosphere] = useState(true);
+  const [showSolarWind, setShowSolarWind] = useState(true);
   const [useRealisticSizes, setUseRealisticSizes] = useState(false);
   const [timeScale, setTimeScale] = useState(1);
   const orbitControlsRef = useRef<any>(null);
@@ -119,6 +103,10 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
         setTimeScale={setTimeScale}
         showBackground={showBackground}
         setShowBackground={setShowBackground}
+        showHeliosphere={showHeliosphere}
+        setShowHeliosphere={setShowHeliosphere}
+        showSolarWind={showSolarWind}
+        setShowSolarWind={setShowSolarWind}
       />
       <Canvas
         ref={canvasRef}
@@ -141,9 +129,9 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
 
         {/* background */}
         <StarMapBackground visible={showBackground} />
-        <ConstellationsOverlay visible={showBackground} />
-        
-        <CameraController 
+
+
+        <CameraController
           focus={focus}
           planetData={focusedPlanet ? {
             name: focusedPlanet.name,
@@ -157,19 +145,35 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
           useSimplifiedDistance={false}
           useRealisticSizes={useRealisticSizes}
         />
-        <SolarSystem
-          setFocus={(focus: string, planetData: PlanetProps | null) => {
-            setFocus(focus, planetData);
-          }}
-          focus={focus}
-          showOrbits={showOrbits}
-          orbitMode={'RealLive'}
-          useSimplifiedDistance={false}
-          useRealisticSizes={useRealisticSizes}
-          timeScale={timeScale}
-        />
+        {focus === 'cosmic' ? (
+          // Cosmic Web is a "warp cut" to a different scale — rendered inside the same
+          // persistent Canvas/WebGL context as the planetary scene (rather than a separate
+          // <Canvas>) since mounting a second Canvas here caused WebGL context loss.
+          <GalaxyField />
+        ) : (
+          <SolarSystem
+            setFocus={(focus: string, planetData: PlanetProps | null) => {
+              setFocus(focus, planetData);
+            }}
+            focus={focus}
+            showOrbits={showOrbits}
+            orbitMode={'RealLive'}
+            useSimplifiedDistance={false}
+            useRealisticSizes={useRealisticSizes}
+            timeScale={timeScale}
+            showHeliosphere={showHeliosphere}
+            showSolarWind={showSolarWind}
+          />
+        )}
         <OrbitControls ref={orbitControlsRef} />
       </Canvas>
+      {focus === 'cosmic' && (
+        <div className="cosmicWebNote">
+          Local Group only, real distances &amp; positions. Superclusters and cosmic-web
+          filaments are left out for now — those need a real large-scale-structure dataset,
+          not an illustrative one.
+        </div>
+      )}
     </div>
   )
 }

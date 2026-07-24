@@ -410,6 +410,78 @@
   color: #e7ecf5;
 }
 
+/* ── Periodic table selector ──────────────────────────────────────────────── */
+.periodicTableRoot {
+  flex-shrink: 0;
+  padding: 0.5rem 0.9rem 0.35rem;
+  overflow-x: auto;
+}
+
+.periodicTableGrid {
+  display: grid;
+  grid-template-columns: repeat(18, 30px);
+  grid-template-rows: repeat(4, 30px);
+  gap: 3px;
+  width: max-content;
+  margin: 0 auto;
+}
+
+.periodicCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  border: 1px solid rgba(173, 201, 255, 0.18);
+  background: rgba(255, 255, 255, 0.03);
+  color: #dce7ff;
+  cursor: pointer;
+  padding: 0;
+  font-family: var(--font-mono), "SFMono-Regular", Menlo, monospace;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.periodicCell:hover {
+  background: rgba(145, 182, 255, 0.16);
+  border-color: rgba(173, 201, 255, 0.5);
+}
+
+.periodicCell.active {
+  background: #91b6ff;
+  border-color: #fff;
+  color: #04070d;
+}
+
+.periodicCellDisabled {
+  cursor: default;
+  opacity: 0.28;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.periodicCellDisabled:hover {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(173, 201, 255, 0.18);
+}
+
+.periodicCellZ {
+  font-size: 7px;
+  line-height: 1;
+  opacity: 0.7;
+}
+
+.periodicCellSymbol {
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.periodicTableNote {
+  margin: 0.3rem 0 0;
+  font-size: 0.68rem;
+  color: rgba(226, 234, 251, 0.5);
+  text-align: center;
+}
+
 @media (max-width: 900px) {
   .workArea {
     border-radius: 20px 20px 0 0;

@@ -2,10 +2,12 @@ import { useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useRef, useState } from 'react'
 import { Html, Edges } from '@react-three/drei'
+import { GeoMoon, JupiterMoons, Rotation_EQJ_ECL, RotateVector, Vector } from 'astronomy-engine'
 import Label from './Label'
-import { orbitalPosition } from '../utils'
+import { orbitalPosition, getBodyAxis, moonOrbitalPosition, MoonOrbitProps, BodyAxis } from '../utils'
 import { getPlanetSize } from '../data/planets'
 import { simulationState } from '../utils'
+import Rings, { RingSpec } from './Rings'
 
 export type PlanetProps = {
   name: string
@@ -35,9 +37,10 @@ export type PlanetProps = {
   moons?: {
     name: string
     size: number
-    distance: number
-    orbitSpeed: number
+    distance: number // display-scale target distance; used for the exact-ephemeris moons' scale-fit (Earth's Moon, Jupiter's Galilean four)
+    orbitSpeed: number // legacy circular-orbit fallback speed; only used when neither exact ephemeris nor orbitData is available
     color: string
+    orbitData?: MoonOrbitProps // real Kepler elements (see utils.tsx) — used instead of the circular fallback when present
   }[]
   orbitMode?: string
   onClick?: (name: string) => void
@@ -67,10 +70,13 @@ export default function Planet({
   const ref = useRef<THREE.Group>(null!)
   const groupRef = useRef<THREE.Group>(null!)
   const [hoveredLayer, setHoveredLayer] = useState<string | null>(null)
+  // Real axial tilt/spin for this body (see getBodyAxis in utils.tsx); shared with
+  // Moon children below so their orbital planes can be tilted to match, and with Rings.
+  const axisRef = useRef<BodyAxis | null>(null)
 
   const textureUrl = useLoader(
     THREE.TextureLoader,
-    texture ?? '/solarstsremImages/UranusTexture.jpg'
+    texture ?? '/solarsystemImages/UranusTexture.jpg'
   );
 
   const planetSize = useRealisticSizes ? getPlanetSize({ size, realDiameter } as any, true) : size;
@@ -88,24 +94,25 @@ export default function Planet({
         ref.current.rotation.y = 0;
         ref.current.rotation.x = 0;
         ref.current.rotation.z = 0;
+        ref.current.quaternion.identity();
       } else if (orbitMode === 'RealLive') {
-        const realRoationPeriodsDays: Record<string, number> = {
-          'Mercury': 58.6,
-          'Venus': -243,
-          'Earth': 0.997,
-          'Mars': 1.026,
-          'Jupiter': 0.41,
-          'Saturn': 0.44,
-          'Uranus': -0.72,
-          'Neptune': 0.67
-        };
-        const period = realRoationPeriodsDays[name];
-        if (period) {
-            const periodMs = period * 24 * 60 * 60 * 1000;
-            const angularVelocity = (2 * Math.PI) / periodMs;
-            ref.current.rotation.y += angularVelocity * (delta * 1000);
+        const axis = getBodyAxis(name, simulationState.dateMs);
+        axisRef.current = axis;
+        if (axis) {
+          // Real IAU pole orientation + prime-meridian angle: tilt the sphere's local
+          // +Y (its "up") to the real north-pole direction, then spin it about that
+          // now-tilted axis by the real instantaneous prime-meridian angle.
+          const tiltQuat = new THREE.Quaternion().setFromUnitVectors(
+            new THREE.Vector3(0, 1, 0),
+            new THREE.Vector3(...axis.northThree).normalize()
+          );
+          const spinQuat = new THREE.Quaternion().setFromAxisAngle(
+            new THREE.Vector3(0, 1, 0),
+            THREE.MathUtils.degToRad(axis.spinDegrees)
+          );
+          ref.current.quaternion.copy(tiltQuat).multiply(spinQuat);
         } else {
-            ref.current.rotation.y += rotationalSpeed * delta;
+          ref.current.rotation.y += rotationalSpeed * delta;
         }
       } else {
         ref.current.rotation.y += rotationalSpeed * delta; // self-rotation speed
@@ -320,31 +327,22 @@ export default function Planet({
           >
             <mesh>
               <sphereGeometry args={[planetSize, 32, 32]} />
-              <meshStandardMaterial map={textureUrl} color={color} />
+              {/* Bodies with no real texture (e.g. dwarf planets) render as a flat color
+                  instead of falling back to the shared placeholder texture image, which
+                  would otherwise show a mismatched Uranus texture on them. */}
+              <meshStandardMaterial map={texture ? textureUrl : undefined} color={color} />
               {hoveredLayer === 'total_crust' && <Edges color="#66AAFF" threshold={15} />}
             </mesh>
           </group>
         )}
       </group>
 
-      {/* Saturn's Rings */}
-      {name === 'Saturn' && (
-        <mesh 
-          rotation={[Math.PI / 2, 0, 0]}
-        >
-          <ringGeometry args={[planetSize + 2, planetSize + 4, 64]} />
-          <meshBasicMaterial
-            color="goldenrod"
-            side={THREE.DoubleSide}
-            transparent
-            opacity={0.5}
-          />
-        </mesh>
-      )}
+      {/* Ring systems (Jupiter/Saturn/Uranus/Neptune) */}
+      <Rings planetName={name} planetSize={planetSize} axisRef={axisRef} />
 
       {/* Moons */}
       {isFocused && moons && moons.map(moon => (
-        <Moon key={moon.name} moon={moon} planetSize={planetSize} planetName={name} orbitMode={orbitMode} />
+        <Moon key={moon.name} moon={moon} planetSize={planetSize} planetName={name} orbitMode={orbitMode} axisRef={axisRef} />
       ))}
 
       {/* Label */}
@@ -353,34 +351,28 @@ export default function Planet({
   )
 }
 
-function Moon({ moon, planetSize, planetName, orbitMode }: { moon: any, planetSize: number, planetName: string, orbitMode: string }) {
+function Moon({ moon, planetSize, planetName, orbitMode, axisRef }: { moon: any, planetSize: number, planetName: string, orbitMode: string, axisRef: React.RefObject<BodyAxis | null> }) {
   const ref = useRef<THREE.Mesh>(null!)
-  
+
   useFrame((_, delta) => {
     if (ref.current) {
         if (orbitMode === 'RealLive') {
            try {
-               const astro = require('astronomy-engine');
                const now = new Date(simulationState.dateMs ?? Date.now());
 
-               let x = null, y = null, z = null;
+               let vecEqj: Vector | null = null;
 
                if (planetName === 'Earth' && moon.name === 'Moon') {
-                   const mm = astro.GeoMoon(now);
-                   x = mm.x; y = mm.y; z = mm.z;
+                   vecEqj = GeoMoon(now);
                } else if (planetName === 'Jupiter') {
-                   const jm = astro.JupiterMoons(now);
-                   const ms = jm[moon.name.toLowerCase()];
-                   if (ms) {
-                       x = ms.x; y = ms.y; z = ms.z;
-                   }
+                   const jm = JupiterMoons(now);
+                   vecEqj = (jm as any)[moon.name.toLowerCase()] ?? null;
                }
 
-               if (x !== null && y !== null && z !== null) {
-                   const rotMatrix = astro.Rotation_EQJ_ECL();
-                   const vecEqj = { x, y, z };
-                   const vecEcl = astro.RotateVector(rotMatrix, vecEqj);
-                   
+               if (vecEqj) {
+                   const rotMatrix = Rotation_EQJ_ECL();
+                   const vecEcl = RotateVector(rotMatrix, vecEqj);
+
                    let X = vecEcl.x;
                    let Y = vecEcl.z;
                    let Z = -vecEcl.y;
@@ -396,9 +388,21 @@ function Moon({ moon, planetSize, planetName, orbitMode }: { moon: any, planetSi
            } catch(e) {
                console.error(e);
            }
+
+           if (moon.orbitData) {
+               // Real Kepler elements, tilted into the parent planet's real equatorial plane
+               const [x, y, z] = moonOrbitalPosition(
+                   simulationState.elapsed,
+                   moon.orbitData,
+                   planetSize,
+                   axisRef.current?.northThree ?? null
+               );
+               ref.current.position.set(x, y, z);
+               return;
+           }
         }
-        
-        // Simple fallback for moons without direct astronomy-engine positioning support
+
+        // Simple fallback for moons without real orbital elements
         const angle = simulationState.elapsed * moon.orbitSpeed * 0.5
         ref.current.position.set(
             Math.cos(angle) * (planetSize + moon.distance),

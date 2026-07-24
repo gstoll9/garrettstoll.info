@@ -6,8 +6,11 @@ import Hydrogen from './components/text/Hydrogen';
 import SpectrumMath from './components/text/SpectrumMath';
 import HydrogenSpectrum from './components/HydrogenSpectrum';
 import WaveStatePlots from './components/WaveStatePlots';
+import PeriodicTable from './components/PeriodicTable';
 import StandardLayout from '@/layouts/standardLayout';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import { getElement } from './data/elements';
+import { effectiveNuclearCharge, outermostSubshell } from './utils/slater';
 
 const TABS = [
   { id: 'wave',     label: 'Wave' },
@@ -21,6 +24,23 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>('wave');
   const [mathOpen, setMathOpen] = useState(true);
   const [selectedState, setSelectedState] = useState({ n: 2, l: 1, m: 0 });
+  const [selectedZ, setSelectedZ] = useState(1);
+
+  const element = getElement(selectedZ)!;
+
+  const handleElementSelect = (Z: number) => {
+    setSelectedZ(Z);
+    // Default to the new element's outermost (valence) subshell — the most illustrative
+    // orbital to land on when switching elements.
+    const el = getElement(Z)!;
+    const outer = outermostSubshell(el.configuration);
+    setSelectedState({ n: outer.n, l: outer.l, m: 0 });
+  };
+
+  const renderZ = useMemo(
+    () => effectiveNuclearCharge(selectedZ, element.configuration, selectedState.n, selectedState.l),
+    [selectedZ, element, selectedState.n, selectedState.l]
+  );
 
   const main = (
     <div className="hydrogenPage">
@@ -42,6 +62,9 @@ export default function Home() {
           ))}
         </div>
       </nav>
+
+      {/* ── Periodic table selector — drives Z/Z_eff for every visualization below ── */}
+      <PeriodicTable selectedZ={selectedZ} onSelect={handleElementSelect} />
 
       {/* ── Content row ── */}
       <div className="workArea">
@@ -85,6 +108,10 @@ export default function Home() {
                     l={selectedState.l}
                     m={selectedState.m}
                     onStateChange={setSelectedState}
+                    Z={selectedZ}
+                    elementSymbol={element.symbol}
+                    configuration={element.configuration}
+                    realIonizationEnergyEV={element.ionizationEnergyEV}
                   />
                 </div>
                 <div className="wavePlotsPanel">
@@ -92,13 +119,14 @@ export default function Home() {
                     n={selectedState.n}
                     l={selectedState.l}
                     m={selectedState.m}
+                    Z={renderZ}
                   />
                 </div>
               </div>
             )
             : (
               <div className="hydrogenSpectrumPane">
-                <HydrogenSpectrum />
+                <HydrogenSpectrum Z={renderZ} />
               </div>
             )
           }
@@ -108,6 +136,5 @@ export default function Home() {
     </div>
   );
 
-  return StandardLayout({ title: "Hydrogen Atom", main, headerMode: "tyro-only" });
+  return StandardLayout({ title: "Hydrogen Atom", main });
 }
-

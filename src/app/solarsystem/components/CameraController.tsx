@@ -32,10 +32,23 @@ export default function CameraController({ focus, planetData, orbitControlsRef, 
       isJumpPending.current = false
       if (orbitControlsRef.current) {
         orbitControlsRef.current.target.set(0, 0, 0)
-        
+
         // Return to wide view if we were following
         if (prevFocus.current !== 'solarsystem' && prevFocus.current !== 'Sun') {
             camera.position.set(0, 10, 40)
+        }
+        orbitControlsRef.current.update()
+      }
+    } else if (focus === 'cosmic') {
+      // Cosmic Web is a "warp cut" to a different scale, not a continuous zoom — just
+      // hard-reset the camera to a framing that fits the Local Group once, then let
+      // OrbitControls take over (nothing to follow at this scale).
+      isFollowing.current = false
+      isJumpPending.current = false
+      if (orbitControlsRef.current) {
+        orbitControlsRef.current.target.set(0, 0, 0)
+        if (prevFocus.current !== 'cosmic') {
+          camera.position.set(0, 40, 130)
         }
         orbitControlsRef.current.update()
       }

@@ -189,6 +189,8 @@
     right: 0.65rem;
     min-width: 210px;
     max-width: calc(100vw - 1.3rem);
+    max-height: calc(100dvh - 5rem);
+    overflow-y: auto;
   }
 
   .controls-content {

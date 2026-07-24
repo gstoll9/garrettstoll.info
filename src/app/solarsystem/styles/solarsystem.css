@@ -48,7 +48,12 @@
   flex-wrap: wrap;
   gap: 0.85rem;
   min-height: 64px;
-  padding: 0.8rem 1rem 0.4rem;
+  /* Left/right padding reserves space so the tyro-home avatar (pinned top-left)
+     never overlaps the first nav item once it's centered. The first/last dot
+     labels are anchored past their own edges (translateX(-50%) on a 0%/100%
+     position), so the clearance has to cover the avatar plus half a label's
+     width, not just the avatar itself. */
+  padding: 0.8rem 160px 0.4rem;
   background: transparent;
 }
 
@@ -140,6 +145,22 @@
   position: relative;
 }
 
+.cosmicWebNote {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  max-width: 320px;
+  padding: 0.6rem 0.85rem;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: rgba(230, 236, 245, 0.82);
+  background: rgba(8, 12, 20, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+}
+
 .solarLoading {
   display: flex;
   align-items: center;
@@ -221,11 +242,14 @@
 
   .solarNav {
     justify-content: flex-start;
-    padding: 0.65rem 0.75rem 0.25rem;
+    /* Left padding clears the tyro-home avatar plus the "Solar System" label's
+       leftward bleed (see note above); no need to mirror on the right since
+       content is left-aligned (not centered) at this breakpoint. */
+    padding: 0.65rem 0.75rem 0.25rem 136px;
   }
 
   .solarTrack {
-    width: min(220px, 60vw);
+    width: min(190px, 50vw);
   }
 
   .planetPicker {

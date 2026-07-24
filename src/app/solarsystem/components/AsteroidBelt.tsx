@@ -1,4 +1,5 @@
-import { useMemo } from 'react'
+import { useMemo, useRef, useLayoutEffect } from 'react'
+import * as THREE from 'three'
 
 const ASTEROID_COUNT = 300
 const REALISTIC_RADIUS = 35 // Between Mars and Jupiter (realistic scale)
@@ -10,27 +11,33 @@ type AsteroidBeltProps = {
 }
 
 export function AsteroidBelt({ useSimplifiedDistance = false }: AsteroidBeltProps) {
-  const asteroids = useMemo(() => {
+  const meshRef = useRef<THREE.InstancedMesh>(null!)
+
+  const positions = useMemo(() => {
     const baseRadius = useSimplifiedDistance ? SIMPLIFIED_RADIUS : REALISTIC_RADIUS
-    const meshData = []
+    const coords: [number, number, number][] = []
     for (let i = 0; i < ASTEROID_COUNT; i++) {
       const angle = Math.random() * 2 * Math.PI
-      const radius = baseRadius + (Math.random() - 0.5) * ASTEROID_SPREAD * 2 // Spread evenly around center
-      const x = radius * Math.cos(angle)
-      const z = radius * Math.sin(angle)
-      meshData.push({ position: [x, 0, z] as [number, number, number] })
+      const radius = baseRadius + (Math.random() - 0.5) * ASTEROID_SPREAD * 2
+      coords.push([radius * Math.cos(angle), 0, radius * Math.sin(angle)])
     }
-    return meshData
+    return coords
   }, [useSimplifiedDistance])
 
+  useLayoutEffect(() => {
+    const dummy = new THREE.Object3D()
+    positions.forEach(([x, y, z], i) => {
+      dummy.position.set(x, y, z)
+      dummy.updateMatrix()
+      meshRef.current.setMatrixAt(i, dummy.matrix)
+    })
+    meshRef.current.instanceMatrix.needsUpdate = true
+  }, [positions])
+
   return (
-    <>
-      {asteroids.map((asteroid, i) => (
-        <mesh key={i} position={asteroid.position}>
-          <sphereGeometry args={[0.1, 6, 6]} />
-          <meshStandardMaterial color="gray" />
-        </mesh>
-      ))}
-    </>
+    <instancedMesh ref={meshRef} args={[undefined, undefined, ASTEROID_COUNT]}>
+      <sphereGeometry args={[0.1, 6, 6]} />
+      <meshStandardMaterial color="gray" />
+    </instancedMesh>
   )
 }

@@ -10,6 +10,7 @@ import './styles/solarsystem.css';
 const TABS = [
   { id: 'solar',  label: 'Solar System' },
   { id: 'planet', label: 'Planet' },
+  { id: 'cosmic', label: 'Cosmic Web' },
 ] as const;
 type Tab = typeof TABS[number]['id'];
 
@@ -26,7 +27,10 @@ const PLANET_SYMBOLS: Record<string, string> = {
   Neptune: "♆"
 };
 
-// Importing the UniverseCanvas component dynamically to avoid SSR issues 
+// Importing the UniverseCanvas component dynamically to avoid SSR issues.
+// Cosmic Web is a "warp cut" to a different scale, handled *inside* UniverseCanvas's
+// existing Canvas (see its `focus === 'cosmic'` branch) rather than a second <Canvas> —
+// mounting a separate WebGL context here caused context loss when switching tabs.
 const UniverseCanvas = dynamic(() => import('./components/UniverseCanvas').then(mod => mod.UniverseCanvas), {
   ssr: false,
   loading: () => (
@@ -41,7 +45,7 @@ export default function Home() {
   const [focus, setFocus] = useState<string>('solarsystem');
   const [focusedPlanet, setFocusedPlanet] = useState<PlanetProps | null>(null);
 
-  const activeTab: Tab = focus === 'solarsystem' ? 'solar' : 'planet';
+  const activeTab: Tab = focus === 'solarsystem' ? 'solar' : focus === 'cosmic' ? 'cosmic' : 'planet';
   const activePlanetName = focusedPlanet?.name ?? null;
 
   const handleFocusChange = (newFocus: string, planetData: PlanetProps | null) => {
@@ -52,6 +56,8 @@ export default function Home() {
   const handleTabClick = (tab: Tab) => {
     if (tab === 'solar') {
       handleFocusChange('solarsystem', null);
+    } else if (tab === 'cosmic') {
+      handleFocusChange('cosmic', null);
     } else {
       // default to Earth if no planet has been selected yet
       const target = focusedPlanet ?? EARTH;
@@ -110,10 +116,10 @@ export default function Home() {
             Initializing 3D Scene...
           </div>
         }>
-          <UniverseCanvas 
+          <UniverseCanvas
             focus={focus}
             focusedPlanet={focusedPlanet}
-            setFocus={handleFocusChange} 
+            setFocus={handleFocusChange}
           />
         </Suspense>
       </div>

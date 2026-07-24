@@ -7,9 +7,10 @@ type OrbitComponentProps = {
   orbitData: OrbitProps;
   segments?: number;
   useSimplifiedDistance?: boolean;
+  color?: string | number;
 };
 
-export default function Orbit({ orbitMode, orbitData, segments = 128, useSimplifiedDistance = false }: OrbitComponentProps) {
+export default function Orbit({ orbitMode, orbitData, segments = 128, useSimplifiedDistance = false, color = 0xffffff }: OrbitComponentProps) {
   const points = useMemo(() => {
     const orbitPoints: THREE.Vector3[] = []
     
@@ -41,9 +42,12 @@ export default function Orbit({ orbitMode, orbitData, segments = 128, useSimplif
     return geometry
   }, [points])
 
-  return (
-    <primitive object={new THREE.Line(lineGeometry, new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.3 }))} />
+  const line = useMemo(
+    () => new THREE.Line(lineGeometry, new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.4 })),
+    [lineGeometry, color]
   )
+
+  return <primitive object={line} />
 }
 
 // import * as THREE from 'three'

@@ -3,12 +3,16 @@ import { Canvas, useThree, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { Suspense, useState, useMemo, useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { 
-  generateProbabilityGrid, 
-  findProbabilityThreshold, 
+import {
+  generateProbabilityGrid,
+  findProbabilityThreshold,
   marchingCubes,
   wavefunction
 } from '../utils/hydrogenCloud';
+import { effectiveNuclearCharge, approximateOrbitalEnergyEV, outermostSubshell } from '../utils/slater';
+import { Subshell } from '../data/elements';
+
+const HYDROGEN_CONFIG: Subshell[] = [{ n: 1, l: 0, electrons: 1 }];
 
 interface ElectronCloudProps {
   n?: number;
@@ -17,6 +21,13 @@ interface ElectronCloudProps {
   onStateChange?: (state: { n: number; l: number; m: number }) => void;
   gridResolution?: number;
   probabilityThreshold?: number;
+  // The selected element (defaults to hydrogen, Z=1, so this component behaves exactly as
+  // before when used without these props). `configuration` is that element's ground-state
+  // electron configuration, used to compute each subshell's Slater effective nuclear charge.
+  Z?: number;
+  elementSymbol?: string;
+  configuration?: Subshell[];
+  realIonizationEnergyEV?: number;
 }
 
 // Projects a world-space length (along X at origin) to screen pixels each frame
@@ -57,13 +68,17 @@ function CameraRig({ n, controlsRef }: { n: number; controlsRef: React.RefObject
   return null;
 }
 
-export default function ElectronCloud({ 
-  n: initialN = 2, 
-  l: initialL = 1, 
+export default function ElectronCloud({
+  n: initialN = 2,
+  l: initialL = 1,
   m: initialM = 0,
   onStateChange,
   gridResolution = 48,
-  probabilityThreshold = 0.50
+  probabilityThreshold = 0.50,
+  Z = 1,
+  elementSymbol = 'H',
+  configuration = HYDROGEN_CONFIG,
+  realIonizationEnergyEV,
 }: ElectronCloudProps) {
   const [n, setN] = useState(initialN);
   const [l, setL] = useState(initialL);
@@ -71,14 +86,7 @@ export default function ElectronCloud({
   const [threshold, setThreshold] = useState(probabilityThreshold);
   const [showPhase, setShowPhase] = useState(true);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [nucleus, setNucleus] = useState<'H' | 'He'>('H');
   const [showLowerOrbital, setShowLowerOrbital] = useState(false);
-
-  // Helium excited-state controls — outer electron quantum numbers
-  const [heExcited, setHeExcited] = useState(false);
-  const [nOuter, setNOuter] = useState(2);
-  const [lOuter, setLOuter] = useState(0);
-  const [mOuter, setMOuter] = useState(0);
   const orbitControlsRef = useRef<any>(null);
 
   // Keep local controls in sync when parent-selected state changes from the text panel.
@@ -91,50 +99,20 @@ export default function ElectronCloud({
     setM(nextM);
   }, [initialN, initialL, initialM]);
 
-  // Variational Z_eff for helium ground state: minimises ⟨E⟩ for ψ = ψ_{1s}^{Z_eff}(r₁)ψ_{1s}^{Z_eff}(r₂)
-  // Optimal Z_eff = Z − 5/16 = 2 − 5/16 = 27/16 ≈ 1.6875
-  const Z_EFF_HE = 27 / 16;
-
-  // What to actually render:
-  // Ground He  → 1s orbital with Z_eff = 27/16
-  // Excited He → outer electron (nOuter, lOuter, mOuter) with Z_eff ≈ 1
-  //              (inner 1s electron fully screens one unit of charge)
-  const isHeExcited = nucleus === 'He' && heExcited;
-  const renderN = isHeExcited ? nOuter : n;
-  const renderL = isHeExcited ? lOuter : l;
-  const renderM = isHeExcited ? mOuter : m;
-  const renderZ = nucleus === 'He' ? (heExcited ? 1.0 : Z_EFF_HE) : 1;
-
-  // Approximate energy for display
-  const heEnergy = heExcited
-    ? (-54.4 - 13.6 / (nOuter * nOuter)).toFixed(1)
-    : '-77.5';
-
   const orbitalNames = ['s', 'p', 'd', 'f', 'g'];
-  const heConfig = heExcited
-    ? `1s ${nOuter}${orbitalNames[lOuter] ?? `l${lOuter}`}${mOuter !== 0 ? ` (m=${mOuter})` : ''}`
-    : '1s²';
 
-  const handleNucleusChange = (newNucleus: 'H' | 'He') => {
-    setNucleus(newNucleus);
-    if (newNucleus === 'He') {
-      setN(1); setL(0); setM(0);
-      onStateChange?.({ n: 1, l: 0, m: 0 });
-      setHeExcited(false);
-    }
-  };
+  // The selected (n,l,m) rendered as a hydrogenic orbital with this subshell's Slater
+  // effective nuclear charge — this is the approximation at the heart of the "all atoms"
+  // model: no exact multi-electron solution exists, so each subshell is modeled as a
+  // hydrogen-like orbital with Z_eff = Z - sigma instead of the real Z=1 hydrogen orbital.
+  const renderN = n;
+  const renderL = l;
+  const renderM = m;
+  const renderZ = effectiveNuclearCharge(Z, configuration, n, l);
 
-  const handleNOuterChange = (newN: number) => {
-    setNOuter(newN);
-    if (lOuter >= newN) setLOuter(newN - 1);
-    if (Math.abs(mOuter) > lOuter) setMOuter(0);
-  };
-
-  const handleLOuterChange = (newL: number) => {
-    setLOuter(newL);
-    if (Math.abs(mOuter) > newL) setMOuter(0);
-    setShowLowerOrbital(true);
-  };
+  const outermost = useMemo(() => outermostSubshell(configuration), [configuration]);
+  const isOutermostSelected = outermost.n === n && outermost.l === l;
+  const approxOrbitalEnergyEV = approximateOrbitalEnergyEV(Z, configuration, n, l);
 
   const [scaleBarPx, setScaleBarPx] = useState(80);
 
@@ -146,14 +124,15 @@ export default function ElectronCloud({
     return (niceVals.find(v => v * mag >= raw) ?? 10) * mag;
   }, [renderN]);
 
-  // Lower orbital: for H show (n-1) shell; for He excited show inner 1s (Z=2)
-  const canShowLower = (nucleus === 'H' && renderN > 1) || isHeExcited;
-  const lowerN = isHeExcited ? 1 : renderN - 1;
+  // Lower orbital preview: the (n-1) shell, rendered with *its own* Slater Z_eff (inner
+  // subshells are screened less, so they're always more tightly bound than the outer one).
+  const canShowLower = renderN > 1;
+  const lowerN = renderN - 1;
   // For s orbitals (l=0) show the highest-l of the lower shell (e.g. 4s → 3d, 3s → 2p)
   // For other orbitals keep the same l, clamped to the lower shell's max
-  const lowerL = isHeExcited ? 0 : (renderL === 0 ? lowerN - 1 : Math.min(renderL, lowerN - 1));
-  const lowerM = isHeExcited ? 0 : (Math.abs(renderM) <= lowerL ? renderM : 0);
-  const lowerZ = isHeExcited ? 2.0 : 1.0;
+  const lowerL = renderL === 0 ? lowerN - 1 : Math.min(renderL, lowerN - 1);
+  const lowerM = Math.abs(renderM) <= lowerL ? renderM : 0;
+  const lowerZ = effectiveNuclearCharge(Z, configuration, lowerN, lowerL);
 
   const lowerGeometry = useMemo(() => {
     if (!showLowerOrbital || !canShowLower) return null;
@@ -257,127 +236,29 @@ export default function ElectronCloud({
     <div className="hydrogenCloudRoot">
       {/* Controls */}
       <div className="hydrogenCloudControls">
-        {/* Atom selector */}
-        <div style={{ display: 'flex', gap: '6px', marginBottom: '12px' }}>
-          {(['H', 'He'] as const).map((atom) => (
-            <button
-              key={atom}
-              onClick={() => handleNucleusChange(atom)}
-              style={{
-                flex: 1,
-                padding: '4px 0',
-                borderRadius: '4px',
-                border: `1px solid ${nucleus === atom ? '#fff' : '#555'}`,
-                background: nucleus === atom ? 'rgba(255,255,255,0.15)' : 'transparent',
-                color: 'white',
-                cursor: 'pointer',
-                fontFamily: 'monospace',
-                fontSize: '13px',
-              }}
-            >
-              {atom}
-            </button>
-          ))}
-        </div>
-
-        <h3 style={{ margin: '0 0 10px 0', fontSize: '14px' }}>
-          {nucleus === 'He' ? `He  ${heConfig}` : `Quantum State: ${stateLabel}`}
+        <h3 style={{ margin: '0 0 6px 0', fontSize: '14px' }}>
+          {elementSymbol} (Z={Z}) — {stateLabel}
         </h3>
 
-        {nucleus === 'He' && (
-          <>
-            {/* Ground / Excited toggle */}
-            <div style={{ display: 'flex', gap: '6px', marginBottom: '10px' }}>
-              {([false, true] as const).map((exc) => (
-                <button
-                  key={String(exc)}
-                  onClick={() => setHeExcited(exc)}
-                  style={{
-                    flex: 1,
-                    padding: '3px 0',
-                    borderRadius: '4px',
-                    border: `1px solid ${heExcited === exc ? '#fff' : '#555'}`,
-                    background: heExcited === exc ? 'rgba(255,255,255,0.15)' : 'transparent',
-                    color: 'white',
-                    cursor: 'pointer',
-                    fontFamily: 'monospace',
-                    fontSize: '12px',
-                  }}
-                >
-                  {exc ? 'Excited' : 'Ground'}
-                </button>
-              ))}
-            </div>
+        {/* Approximation vs. real-measurement comparison — the core of the all-atoms
+            model: this subshell modeled as a hydrogenic orbital with Slater's Z_eff,
+            compared against the element's real measured first ionization energy. */}
+        <div style={{ fontSize: '11px', opacity: 0.8, marginBottom: '12px', lineHeight: '1.6' }}>
+          Z<sub>eff</sub> (Slater) = <strong>{renderZ.toFixed(3)}</strong><br />
+          Approx. orbital energy = <strong>{approxOrbitalEnergyEV.toFixed(2)} eV</strong>
+          {isOutermostSelected && realIonizationEnergyEV !== undefined && (
+            <>
+              <br />
+              Approx. ionization energy ≈ <strong>{(-approxOrbitalEnergyEV).toFixed(2)} eV</strong>
+              {' '}(real: <strong>{realIonizationEnergyEV.toFixed(3)} eV</strong>)
+            </>
+          )}
+        </div>
 
-            {/* Energy info */}
-            <div style={{ fontSize: '11px', opacity: 0.75, marginBottom: '10px', lineHeight: '1.6' }}>
-              {heExcited ? (
-                <>
-                  Outer e⁻: Z<sub>eff</sub> = 1<br />
-                  (inner 1s screens one charge unit)<br />
-                  E ≈ −54.4 − 13.6/n² = <strong>{heEnergy} eV</strong>
-                </>
-              ) : (
-                <>
-                  ψ(r₁,r₂) = ψ<sub>1s</sub><sup>Z</sup>(r₁) ψ<sub>1s</sub><sup>Z</sup>(r₂)<br />
-                  Z<sub>eff</sub> = 27/16 = <strong>{Z_EFF_HE.toFixed(4)}</strong><br />
-                  E = −77.5 eV&nbsp;(exact: −79.0 eV)
-                </>
-              )}
-            </div>
-
-            {/* Outer electron sliders (excited only) */}
-            {heExcited && (
-              <>
-                <div style={{ marginBottom: '10px' }}>
-                  <label style={{ display: 'block', marginBottom: '5px' }}>
-                    Outer n: {nOuter}
-                  </label>
-                  <input
-                    type="range"
-                    min="2"
-                    max="4"
-                    value={nOuter}
-                    onChange={(e) => handleNOuterChange(parseInt(e.target.value))}
-                    style={{ width: '100%' }}
-                  />
-                </div>
-                <div style={{ marginBottom: '10px' }}>
-                  <label style={{ display: 'block', marginBottom: '5px' }}>
-                    Outer l: {lOuter}
-                  </label>
-                  <input
-                    type="range"
-                    min="0"
-                    max={nOuter - 1}
-                    value={lOuter}
-                    onChange={(e) => handleLOuterChange(parseInt(e.target.value))}
-                    style={{ width: '100%' }}
-                  />
-                </div>
-                <div style={{ marginBottom: '10px' }}>
-                  <label style={{ display: 'block', marginBottom: '5px' }}>
-                    Outer m: {mOuter}
-                  </label>
-                  <input
-                    type="range"
-                    min={-lOuter}
-                    max={lOuter}
-                    value={mOuter}
-                    onChange={(e) => setMOuter(parseInt(e.target.value))}
-                    style={{ width: '100%' }}
-                  />
-                </div>
-              </>
-            )}
-          </>
-        )}
-
-        {/* Hydrogen quantum number dot-track selectors */}
+        {/* Quantum number dot-track selectors */}
         {(() => {
-          const heDisabled = nucleus === 'He';
-          const lLocked = heDisabled || n === 1;
-          const mLocked = heDisabled || l === 0;
+          const lLocked = n === 1;
+          const mLocked = l === 0;
 
           function DotTrack({
             label, values, selected, onSelect, locked, hint,
@@ -440,12 +321,12 @@ export default function ElectronCloud({
             <>
               <DotTrack
                 label="n" values={nValues} selected={n}
-                onSelect={handleNChange} locked={heDisabled}
+                onSelect={handleNChange} locked={false}
               />
               <DotTrack
                 label="l" values={lValues} selected={l}
                 onSelect={handleLChange} locked={lLocked}
-                hint={n === 1 && !heDisabled ? 's only' : undefined}
+                hint={n === 1 ? 's only' : undefined}
               />
               <DotTrack
                 label="m" values={mValues} selected={m}
@@ -453,7 +334,7 @@ export default function ElectronCloud({
                   setM(newM);
                   onStateChange?.({ n, l, m: newM });
                 }} locked={mLocked}
-                hint={l === 0 && !heDisabled ? 'm=0' : undefined}
+                hint={l === 0 ? 'm=0' : undefined}
               />
             </>
           );
@@ -636,9 +517,9 @@ export default function ElectronCloud({
 
           {/* Nucleus */}
           <mesh>
-            <sphereGeometry args={[nucleus === 'He' ? 0.4 : 0.3, 16, 16]} />
+            <sphereGeometry args={[Math.min(0.3 + Z * 0.01, 0.6), 16, 16]} />
             <meshPhysicalMaterial
-              color={nucleus === 'He' ? '#FFC107' : 'red'}
+              color={Z === 1 ? 'red' : '#FFC107'}
               roughness={0.32}
               metalness={0.08}
             />

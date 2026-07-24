@@ -1,6 +1,7 @@
 import { useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useRef } from 'react'
+import { getBodyAxis, simulationState } from '../utils'
 
 type SunProps = {
   size: number
@@ -20,12 +21,25 @@ export default function Sun({
   const ref = useRef<THREE.Mesh>(null!)
   const texture = useLoader(
       THREE.TextureLoader,
-      textureUrl ?? '/solarstsremImages/SunTexture.jpg'
+      textureUrl ?? '/solarsystemImages/SunTexture.jpg'
     );
 
   useFrame((_, delta) => {
     if (ref.current) {
-      ref.current.rotation.y += rotationalSpeed * delta;
+      const axis = getBodyAxis('Sun', simulationState.dateMs);
+      if (axis) {
+        const tiltQuat = new THREE.Quaternion().setFromUnitVectors(
+          new THREE.Vector3(0, 1, 0),
+          new THREE.Vector3(...axis.northThree).normalize()
+        );
+        const spinQuat = new THREE.Quaternion().setFromAxisAngle(
+          new THREE.Vector3(0, 1, 0),
+          THREE.MathUtils.degToRad(axis.spinDegrees)
+        );
+        ref.current.quaternion.copy(tiltQuat).multiply(spinQuat);
+      } else {
+        ref.current.rotation.y += rotationalSpeed * delta;
+      }
     }
   })
 
