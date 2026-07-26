@@ -1,7 +1,9 @@
+"use client"
 import Header from "./header";
 import "./styles/StandardLayout.css";
 import Image from "next/image";
 import Link from "next/link";
+import * as React from "react";
 
 interface StandardLayoutProps {
   title?: string;
@@ -10,6 +12,13 @@ interface StandardLayoutProps {
 }
 
 function StandardLayout({ title, main, headerMode = 'full' }: StandardLayoutProps) {
+  const [introDancing, setIntroDancing] = React.useState(true);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => setIntroDancing(false), 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="container0">
       {headerMode === 'full' && <Header title={title} />}
@@ -21,7 +30,7 @@ function StandardLayout({ title, main, headerMode = 'full' }: StandardLayoutProp
               alt="Home"
               width={60}
               height={60}
-              className="tyro-home-image"
+              className={`tyro-home-image${introDancing ? ' tyro-intro-dance' : ''}`}
               unoptimized
             />
           </Link>

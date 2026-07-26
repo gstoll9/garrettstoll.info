@@ -48,6 +48,25 @@ header {
   height: auto;
 }
 
+.leftTyroContainer .logo.tyro-intro-dance,
+.rightTyroContainer .logo.tyro-intro-dance,
+.leftTyroContainer .logo:hover,
+.rightTyroContainer .logo:hover {
+  animation: tyro-dance 2.2s ease-in-out infinite;
+}
+
+.rightTyroContainer .logo.tyro-intro-dance {
+  animation-delay: 0.5s;
+}
+
+@keyframes tyro-dance {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  20% { transform: translateY(-5px) rotate(-8deg); }
+  40% { transform: translateY(0) rotate(0deg); }
+  60% { transform: translateY(-4px) rotate(8deg); }
+  80% { transform: translateY(0) rotate(-3deg); }
+}
+
 .logo.pop-image {
   opacity: 0;
   transform: scale(0.7) rotate(0deg);

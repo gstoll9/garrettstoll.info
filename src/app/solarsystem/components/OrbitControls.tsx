@@ -71,10 +71,6 @@ type OrbitControlsMenuProps = {
   setShowOrbits: (show: boolean) => void;
   showBackground: boolean;
   setShowBackground: (show: boolean) => void;
-  showHeliosphere: boolean;
-  setShowHeliosphere: (show: boolean) => void;
-  showSolarWind: boolean;
-  setShowSolarWind: (show: boolean) => void;
 };
 
 export default function OrbitControlsMenu({
@@ -86,10 +82,6 @@ export default function OrbitControlsMenu({
   setTimeScale,
   showBackground,
   setShowBackground,
-  showHeliosphere,
-  setShowHeliosphere,
-  showSolarWind,
-  setShowSolarWind,
 }: OrbitControlsMenuProps) {
   const [isExpanded, setIsExpanded] = useState(
     () => typeof window === 'undefined' || window.innerWidth >= 768
@@ -97,14 +89,16 @@ export default function OrbitControlsMenu({
 
   return (
     <div className={`orbit-controls-menu ${isExpanded ? 'expanded' : 'collapsed'}`}>
-      <button 
-        className="toggle-button"
+      <button
+        type="button"
+        className="menu-toggle-button"
         onClick={() => setIsExpanded(!isExpanded)}
-        aria-label={isExpanded ? 'Collapse menu' : 'Expand menu'}
+        aria-expanded={isExpanded}
       >
-        {isExpanded ? '−' : '+'}
+        <span className="menu-toggle-label">Display Options</span>
+        <span className="menu-toggle-arrow">▾</span>
       </button>
-      
+
       {isExpanded && (
         <div className="controls-content">
           <div className="control-group">            
@@ -170,27 +164,6 @@ export default function OrbitControlsMenu({
             </label>
           </div>
 
-          <div className="control-group">
-            <label className="toggle-label">
-              <input
-                type="checkbox"
-                checked={showHeliosphere}
-                onChange={(e) => setShowHeliosphere(e.target.checked)}
-              />
-              <span>Show Heliosphere</span>
-            </label>
-          </div>
-
-          <div className="control-group">
-            <label className="toggle-label">
-              <input
-                type="checkbox"
-                checked={showSolarWind}
-                onChange={(e) => setShowSolarWind(e.target.checked)}
-              />
-              <span>Show Solar Wind</span>
-            </label>
-          </div>
         </div>
       )}
     </div>

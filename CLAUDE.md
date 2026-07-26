@@ -33,6 +33,8 @@ Next.js App Router, TypeScript, one folder per route under `src/app/*/page.tsx`.
 
 Two perf/correctness patterns worth following if you touch simulation code: don't call `require(...)` or rebuild lookup tables inside a `useFrame` callback (it runs every frame, for every animated object) — hoist heavy imports and static lookup tables to module scope; and prefer `THREE.InstancedMesh` over mapping many individual `<mesh>` elements when rendering repeated identical geometry (e.g. asteroid belts, particle fields).
 
+The `solarsystem` page's on-canvas UI controls are two collapsible panels (`components/ObjectVisibilityMenu.tsx` for per-body show/hide, `components/OrbitControls.tsx` for display settings) stacked inside one shared `.solar-menu-stack` card in the top-left corner, each toggled by a `.menu-toggle-button` labeled with its own title rather than an icon. `data/regions.ts` holds the single source of truth for solar-system body groupings (inner/outer planets, asteroid belt, orbit-line colors) — both `SolarSystem.tsx` (orbit coloring) and `ObjectVisibilityMenu.tsx` (menu grouping) import from it rather than each keeping their own copy of the lists.
+
 Math-heavy text pages (`structuralbioinformatics`, `hubbardmodel`) render LaTeX via `react-katex`'s `<BlockMath>`/`<InlineMath>` plus `katex/dist/katex.min.css`.
 
 Per-page static assets live under `public/<pageName>Images/` (e.g. `public/solarsystemImages`, `public/hubbardmodelImages`, `public/methanogensImages`), matching the page's route name.

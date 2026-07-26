@@ -4,24 +4,10 @@ import { planets } from '../data/planets'
 import { dwarfPlanets } from '../data/dwarfPlanets'
 import { AsteroidBelt } from './AsteroidBelt'
 import Sun from './Sun'
-import Heliosphere from './Heliosphere'
-import SolarWind from './SolarWind'
 import { PlanetProps } from './Planet'
+import { INNER_PLANETS, ASTEROID_BELT_BODIES, OUTER_PLANETS, REGION_COLORS } from '../data/regions'
 
 type OrbitMode = 'Simple' | 'Elliptical' | 'RealLive';
-
-// Orbit line color by solar-system region.
-const REGION_COLORS = {
-  inner: '#e8935a',        // Mercury, Venus, Earth, Mars — rocky, close to the Sun
-  asteroidBelt: '#9a8a7a', // Ceres — rocky debris between Mars and Jupiter
-  outer: '#5fb8e8',        // Jupiter, Saturn, Uranus, Neptune — gas/ice giants
-  transNeptunian: '#b39ddb', // Pluto, Eris, Haumea, Makemake — icy, beyond Neptune
-} as const;
-
-const INNER_PLANETS = new Set(['Mercury', 'Venus', 'Earth', 'Mars']);
-const ASTEROID_BELT_BODIES = new Set(['Ceres']);
-const OUTER_PLANETS = new Set(['Jupiter', 'Saturn', 'Uranus', 'Neptune']);
-// Everything else in dwarfPlanets (Pluto, Eris, Haumea, Makemake) is trans-Neptunian.
 
 function orbitColorFor(name: string): string {
   if (INNER_PLANETS.has(name)) return REGION_COLORS.inner;
@@ -38,11 +24,10 @@ type SolarSystemProps = {
   useSimplifiedDistance: boolean;
   useRealisticSizes: boolean;
   timeScale: number;
-  showHeliosphere: boolean;
-  showSolarWind: boolean;
+  hiddenBodies: Set<string>;
 };
 
-export default function SolarSystem({ setFocus, focus, showOrbits, orbitMode, useSimplifiedDistance, useRealisticSizes, timeScale, showHeliosphere, showSolarWind }: SolarSystemProps) {
+export default function SolarSystem({ setFocus, focus, showOrbits, orbitMode, useSimplifiedDistance, useRealisticSizes, timeScale, hiddenBodies }: SolarSystemProps) {
 
   const isSolarSystem = focus === 'solarsystem';
   const isSunFocused = focus === 'Sun';
@@ -50,28 +35,14 @@ export default function SolarSystem({ setFocus, focus, showOrbits, orbitMode, us
   return (
     <>
       {/* Asteroid Belt */}
-      <group visible={isSolarSystem || isSunFocused}>
+      <group visible={(isSolarSystem || isSunFocused) && !hiddenBodies.has('Asteroid Belt')}>
         <AsteroidBelt useSimplifiedDistance={useSimplifiedDistance} />
       </group>
-
-      {/* Heliosphere boundary (termination shock + heliopause) */}
-      {showHeliosphere && (
-        <group visible={isSolarSystem || isSunFocused}>
-          <Heliosphere />
-        </group>
-      )}
-
-      {/* Solar wind particle stream */}
-      {showSolarWind && (
-        <group visible={isSolarSystem || isSunFocused}>
-          <SolarWind />
-        </group>
-      )}
 
       {/* Planets and orbits */}
       {planets.map((planet) => {
         const isThisPlanetFocused = focus === planet.name;
-        const isVisible = isSolarSystem || isSunFocused || isThisPlanetFocused;
+        const isVisible = (isSolarSystem || isSunFocused || isThisPlanetFocused) && !hiddenBodies.has(planet.name);
 
         return (
           <group key={planet.name} visible={isVisible}>
@@ -99,7 +70,7 @@ export default function SolarSystem({ setFocus, focus, showOrbits, orbitMode, us
       {/* Dwarf planets (Pluto, Ceres, Eris, Haumea, Makemake) */}
       {dwarfPlanets.map((dwarf) => {
         const isThisFocused = focus === dwarf.name;
-        const isVisible = isSolarSystem || isSunFocused || isThisFocused;
+        const isVisible = (isSolarSystem || isSunFocused || isThisFocused) && !hiddenBodies.has(dwarf.name);
 
         return (
           <group key={dwarf.name} visible={isVisible}>
@@ -125,7 +96,7 @@ export default function SolarSystem({ setFocus, focus, showOrbits, orbitMode, us
       })}
 
       {/* Sun */}
-      <group visible={isSolarSystem || isSunFocused}>
+      <group visible={(isSolarSystem || isSunFocused) && !hiddenBodies.has('Sun')}>
         <Sun
           size={2} 
           textureUrl="/solarsystemImages/SunTexture.jpg"

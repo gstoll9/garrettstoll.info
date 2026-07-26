@@ -6,11 +6,19 @@ import GalaxyField from './GalaxyField'
 import { useEffect, useState, useRef } from 'react'
 import {PlanetProps} from './Planet';
 import OrbitControlsMenu from './OrbitControls';
+import ObjectVisibilityMenu from './ObjectVisibilityMenu';
 import CameraController from './CameraController';
 import { OrbitControls } from '@react-three/drei';
 import { simulationState } from '../utils';
+import { dwarfPlanets } from '../data/dwarfPlanets';
+import { ASTEROID_BELT_BODIES } from '../data/regions';
 
 type OrbitMode = 'RealLive';
+
+// Dwarf planets other than Ceres (which lives in the Asteroid Belt group) start hidden.
+const DEFAULT_HIDDEN_BODIES = dwarfPlanets
+  .filter((d) => !ASTEROID_BELT_BODIES.has(d.name))
+  .map((d) => d.name);
 
 function StarMapBackground({ visible }: { visible: boolean }) {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
@@ -44,13 +52,38 @@ type UniverseCanvasProps = {
 
 export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanvasProps) {
   const [contextLost, setContextLost] = useState(false);
-  const [showOrbits, setShowOrbits] = useState(true);
+  const [showOrbits, setShowOrbits] = useState(false);
   const [showBackground, setShowBackground] = useState(true);
-  const [showHeliosphere, setShowHeliosphere] = useState(true);
-  const [showSolarWind, setShowSolarWind] = useState(true);
   const [useRealisticSizes, setUseRealisticSizes] = useState(false);
   const [timeScale, setTimeScale] = useState(1);
+  const [hiddenBodies, setHiddenBodies] = useState<Set<string>>(() => new Set(DEFAULT_HIDDEN_BODIES));
   const orbitControlsRef = useRef<any>(null);
+
+  const toggleBody = (name: string) => {
+    setHiddenBodies(prev => {
+      const next = new Set(prev);
+      if (next.has(name)) {
+        next.delete(name);
+      } else {
+        next.add(name);
+      }
+      return next;
+    });
+  };
+
+  const setBodiesVisible = (names: string[], visible: boolean) => {
+    setHiddenBodies(prev => {
+      const next = new Set(prev);
+      names.forEach(name => {
+        if (visible) {
+          next.delete(name);
+        } else {
+          next.add(name);
+        }
+      });
+      return next;
+    });
+  };
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -94,20 +127,25 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
 
   return (
     <div className="universeCanvasShell">
-      <OrbitControlsMenu
-        showOrbits={showOrbits}
-        setShowOrbits={setShowOrbits}
-        useRealisticSizes={useRealisticSizes}
-        setUseRealisticSizes={setUseRealisticSizes}
-        timeScale={timeScale}
-        setTimeScale={setTimeScale}
-        showBackground={showBackground}
-        setShowBackground={setShowBackground}
-        showHeliosphere={showHeliosphere}
-        setShowHeliosphere={setShowHeliosphere}
-        showSolarWind={showSolarWind}
-        setShowSolarWind={setShowSolarWind}
-      />
+      <div className="solar-menu-stack">
+        {focus !== 'cosmic' && (
+          <ObjectVisibilityMenu
+            hiddenBodies={hiddenBodies}
+            toggleBody={toggleBody}
+            setBodiesVisible={setBodiesVisible}
+          />
+        )}
+        <OrbitControlsMenu
+          showOrbits={showOrbits}
+          setShowOrbits={setShowOrbits}
+          useRealisticSizes={useRealisticSizes}
+          setUseRealisticSizes={setUseRealisticSizes}
+          timeScale={timeScale}
+          setTimeScale={setTimeScale}
+          showBackground={showBackground}
+          setShowBackground={setShowBackground}
+        />
+      </div>
       <Canvas
         ref={canvasRef}
         camera={{ position: [0, 150, 600], fov: 60, near: 0.1, far: 50000 }}
@@ -161,8 +199,7 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
             useSimplifiedDistance={false}
             useRealisticSizes={useRealisticSizes}
             timeScale={timeScale}
-            showHeliosphere={showHeliosphere}
-            showSolarWind={showSolarWind}
+            hiddenBodies={hiddenBodies}
           />
         )}
         <OrbitControls ref={orbitControlsRef} />

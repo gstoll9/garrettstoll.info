@@ -26,6 +26,7 @@
   top: 1rem;
   left: 1rem;
   z-index: 10;
+  overflow: hidden;
   border-radius: 999px;
   padding: 0.35rem;
   background-color: rgba(255, 255, 255, 0.28);
@@ -42,11 +43,22 @@
 .tyro-home-image {
   width: 56px;
   height: 56px;
+  border-radius: 50%;
+  overflow: hidden;
   transition: transform 170ms ease;
 }
 
+.tyro-home-image.tyro-intro-dance,
 .tyro-home-link:hover .tyro-home-image {
-  transform: scale(1.06);
+  animation: tyro-dance 2.2s ease-in-out infinite;
+}
+
+@keyframes tyro-dance {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  20% { transform: translateY(-5px) rotate(-8deg); }
+  40% { transform: translateY(0) rotate(0deg); }
+  60% { transform: translateY(-4px) rotate(8deg); }
+  80% { transform: translateY(0) rotate(-3deg); }
 }
 
 @media (max-width: 768px) {
