@@ -13,7 +13,7 @@ npm run start     # serve the production build
 
 There is no test suite in this repo (no Jest/Vitest/Playwright config, no `*.test.*`/`*.spec.*` files).
 
-**`npm run lint` is currently broken.** `eslint.config.mjs` uses the flat-config `defineConfig` helper from `eslint/config`, which doesn't exist in the installed `eslint@8.57.1` — it needs ESLint v9. The build's own lint step hits the same error but doesn't fail the build (Next just reports it and continues). A legacy `.eslintrc.json` also still exists alongside `eslint.config.mjs`; don't assume either is authoritative until this is reconciled.
+`npm run lint` uses ESLint 9's flat config (`eslint.config.mjs`), which bridges `eslint-config-next`'s legacy `next/core-web-vitals`/`next/typescript` presets via `FlatCompat` (the old `.eslintrc.json` was removed as redundant). It surfaces a large number of pre-existing errors/warnings across the codebase that haven't been triaged yet — `next.config.ts` sets `eslint.ignoreDuringBuilds: true` so those don't block `npm run build`; run `npm run lint` directly when you want to see them.
 
 There is also a `flask-app/` directory — it's the unmodified Flask quickstart boilerplate (`"Welcome to the Flask App!"`), not wired into the Next.js app or any page. Don't assume it backs any feature.
 
