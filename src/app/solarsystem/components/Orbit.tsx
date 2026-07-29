@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import * as THREE from 'three'
+import { Line } from '@react-three/drei'
 import { OrbitProps, orbitalPosition } from '../utils'
 
 type OrbitComponentProps = {
@@ -8,9 +9,10 @@ type OrbitComponentProps = {
   segments?: number;
   useSimplifiedDistance?: boolean;
   color?: string | number;
+  lineWidth?: number;
 };
 
-export default function Orbit({ orbitMode, orbitData, segments = 128, useSimplifiedDistance = false, color = 0xffffff }: OrbitComponentProps) {
+export default function Orbit({ orbitMode, orbitData, segments = 128, useSimplifiedDistance = false, color = 0xffffff, lineWidth = 1 }: OrbitComponentProps) {
   const points = useMemo(() => {
     const orbitPoints: THREE.Vector3[] = []
     
@@ -26,7 +28,7 @@ export default function Orbit({ orbitMode, orbitData, segments = 128, useSimplif
       // Circular orbit
       for (let i = 0; i <= segments; i++) {
         const t = (i / segments) * orbitData.orbitalPeriod; // Time step
-        const [x, _, z] = orbitalPosition(orbitMode, t, orbitData, useSimplifiedDistance);
+        const [x, , z] = orbitalPosition(orbitMode, t, orbitData, useSimplifiedDistance);
         // const angle = (i / segments) * Math.PI * 2
         // const x = radius * Math.cos(angle)
         // const z = radius * Math.sin(angle)
@@ -35,19 +37,11 @@ export default function Orbit({ orbitMode, orbitData, segments = 128, useSimplif
     }
     
     return orbitPoints
-  }, [orbitMode, orbitData, useSimplifiedDistance])
+  }, [orbitMode, orbitData, useSimplifiedDistance, segments])
 
-  const lineGeometry = useMemo(() => {
-    const geometry = new THREE.BufferGeometry().setFromPoints(points)
-    return geometry
-  }, [points])
-
-  const line = useMemo(
-    () => new THREE.Line(lineGeometry, new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.4 })),
-    [lineGeometry, color]
+  return (
+    <Line points={points} color={color} lineWidth={lineWidth} transparent opacity={0.4} />
   )
-
-  return <primitive object={line} />
 }
 
 // import * as THREE from 'three'

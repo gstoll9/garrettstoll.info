@@ -1,6 +1,6 @@
 import { Body, HelioVector, Rotation_EQJ_ECL, RotateVector, RotationAxis, Vector } from 'astronomy-engine';
 
-export const REAL_LIVE_BODIES: Record<string, any> = {
+export const REAL_LIVE_BODIES: Record<string, Body> = {
     'Sun': Body.Sun,
     'Mercury': Body.Mercury,
     'Venus': Body.Venus,

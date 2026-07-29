@@ -83,9 +83,7 @@ export default function OrbitControlsMenu({
   showBackground,
   setShowBackground,
 }: OrbitControlsMenuProps) {
-  const [isExpanded, setIsExpanded] = useState(
-    () => typeof window === 'undefined' || window.innerWidth >= 768
-  );
+  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <div className={`orbit-controls-menu ${isExpanded ? 'expanded' : 'collapsed'}`}>

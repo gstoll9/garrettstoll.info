@@ -34,6 +34,73 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
+/* Mirrors .solar-menu-stack on the opposite corner — holds the per-layer
+   Show Atmosphere/Show Crust toggles and the Layer Cross-Section panel, both only
+   rendered while a planet with structure data is focused. */
+.solar-menu-stack-right {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-height: calc(100% - 2rem);
+  pointer-events: none;
+}
+
+.solar-menu-stack-right > * {
+  pointer-events: auto;
+}
+
+.layer-visibility-controls {
+  display: flex;
+  gap: 0.5rem;
+  background: linear-gradient(180deg, rgba(10, 15, 23, 0.92), rgba(4, 8, 14, 0.84));
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(173, 201, 255, 0.14);
+  border-radius: 18px;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.42);
+  padding: 0.6rem;
+}
+
+.layer-toggle-pill {
+  flex: 1;
+  padding: 0.6rem 0.7rem;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.82);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.layer-toggle-pill:hover {
+  background: rgba(255, 255, 255, 0.13);
+  border-color: rgba(255, 255, 255, 0.34);
+}
+
+.layer-toggle-pill.active {
+  background: linear-gradient(135deg, rgba(66, 133, 244, 0.42), rgba(101, 175, 255, 0.24));
+  border-color: rgba(130, 185, 255, 0.8);
+  color: white;
+  box-shadow: 0 0 16px rgba(90, 150, 255, 0.2);
+}
+
+.solar-menu-stack-right .orbit-controls-menu {
+  background: linear-gradient(180deg, rgba(10, 15, 23, 0.92), rgba(4, 8, 14, 0.84));
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(173, 201, 255, 0.14);
+  border-radius: 18px;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.42);
+  color: #f4f7fb;
+  overflow: hidden;
+}
+
 .orbit-controls-menu {
   transition: all 0.3s ease;
 }
@@ -113,6 +180,63 @@
 
 .region-body-list .toggle-label span {
   font-size: 0.86rem;
+}
+
+.region-subgroup-list {
+  padding: 0.2rem 0 0.3rem 0.3rem;
+}
+
+.region-subgroup {
+  margin-bottom: 0.3rem;
+}
+
+.region-subgroup:last-child {
+  margin-bottom: 0;
+}
+
+.region-subheader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.3rem 0;
+}
+
+.region-subheader-toggle {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.region-visibility-toggle-small {
+  font-size: 0.6rem;
+  padding: 0.15rem 0.5rem;
+}
+
+.region-subarrow {
+  display: inline-block;
+  font-size: 1em;
+  color: currentColor;
+  opacity: 0.8;
+  transition: transform 0.2s ease;
+}
+
+.region-subarrow.open {
+  transform: rotate(180deg);
+}
+
+.region-subgroup .region-body-list {
+  padding-left: 0.9rem;
 }
 
 .menu-toggle-button {
@@ -263,11 +387,11 @@
   color-scheme: dark;
 }
 
-.controls-content button:not(.region-header-toggle):not(.region-visibility-toggle) {
+.controls-content button:not(.region-header-toggle):not(.region-visibility-toggle):not(.region-subheader-toggle) {
   font: inherit;
 }
 
-.controls-content button:not(.mode-button):not(.region-header-toggle):not(.region-visibility-toggle) {
+.controls-content button:not(.mode-button):not(.region-header-toggle):not(.region-visibility-toggle):not(.region-subheader-toggle) {
   background: none;
   border: none;
   color: rgba(140, 187, 255, 0.92);
@@ -276,8 +400,130 @@
   padding: 0;
 }
 
-.controls-content button:not(.mode-button):not(.region-header-toggle):not(.region-visibility-toggle):hover {
+.controls-content button:not(.mode-button):not(.region-header-toggle):not(.region-visibility-toggle):not(.region-subheader-toggle):hover {
   color: #fff;
+}
+
+/* Layer Cross-Section panel — a legible, non-true-scale stand-in for layers the 3D
+   cutaway makes too thin to reliably hover (see Planet.tsx's Shell/getLayerSegments). */
+.layer-bar {
+  display: flex;
+  width: 100%;
+  height: 28px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.layer-bar-segment {
+  height: 100%;
+  cursor: pointer;
+  transition: filter 0.15s ease, outline 0.15s ease;
+  outline: 2px solid transparent;
+  outline-offset: -2px;
+}
+
+.layer-bar-segment:hover,
+.layer-bar-segment.active {
+  filter: brightness(1.25);
+  outline-color: rgba(255, 255, 255, 0.9);
+}
+
+.layer-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.7rem;
+}
+
+.layer-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.82);
+  transition: all 0.15s ease;
+}
+
+.layer-legend-item:hover,
+.layer-legend-item.active {
+  background: rgba(130, 185, 255, 0.18);
+  border-color: rgba(130, 185, 255, 0.6);
+  color: white;
+}
+
+.layer-legend-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.layer-detail {
+  margin-top: 0.85rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.layer-detail-title {
+  font-weight: 600;
+  font-size: 0.86rem;
+  margin-bottom: 0.5rem;
+}
+
+.layer-detail-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  row-gap: 0.4rem;
+  column-gap: 0.75rem;
+}
+
+.layer-detail-placeholder {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+}
+
+/* Atmosphere Cross-Section panel — a vertical variant of .layer-bar, since altitude
+   reads bottom (surface) to top (space) rather than center-to-edge. */
+.atmo-bar {
+  display: flex;
+  flex-direction: column-reverse;
+  width: 100%;
+  height: 220px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.atmo-bar-segment {
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: filter 0.15s ease, outline 0.15s ease;
+  outline: 2px solid transparent;
+  outline-offset: -2px;
+}
+
+.atmo-bar-segment:hover,
+.atmo-bar-segment.active {
+  filter: brightness(1.25);
+  outline-color: rgba(255, 255, 255, 0.9);
+}
+
+.atmo-bar-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.65);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3);
+  pointer-events: none;
 }
 
 /* Mobile responsiveness */
@@ -289,6 +535,14 @@
     max-width: calc(100vw - 1.3rem);
     max-height: calc(100dvh - 5rem);
     overflow-y: auto;
+  }
+
+  .solar-menu-stack-right {
+    top: 0.65rem;
+    right: 0.65rem;
+    width: 210px;
+    max-width: calc(100vw - 1.3rem);
+    max-height: calc(100dvh - 5rem);
   }
 
   .menu-toggle-button {
@@ -306,5 +560,10 @@
   .mode-button {
     padding: 0.55rem 0.75rem;
     font-size: 0.8rem;
+  }
+
+  .layer-toggle-pill {
+    font-size: 0.72rem;
+    padding: 0.5rem 0.55rem;
   }
 }

@@ -1,3 +1,5 @@
+import { planetStructures } from './planetStructure';
+
 const distanceFactor = 12;
 const orbitalPeriodFactor = 5; // days in a year, used for converting orbital periods to Julian years
 const evenSpacing = 8; // Constant spacing between orbits
@@ -13,12 +15,7 @@ export const planets = [
     texture: '/solarsystemImages/MercuryTexture.jpg',
     color: '#8C7853', 
 
-    structure: {
-      coreRadius: 0.8,    // Mercury has a very large core
-      mantleRadius: 0.95,
-      coreColor: '#5c5c5c',
-      mantleColor: '#845e36',
-    },
+    structure: planetStructures.Mercury,
 
     size: 0.4,  // Display-friendly size
     realDiameter: 0.383, // In Earth diameters
@@ -43,14 +40,7 @@ export const planets = [
     texture: '/solarsystemImages/VenusTexture.jpg',
     color: '#FFC649', 
 
-    structure: {
-      coreRadius: 0.5,
-      mantleRadius: 0.9,
-      atmosphereRadius: 1.15,
-      coreColor: '#c79532',
-      mantleColor: '#db6c25',
-      atmosphereColor: '#ffd782'
-    },
+    structure: planetStructures.Venus,
 
     size: 0.9,
     realDiameter: 0.949,
@@ -75,14 +65,7 @@ export const planets = [
     texture: '/solarsystemImages/EarthTexture.jpg',
     color: '#6B93D6',
 
-    structure: {
-      coreRadius: 0.55,
-      mantleRadius: 0.95,
-      atmosphereRadius: 1.1,
-      coreColor: '#ffda3e',
-      mantleColor: '#ff4d00',
-      atmosphereColor: '#a6e1ff'
-    },
+    structure: planetStructures.Earth,
 
     size: 1,
     realDiameter: 1.0, // Reference: 1 Earth diameter
@@ -111,14 +94,7 @@ export const planets = [
     texture: '/solarsystemImages/MarsTexture.jpg',
     color: '#CD5C5C',
 
-    structure: {
-      coreRadius: 0.5,
-      mantleRadius: 0.95,
-      atmosphereRadius: 1.05,
-      coreColor: '#968172',
-      mantleColor: '#cd6d3b',
-      atmosphereColor: '#ffba9e' // thin
-    },
+    structure: planetStructures.Mars,
 
     size: 0.5,
     realDiameter: 0.532, 
@@ -157,14 +133,7 @@ export const planets = [
     texture: '/solarsystemImages/JupiterTexture.jpg',
     color: '#D8CA9D', 
 
-    structure: {
-      coreRadius: 0.15,
-      mantleRadius: 0.8, // metallic hydrogen
-      atmosphereRadius: 1.05, 
-      coreColor: '#b4afa3',
-      mantleColor: '#eaab67',
-      atmosphereColor: '#ffe9c0'
-    },
+    structure: planetStructures.Jupiter,
 
     size: 3,
     realDiameter: 10.97,
@@ -196,14 +165,7 @@ export const planets = [
     texture: '/solarsystemImages/SaturnTexture.jpg',
     color: '#FAD5A5', 
 
-    structure: {
-      coreRadius: 0.2,
-      mantleRadius: 0.75, // metallic hydrogen
-      atmosphereRadius: 1.05, 
-      coreColor: '#b4afa3',
-      mantleColor: '#eaab67',
-      atmosphereColor: '#ffeca2'
-    },
+    structure: planetStructures.Saturn,
 
     size: 2.5,
     realDiameter: 9.14,
@@ -239,14 +201,7 @@ export const planets = [
     texture: '/solarsystemImages/UranusTexture.jpg',
     color: '#4FD0E7', 
 
-    structure: {
-      coreRadius: 0.2, // rock
-      mantleRadius: 0.8, // icy
-      atmosphereRadius: 1.05, 
-      coreColor: '#968172',
-      mantleColor: '#2b96cc',
-      atmosphereColor: '#6af5ff'
-    },
+    structure: planetStructures.Uranus,
 
     size: 1.8,
     realDiameter: 3.98,
@@ -295,14 +250,7 @@ export const planets = [
     texture: '/solarsystemImages/NeptuneTexture.jpg',
     color: '#4B70DD', 
 
-    structure: {
-      coreRadius: 0.2, // rock
-      mantleRadius: 0.8, // icy
-      atmosphereRadius: 1.05, 
-      coreColor: '#968172',
-      mantleColor: '#2b96cc',
-      atmosphereColor: '#6a97ff'
-    },
+    structure: planetStructures.Neptune,
 
     size: 1.7,
     realDiameter: 3.87,
@@ -338,7 +286,7 @@ export const planets = [
 export { realisticSizeScale };
 
 // Helper function to calculate realistic planet size
-export function getPlanetSize(planet: typeof planets[0], useRealisticSize: boolean): number {
+export function getPlanetSize(planet: { size: number; realDiameter: number }, useRealisticSize: boolean): number {
   if (useRealisticSize) {
     return planet.realDiameter * realisticSizeScale;
   }

@@ -8,9 +8,9 @@ import { planets } from './data/planets';
 import './styles/solarsystem.css';
 
 const TABS = [
+  { id: 'cosmic', label: 'Local Group' },
   { id: 'solar',  label: 'Solar System' },
   { id: 'planet', label: 'Planet' },
-  { id: 'cosmic', label: 'Cosmic Web' },
 ] as const;
 type Tab = typeof TABS[number]['id'];
 

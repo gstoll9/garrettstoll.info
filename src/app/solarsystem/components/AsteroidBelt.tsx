@@ -1,10 +1,14 @@
 import { useMemo, useRef, useLayoutEffect } from 'react'
 import * as THREE from 'three'
+import { asteroids } from '../data/asteroids'
+import { orbitalPosition } from '../utils'
 
-const ASTEROID_COUNT = 300
-const REALISTIC_RADIUS = 35 // Between Mars and Jupiter (realistic scale)
-const SIMPLIFIED_RADIUS = 5.1 * 8 // Position 4.5 in even spacing (36 units)
-const ASTEROID_SPREAD = 2 // Spread around the base radius
+const ASTEROID_COUNT = 2000
+
+// Hektor is a Jupiter Trojan, not a main-belt object (see data/asteroids.ts) — its orbit
+// would skew the belt's shape way out toward Jupiter, so it's excluded from the templates
+// used to approximate the belt's 3D extent.
+const BELT_ORBIT_TEMPLATES = asteroids.filter((a) => a.name !== 'Hektor').map((a) => a.orbitData)
 
 type AsteroidBeltProps = {
   useSimplifiedDistance?: boolean
@@ -14,12 +18,15 @@ export function AsteroidBelt({ useSimplifiedDistance = false }: AsteroidBeltProp
   const meshRef = useRef<THREE.InstancedMesh>(null!)
 
   const positions = useMemo(() => {
-    const baseRadius = useSimplifiedDistance ? SIMPLIFIED_RADIUS : REALISTIC_RADIUS
     const coords: [number, number, number][] = []
     for (let i = 0; i < ASTEROID_COUNT; i++) {
-      const angle = Math.random() * 2 * Math.PI
-      const radius = baseRadius + (Math.random() - 0.5) * ASTEROID_SPREAD * 2
-      coords.push([radius * Math.cos(angle), 0, radius * Math.sin(angle)])
+      // Each particle borrows one real asteroid's orbital shape (semimajor axis,
+      // eccentricity, inclination, node/perihelion angles) and lands at a random point
+      // along that ellipse — so across all templates the cloud approximates the belt's
+      // real 3D shape (its inclination and eccentricity spread) instead of a flat ring.
+      const orbitData = BELT_ORBIT_TEMPLATES[i % BELT_ORBIT_TEMPLATES.length]
+      const t = Math.random() * orbitData.orbitalPeriod
+      coords.push(orbitalPosition('Elliptical', t, orbitData, useSimplifiedDistance))
     }
     return coords
   }, [useSimplifiedDistance])

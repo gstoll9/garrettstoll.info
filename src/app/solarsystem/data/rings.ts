@@ -2,8 +2,8 @@
 // (Rings of Jupiter / Rings of Saturn / Rings of Uranus / Rings of Neptune).
 // Radii are stored as a multiple of the planet's own real equatorial radius, not km —
 // this lets them scale with whichever display size the planet is currently rendered at
-// (the "Visible" vs "Realistic" size toggle), the same convention data/planets.tsx
-// already uses for structure.mantleRadius/atmosphereRadius.
+// (the "Visible" vs "Realistic" size toggle), the same convention data/planetStructure.ts
+// already uses for its mantle/atmosphere radiusFraction fields.
 //
 // Real planet radii used for the km -> planet-radii conversion:
 // Jupiter 71,398 km, Saturn 60,268 km, Uranus 25,556.6 km, Neptune 24,760.6 km.

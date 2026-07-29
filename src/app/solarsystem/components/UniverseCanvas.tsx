@@ -1,24 +1,27 @@
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
-import { Stars } from '@react-three/drei'
+import { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 import SolarSystem from './SolarSystem'
 import GalaxyField from './GalaxyField'
 import { useEffect, useState, useRef } from 'react'
-import {PlanetProps} from './Planet';
+import {PlanetProps, HoveredLayer} from './Planet';
 import OrbitControlsMenu from './OrbitControls';
 import ObjectVisibilityMenu from './ObjectVisibilityMenu';
+import LayerVisibilityControls from './LayerVisibilityControls';
+import LayerCrossSection from './LayerCrossSection';
+import AtmosphereCrossSection from './AtmosphereCrossSection';
 import CameraController from './CameraController';
 import { OrbitControls } from '@react-three/drei';
 import { simulationState } from '../utils';
 import { dwarfPlanets } from '../data/dwarfPlanets';
-import { ASTEROID_BELT_BODIES } from '../data/regions';
+import { asteroids } from '../data/asteroids';
 
-type OrbitMode = 'RealLive';
-
-// Dwarf planets other than Ceres (which lives in the Asteroid Belt group) start hidden.
-const DEFAULT_HIDDEN_BODIES = dwarfPlanets
-  .filter((d) => !ASTEROID_BELT_BODIES.has(d.name))
-  .map((d) => d.name);
+// All dwarf planets and individual named asteroids start hidden — only the "Asteroid
+// Belt" instanced-mesh visualization itself is visible by default.
+const DEFAULT_HIDDEN_BODIES = [
+  ...dwarfPlanets.map((d) => d.name),
+  ...asteroids.map((a) => a.name),
+];
 
 function StarMapBackground({ visible }: { visible: boolean }) {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
@@ -52,12 +55,20 @@ type UniverseCanvasProps = {
 
 export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanvasProps) {
   const [contextLost, setContextLost] = useState(false);
-  const [showOrbits, setShowOrbits] = useState(false);
+  const [showOrbits, setShowOrbits] = useState(true);
   const [showBackground, setShowBackground] = useState(true);
   const [useRealisticSizes, setUseRealisticSizes] = useState(false);
   const [timeScale, setTimeScale] = useState(1);
   const [hiddenBodies, setHiddenBodies] = useState<Set<string>>(() => new Set(DEFAULT_HIDDEN_BODIES));
-  const orbitControlsRef = useRef<any>(null);
+  const [showAtmosphere, setShowAtmosphere] = useState(true);
+  const [showCrust, setShowCrust] = useState(true);
+  const [hoveredLayer, setHoveredLayer] = useState<HoveredLayer>(null);
+  const orbitControlsRef = useRef<OrbitControlsImpl>(null);
+
+  // A layer hovered on one planet shouldn't stay "hovered" once the focus target changes.
+  useEffect(() => {
+    setHoveredLayer(null);
+  }, [focus]);
 
   const toggleBody = (name: string) => {
     setHiddenBodies(prev => {
@@ -146,6 +157,24 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
           setShowBackground={setShowBackground}
         />
       </div>
+      {focusedPlanet?.structure && (
+        <div className="solar-menu-stack-right">
+          <LayerVisibilityControls
+            showAtmosphere={showAtmosphere}
+            setShowAtmosphere={setShowAtmosphere}
+            showCrust={showCrust}
+            setShowCrust={setShowCrust}
+          />
+          <LayerCrossSection
+            structure={focusedPlanet.structure}
+            hoveredLayer={hoveredLayer}
+            setHoveredLayer={setHoveredLayer}
+          />
+          {showAtmosphere && (
+            <AtmosphereCrossSection atmosphere={focusedPlanet.structure.atmosphere} />
+          )}
+        </div>
+      )}
       <Canvas
         ref={canvasRef}
         camera={{ position: [0, 150, 600], fov: 60, near: 0.1, far: 50000 }}
@@ -157,6 +186,11 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
           alpha: false,
           preserveDrawingBuffer: false,
           failIfMajorPerformanceCaveat: false,
+          // Needed once CameraController tightens `near` to 0.001 while focused on a planet
+          // (to support scroll-zooming in on true-to-scale thin structure layers) — a
+          // standard depth buffer loses precision badly across that near/far (0.001/50000)
+          // ratio, which shows up as z-fighting between adjacent shell boundaries.
+          logarithmicDepthBuffer: true,
         }}
       >
         {/* lighting */}
@@ -198,19 +232,15 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
             orbitMode={'RealLive'}
             useSimplifiedDistance={false}
             useRealisticSizes={useRealisticSizes}
-            timeScale={timeScale}
             hiddenBodies={hiddenBodies}
+            showAtmosphere={showAtmosphere}
+            showCrust={showCrust}
+            hoveredLayer={hoveredLayer}
+            setHoveredLayer={setHoveredLayer}
           />
         )}
         <OrbitControls ref={orbitControlsRef} />
       </Canvas>
-      {focus === 'cosmic' && (
-        <div className="cosmicWebNote">
-          Local Group only, real distances &amp; positions. Superclusters and cosmic-web
-          filaments are left out for now — those need a real large-scale-structure dataset,
-          not an illustrative one.
-        </div>
-      )}
     </div>
   )
 }

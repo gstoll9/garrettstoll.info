@@ -1,7 +1,12 @@
+import { asteroids } from './asteroids';
+
 // Solar-system body groupings by region, shared by orbit coloring and the
 // object-visibility menu so both stay in sync with a single source of truth.
 export const INNER_PLANETS = new Set(['Mercury', 'Venus', 'Earth', 'Mars']);
-export const ASTEROID_BELT_BODIES = new Set(['Ceres']);
+// Ceres lives in data/dwarfPlanets.ts (it's IAU-classified as a dwarf planet); everything
+// else here comes straight from data/asteroids.ts so this set can't drift out of sync as
+// more asteroids are added.
+export const ASTEROID_BELT_BODIES = new Set(['Ceres', ...asteroids.map(a => a.name)]);
 export const OUTER_PLANETS = new Set(['Jupiter', 'Saturn', 'Uranus', 'Neptune']);
 // Everything else in dwarfPlanets (Pluto, Eris, Haumea, Makemake) is trans-Neptunian.
 

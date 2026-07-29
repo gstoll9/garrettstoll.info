@@ -8,7 +8,6 @@ type SunProps = {
   textureUrl?: string
   rotationalSpeed?: number
   onClick?: () => void
-  timeScale?: number
 }
 
 export default function Sun({
@@ -16,7 +15,6 @@ export default function Sun({
   textureUrl,
   rotationalSpeed = 0.01,
   onClick,
-  timeScale = 1,
 }: SunProps) {
   const ref = useRef<THREE.Mesh>(null!)
   const texture = useLoader(
