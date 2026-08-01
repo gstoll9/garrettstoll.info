@@ -301,8 +301,7 @@ export function marchingCubes(
 ): { positions: number[]; indices: number[] } {
   const positions: number[] = [];
   const indices: number[] = [];
-  const vertexMap = new Map<string, number>();
-  
+
   const step = extent / (gridSize - 1);
   const offset = -extent / 2;
   

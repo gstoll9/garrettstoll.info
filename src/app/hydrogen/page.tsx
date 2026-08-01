@@ -1,8 +1,7 @@
 'use client'
 import './styles/HydrogenAtom.css';
 import ElectronCloud from './components/ElectronCloud';
-import SchrodingerEquation from './components/text/SchrodingerEquation';
-import Hydrogen from './components/text/Hydrogen';
+import HydrogenText from './components/text/pageText';
 import SpectrumMath from './components/text/SpectrumMath';
 import HydrogenSpectrum from './components/HydrogenSpectrum';
 import WaveStatePlots from './components/WaveStatePlots';
@@ -25,6 +24,7 @@ export default function Home() {
   const [mathOpen, setMathOpen] = useState(true);
   const [selectedState, setSelectedState] = useState({ n: 2, l: 1, m: 0 });
   const [selectedZ, setSelectedZ] = useState(1);
+  const [tableOpen, setTableOpen] = useState(false);
 
   const element = getElement(selectedZ)!;
 
@@ -35,6 +35,9 @@ export default function Home() {
     const el = getElement(Z)!;
     const outer = outermostSubshell(el.configuration);
     setSelectedState({ n: outer.n, l: outer.l, m: 0 });
+    // Whether the pick changed the element or just re-confirmed the current one,
+    // the table's job is done — collapse it back down.
+    setTableOpen(false);
   };
 
   const renderZ = useMemo(
@@ -47,6 +50,19 @@ export default function Home() {
 
       {/* ── Energy-level style tab nav ── */}
       <nav className="energyNav">
+        <div className="energyNavSide energyNavSideLeft">
+          <button
+            className={`elementBadge${tableOpen ? ' open' : ''}`}
+            onClick={() => setTableOpen(o => !o)}
+            title="Select element"
+            aria-expanded={tableOpen}
+          >
+            <span className="elementBadgeZ">{element.Z}</span>
+            <span className="elementBadgeSymbol">{element.symbol}</span>
+            <span className="elementBadgeName">{element.name}</span>
+            <span className="elementBadgeChevron">{tableOpen ? '▲' : '▼'}</span>
+          </button>
+        </div>
         <div className="energyTrack">
           <div className="energyLine" />
           {TABS.map((tab, i) => (
@@ -61,10 +77,13 @@ export default function Home() {
             </button>
           ))}
         </div>
+        <div className="energyNavSide energyNavSideRight" aria-hidden="true" />
       </nav>
 
       {/* ── Periodic table selector — drives Z/Z_eff for every visualization below ── */}
-      <PeriodicTable selectedZ={selectedZ} onSelect={handleElementSelect} />
+      <div className={`periodicTableCollapse${tableOpen ? ' open' : ''}`}>
+        <PeriodicTable selectedZ={selectedZ} onSelect={handleElementSelect} />
+      </div>
 
       {/* ── Content row ── */}
       <div className="workArea">
@@ -73,16 +92,14 @@ export default function Home() {
         <aside className={`mathDrawer${mathOpen ? '' : ' closed'}`}>
           <div className="mathDrawerInner">
             {activeTab === 'wave' ? (
-              <>
-                <SchrodingerEquation
-                  n={selectedState.n}
-                  l={selectedState.l}
-                  m={selectedState.m}
-                  onStateChange={setSelectedState}
-                />
-              </>
+              <HydrogenText
+                n={selectedState.n}
+                l={selectedState.l}
+                m={selectedState.m}
+                onStateChange={setSelectedState}
+              />
             ) : (
-              <SpectrumMath />
+              <SpectrumMath Z={selectedZ} />
             )}
           </div>
         </aside>
@@ -126,7 +143,7 @@ export default function Home() {
             )
             : (
               <div className="hydrogenSpectrumPane">
-                <HydrogenSpectrum Z={renderZ} />
+                <HydrogenSpectrum Z={selectedZ} />
               </div>
             )
           }

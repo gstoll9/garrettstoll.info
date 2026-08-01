@@ -50,8 +50,21 @@
   background: transparent;
 }
 
+.energyNavSide {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.energyNavSideLeft {
+  justify-content: flex-start;
+  padding-left: 0.9rem;
+}
+
 .energyTrack {
   position: relative;
+  flex: 0 0 auto;
   width: min(250px, 44vw);
   height: 20px;
 }
@@ -118,6 +131,57 @@
 
 .energyNode:hover .energyLabel {
   color: rgba(255, 255, 255, 0.65);
+}
+
+/* ── Selected-element badge (opens/closes the periodic table below) ─────────── */
+.elementBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(173, 201, 255, 0.22);
+  border-radius: 10px;
+  padding: 0.32rem 0.65rem;
+  cursor: pointer;
+  color: #dce7ff;
+  font-family: var(--font-mono), "SFMono-Regular", Menlo, monospace;
+  max-width: 100%;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.elementBadge:hover,
+.elementBadge.open {
+  background: rgba(145, 182, 255, 0.14);
+  border-color: rgba(173, 201, 255, 0.55);
+}
+
+.elementBadgeZ {
+  color: inherit;
+  font-size: 10px;
+  opacity: 0.6;
+}
+
+.elementBadgeSymbol {
+  color: inherit;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.elementBadgeName {
+  font-family: var(--font-body), system-ui, -apple-system, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.elementBadgeChevron {
+  color: inherit;
+  font-size: 9px;
+  opacity: 0.5;
 }
 
 /* ── Work area ────────────────────────────────────────────────────────────── */
@@ -411,6 +475,19 @@
 }
 
 /* ── Periodic table selector ──────────────────────────────────────────────── */
+.periodicTableCollapse {
+  flex-shrink: 0;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.32s ease, opacity 0.22s ease;
+}
+
+.periodicTableCollapse.open {
+  max-height: 320px;
+  opacity: 1;
+}
+
 .periodicTableRoot {
   flex-shrink: 0;
   padding: 0.5rem 0.9rem 0.35rem;
@@ -464,12 +541,14 @@
 }
 
 .periodicCellZ {
+  color: inherit;
   font-size: 7px;
   line-height: 1;
   opacity: 0.7;
 }
 
 .periodicCellSymbol {
+  color: inherit;
   font-size: 11px;
   font-weight: 600;
   line-height: 1.2;
@@ -524,6 +603,18 @@
 
   .energyTrack {
     width: min(220px, 62vw);
+  }
+
+  .energyNavSideLeft {
+    padding-left: 0.5rem;
+  }
+
+  .elementBadge {
+    padding: 0.28rem 0.5rem;
+  }
+
+  .elementBadgeName {
+    display: none;
   }
 
   .hydrogenSpectrumPane {

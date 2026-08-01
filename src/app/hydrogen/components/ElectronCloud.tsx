@@ -3,6 +3,7 @@ import { Canvas, useThree, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { Suspense, useState, useMemo, useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import {
   generateProbabilityGrid,
   findProbabilityThreshold,
@@ -50,7 +51,7 @@ function ScaleBarMeasure({ scaleLen, onWidth }: { scaleLen: number; onWidth: (w:
 }
 
 // Camera auto-framing: orbital radius scales as n²a₀, so pull back proportionally
-function CameraRig({ n, controlsRef }: { n: number; controlsRef: React.RefObject<any> }) {
+function CameraRig({ n, controlsRef }: { n: number; controlsRef: React.RefObject<OrbitControlsImpl | null> }) {
   const { camera } = useThree();
   useEffect(() => {
     const dist = Math.max(5, n * n * 3.2);
@@ -87,7 +88,7 @@ export default function ElectronCloud({
   const [showPhase, setShowPhase] = useState(true);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showLowerOrbital, setShowLowerOrbital] = useState(false);
-  const orbitControlsRef = useRef<any>(null);
+  const orbitControlsRef = useRef<OrbitControlsImpl>(null);
 
   // Keep local controls in sync when parent-selected state changes from the text panel.
   useEffect(() => {

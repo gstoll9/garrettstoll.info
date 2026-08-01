@@ -25,47 +25,6 @@ export default function SchrodingerEquation({
         return out;
     };
 
-    const formatCoeff = (value: number): string => {
-        if (!Number.isFinite(value)) return '0';
-        const abs = Math.abs(value);
-        if (abs === 0) return '0';
-        if (Math.abs(value - Math.round(value)) < 1e-10) return `${Math.round(value)}`;
-        if (abs >= 1e4 || abs < 1e-4) {
-            const [mantissaRaw, exponentRaw] = value.toExponential(4).split('e');
-            const exponent = Number(exponentRaw);
-            return `${mantissaRaw}\\times 10^{${exponent}}`;
-        }
-        return value.toFixed(6).replace(/\.?0+$/, '');
-    };
-
-    const laguerreExpandedLatex = (nVal: number, lVal: number): string => {
-        const pVal = nVal - lVal - 1;
-        const qVal = 2 * lVal + 1;
-        const terms: string[] = [];
-        for (let k = 0; k <= pVal; k++) {
-            const coeff = Math.pow(-1, k) * factorial(pVal + qVal)
-                / (factorial(pVal - k) * factorial(qVal + k) * factorial(k));
-            const coeffStr = formatCoeff(coeff);
-            terms.push(`${coeffStr}\\left(\\frac{2r}{${nVal}a_0}\\right)^{${k}}`);
-        }
-        return terms.join(' + ').replace(/\+ -/g, '- ');
-    };
-
-    const associatedLegendreExpandedLatex = (lVal: number, mVal: number): string => {
-        const absM = Math.abs(mVal);
-        const maxJ = Math.floor((lVal - absM) / 2);
-        const terms: string[] = [];
-        for (let j = 0; j <= maxJ; j++) {
-            const numerator = Math.pow(-1, j) * factorial(2 * lVal - 2 * j);
-            const denominator = Math.pow(2, lVal) * factorial(j) * factorial(lVal - j) * factorial(lVal - absM - 2 * j);
-            const coeff = numerator / denominator;
-            const power = lVal - absM - 2 * j;
-            const coeffStr = formatCoeff(coeff);
-            terms.push(`${coeffStr}(\\cos\\theta)^{${power}}`);
-        }
-        return terms.join(' + ').replace(/\+ -/g, '- ');
-    };
-
     const simplifyExprRaw = (expr: string): string => {
         try {
             return String(Algebrite.run(`simplify(${expr})`)).trim();
@@ -215,49 +174,8 @@ export default function SchrodingerEquation({
     };
 
     const isValidState = l >= 0 && l < n && Math.abs(m) <= l;
-    const p = n - l - 1;
-    const q = 2 * l + 1;
-    const mAbs = Math.abs(m);
-    const jMax = Math.floor((l - mAbs) / 2);
 
-    const stateWavefunctionLatex = isValidState
-        ? String.raw`
-            \Psi_{${n},${l},${m}}(r,\theta,\phi)=
-            \sqrt{\left(\frac{2}{${n}a_0}\right)^3\frac{(${n}-${l}-1)!}{2(${n})(${n}+${l})!}}
-            e^{-r/(${n}a_0)}
-            \left(\frac{2r}{${n}a_0}\right)^{${l}}
-            L_{${n - l - 1}}^{${2 * l + 1}}\!\left(\frac{2r}{${n}a_0}\right)
-            Y_{${l},${m}}(\theta,\phi)
-        `
-        : String.raw`\text{Invalid state: require } n\ge1,\ 0\le l\le n-1,\ |m|\le l`;
-
-        const expandedWavefunctionLatex = isValidState
-                ? String.raw`
-                        \Psi_{${n},${l},${m}}(r,\theta,\phi)=
-                        \sqrt{\left(\frac{2}{${n}a_0}\right)^3\frac{${p}!}{2(${n})(${n}+${l})!}}
-                        e^{-r/(${n}a_0)}
-                        \left(\frac{2r}{${n}a_0}\right)^{${l}}
-                        \left[
-                            \sum_{k=0}^{${p}}
-                            (-1)^k
-                            \frac{(${p}+${q})!}{(${p}-k)!(${q}+k)!k!}
-                            \left(\frac{2r}{${n}a_0}\right)^k
-                        \right]
-                        \\
-                        	imes
-                        \sqrt{\frac{2\cdot${l}+1}{4\pi}\frac{(${l}-${mAbs})!}{(${l}+${mAbs})!}}
-                        (\sin\theta)^{${mAbs}}
-                        \left[
-                            \sum_{j=0}^{${jMax}}
-                            (-1)^j
-                            \frac{(2\cdot${l}-2j)!}{2^{${l}}\,j!\,(${l}-j)!\,(${l}-${mAbs}-2j)!}
-                            (\cos\theta)^{${l - mAbs}-2j}
-                        \right]
-                        e^{i(${m})\phi}
-                `
-                : String.raw`\text{Invalid state: require } n\ge1,\ 0\le l\le n-1,\ |m|\le l`;
-
-                const simplifiedSelectedStateLatex = (() => {
+    const simplifiedSelectedStateLatex = (() => {
                     if (!isValidState) {
                         return String.raw`\text{Invalid state: require } n\ge1,\ 0\le l\le n-1,\ |m|\le l`;
                     }
@@ -340,7 +258,7 @@ export default function SchrodingerEquation({
         <div className="sameLine">
 
         </div>
-        <h1>Schrodinger's Equation</h1>
+        <h1>Schrodinger&apos;s Equation</h1>
         <div className="divider" />
         <h2>Time-Independent</h2>
         <BlockMath math="

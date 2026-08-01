@@ -1,6 +1,8 @@
 "use client"
 import { useEffect, useRef, useState, useMemo, useCallback, Fragment } from 'react';
 import { wavefunction } from '../utils/hydrogenCloud';
+import { nistLines, type IonStage, type NistTerm } from '../data/nistSpectralLines';
+import { getElement } from '../data/elements';
 
 // ── Physical constants ─────────────────────────────────────────────────────────
 const C_NM_S   = 2.998e17;   // speed of light in nm/s
@@ -65,7 +67,10 @@ const SERIES_DEFS = [
 ];
 
 interface SpectralLine {
-  n1: number; n2: number;
+  n1?: number; n2?: number;                 // hydrogen (Rydberg) mode only
+  transition?: {                            // real-element (NIST) mode only
+    lower: NistTerm; upper: NistTerm; ref: string; intensity: number | null;
+  };
   series: string;
   wavelength: number;  // nm
   frequency: number;   // Hz
@@ -92,6 +97,37 @@ function buildLines(Z: number): SpectralLine[] {
   );
 }
 
+// ── Real (NIST) lines for non-hydrogen elements ─────────────────────────────────
+// The Rydberg formula above is exact only for a genuine one-electron/hydrogenic system;
+// every other element here uses real measured lines instead (see data/nistSpectralLines.ts
+// for the full sourcing note). Grouped/colored by ionization stage (I = neutral, II = singly
+// ionized) rather than by hydrogen's named series, since that's the real physically
+// meaningful grouping for these lines.
+const STAGE_COLORS: Record<IonStage, string> = {
+  I:  '#5EC8F2',
+  II: '#F2A65E',
+};
+
+function buildRealLines(Z: number): SpectralLine[] {
+  const symbol = getElement(Z)?.symbol ?? '?';
+  const stages = nistLines[Z];
+  if (!stages) return [];
+
+  return (Object.keys(stages) as IonStage[]).flatMap(stage => {
+    const rows = stages[stage];
+    if (!rows) return [];
+    return rows.map(row => ({
+      series: `${symbol} ${stage}`,
+      wavelength: row.wavelengthNm,
+      frequency: C_NM_S / row.wavelengthNm,
+      energy: HC_EV_NM / row.wavelengthNm,
+      emRegion: emRegion(row.wavelengthNm),
+      labelColor: STAGE_COLORS[stage],
+      transition: { lower: row.lower, upper: row.upper, ref: row.ref, intensity: row.intensity },
+    }));
+  });
+}
+
 // ── Canvas layout ───────────────────────────────────────────────────────────────
 const CW        = 1000;
 const CH        = 210;
@@ -101,13 +137,18 @@ const PLOT_W    = CW - MARGIN_L - MARGIN_R;
 const STRIP_TOP = 28;
 const STRIP_H   = 120;
 
-const NM_MIN = 80;
+// Hydrogen's own lines (Lyman..Humphreys) all fall within 80-20000nm, the plot's original
+// range. Real NIST lines run wider on the short end (Li II's 1s²→1s3p line sits at 17.8nm,
+// He I's resonance lines around 52-58nm) -- widening NM_MIN only for real-element mode keeps
+// hydrogen's plot pixel-identical to before while not clipping real short-wavelength lines.
+const NM_MIN_HYDROGEN = 80;
+const NM_MIN_REAL     = 15;
 const NM_MAX = 20000;
 
 const SLICE_SIZE = 184;
 
-function nmToX(nm: number): number {
-  const t = (Math.log(nm) - Math.log(NM_MIN)) / (Math.log(NM_MAX) - Math.log(NM_MIN));
+function nmToX(nm: number, nmMin: number): number {
+  const t = (Math.log(nm) - Math.log(nmMin)) / (Math.log(NM_MAX) - Math.log(nmMin));
   return MARGIN_L + t * PLOT_W;
 }
 
@@ -217,10 +258,12 @@ function buildCrossSectionDataUrl(n: number, l: number, m: number, Z: number = 1
 function drawCanvas(
   canvas: HTMLCanvasElement,
   visible: SpectralLine[],
-  hov: SpectralLine | null
+  hov: SpectralLine | null,
+  nmMin: number
 ) {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
+  const toX = (nm: number) => nmToX(nm, nmMin);
 
   ctx.clearRect(0, 0, CW, CH);
   ctx.fillStyle = '#080808';
@@ -236,7 +279,7 @@ function drawCanvas(
     [20000, '#0D0000'],
   ];
   gradStops.forEach(([nm, color]) => {
-    const t = (Math.log(nm) - Math.log(NM_MIN)) / (Math.log(NM_MAX) - Math.log(NM_MIN));
+    const t = (Math.log(nm) - Math.log(nmMin)) / (Math.log(NM_MAX) - Math.log(nmMin));
     grad.addColorStop(Math.max(0, Math.min(1, t)), color);
   });
   ctx.fillStyle = grad;
@@ -244,7 +287,7 @@ function drawCanvas(
 
   // ── Region boundary lines ─────────────────────────────────────────────────
   [380, 750, 1400, 3000].forEach(nm => {
-    const x = nmToX(nm);
+    const x = toX(nm);
     ctx.strokeStyle = 'rgba(255,255,255,0.15)';
     ctx.lineWidth = 0.7;
     ctx.setLineDash([]);
@@ -256,7 +299,7 @@ function drawCanvas(
 
   // ── EM region labels ──────────────────────────────────────────────────────
   const regionRanges: [number, number, string][] = [
-    [80,   380,   'UV'],
+    [nmMin, 380,   'UV'],
     [380,  750,   'Visible'],
     [750,  1400,  'Near-IR'],
     [1400, 3000,  'Mid-IR'],
@@ -266,7 +309,7 @@ function drawCanvas(
   ctx.textAlign = 'center';
   ctx.fillStyle = 'rgba(255,255,255,0.38)';
   regionRanges.forEach(([nm0, nm1, label]) => {
-    ctx.fillText(label, (nmToX(nm0) + nmToX(nm1)) / 2, STRIP_TOP + STRIP_H + 40);
+    ctx.fillText(label, (toX(nm0) + toX(nm1)) / 2, STRIP_TOP + STRIP_H + 40);
   });
 
   // ── Series endpoint wavelength labels (collision-aware 2-row) ─────────────
@@ -281,7 +324,7 @@ function drawCanvas(
     const endpoints = sorted.length === 1 ? [sorted[0]] : [sorted[0], sorted[sorted.length - 1]];
     endpoints.forEach(line => {
       endpointLabels.push({
-        x: nmToX(line.wavelength),
+        x: toX(line.wavelength),
         label: line.wavelength < 1000
           ? `${line.wavelength.toFixed(0)}nm`
           : `${(line.wavelength / 1000).toFixed(2)}µm`,
@@ -311,7 +354,7 @@ function drawCanvas(
 
   // ── Spectral emission lines ───────────────────────────────────────────────
   visible.forEach(line => {
-    const x    = nmToX(line.wavelength);
+    const x    = toX(line.wavelength);
     const yTop = STRIP_TOP;
     const yBot = STRIP_TOP + STRIP_H;
     const isHov = hov === line;
@@ -338,11 +381,25 @@ interface HydrogenSpectrumProps {
 
 export default function HydrogenSpectrum({ Z = 1 }: HydrogenSpectrumProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const isHydrogen = Z === 1;
+  const nmMin = isHydrogen ? NM_MIN_HYDROGEN : NM_MIN_REAL;
 
-  const allLines = useMemo(() => buildLines(Z), [Z]);
+  const allLines = useMemo(() => isHydrogen ? buildLines(Z) : buildRealLines(Z), [Z, isHydrogen]);
+
+  // Series buttons (hydrogen) / ionization-stage buttons (real elements) -- same
+  // {name, labelColor} shape either way, so the filter UI and activeSeries logic below
+  // don't need to know which mode they're in.
+  const filterDefs = useMemo(() => {
+    if (isHydrogen) return SERIES_DEFS.map(s => ({ name: s.name, labelColor: s.labelColor }));
+    const symbol = getElement(Z)?.symbol ?? '?';
+    const stages = nistLines[Z] ?? {};
+    return (Object.keys(stages) as IonStage[]).map(stage => ({
+      name: `${symbol} ${stage}`, labelColor: STAGE_COLORS[stage],
+    }));
+  }, [Z, isHydrogen]);
 
   const [activeSeries, setActiveSeries] = useState<Set<string>>(
-    () => new Set(SERIES_DEFS.map(s => s.name))
+    () => new Set(filterDefs.map(f => f.name))
   );
   const [n2Min, setN2Min] = useState(2);
   const [n2Max, setN2Max] = useState(9);
@@ -350,16 +407,23 @@ export default function HydrogenSpectrum({ Z = 1 }: HydrogenSpectrumProps) {
   const [selectedLine, setSelectedLine] = useState<SpectralLine | null>(null);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
 
+  // Reset the stage/series filter whenever the element (and so filterDefs) changes --
+  // otherwise switching from e.g. Iron to Sodium leaves "Fe I"/"Fe II" selected, which
+  // don't match any of Sodium's lines.
+  useEffect(() => {
+    setActiveSeries(new Set(filterDefs.map(f => f.name)));
+  }, [filterDefs]);
+
   const visibleLines = useMemo(
     () => allLines.filter(l =>
-      activeSeries.has(l.series) && l.n2 >= n2Min && l.n2 <= n2Max
+      activeSeries.has(l.series) && (!isHydrogen || (l.n2! >= n2Min && l.n2! <= n2Max))
     ),
-    [allLines, activeSeries, n2Min, n2Max]
+    [allLines, activeSeries, n2Min, n2Max, isHydrogen]
   );
 
   useEffect(() => {
-    if (canvasRef.current) drawCanvas(canvasRef.current, visibleLines, hovered);
-  }, [visibleLines, hovered]);
+    if (canvasRef.current) drawCanvas(canvasRef.current, visibleLines, hovered, nmMin);
+  }, [visibleLines, hovered, nmMin]);
 
   useEffect(() => {
     if (!visibleLines.length) {
@@ -375,14 +439,14 @@ export default function HydrogenSpectrum({ Z = 1 }: HydrogenSpectrumProps) {
     let closest: SpectralLine | null = null;
     let minDist = 10;
     visibleLines.forEach(line => {
-      const dist = Math.abs(nmToX(line.wavelength) - logicalX);
+      const dist = Math.abs(nmToX(line.wavelength, nmMin) - logicalX);
       if (dist < minDist) {
         minDist = dist;
         closest = line;
       }
     });
     return closest;
-  }, [visibleLines]);
+  }, [visibleLines, nmMin]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (!canvasRef.current) return;
@@ -405,17 +469,21 @@ export default function HydrogenSpectrum({ Z = 1 }: HydrogenSpectrumProps) {
 
   const activeTransition = hovered ?? selectedLine;
 
+  // The transition-cloud cross-sections below are built from hydrogenic wavefunctions
+  // (n, l, m) -- meaningful for Z=1 (and the Z_eff approximation the rest of this page
+  // already uses for hydrogen-like single-electron behavior), but not for a real
+  // multi-electron transition's actual orbitals, so this only runs in hydrogen mode.
   const upperState = useMemo(() => {
-    if (!activeTransition) return null;
+    if (!isHydrogen || !activeTransition?.n2) return null;
     const n = activeTransition.n2;
     return { n, l: Math.min(1, n - 1), m: 0 };
-  }, [activeTransition]);
+  }, [isHydrogen, activeTransition]);
 
   const lowerState = useMemo(() => {
-    if (!activeTransition) return null;
+    if (!isHydrogen || activeTransition?.n1 === undefined) return null;
     const n = activeTransition.n1;
     return { n, l: 0, m: 0 };
-  }, [activeTransition]);
+  }, [isHydrogen, activeTransition]);
 
   const upperSliceUrl = useMemo(() => {
     if (!upperState) return '';
@@ -440,8 +508,10 @@ export default function HydrogenSpectrum({ Z = 1 }: HydrogenSpectrumProps) {
 
       {/* ── Controls ── */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '10px', alignItems: 'center' }}>
-        <span style={{ fontSize: '11px', color: '#444', marginRight: '2px' }}>Series:</span>
-        {SERIES_DEFS.map(s => (
+        <span style={{ fontSize: '11px', color: '#444', marginRight: '2px' }}>
+          {isHydrogen ? 'Series:' : 'Stage:'}
+        </span>
+        {filterDefs.map(s => (
           <button
             key={s.name}
             onClick={() => toggleSeries(s.name)}
@@ -460,23 +530,33 @@ export default function HydrogenSpectrum({ Z = 1 }: HydrogenSpectrumProps) {
           </button>
         ))}
 
-        <div style={{ marginLeft: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <span style={{ fontSize: '11px', color: '#444' }}>n₂ range:</span>
-          <span style={{ fontSize: '11px', color: '#666', minWidth: '10px' }}>{n2Min}</span>
-          <input
-            type="range" min={2} max={9} value={n2Min}
-            onChange={e => setN2Min(Math.min(parseInt(e.target.value), n2Max))}
-            style={{ width: '70px', accentColor: '#666' }}
-          />
-          <span style={{ fontSize: '11px', color: '#555' }}>–</span>
-          <input
-            type="range" min={2} max={9} value={n2Max}
-            onChange={e => setN2Max(Math.max(parseInt(e.target.value), n2Min))}
-            style={{ width: '70px', accentColor: '#666' }}
-          />
-          <span style={{ fontSize: '11px', color: '#666', minWidth: '10px' }}>{n2Max}</span>
-        </div>
+        {isHydrogen && (
+          <div style={{ marginLeft: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ fontSize: '11px', color: '#444' }}>n₂ range:</span>
+            <span style={{ fontSize: '11px', color: '#666', minWidth: '10px' }}>{n2Min}</span>
+            <input
+              type="range" min={2} max={9} value={n2Min}
+              onChange={e => setN2Min(Math.min(parseInt(e.target.value), n2Max))}
+              style={{ width: '70px', accentColor: '#666' }}
+            />
+            <span style={{ fontSize: '11px', color: '#555' }}>–</span>
+            <input
+              type="range" min={2} max={9} value={n2Max}
+              onChange={e => setN2Max(Math.max(parseInt(e.target.value), n2Min))}
+              style={{ width: '70px', accentColor: '#666' }}
+            />
+            <span style={{ fontSize: '11px', color: '#666', minWidth: '10px' }}>{n2Max}</span>
+          </div>
+        )}
       </div>
+
+      {!isHydrogen && (
+        <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.35)', margin: '-4px 0 10px' }}>
+          Real measured emission lines — NIST Handbook of Basic Atomic Spectroscopic Data,
+          persistent lines of {getElement(Z)?.symbol} I/II. Relative intensities aren&rsquo;t
+          comparable across elements.
+        </div>
+      )}
 
       {/* ── Canvas + tooltip overlay ── */}
       <div style={{ position: 'relative', width: '100%' }}>
@@ -510,6 +590,9 @@ export default function HydrogenSpectrum({ Z = 1 }: HydrogenSpectrumProps) {
             ['Frequency',  `${(hovered.frequency / 1e12).toFixed(2)} THz`],
             ['Energy',     `${hovered.energy.toFixed(3)} eV`],
           ];
+          if (hovered.transition) {
+            rows.push(['NIST ref', hovered.transition.ref]);
+          }
 
           if (hovered.wavelength >= 380 && hovered.wavelength <= 750) {
             let colorName = '';
@@ -528,13 +611,14 @@ export default function HydrogenSpectrum({ Z = 1 }: HydrogenSpectrumProps) {
 
             const colorHex = wavelengthToHex(hovered.wavelength);
 
-            rows.push(['Color', (
+            const colorValue = (
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'flex-end' }}>
-                {colorName} 
+                {colorName}
                 <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '10px' }}>({colorHex})</span>
                 <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: colorHex, display: 'inline-block' }} />
               </span>
-            )]);
+            );
+            rows.push(['Color', colorValue]);
           }
 
           return (
@@ -555,10 +639,12 @@ export default function HydrogenSpectrum({ Z = 1 }: HydrogenSpectrumProps) {
             }}>
               <div style={{ marginBottom: '8px' }}>
                 <div style={{ color: hovered.labelColor, fontWeight: 600, fontSize: '13px', letterSpacing: '0.01em' }}>
-                  {hovered.series} Series
+                  {hovered.series}{hovered.transition ? '' : ' Series'}
                 </div>
                 <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '11px', marginTop: '1px' }}>
-                  n = {hovered.n1} → {hovered.n2}
+                  {hovered.transition
+                    ? `${hovered.transition.lower.configuration} (${hovered.transition.lower.term}${hovered.transition.lower.j}) → ${hovered.transition.upper.configuration} (${hovered.transition.upper.term}${hovered.transition.upper.j})`
+                    : `n = ${hovered.n1} → ${hovered.n2}`}
                 </div>
               </div>
               <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '8px', display: 'grid', gridTemplateColumns: 'auto 1fr', rowGap: '5px', columnGap: '12px' }}>
@@ -593,6 +679,9 @@ export default function HydrogenSpectrum({ Z = 1 }: HydrogenSpectrumProps) {
               width: `${SLICE_SIZE + 12}px`
             }}>
               {upperSliceUrl && (
+                // next/image isn't a fit here: this is a client-generated data URL
+                // (canvas cross-section render), not an optimizable static asset.
+                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={upperSliceUrl}
                   alt={`Upper state ${upperState.n}${orbitalLetter(upperState.l)} cross-section`}
@@ -616,6 +705,9 @@ export default function HydrogenSpectrum({ Z = 1 }: HydrogenSpectrumProps) {
               width: `${SLICE_SIZE + 12}px`
             }}>
               {lowerSliceUrl && (
+                // next/image isn't a fit here: this is a client-generated data URL
+                // (canvas cross-section render), not an optimizable static asset.
+                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={lowerSliceUrl}
                   alt={`Lower state ${lowerState.n}${orbitalLetter(lowerState.l)} cross-section`}
