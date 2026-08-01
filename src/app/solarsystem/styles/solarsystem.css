@@ -10,18 +10,13 @@
   overflow: hidden !important;
 }
 
+/* Unlike Hydrogen/Brain, this page uses headerMode="tyro-only" — the tyro avatar is
+   absolutely positioned (no layout height), so there's no header bar height to subtract. */
 :has(.solarPage) .standardlayout-main {
   width: 100% !important;
-  min-height: calc(100dvh - 92px - 1.8rem) !important;
-  height: calc(100dvh - 92px - 1.8rem) !important;
+  min-height: 100dvh !important;
+  height: 100dvh !important;
   border-radius: 0 !important;
-}
-
-@media (max-width: 768px) {
-  :has(.solarPage) .standardlayout-main {
-    min-height: calc(100dvh - 74px - 1.2rem) !important;
-    height: calc(100dvh - 74px - 1.2rem) !important;
-  }
 }
 
 /* ── Full-screen page shell ─────────────────────────────────────────────── */
