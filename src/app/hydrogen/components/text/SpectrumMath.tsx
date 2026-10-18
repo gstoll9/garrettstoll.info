@@ -1,6 +1,12 @@
 import { BlockMath, InlineMath } from 'react-katex';
+import { getElement } from '../../data/elements';
 
-export default function SpectrumMath() {
+interface SpectrumMathProps {
+    Z?: number;
+}
+
+export default function SpectrumMath({ Z = 1 }: SpectrumMathProps) {
+    const isHydrogen = Z === 1;
     return (
         <div style={{ textAlign: "left" }}>
             <h2>The Rydberg Formula</h2>
@@ -17,6 +23,11 @@ export default function SpectrumMath() {
             <BlockMath math="E_n = -13.6 \text{ eV} \frac{1}{n^2}" />
             <p>
                 The transition energy is <InlineMath math="\Delta E = E_{n_2} - E_{n_1}" />.
+            </p>
+            <p>
+                {isHydrogen
+                    ? "This formula is exact here because hydrogen has just one electron — the simple case it was derived for."
+                    : `${getElement(Z)?.name ?? 'This element'} has multiple electrons, so the Rydberg formula above no longer predicts its spectrum accurately. The lines shown for it instead come directly from NIST's measured atomic spectroscopy data.`}
             </p>
         </div>
     );

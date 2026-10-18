@@ -1,3 +1,4 @@
+'use client'
 import Board from './components/Board';
 import StandardLayout from '@/layouts/standardLayout';
 import './Solitaire.css';

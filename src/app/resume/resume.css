@@ -189,10 +189,30 @@ p:not(.introText) {
         width: 100% !important;
     }
     .projects {
-        margin-top: 2.5rem !important;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        order: -1 !important;
         width: 100% !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
+        margin: 0 0 1rem 0 !important;
+        gap: 0.5rem;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(0,0,0,0.15);
+    }
+    .projects .projectsTitle {
+        display: none !important;
+    }
+    .projects .headerDivider {
+        display: none !important;
+    }
+    .projects .projectItem {
+        width: auto !important;
+        border-bottom: none !important;
+        border: 1px solid rgba(0,0,0,0.25) !important;
+        border-radius: 6px !important;
+        padding: 0.2rem 0.6rem !important;
+        background: rgba(0,0,0,0.06) !important;
     }
     .date {
         font-style: italic !important;

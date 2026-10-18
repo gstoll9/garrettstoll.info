@@ -1,11 +1,18 @@
 import { useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useRef, useState } from 'react'
-import { Html, Edges } from '@react-three/drei'
+import { Edges } from '@react-three/drei'
+import { GeoMoon, JupiterMoons, Rotation_EQJ_ECL, RotateVector, Vector, StateVector } from 'astronomy-engine'
 import Label from './Label'
-import { orbitalPosition } from '../utils'
+import { orbitalPosition, getBodyAxis, moonOrbitalPosition, MoonOrbitProps, BodyAxis } from '../utils'
 import { getPlanetSize } from '../data/planets'
 import { simulationState } from '../utils'
+import { PlanetStructure, LayerFacts, LayerKey } from '../data/planetStructure'
+import Rings from './Rings'
+
+// A hover/focus target: any radial layer key, the whole-planet fallback sphere used when
+// a body has no `structure` data ('total_crust'), or nothing hovered.
+export type HoveredLayer = LayerKey | 'total_crust' | null;
 
 export type PlanetProps = {
   name: string
@@ -14,14 +21,7 @@ export type PlanetProps = {
   color?: string
   texture?: string
   rotationalSpeed?: number
-  structure?: {
-    coreRadius: number; // 0 to 1 fraction of crust
-    mantleRadius: number; // 0 to 1 fraction of crust
-    atmosphereRadius?: number; // > 1 fraction of crust
-    coreColor?: string;
-    mantleColor?: string;
-    atmosphereColor?: string;
-  }
+  structure?: PlanetStructure
   orbitData: {
     semimajorAxis: number
     semimajorAxisSimplified: number
@@ -35,16 +35,231 @@ export type PlanetProps = {
   moons?: {
     name: string
     size: number
-    distance: number
-    orbitSpeed: number
+    distance: number // display-scale target distance; used for the exact-ephemeris moons' scale-fit (Earth's Moon, Jupiter's Galilean four)
+    orbitSpeed: number // legacy circular-orbit fallback speed; only used when neither exact ephemeris nor orbitData is available
     color: string
+    orbitData?: MoonOrbitProps // real Kepler elements (see utils.tsx) — used instead of the circular fallback when present
   }[]
   orbitMode?: string
   onClick?: (name: string) => void
   useSimplifiedDistance?: boolean
   useRealisticSizes?: boolean
-  timeScale?: number
   isFocused?: boolean
+  showAtmosphere?: boolean // default true — peel back the atmosphere shell in the 3D cutaway
+  showCrust?: boolean // default true — peel back the crust shell in the 3D cutaway
+  hoveredLayer?: HoveredLayer // lifted state so a DOM sibling (LayerCrossSection) can share it; falls back to local state if omitted
+  setHoveredLayer?: (layer: HoveredLayer) => void
+}
+
+export type MoonData = NonNullable<PlanetProps['moons']>[number];
+
+// --- Tooltip formatting helpers (exported for reuse by LayerCrossSection.tsx) -----------
+
+export function kelvinToC(k: number): number {
+  return Math.round(k - 273.15);
+}
+
+export function formatTempK(t?: number | { min?: number; mean?: number; max?: number }): string | null {
+  if (t === undefined) return null;
+  if (typeof t === 'number') return `${kelvinToC(t)}°C`;
+  const { min, mean, max } = t;
+  if (min !== undefined && max !== undefined) return `${kelvinToC(min)}°C to ${kelvinToC(max)}°C`;
+  if (mean !== undefined) return `${kelvinToC(mean)}°C`;
+  return null;
+}
+
+export function formatMassKg(kg: number): { mantissa: string; exp: number } {
+  const exp = Math.floor(Math.log10(kg));
+  const mantissa = (kg / Math.pow(10, exp)).toFixed(2);
+  return { mantissa, exp };
+}
+
+export function formatDayLength(hours: number): string {
+  if (hours >= 48) return `${(hours / 24).toFixed(1)} days`;
+  return `${hours.toFixed(1)} hours`;
+}
+
+export function formatKm(km: number): string {
+  return `${Math.round(km).toLocaleString()} km`;
+}
+
+// A label/value row within the tooltip grid.
+export function Row({ label, value }: { label: string; value: React.ReactNode }) {
+  return (
+    <>
+      <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '11px' }}>{label}</span>
+      <span style={{ color: 'rgba(255,255,255,0.82)', fontSize: '11px', textAlign: 'right' }}>{value}</span>
+    </>
+  );
+}
+
+export type TooltipContent = { title: string; color: string; body: React.ReactNode };
+
+// Shared content builder for any plain radial layer (core/innerCore/outerCore/mantle/
+// upperMantle/lowerMantle) — crust and atmosphere have extra fields (whole-planet facts,
+// gas composition) and keep their own builders below.
+export function layerTooltipContent(layer: LayerFacts, radiusKm: number, fallbackTitle: string): TooltipContent {
+  return {
+    title: layer.displayName || fallbackTitle,
+    color: layer.color || '#ffffff',
+    body: (
+      <>
+        <Row label="Radius" value={formatKm(radiusKm)} />
+        <Row label="Material" value={layer.material} />
+        {layer.densityGCm3 !== undefined && <Row label="Density" value={`${layer.densityGCm3} g/cm³`} />}
+        {formatTempK(layer.tempK) && <Row label="Temp" value={formatTempK(layer.tempK)} />}
+        {layer.note && <Row label="" value={layer.note} />}
+      </>
+    ),
+  };
+}
+
+export function crustTooltipContent(structure: PlanetStructure): TooltipContent {
+  const { crust, facts } = structure;
+  const { mantissa, exp } = formatMassKg(facts.massKg);
+  return {
+    title: crust.displayName || 'Crust',
+    color: crust.color || '#66AAFF',
+    body: (
+      <>
+        <Row label="Radius" value={formatKm(facts.meanRadiusKm)} />
+        <Row label="Material" value={crust.material} />
+        {crust.note && <Row label="" value={crust.note} />}
+        <div style={{ gridColumn: '1 / -1', borderTop: '1px solid rgba(255,255,255,0.06)', margin: '4px 0' }} />
+        <Row label="Mass" value={<>{mantissa} × 10<sup>{exp}</sup> kg</>} />
+        <Row label="Gravity" value={`${facts.gravityMs2} m/s²`} />
+        <Row label="Day length" value={formatDayLength(facts.dayLengthHours)} />
+        <Row label="Axial tilt" value={`${facts.axialTiltDeg}°`} />
+        <Row label="Moons" value={String(facts.moonCount)} />
+        {facts.funFact && (
+          <div style={{ gridColumn: '1 / -1', marginTop: '6px', fontSize: '11px', color: 'rgba(255,255,255,0.6)', fontStyle: 'italic' }}>
+            {facts.funFact}
+          </div>
+        )}
+      </>
+    ),
+  };
+}
+
+export function atmosphereTooltipContent(structure: PlanetStructure): TooltipContent | null {
+  if (!structure.atmosphere) return null;
+  const atmo = structure.atmosphere;
+  const topGases = atmo.composition.slice(0, 4);
+  return {
+    title: atmo.displayName || 'Atmosphere',
+    color: atmo.color || '#aaaaaa',
+    body: (
+      <>
+        <Row label="Radius" value={formatKm(atmo.radiusFraction * structure.facts.meanRadiusKm)} />
+        {topGases.map(g => (
+          <Row key={g.gas} label={g.gas} value={`${g.percent}%`} />
+        ))}
+        {atmo.composition.length > 4 && <Row label="" value="+ trace gases" />}
+        {atmo.surfacePressureKPa !== undefined && (
+          <Row label="Pressure" value={`${atmo.surfacePressureKPa.toLocaleString()} kPa`} />
+        )}
+        {atmo.surfacePressureKPa === undefined && atmo.scaleHeightKm !== undefined && (
+          <Row label="Scale height" value={`${atmo.scaleHeightKm} km`} />
+        )}
+        {formatTempK(atmo.tempK) && <Row label="Temp" value={formatTempK(atmo.tempK)} />}
+      </>
+    ),
+  };
+}
+
+// Single entry point for "what should the tooltip show for this layer key" — used by
+// LayerCrossSection.tsx's 2D panel.
+export function getTooltipContent(structure: PlanetStructure, key: LayerKey): TooltipContent | null {
+  switch (key) {
+    case 'atmosphere':
+      return atmosphereTooltipContent(structure);
+    case 'crust':
+      return crustTooltipContent(structure);
+    case 'innerCore':
+      return structure.core.innerCore
+        ? layerTooltipContent(structure.core.innerCore, structure.core.innerCore.radiusFraction * structure.facts.meanRadiusKm, 'Inner Core')
+        : null;
+    case 'outerCore':
+    case 'core':
+      return layerTooltipContent(structure.core, structure.core.radiusFraction * structure.facts.meanRadiusKm, key === 'outerCore' ? 'Outer Core' : 'Core');
+    case 'lowerMantle':
+      return structure.mantle.lowerMantle
+        ? layerTooltipContent(structure.mantle.lowerMantle, structure.mantle.lowerMantle.radiusFraction * structure.facts.meanRadiusKm, 'Lower Mantle')
+        : null;
+    case 'upperMantle':
+    case 'mantle':
+      return layerTooltipContent(structure.mantle, structure.mantle.radiusFraction * structure.facts.meanRadiusKm, key === 'upperMantle' ? 'Upper Mantle' : 'Mantle');
+    default:
+      return null;
+  }
+}
+
+// One radial layer's geometry: two outer-surface partial spheres (covering the sphere
+// minus the removed octant) plus 3 flat cut-face meshes on the three cutaway planes —
+// a ring if this shell has a nonzero inner radius, a circle (solid disk) if it's the
+// innermost layer (core/innerCore). Shared by every plain colored layer (core/innerCore/
+// outerCore/mantle/upperMantle/lowerMantle); crust (textured) and atmosphere
+// (transparent/glowing) keep their own bespoke JSX below since they differ materially.
+function Shell({
+  innerR,
+  outerR,
+  color,
+  hoverKey,
+  hoveredLayer,
+  setHoveredLayer,
+  emissiveIntensity = 0.2,
+}: {
+  innerR: number
+  outerR: number
+  color: string
+  hoverKey: LayerKey
+  hoveredLayer: HoveredLayer
+  setHoveredLayer: (layer: HoveredLayer) => void
+  emissiveIntensity?: number
+}) {
+  const isHollow = innerR > 0;
+  const edgeColor = hoveredLayer === hoverKey ? '#ffffff' : color;
+
+  return (
+    <group
+      onPointerOver={(e) => { e.stopPropagation(); setHoveredLayer(hoverKey); }}
+      onPointerOut={(e) => { e.stopPropagation(); setHoveredLayer(null); }}
+    >
+      <mesh>
+        <sphereGeometry args={[outerR, 64, 32, 0, Math.PI * 1.5, 0, Math.PI / 2]} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={emissiveIntensity} side={THREE.DoubleSide} />
+        <Edges color={edgeColor} threshold={15} />
+      </mesh>
+      <mesh>
+        <sphereGeometry args={[outerR, 64, 32, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2]} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={emissiveIntensity} side={THREE.DoubleSide} />
+        <Edges color={edgeColor} threshold={15} />
+      </mesh>
+
+      {/* Flat cut faces */}
+      <mesh rotation={[0, Math.PI, 0]} position={[0, 0, 0]}>
+        {isHollow
+          ? <ringGeometry args={[innerR, outerR, 64, 1, 0, Math.PI / 2]} />
+          : <circleGeometry args={[outerR, 64, 0, Math.PI / 2]} />}
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={emissiveIntensity} side={THREE.DoubleSide} />
+        <Edges color={edgeColor} threshold={15} />
+      </mesh>
+      <mesh rotation={[0, Math.PI / 2, 0]} position={[0, 0, 0]}>
+        {isHollow
+          ? <ringGeometry args={[innerR, outerR, 64, 1, 0, Math.PI / 2]} />
+          : <circleGeometry args={[outerR, 64, 0, Math.PI / 2]} />}
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={emissiveIntensity} side={THREE.DoubleSide} />
+        <Edges color={edgeColor} threshold={15} />
+      </mesh>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
+        {isHollow
+          ? <ringGeometry args={[innerR, outerR, 64, 1, Math.PI / 2, Math.PI / 2]} />
+          : <circleGeometry args={[outerR, 64, Math.PI / 2, Math.PI / 2]} />}
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={emissiveIntensity} side={THREE.DoubleSide} />
+        <Edges color={edgeColor} threshold={15} />
+      </mesh>
+    </group>
+  );
 }
 
 export default function Planet({
@@ -60,26 +275,59 @@ export default function Planet({
   onClick,
   useSimplifiedDistance = false,
   useRealisticSizes = false,
-  timeScale = 1,
   isFocused = false,
   structure,
+  showAtmosphere = true,
+  showCrust = true,
+  hoveredLayer: hoveredLayerProp,
+  setHoveredLayer: setHoveredLayerProp,
 }: PlanetProps) {
   const ref = useRef<THREE.Group>(null!)
   const groupRef = useRef<THREE.Group>(null!)
-  const [hoveredLayer, setHoveredLayer] = useState<string | null>(null)
+  // Falls back to local state when no lifted state is supplied, so Planet stays usable
+  // standalone; SolarSystem.tsx normally passes the shared UniverseCanvas-level state.
+  const [fallbackHoveredLayer, setFallbackHoveredLayer] = useState<HoveredLayer>(null)
+  const hoveredLayer = hoveredLayerProp !== undefined ? hoveredLayerProp : fallbackHoveredLayer;
+  const setHoveredLayer = setHoveredLayerProp ?? setFallbackHoveredLayer;
+  // Real axial tilt/spin for this body (see getBodyAxis in utils.tsx); shared with
+  // Moon children below so their orbital planes can be tilted to match, and with Rings.
+  const axisRef = useRef<BodyAxis | null>(null)
 
   const textureUrl = useLoader(
     THREE.TextureLoader,
-    texture ?? '/solarstsremImages/UranusTexture.jpg'
+    texture ?? '/solarsystemImages/UranusTexture.jpg'
   );
 
-  const planetSize = useRealisticSizes ? getPlanetSize({ size, realDiameter } as any, true) : size;
+  const planetSize = useRealisticSizes ? getPlanetSize({ size, realDiameter }, true) : size;
+
+  // World-space layer radii, computed once. `EPS` exists purely to keep ring/circle
+  // geometry non-degenerate when two boundaries are proportionally very close (e.g. a
+  // true-to-scale crust, or Mars's ~613 km inner core, is often <1% of the planet's
+  // radius) — it is NOT a visual exaggeration, just a guard against NaN/inverted
+  // geometry. It scales with planetSize since that itself ranges from ~3 units down to
+  // ~0.008 units depending on the "useRealisticSizes" toggle, so a fixed epsilon would
+  // either do nothing or swallow a real gap depending on scale.
+  let innerCoreR: number | undefined;
+  let coreR = 0, lowerMantleR: number | undefined, mantleR = 0, crustR = planetSize, atmoR: number | undefined;
+  if (structure) {
+    const EPS = planetSize * 1e-4;
+    coreR = planetSize * structure.core.radiusFraction;
+    innerCoreR = structure.core.innerCore
+      ? Math.max(EPS, Math.min(planetSize * structure.core.innerCore.radiusFraction, coreR - EPS))
+      : undefined;
+    mantleR = Math.max(planetSize * structure.mantle.radiusFraction, coreR + EPS);
+    lowerMantleR = structure.mantle.lowerMantle
+      ? Math.min(Math.max(planetSize * structure.mantle.lowerMantle.radiusFraction, coreR + EPS), mantleR - EPS)
+      : undefined;
+    crustR = Math.max(planetSize, mantleR + EPS);
+    atmoR = structure.atmosphere ? Math.max(planetSize * structure.atmosphere.radiusFraction, crustR + EPS) : undefined;
+  }
 
   useFrame((_, delta) => {
     if (groupRef.current) {
       // Orbit calculation uses the globally accumulated time
       const position = orbitalPosition(orbitMode, simulationState.elapsed, orbitData, useSimplifiedDistance, name, simulationState.dateMs)
-      
+
       groupRef.current.position.set(...position); // Update position
     }
     if (ref.current) {
@@ -88,30 +336,34 @@ export default function Planet({
         ref.current.rotation.y = 0;
         ref.current.rotation.x = 0;
         ref.current.rotation.z = 0;
+        ref.current.quaternion.identity();
       } else if (orbitMode === 'RealLive') {
-        const realRoationPeriodsDays: Record<string, number> = {
-          'Mercury': 58.6,
-          'Venus': -243,
-          'Earth': 0.997,
-          'Mars': 1.026,
-          'Jupiter': 0.41,
-          'Saturn': 0.44,
-          'Uranus': -0.72,
-          'Neptune': 0.67
-        };
-        const period = realRoationPeriodsDays[name];
-        if (period) {
-            const periodMs = period * 24 * 60 * 60 * 1000;
-            const angularVelocity = (2 * Math.PI) / periodMs;
-            ref.current.rotation.y += angularVelocity * (delta * 1000);
+        const axis = getBodyAxis(name, simulationState.dateMs);
+        axisRef.current = axis;
+        if (axis) {
+          // Real IAU pole orientation + prime-meridian angle: tilt the sphere's local
+          // +Y (its "up") to the real north-pole direction, then spin it about that
+          // now-tilted axis by the real instantaneous prime-meridian angle.
+          const tiltQuat = new THREE.Quaternion().setFromUnitVectors(
+            new THREE.Vector3(0, 1, 0),
+            new THREE.Vector3(...axis.northThree).normalize()
+          );
+          const spinQuat = new THREE.Quaternion().setFromAxisAngle(
+            new THREE.Vector3(0, 1, 0),
+            THREE.MathUtils.degToRad(axis.spinDegrees)
+          );
+          ref.current.quaternion.copy(tiltQuat).multiply(spinQuat);
         } else {
-            ref.current.rotation.y += rotationalSpeed * delta;
+          ref.current.rotation.y += rotationalSpeed * delta;
         }
       } else {
         ref.current.rotation.y += rotationalSpeed * delta; // self-rotation speed
       }
     }
   })
+
+  const coreHasSplit = !!structure?.core.innerCore;
+  const mantleHasSplit = !!structure?.mantle.lowerMantle;
 
   return (
     <group ref={groupRef}>
@@ -124,194 +376,139 @@ export default function Planet({
           onClick?.(name);
         }}
       >
-        {/* Layer Groups and Tooltip */}
+        {/* Layer Groups */}
         {isFocused && structure ? (
           <>
-            {hoveredLayer && (
-              <Html position={[0, planetSize + (hoveredLayer === 'atmosphere' ? (structure.atmosphereRadius || 1) * 0.5 : 0.5), 0]} center zIndexRange={[100, 0]}>
-                <div style={{
-                  background: 'rgba(18,18,22,0.96)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  borderTop: `2px solid ${hoveredLayer === 'core' ? (structure.coreColor || '#ececec') : hoveredLayer === 'mantle' ? (structure.mantleColor || '#ffaa00') : hoveredLayer === 'crust' ? '#66AAFF' : (structure.atmosphereColor || '#aaaaaa')}`,
-                  borderRadius: '6px',
-                  padding: '10px 14px 12px',
-                  color: 'white',
-                  fontFamily: 'system-ui, sans-serif',
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.6)',
-                  width: '180px',
-                  pointerEvents: 'none',
-                  zIndex: 10
-                }}>
-                  <div style={{ color: hoveredLayer === 'core' ? (structure.coreColor || '#ececec') : hoveredLayer === 'mantle' ? (structure.mantleColor || '#ffaa00') : hoveredLayer === 'crust' ? '#66AAFF' : (structure.atmosphereColor || '#aaaaaa'), fontWeight: 600, fontSize: '13px', letterSpacing: '0.01em', marginBottom: '8px', textTransform: 'capitalize' }}>
-                    {hoveredLayer}
-                  </div>
-                  <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '8px', display: 'grid', gridTemplateColumns: 'auto 1fr', rowGap: '5px', columnGap: '12px' }}>
-                    <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '11px' }}>Radius</span>
-                    <span style={{ color: 'rgba(255,255,255,0.82)', fontSize: '11px', textAlign: 'right' }}>
-                      {
-                        hoveredLayer === 'core' ? (structure.coreRadius * realDiameter/2).toLocaleString(undefined, {maximumFractionDigits: 0}) :
-                        hoveredLayer === 'mantle' ? (structure.mantleRadius * realDiameter/2).toLocaleString(undefined, {maximumFractionDigits: 0}) :
-                        hoveredLayer === 'crust' ? (realDiameter/2).toLocaleString(undefined, {maximumFractionDigits: 0}) :
-                        (structure.atmosphereRadius! * realDiameter/2).toLocaleString(undefined, {maximumFractionDigits: 0})
-                      } km
-                    </span>
-                  </div>
-                </div>
-              </Html>
-            )}
-
             {/* Atmosphere (Optional) */}
-            {structure.atmosphereRadius && (
+            {structure.atmosphere && atmoR !== undefined && showAtmosphere && (
               <group
                 onPointerOver={(e) => { e.stopPropagation(); setHoveredLayer('atmosphere'); }}
                 onPointerOut={(e) => { e.stopPropagation(); setHoveredLayer(null); }}
               >
                 <mesh>
-                  <sphereGeometry args={[planetSize * structure.atmosphereRadius, 32, 16, 0, Math.PI * 1.5, 0, Math.PI / 2]} />
-                  <meshStandardMaterial color={structure.atmosphereColor || "#aaaaaa"} emissive={structure.atmosphereColor || "#aaaaaa"} emissiveIntensity={hoveredLayer === 'atmosphere' ? 0.3 : 0.05} transparent opacity={hoveredLayer === 'atmosphere' ? 0.3 : 0.15} side={THREE.DoubleSide} depthWrite={false} />
+                  <sphereGeometry args={[atmoR, 64, 32, 0, Math.PI * 1.5, 0, Math.PI / 2]} />
+                  <meshStandardMaterial color={structure.atmosphere.color || "#aaaaaa"} emissive={structure.atmosphere.color || "#aaaaaa"} emissiveIntensity={hoveredLayer === 'atmosphere' ? 0.3 : 0.05} transparent opacity={hoveredLayer === 'atmosphere' ? 0.3 : 0.15} side={THREE.DoubleSide} depthWrite={false} />
                 </mesh>
                 <mesh>
-                  <sphereGeometry args={[planetSize * structure.atmosphereRadius, 32, 16, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2]} />
-                  <meshStandardMaterial color={structure.atmosphereColor || "#aaaaaa"} emissive={structure.atmosphereColor || "#aaaaaa"} emissiveIntensity={hoveredLayer === 'atmosphere' ? 0.3 : 0.05} transparent opacity={hoveredLayer === 'atmosphere' ? 0.3 : 0.15} side={THREE.DoubleSide} depthWrite={false} />
+                  <sphereGeometry args={[atmoR, 64, 32, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2]} />
+                  <meshStandardMaterial color={structure.atmosphere.color || "#aaaaaa"} emissive={structure.atmosphere.color || "#aaaaaa"} emissiveIntensity={hoveredLayer === 'atmosphere' ? 0.3 : 0.05} transparent opacity={hoveredLayer === 'atmosphere' ? 0.3 : 0.15} side={THREE.DoubleSide} depthWrite={false} />
                 </mesh>
 
                 {/* Flat cut faces - Atmosphere portion */}
                 <mesh rotation={[0, Math.PI, 0]} position={[0, 0, 0]}>
-                  <ringGeometry args={[planetSize, planetSize * structure.atmosphereRadius, 32, 1, 0, Math.PI / 2]} />
-                  <meshStandardMaterial color={structure.atmosphereColor || "#aaaaaa"} emissive={structure.atmosphereColor || "#aaaaaa"} emissiveIntensity={hoveredLayer === 'atmosphere' ? 0.3 : 0.05} transparent opacity={hoveredLayer === 'atmosphere' ? 0.3 : 0.15} side={THREE.DoubleSide} depthWrite={false} />
+                  <ringGeometry args={[crustR, atmoR, 64, 1, 0, Math.PI / 2]} />
+                  <meshStandardMaterial color={structure.atmosphere.color || "#aaaaaa"} emissive={structure.atmosphere.color || "#aaaaaa"} emissiveIntensity={hoveredLayer === 'atmosphere' ? 0.3 : 0.05} transparent opacity={hoveredLayer === 'atmosphere' ? 0.3 : 0.15} side={THREE.DoubleSide} depthWrite={false} />
                 </mesh>
                 <mesh rotation={[0, Math.PI / 2, 0]} position={[0, 0, 0]}>
-                  <ringGeometry args={[planetSize, planetSize * structure.atmosphereRadius, 32, 1, 0, Math.PI / 2]} />
-                  <meshStandardMaterial color={structure.atmosphereColor || "#aaaaaa"} emissive={structure.atmosphereColor || "#aaaaaa"} emissiveIntensity={hoveredLayer === 'atmosphere' ? 0.3 : 0.05} transparent opacity={hoveredLayer === 'atmosphere' ? 0.3 : 0.15} side={THREE.DoubleSide} depthWrite={false} />
+                  <ringGeometry args={[crustR, atmoR, 64, 1, 0, Math.PI / 2]} />
+                  <meshStandardMaterial color={structure.atmosphere.color || "#aaaaaa"} emissive={structure.atmosphere.color || "#aaaaaa"} emissiveIntensity={hoveredLayer === 'atmosphere' ? 0.3 : 0.05} transparent opacity={hoveredLayer === 'atmosphere' ? 0.3 : 0.15} side={THREE.DoubleSide} depthWrite={false} />
                 </mesh>
                 <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
-                  <ringGeometry args={[planetSize, planetSize * structure.atmosphereRadius, 32, 1, Math.PI / 2, Math.PI / 2]} />
-                  <meshStandardMaterial color={structure.atmosphereColor || "#aaaaaa"} emissive={structure.atmosphereColor || "#aaaaaa"} emissiveIntensity={hoveredLayer === 'atmosphere' ? 0.3 : 0.05} transparent opacity={hoveredLayer === 'atmosphere' ? 0.3 : 0.15} side={THREE.DoubleSide} depthWrite={false} />
+                  <ringGeometry args={[crustR, atmoR, 64, 1, Math.PI / 2, Math.PI / 2]} />
+                  <meshStandardMaterial color={structure.atmosphere.color || "#aaaaaa"} emissive={structure.atmosphere.color || "#aaaaaa"} emissiveIntensity={hoveredLayer === 'atmosphere' ? 0.3 : 0.05} transparent opacity={hoveredLayer === 'atmosphere' ? 0.3 : 0.15} side={THREE.DoubleSide} depthWrite={false} />
                 </mesh>
               </group>
             )}
 
             {/* Crust */}
-            <group
-              onPointerOver={(e) => { e.stopPropagation(); setHoveredLayer('crust'); }}
-              onPointerOut={(e) => { e.stopPropagation(); setHoveredLayer(null); }}
-            >
-              <mesh>
-                <sphereGeometry 
-                  args={[planetSize, 32, 16, 0, Math.PI * 1.5, 0, Math.PI / 2]} 
-                  onUpdate={(geom) => {
-                    if (geom.userData.uvsFixed) return;
-                    geom.userData.uvsFixed = true;
-                    const uv = geom.attributes.uv;
-                    for (let i = 0; i < uv.count; i++) {
-                      uv.setXY(i, uv.getX(i) * 0.75, uv.getY(i) * 0.5 + 0.5);
-                    }
-                    uv.needsUpdate = true;
-                  }}
-                />
-                <meshStandardMaterial map={textureUrl} color={color} side={THREE.DoubleSide} emissive={color} emissiveIntensity={0.05} />
-              </mesh>
-              <mesh>
-                <sphereGeometry 
-                  args={[planetSize, 32, 16, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2]} 
-                  onUpdate={(geom) => {
-                    if (geom.userData.uvsFixed) return;
-                    geom.userData.uvsFixed = true;
-                    const uv = geom.attributes.uv;
-                    for (let i = 0; i < uv.count; i++) {
-                      uv.setY(i, uv.getY(i) * 0.5);
-                    }
-                    uv.needsUpdate = true;
-                  }}
-                />
-                <meshStandardMaterial map={textureUrl} color={color} side={THREE.DoubleSide} emissive={color} emissiveIntensity={0.05} />
-              </mesh>
+            {showCrust && (
+              <group
+                onPointerOver={(e) => { e.stopPropagation(); setHoveredLayer('crust'); }}
+                onPointerOut={(e) => { e.stopPropagation(); setHoveredLayer(null); }}
+              >
+                <mesh>
+                  <sphereGeometry
+                    args={[crustR, 64, 32, 0, Math.PI * 1.5, 0, Math.PI / 2]}
+                    onUpdate={(geom) => {
+                      if (geom.userData.uvsFixed) return;
+                      geom.userData.uvsFixed = true;
+                      const uv = geom.attributes.uv;
+                      for (let i = 0; i < uv.count; i++) {
+                        uv.setXY(i, uv.getX(i) * 0.75, uv.getY(i) * 0.5 + 0.5);
+                      }
+                      uv.needsUpdate = true;
+                    }}
+                  />
+                  <meshStandardMaterial map={textureUrl} color={color} side={THREE.DoubleSide} emissive={color} emissiveIntensity={0.05} />
+                </mesh>
+                <mesh>
+                  <sphereGeometry
+                    args={[crustR, 64, 32, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2]}
+                    onUpdate={(geom) => {
+                      if (geom.userData.uvsFixed) return;
+                      geom.userData.uvsFixed = true;
+                      const uv = geom.attributes.uv;
+                      for (let i = 0; i < uv.count; i++) {
+                        uv.setY(i, uv.getY(i) * 0.5);
+                      }
+                      uv.needsUpdate = true;
+                    }}
+                  />
+                  <meshStandardMaterial map={textureUrl} color={color} side={THREE.DoubleSide} emissive={color} emissiveIntensity={0.05} />
+                </mesh>
 
-              {/* Flat cut faces - Crust portion */}
-              <mesh rotation={[0, Math.PI, 0]} position={[0, 0, 0]}>
-                <ringGeometry args={[planetSize * structure.mantleRadius, planetSize, 32, 1, 0, Math.PI / 2]} />
-                <meshStandardMaterial color="#8b5a2b" side={THREE.DoubleSide} emissive="#8b5a2b" emissiveIntensity={0.05} />
-                <Edges color={hoveredLayer === 'crust' ? "#ffffff" : "#8B5A2B"} threshold={15} />
-              </mesh>
-              <mesh rotation={[0, Math.PI / 2, 0]} position={[0, 0, 0]}>
-                <ringGeometry args={[planetSize * structure.mantleRadius, planetSize, 32, 1, 0, Math.PI / 2]} />
-                <meshStandardMaterial color="#8b5a2b" side={THREE.DoubleSide} emissive="#8b5a2b" emissiveIntensity={0.05} />
-                <Edges color={hoveredLayer === 'crust' ? "#ffffff" : "#8B5A2B"} threshold={15} />
-              </mesh>
-              <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
-                <ringGeometry args={[planetSize * structure.mantleRadius, planetSize, 32, 1, Math.PI / 2, Math.PI / 2]} />
-                <meshStandardMaterial color="#8b5a2b" side={THREE.DoubleSide} emissive="#8b5a2b" emissiveIntensity={0.05} />
-                <Edges color={hoveredLayer === 'crust' ? "#ffffff" : "#8B5A2B"} threshold={15} />
-              </mesh>
-            </group>
+                {/* Flat cut faces - Crust portion */}
+                <mesh rotation={[0, Math.PI, 0]} position={[0, 0, 0]}>
+                  <ringGeometry args={[mantleR, crustR, 64, 1, 0, Math.PI / 2]} />
+                  <meshStandardMaterial color={structure.crust.color || '#8b5a2b'} side={THREE.DoubleSide} emissive={structure.crust.color || '#8b5a2b'} emissiveIntensity={0.05} />
+                  <Edges color={hoveredLayer === 'crust' ? "#ffffff" : (structure.crust.color || '#8b5a2b')} threshold={15} />
+                </mesh>
+                <mesh rotation={[0, Math.PI / 2, 0]} position={[0, 0, 0]}>
+                  <ringGeometry args={[mantleR, crustR, 64, 1, 0, Math.PI / 2]} />
+                  <meshStandardMaterial color={structure.crust.color || '#8b5a2b'} side={THREE.DoubleSide} emissive={structure.crust.color || '#8b5a2b'} emissiveIntensity={0.05} />
+                  <Edges color={hoveredLayer === 'crust' ? "#ffffff" : (structure.crust.color || '#8b5a2b')} threshold={15} />
+                </mesh>
+                <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
+                  <ringGeometry args={[mantleR, crustR, 64, 1, Math.PI / 2, Math.PI / 2]} />
+                  <meshStandardMaterial color={structure.crust.color || '#8b5a2b'} side={THREE.DoubleSide} emissive={structure.crust.color || '#8b5a2b'} emissiveIntensity={0.05} />
+                  <Edges color={hoveredLayer === 'crust' ? "#ffffff" : (structure.crust.color || '#8b5a2b')} threshold={15} />
+                </mesh>
+              </group>
+            )}
 
-            {/* Mantle */}
-            <group
-              onPointerOver={(e) => { e.stopPropagation(); setHoveredLayer('mantle'); }}
-              onPointerOut={(e) => { e.stopPropagation(); setHoveredLayer(null); }}
-            >
-              <mesh>
-                <sphereGeometry args={[planetSize * structure.mantleRadius, 32, 16, 0, Math.PI * 1.5, 0, Math.PI / 2]} />
-                <meshStandardMaterial color={structure.mantleColor || "#ffaa00"} emissive={structure.mantleColor || "#ffaa00"} emissiveIntensity={0.2} side={THREE.DoubleSide} />
-                <Edges color={hoveredLayer === 'mantle' ? "#ffffff" : (structure.mantleColor || "#ffaa00")} threshold={15} />
-              </mesh>
-              <mesh>
-                <sphereGeometry args={[planetSize * structure.mantleRadius, 32, 16, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2]} />
-                <meshStandardMaterial color={structure.mantleColor || "#ffaa00"} emissive={structure.mantleColor || "#ffaa00"} emissiveIntensity={0.2} side={THREE.DoubleSide} />
-                <Edges color={hoveredLayer === 'mantle' ? "#ffffff" : (structure.mantleColor || "#ffaa00")} threshold={15} />
-              </mesh>
+            {/* Mantle: upper mantle if split, otherwise the whole mantle */}
+            <Shell
+              innerR={lowerMantleR ?? coreR}
+              outerR={mantleR}
+              color={structure.mantle.color || "#ffaa00"}
+              hoverKey={mantleHasSplit ? 'upperMantle' : 'mantle'}
+              hoveredLayer={hoveredLayer}
+              setHoveredLayer={setHoveredLayer}
+            />
 
-              {/* Flat cut faces - Mantle portion */}
-              <mesh rotation={[0, Math.PI, 0]} position={[0, 0, 0]}>
-                <ringGeometry args={[planetSize * structure.coreRadius, planetSize * structure.mantleRadius, 32, 1, 0, Math.PI / 2]} />
-                <meshStandardMaterial color={structure.mantleColor || "#ffaa00"} emissive={structure.mantleColor || "#ffaa00"} emissiveIntensity={0.2} side={THREE.DoubleSide} />
-                <Edges color={hoveredLayer === 'mantle' ? "#ffffff" : (structure.mantleColor || "#ffaa00")} threshold={15} />
-              </mesh>
-              <mesh rotation={[0, Math.PI / 2, 0]} position={[0, 0, 0]}>
-                <ringGeometry args={[planetSize * structure.coreRadius, planetSize * structure.mantleRadius, 32, 1, 0, Math.PI / 2]} />
-                <meshStandardMaterial color={structure.mantleColor || "#ffaa00"} emissive={structure.mantleColor || "#ffaa00"} emissiveIntensity={0.2} side={THREE.DoubleSide} />
-                <Edges color={hoveredLayer === 'mantle' ? "#ffffff" : (structure.mantleColor || "#ffaa00")} threshold={15} />
-              </mesh>
-              <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
-                <ringGeometry args={[planetSize * structure.coreRadius, planetSize * structure.mantleRadius, 32, 1, Math.PI / 2, Math.PI / 2]} />
-                <meshStandardMaterial color={structure.mantleColor || "#ffaa00"} emissive={structure.mantleColor || "#ffaa00"} emissiveIntensity={0.2} side={THREE.DoubleSide} />
-                <Edges color={hoveredLayer === 'mantle' ? "#ffffff" : (structure.mantleColor || "#ffaa00")} threshold={15} />
-              </mesh>
-            </group>
+            {/* Lower mantle (optional sub-layer) */}
+            {mantleHasSplit && lowerMantleR !== undefined && structure.mantle.lowerMantle && (
+              <Shell
+                innerR={coreR}
+                outerR={lowerMantleR}
+                color={structure.mantle.lowerMantle.color || "#ffaa00"}
+                hoverKey="lowerMantle"
+                hoveredLayer={hoveredLayer}
+                setHoveredLayer={setHoveredLayer}
+              />
+            )}
 
-            {/* Core */}
-            <group
-              onPointerOver={(e) => { e.stopPropagation(); setHoveredLayer('core'); }}
-              onPointerOut={(e) => { e.stopPropagation(); setHoveredLayer(null); }}
-            >
-              <mesh>
-                <sphereGeometry args={[planetSize * structure.coreRadius, 32, 16, 0, Math.PI * 1.5, 0, Math.PI / 2]} />
-                <meshStandardMaterial color={structure.coreColor || "#ececec"} emissive={structure.coreColor || "#ececec"} emissiveIntensity={0.2} side={THREE.DoubleSide} />
-                <Edges color={hoveredLayer === 'core' ? "#ffffff" : (structure.coreColor || "#ececec")} threshold={15} />
-              </mesh>
-              <mesh>
-                <sphereGeometry args={[planetSize * structure.coreRadius, 32, 16, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2]} />
-                <meshStandardMaterial color={structure.coreColor || "#ececec"} emissive={structure.coreColor || "#ececec"} emissiveIntensity={0.2} side={THREE.DoubleSide} />
-                <Edges color={hoveredLayer === 'core' ? "#ffffff" : (structure.coreColor || "#ececec")} threshold={15} />
-              </mesh>
+            {/* Core: outer core if split, otherwise the whole core */}
+            <Shell
+              innerR={innerCoreR ?? 0}
+              outerR={coreR}
+              color={structure.core.color || "#ececec"}
+              hoverKey={coreHasSplit ? 'outerCore' : 'core'}
+              hoveredLayer={hoveredLayer}
+              setHoveredLayer={setHoveredLayer}
+            />
 
-              {/* Flat cut faces - Core portion */}
-              <mesh rotation={[0, Math.PI, 0]} position={[0, 0, 0]}>
-                <circleGeometry args={[planetSize * structure.coreRadius, 32, 0, Math.PI / 2]} />
-                <meshStandardMaterial color={structure.coreColor || "#ececec"} emissive={structure.coreColor || "#ececec"} emissiveIntensity={0.2} side={THREE.DoubleSide} />
-                <Edges color={hoveredLayer === 'core' ? "#ffffff" : (structure.coreColor || "#ececec")} threshold={15} />
-              </mesh>
-              <mesh rotation={[0, Math.PI / 2, 0]} position={[0, 0, 0]}>
-                <circleGeometry args={[planetSize * structure.coreRadius, 32, 0, Math.PI / 2]} />
-                <meshStandardMaterial color={structure.coreColor || "#ececec"} emissive={structure.coreColor || "#ececec"} emissiveIntensity={0.2} side={THREE.DoubleSide} />
-                <Edges color={hoveredLayer === 'core' ? "#ffffff" : (structure.coreColor || "#ececec")} threshold={15} />
-              </mesh>
-              <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
-                <circleGeometry args={[planetSize * structure.coreRadius, 32, Math.PI / 2, Math.PI / 2]} />
-                <meshStandardMaterial color={structure.coreColor || "#ececec"} emissive={structure.coreColor || "#ececec"} emissiveIntensity={0.2} side={THREE.DoubleSide} />
-                <Edges color={hoveredLayer === 'core' ? "#ffffff" : (structure.coreColor || "#ececec")} threshold={15} />
-              </mesh>
-            </group>
+            {/* Inner core (optional sub-layer) */}
+            {coreHasSplit && innerCoreR !== undefined && structure.core.innerCore && (
+              <Shell
+                innerR={0}
+                outerR={innerCoreR}
+                color={structure.core.innerCore.color || "#ececec"}
+                hoverKey="innerCore"
+                hoveredLayer={hoveredLayer}
+                setHoveredLayer={setHoveredLayer}
+              />
+            )}
           </>
         ) : (
           <group
@@ -320,31 +517,22 @@ export default function Planet({
           >
             <mesh>
               <sphereGeometry args={[planetSize, 32, 32]} />
-              <meshStandardMaterial map={textureUrl} color={color} />
+              {/* Bodies with no real texture (e.g. dwarf planets) render as a flat color
+                  instead of falling back to the shared placeholder texture image, which
+                  would otherwise show a mismatched Uranus texture on them. */}
+              <meshStandardMaterial map={texture ? textureUrl : undefined} color={color} />
               {hoveredLayer === 'total_crust' && <Edges color="#66AAFF" threshold={15} />}
             </mesh>
           </group>
         )}
       </group>
 
-      {/* Saturn's Rings */}
-      {name === 'Saturn' && (
-        <mesh 
-          rotation={[Math.PI / 2, 0, 0]}
-        >
-          <ringGeometry args={[planetSize + 2, planetSize + 4, 64]} />
-          <meshBasicMaterial
-            color="goldenrod"
-            side={THREE.DoubleSide}
-            transparent
-            opacity={0.5}
-          />
-        </mesh>
-      )}
+      {/* Ring systems (Jupiter/Saturn/Uranus/Neptune) */}
+      <Rings planetName={name} planetSize={planetSize} axisRef={axisRef} />
 
       {/* Moons */}
       {isFocused && moons && moons.map(moon => (
-        <Moon key={moon.name} moon={moon} planetSize={planetSize} planetName={name} orbitMode={orbitMode} />
+        <Moon key={moon.name} moon={moon} planetSize={planetSize} planetName={name} orbitMode={orbitMode} axisRef={axisRef} />
       ))}
 
       {/* Label */}
@@ -353,37 +541,33 @@ export default function Planet({
   )
 }
 
-function Moon({ moon, planetSize, planetName, orbitMode }: { moon: any, planetSize: number, planetName: string, orbitMode: string }) {
+function Moon({ moon, planetSize, planetName, orbitMode, axisRef }: { moon: MoonData, planetSize: number, planetName: string, orbitMode: string, axisRef: React.RefObject<BodyAxis | null> }) {
   const ref = useRef<THREE.Mesh>(null!)
-  
-  useFrame((_, delta) => {
+
+  useFrame(() => {
     if (ref.current) {
         if (orbitMode === 'RealLive') {
            try {
-               const astro = require('astronomy-engine');
                const now = new Date(simulationState.dateMs ?? Date.now());
 
-               let x = null, y = null, z = null;
+               let vecEqj: Vector | null = null;
 
                if (planetName === 'Earth' && moon.name === 'Moon') {
-                   const mm = astro.GeoMoon(now);
-                   x = mm.x; y = mm.y; z = mm.z;
+                   vecEqj = GeoMoon(now);
                } else if (planetName === 'Jupiter') {
-                   const jm = astro.JupiterMoons(now);
-                   const ms = jm[moon.name.toLowerCase()];
-                   if (ms) {
-                       x = ms.x; y = ms.y; z = ms.z;
-                   }
+                   const jm = JupiterMoons(now);
+                   const galileanMoons: Record<string, StateVector> = { io: jm.io, europa: jm.europa, ganymede: jm.ganymede, callisto: jm.callisto };
+                   const sv = galileanMoons[moon.name.toLowerCase()];
+                   vecEqj = sv ? new Vector(sv.x, sv.y, sv.z, sv.t) : null;
                }
 
-               if (x !== null && y !== null && z !== null) {
-                   const rotMatrix = astro.Rotation_EQJ_ECL();
-                   const vecEqj = { x, y, z };
-                   const vecEcl = astro.RotateVector(rotMatrix, vecEqj);
-                   
-                   let X = vecEcl.x;
-                   let Y = vecEcl.z;
-                   let Z = -vecEcl.y;
+               if (vecEqj) {
+                   const rotMatrix = Rotation_EQJ_ECL();
+                   const vecEcl = RotateVector(rotMatrix, vecEqj);
+
+                   const X = vecEcl.x;
+                   const Y = vecEcl.z;
+                   const Z = -vecEcl.y;
 
                    const currentDist = Math.sqrt(X * X + Y * Y + Z * Z);
                    if (currentDist > 0) {
@@ -396,9 +580,21 @@ function Moon({ moon, planetSize, planetName, orbitMode }: { moon: any, planetSi
            } catch(e) {
                console.error(e);
            }
+
+           if (moon.orbitData) {
+               // Real Kepler elements, tilted into the parent planet's real equatorial plane
+               const [x, y, z] = moonOrbitalPosition(
+                   simulationState.elapsed,
+                   moon.orbitData,
+                   planetSize,
+                   axisRef.current?.northThree ?? null
+               );
+               ref.current.position.set(x, y, z);
+               return;
+           }
         }
-        
-        // Simple fallback for moons without direct astronomy-engine positioning support
+
+        // Simple fallback for moons without real orbital elements
         const angle = simulationState.elapsed * moon.orbitSpeed * 0.5
         ref.current.position.set(
             Math.cos(angle) * (planetSize + moon.distance),

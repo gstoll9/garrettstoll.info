@@ -19,6 +19,9 @@ function Resume() {
             <Link className="projectItem" href="/hubbardmodel">
               <p className="projectText">Hubbard Model</p>
             </Link>
+            <Link className="projectItem" href="/methanogens">
+              <p className="projectText">Methanogens</p>
+            </Link>
 
             {/* Projects */}
             <h2 className="projectsTitle" style={{paddingTop: "10%"}}>Projects</h2>

@@ -1,15 +1,27 @@
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
-import { Stars } from '@react-three/drei'
+import { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 import SolarSystem from './SolarSystem'
+import GalaxyField from './GalaxyField'
 import { useEffect, useState, useRef } from 'react'
-import {PlanetProps} from './Planet';
+import {PlanetProps, HoveredLayer} from './Planet';
 import OrbitControlsMenu from './OrbitControls';
+import ObjectVisibilityMenu from './ObjectVisibilityMenu';
+import LayerVisibilityControls from './LayerVisibilityControls';
+import LayerCrossSection from './LayerCrossSection';
+import AtmosphereCrossSection from './AtmosphereCrossSection';
 import CameraController from './CameraController';
 import { OrbitControls } from '@react-three/drei';
 import { simulationState } from '../utils';
+import { dwarfPlanets } from '../data/dwarfPlanets';
+import { asteroids } from '../data/asteroids';
 
-type OrbitMode = 'Simple' | 'Elliptical' | 'RealLive';
+// All dwarf planets and individual named asteroids start hidden — only the "Asteroid
+// Belt" instanced-mesh visualization itself is visible by default.
+const DEFAULT_HIDDEN_BODIES = [
+  ...dwarfPlanets.map((d) => d.name),
+  ...asteroids.map((a) => a.name),
+];
 
 function StarMapBackground({ visible }: { visible: boolean }) {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
@@ -19,25 +31,6 @@ function StarMapBackground({ visible }: { visible: boolean }) {
   texture.colorSpace = THREE.SRGBColorSpace;
   if (!visible) return null;
   return <primitive attach="background" object={texture} />;
-}
-
-function ConstellationsOverlay({ visible }: { visible: boolean }) {
-  const texture = useLoader(THREE.TextureLoader, '/solarsystemImages/constellation_figures.jpg');
-  texture.colorSpace = THREE.SRGBColorSpace;
-  if (!visible) return null;
-  return (
-    <mesh>
-      <sphereGeometry args={[9000, 64, 64]} />
-      <meshBasicMaterial 
-        map={texture} 
-        side={THREE.BackSide} 
-        transparent={true} 
-        opacity={0.3} 
-        blending={THREE.AdditiveBlending}
-        depthWrite={false}
-      />
-    </mesh>
-  );
 }
 
 function TimeUpdater({ timeScale }: { timeScale: number }) {
@@ -64,11 +57,44 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
   const [contextLost, setContextLost] = useState(false);
   const [showOrbits, setShowOrbits] = useState(true);
   const [showBackground, setShowBackground] = useState(true);
-  const [orbitMode, setOrbitMode] = useState<OrbitMode>('RealLive');
-  const [useSimplifiedDistance, setUseSimplifiedDistance] = useState(false);
   const [useRealisticSizes, setUseRealisticSizes] = useState(false);
   const [timeScale, setTimeScale] = useState(1);
-  const orbitControlsRef = useRef<any>(null);
+  const [hiddenBodies, setHiddenBodies] = useState<Set<string>>(() => new Set(DEFAULT_HIDDEN_BODIES));
+  const [showAtmosphere, setShowAtmosphere] = useState(true);
+  const [showCrust, setShowCrust] = useState(true);
+  const [hoveredLayer, setHoveredLayer] = useState<HoveredLayer>(null);
+  const orbitControlsRef = useRef<OrbitControlsImpl>(null);
+
+  // A layer hovered on one planet shouldn't stay "hovered" once the focus target changes.
+  useEffect(() => {
+    setHoveredLayer(null);
+  }, [focus]);
+
+  const toggleBody = (name: string) => {
+    setHiddenBodies(prev => {
+      const next = new Set(prev);
+      if (next.has(name)) {
+        next.delete(name);
+      } else {
+        next.add(name);
+      }
+      return next;
+    });
+  };
+
+  const setBodiesVisible = (names: string[], visible: boolean) => {
+    setHiddenBodies(prev => {
+      const next = new Set(prev);
+      names.forEach(name => {
+        if (visible) {
+          next.delete(name);
+        } else {
+          next.add(name);
+        }
+      });
+      return next;
+    });
+  };
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -104,35 +130,51 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
 
   if (contextLost) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '100vh',
-        color: 'white',
-        backgroundColor: 'black'
-      }}>
+      <div className="solarLoading">
         WebGL Context Lost - Please refresh the page
       </div>
     );
   }
 
   return (
-    <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-      <OrbitControlsMenu
-        orbitMode={orbitMode}
-        setOrbitMode={setOrbitMode}
-        showOrbits={showOrbits}
-        setShowOrbits={setShowOrbits}
-        useSimplifiedDistance={useSimplifiedDistance}
-        setUseSimplifiedDistance={setUseSimplifiedDistance}
-        useRealisticSizes={useRealisticSizes}
-        setUseRealisticSizes={setUseRealisticSizes}
-        timeScale={timeScale}
-        setTimeScale={setTimeScale}
-        showBackground={showBackground}
-        setShowBackground={setShowBackground}
-      />
+    <div className="universeCanvasShell">
+      <div className="solar-menu-stack">
+        {focus !== 'cosmic' && (
+          <ObjectVisibilityMenu
+            hiddenBodies={hiddenBodies}
+            toggleBody={toggleBody}
+            setBodiesVisible={setBodiesVisible}
+          />
+        )}
+        <OrbitControlsMenu
+          showOrbits={showOrbits}
+          setShowOrbits={setShowOrbits}
+          useRealisticSizes={useRealisticSizes}
+          setUseRealisticSizes={setUseRealisticSizes}
+          timeScale={timeScale}
+          setTimeScale={setTimeScale}
+          showBackground={showBackground}
+          setShowBackground={setShowBackground}
+        />
+      </div>
+      {focusedPlanet?.structure && (
+        <div className="solar-menu-stack-right">
+          <LayerVisibilityControls
+            showAtmosphere={showAtmosphere}
+            setShowAtmosphere={setShowAtmosphere}
+            showCrust={showCrust}
+            setShowCrust={setShowCrust}
+          />
+          <LayerCrossSection
+            structure={focusedPlanet.structure}
+            hoveredLayer={hoveredLayer}
+            setHoveredLayer={setHoveredLayer}
+          />
+          {showAtmosphere && (
+            <AtmosphereCrossSection atmosphere={focusedPlanet.structure.atmosphere} />
+          )}
+        </div>
+      )}
       <Canvas
         ref={canvasRef}
         camera={{ position: [0, 150, 600], fov: 60, near: 0.1, far: 50000 }}
@@ -144,6 +186,11 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
           alpha: false,
           preserveDrawingBuffer: false,
           failIfMajorPerformanceCaveat: false,
+          // Needed once CameraController tightens `near` to 0.001 while focused on a planet
+          // (to support scroll-zooming in on true-to-scale thin structure layers) — a
+          // standard depth buffer loses precision badly across that near/far (0.001/50000)
+          // ratio, which shows up as z-fighting between adjacent shell boundaries.
+          logarithmicDepthBuffer: true,
         }}
       >
         {/* lighting */}
@@ -154,33 +201,44 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
 
         {/* background */}
         <StarMapBackground visible={showBackground} />
-        <ConstellationsOverlay visible={showBackground} />
-        
-        <CameraController 
+
+
+        <CameraController
           focus={focus}
           planetData={focusedPlanet ? {
             name: focusedPlanet.name,
             orbitData: focusedPlanet.orbitData,
-            orbitMode: orbitMode,
+            orbitMode: 'RealLive',
             moons: focusedPlanet.moons,
             size: focusedPlanet.size,
             realDiameter: focusedPlanet.realDiameter
           } : null}
           orbitControlsRef={orbitControlsRef}
-          useSimplifiedDistance={useSimplifiedDistance}
+          useSimplifiedDistance={false}
           useRealisticSizes={useRealisticSizes}
         />
-        <SolarSystem
-          setFocus={(focus: string, planetData: PlanetProps | null) => {
-            setFocus(focus, planetData);
-          }}
-          focus={focus}
-          showOrbits={showOrbits}
-          orbitMode={orbitMode}
-          useSimplifiedDistance={useSimplifiedDistance}
-          useRealisticSizes={useRealisticSizes}
-          timeScale={timeScale}
-        />
+        {focus === 'cosmic' ? (
+          // Cosmic Web is a "warp cut" to a different scale — rendered inside the same
+          // persistent Canvas/WebGL context as the planetary scene (rather than a separate
+          // <Canvas>) since mounting a second Canvas here caused WebGL context loss.
+          <GalaxyField />
+        ) : (
+          <SolarSystem
+            setFocus={(focus: string, planetData: PlanetProps | null) => {
+              setFocus(focus, planetData);
+            }}
+            focus={focus}
+            showOrbits={showOrbits}
+            orbitMode={'RealLive'}
+            useSimplifiedDistance={false}
+            useRealisticSizes={useRealisticSizes}
+            hiddenBodies={hiddenBodies}
+            showAtmosphere={showAtmosphere}
+            showCrust={showCrust}
+            hoveredLayer={hoveredLayer}
+            setHoveredLayer={setHoveredLayer}
+          />
+        )}
         <OrbitControls ref={orbitControlsRef} />
       </Canvas>
     </div>

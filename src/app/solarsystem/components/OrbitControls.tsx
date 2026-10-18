@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react';
 import '../styles/orbitControls.css';
 import { simulationState } from '../utils';
 
-type OrbitMode = 'Simple' | 'Elliptical' | 'RealLive';
-
 function DateTimeControl() {
   const [localDate, setLocalDate] = useState('');
 
@@ -65,27 +63,19 @@ function DateTimeControl() {
 }
 
 type OrbitControlsMenuProps = {
-  orbitMode: OrbitMode;
-  setOrbitMode: (mode: OrbitMode) => void;
-  showOrbits: boolean;
-  setShowOrbits: (show: boolean) => void;
-  useSimplifiedDistance: boolean;
-  setUseSimplifiedDistance: (use: boolean) => void;
   useRealisticSizes: boolean;
   setUseRealisticSizes: (use: boolean) => void;
   timeScale: number;
   setTimeScale: (scale: number) => void;
+  showOrbits: boolean;
+  setShowOrbits: (show: boolean) => void;
   showBackground: boolean;
   setShowBackground: (show: boolean) => void;
 };
 
 export default function OrbitControlsMenu({
-  orbitMode,
-  setOrbitMode,
   showOrbits,
   setShowOrbits,
-  useSimplifiedDistance,
-  setUseSimplifiedDistance,
   useRealisticSizes,
   setUseRealisticSizes,
   timeScale,
@@ -93,93 +83,44 @@ export default function OrbitControlsMenu({
   showBackground,
   setShowBackground,
 }: OrbitControlsMenuProps) {
-  const [isExpanded, setIsExpanded] = useState(true);
-
-  const handleOrbitModeChange = (mode: OrbitMode) => {
-    setOrbitMode(mode);
-    if (mode === 'RealLive') {
-      setUseSimplifiedDistance(false);
-      setTimeScale(1); // Default to live time scale
-    } else {
-      setTimeScale(1);
-    }
-  };
+  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <div className={`orbit-controls-menu ${isExpanded ? 'expanded' : 'collapsed'}`}>
-      <button 
-        className="toggle-button"
+      <button
+        type="button"
+        className="menu-toggle-button"
         onClick={() => setIsExpanded(!isExpanded)}
-        aria-label={isExpanded ? 'Collapse menu' : 'Expand menu'}
+        aria-expanded={isExpanded}
       >
-        {isExpanded ? '−' : '+'}
+        <span className="menu-toggle-label">Display Options</span>
+        <span className="menu-toggle-arrow">▾</span>
       </button>
-      
+
       {isExpanded && (
         <div className="controls-content">
-          <h3>Orbit Settings</h3>
-          
-          <div className="control-group">
-            <label className="control-label">Orbit Type</label>
-            <div className="button-group">
-              <button
-                className={`mode-button ${orbitMode === 'Simple' ? 'active' : ''}`}
-                onClick={() => handleOrbitModeChange('Simple')}
-              >
-                Circular
-              </button>
-              <button
-                className={`mode-button ${orbitMode === 'RealLive' ? 'active' : ''}`}
-                onClick={() => handleOrbitModeChange('RealLive')}
-              >
-                Live
-              </button>
-            </div>
-          </div>
-
           <div className="control-group">            
             <label className="control-label">
               Orbital Speed
             </label>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+            <div className="slider-stack">
               <input 
                 type="range" 
-                min={orbitMode === 'RealLive' ? 1 : 0} 
-                max={orbitMode === 'RealLive' ? 31536000 : 20} 
-                step={orbitMode === 'RealLive' ? 86400 : 0.5} 
+                min={1} 
+                max={31536000} 
+                step={86400} 
                 value={timeScale} 
                 onChange={(e) => setTimeScale(parseFloat(e.target.value))} 
-                style={{ width: '100%', cursor: 'pointer' }}
               />
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', color: '#ccc' }}>
-                <span>{orbitMode === 'RealLive' ? 'Live' : '0.0x'}</span>
-                <span>{orbitMode === 'RealLive' ? (timeScale <= 1 ? 'Live' : `${(timeScale / 86400).toFixed(1)} days/sec`) : `${timeScale}x`}</span>
-                <span>{orbitMode === 'RealLive' ? '1 yr/sec' : '20x'}</span>
+              <div className="slider-meta">
+                <span>Live</span>
+                <span>{timeScale <= 1 ? 'Live' : `${(timeScale / 86400).toFixed(1)} days/sec`}</span>
+                <span>1 yr/sec</span>
               </div>
             </div>
           </div>
 
-          {orbitMode === 'RealLive' && <DateTimeControl />}
-
-          <div className="control-group">
-            <label className="control-label">Distance Mode</label>
-            <div className="button-group">
-             <button
-                className={`mode-button ${useSimplifiedDistance ? 'active' : ''}`}
-                onClick={() => orbitMode === 'RealLive' ? null : setUseSimplifiedDistance(true)}
-                disabled={orbitMode === 'RealLive'}
-                style={{ opacity: orbitMode === 'RealLive' ? 0.5 : 1, cursor: orbitMode === 'RealLive' ? 'not-allowed' : 'pointer' }}
-              >
-                Even Spacing
-              </button>
-              <button
-                className={`mode-button ${!useSimplifiedDistance ? 'active' : ''}`}
-                onClick={() => setUseSimplifiedDistance(false)}
-              >
-                Realistic
-              </button>
-            </div>
-          </div>
+          <DateTimeControl />
 
           <div className="control-group">
             <label className="control-label">Planet Sizes</label>
@@ -210,7 +151,7 @@ export default function OrbitControlsMenu({
             </label>
           </div>
 
-          <div className="control-group">            
+          <div className="control-group">
             <label className="toggle-label">
               <input
                 type="checkbox"
@@ -220,6 +161,7 @@ export default function OrbitControlsMenu({
               <span>Show Orbits</span>
             </label>
           </div>
+
         </div>
       )}
     </div>

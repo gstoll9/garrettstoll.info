@@ -1,3 +1,5 @@
+import { planetStructures } from './planetStructure';
+
 const distanceFactor = 12;
 const orbitalPeriodFactor = 5; // days in a year, used for converting orbital periods to Julian years
 const evenSpacing = 8; // Constant spacing between orbits
@@ -13,12 +15,7 @@ export const planets = [
     texture: '/solarsystemImages/MercuryTexture.jpg',
     color: '#8C7853', 
 
-    structure: {
-      coreRadius: 0.8,    // Mercury has a very large core
-      mantleRadius: 0.95,
-      coreColor: '#5c5c5c',
-      mantleColor: '#845e36',
-    },
+    structure: planetStructures.Mercury,
 
     size: 0.4,  // Display-friendly size
     realDiameter: 0.383, // In Earth diameters
@@ -43,14 +40,7 @@ export const planets = [
     texture: '/solarsystemImages/VenusTexture.jpg',
     color: '#FFC649', 
 
-    structure: {
-      coreRadius: 0.5,
-      mantleRadius: 0.9,
-      atmosphereRadius: 1.15,
-      coreColor: '#c79532',
-      mantleColor: '#db6c25',
-      atmosphereColor: '#ffd782'
-    },
+    structure: planetStructures.Venus,
 
     size: 0.9,
     realDiameter: 0.949,
@@ -75,14 +65,7 @@ export const planets = [
     texture: '/solarsystemImages/EarthTexture.jpg',
     color: '#6B93D6',
 
-    structure: {
-      coreRadius: 0.55,
-      mantleRadius: 0.95,
-      atmosphereRadius: 1.1,
-      coreColor: '#ffda3e',
-      mantleColor: '#ff4d00',
-      atmosphereColor: '#a6e1ff'
-    },
+    structure: planetStructures.Earth,
 
     size: 1,
     realDiameter: 1.0, // Reference: 1 Earth diameter
@@ -111,14 +94,7 @@ export const planets = [
     texture: '/solarsystemImages/MarsTexture.jpg',
     color: '#CD5C5C',
 
-    structure: {
-      coreRadius: 0.5,
-      mantleRadius: 0.95,
-      atmosphereRadius: 1.05,
-      coreColor: '#968172',
-      mantleColor: '#cd6d3b',
-      atmosphereColor: '#ffba9e' // thin
-    },
+    structure: planetStructures.Mars,
 
     size: 0.5,
     realDiameter: 0.532, 
@@ -126,9 +102,18 @@ export const planets = [
     orbitSpeed: 0.4, 
     rotationalSpeed: 0.018,
 
+    // Real orbital elements (semimajorAxis in Mars radii, orbitalPeriod in real seconds);
+    // longitudeOfAscendingNode/argumentOfPerihelion/meanAnomaly are 0 (unsourced simplification —
+    // Wikipedia's moon infoboxes give period/eccentricity/inclination but not orbital phase).
     moons: [
-      { name: 'Phobos', size: 0.1, distance: 1.2, orbitSpeed: 3, color: '#aaa' },
-      { name: 'Deimos', size: 0.08, distance: 1.8, orbitSpeed: 2.2, color: '#bbb' }
+      { name: 'Phobos', size: 0.1, distance: 1.2, orbitSpeed: 3, color: '#aaa', orbitData: {
+        semimajorAxis: 2.7659, eccentricity: 0.0151, inclination: 1.093,
+        longitudeOfAscendingNode: 0, argumentOfPerihelion: 0, meanAnomaly: 0, orbitalPeriod: 27553.82,
+      } },
+      { name: 'Deimos', size: 0.08, distance: 1.8, orbitSpeed: 2.2, color: '#bbb', orbitData: {
+        semimajorAxis: 6.9227, eccentricity: 0.00033, inclination: 0.93,
+        longitudeOfAscendingNode: 0, argumentOfPerihelion: 0, meanAnomaly: 0, orbitalPeriod: 109123.2,
+      } }
     ],
     
     // elliptical
@@ -148,14 +133,7 @@ export const planets = [
     texture: '/solarsystemImages/JupiterTexture.jpg',
     color: '#D8CA9D', 
 
-    structure: {
-      coreRadius: 0.15,
-      mantleRadius: 0.8, // metallic hydrogen
-      atmosphereRadius: 1.05, 
-      coreColor: '#b4afa3',
-      mantleColor: '#eaab67',
-      atmosphereColor: '#ffe9c0'
-    },
+    structure: planetStructures.Jupiter,
 
     size: 3,
     realDiameter: 10.97,
@@ -187,14 +165,7 @@ export const planets = [
     texture: '/solarsystemImages/SaturnTexture.jpg',
     color: '#FAD5A5', 
 
-    structure: {
-      coreRadius: 0.2,
-      mantleRadius: 0.75, // metallic hydrogen
-      atmosphereRadius: 1.05, 
-      coreColor: '#b4afa3',
-      mantleColor: '#eaab67',
-      atmosphereColor: '#ffeca2'
-    },
+    structure: planetStructures.Saturn,
 
     size: 2.5,
     realDiameter: 9.14,
@@ -203,8 +174,14 @@ export const planets = [
     rotationalSpeed: 0.038,
 
     moons: [
-      { name: 'Titan', size: 0.4, distance: 6.5, orbitSpeed: 1.2, color: '#f2cd6f' },
-      { name: 'Enceladus', size: 0.2, distance: 4.5, orbitSpeed: 3, color: '#ececec' }
+      { name: 'Titan', size: 0.4, distance: 6.5, orbitSpeed: 1.2, color: '#f2cd6f', orbitData: {
+        semimajorAxis: 20.2737, eccentricity: 0.0288, inclination: 0.34854,
+        longitudeOfAscendingNode: 0, argumentOfPerihelion: 0, meanAnomaly: 0, orbitalPeriod: 1377648,
+      } },
+      { name: 'Enceladus', size: 0.2, distance: 4.5, orbitSpeed: 3, color: '#ececec', orbitData: {
+        semimajorAxis: 3.9497, eccentricity: 0.0047, inclination: 0.009,
+        longitudeOfAscendingNode: 0, argumentOfPerihelion: 0, meanAnomaly: 0, orbitalPeriod: 118410.8,
+      } }
     ],
     
     // elliptical
@@ -224,14 +201,7 @@ export const planets = [
     texture: '/solarsystemImages/UranusTexture.jpg',
     color: '#4FD0E7', 
 
-    structure: {
-      coreRadius: 0.2, // rock
-      mantleRadius: 0.8, // icy
-      atmosphereRadius: 1.05, 
-      coreColor: '#968172',
-      mantleColor: '#2b96cc',
-      atmosphereColor: '#6af5ff'
-    },
+    structure: planetStructures.Uranus,
 
     size: 1.8,
     realDiameter: 3.98,
@@ -240,11 +210,27 @@ export const planets = [
     rotationalSpeed: 0.03,
 
     moons: [
-      { name: 'Titania', size: 0.25, distance: 4.0, orbitSpeed: 1.5, color: '#e0e0e0' },
-      { name: 'Oberon', size: 0.24, distance: 5.0, orbitSpeed: 1.2, color: '#d0d0d0' },
-      { name: 'Umbriel', size: 0.2, distance: 3.5, orbitSpeed: 1.8, color: '#c0c0c0' },
-      { name: 'Ariel', size: 0.2, distance: 3.0, orbitSpeed: 2.1, color: '#b0b0b0' },
-      { name: 'Miranda', size: 0.15, distance: 2.5, orbitSpeed: 2.5, color: '#a0a0a0' }
+      { name: 'Titania', size: 0.25, distance: 4.0, orbitSpeed: 1.5, color: '#e0e0e0', orbitData: {
+        semimajorAxis: 17.0567, eccentricity: 0.0011, inclination: 0.340,
+        longitudeOfAscendingNode: 0, argumentOfPerihelion: 0, meanAnomaly: 0, orbitalPeriod: 752378.6,
+      } },
+      { name: 'Oberon', size: 0.24, distance: 5.0, orbitSpeed: 1.2, color: '#d0d0d0', orbitData: {
+        semimajorAxis: 22.8329, eccentricity: 0.0014, inclination: 0.058,
+        longitudeOfAscendingNode: 0, argumentOfPerihelion: 0, meanAnomaly: 0, orbitalPeriod: 1163225.6,
+      } },
+      { name: 'Umbriel', size: 0.2, distance: 3.5, orbitSpeed: 1.8, color: '#c0c0c0', orbitData: {
+        semimajorAxis: 10.4093, eccentricity: 0.0039, inclination: 0.128,
+        longitudeOfAscendingNode: 0, argumentOfPerihelion: 0, meanAnomaly: 0, orbitalPeriod: 358041.6,
+      } },
+      { name: 'Ariel', size: 0.2, distance: 3.0, orbitSpeed: 2.1, color: '#b0b0b0', orbitData: {
+        semimajorAxis: 7.4696, eccentricity: 0.0012, inclination: 0.260,
+        longitudeOfAscendingNode: 0, argumentOfPerihelion: 0, meanAnomaly: 0, orbitalPeriod: 217728,
+      } },
+      { name: 'Miranda', size: 0.15, distance: 2.5, orbitSpeed: 2.5, color: '#a0a0a0', orbitData: {
+        // Miranda's ~4.2° inclination is unusually high for so close-in a moon (cause debated).
+        semimajorAxis: 5.0628, eccentricity: 0.0013, inclination: 4.232,
+        longitudeOfAscendingNode: 0, argumentOfPerihelion: 0, meanAnomaly: 0, orbitalPeriod: 122124.6,
+      } }
     ],
     
     // elliptical
@@ -264,14 +250,7 @@ export const planets = [
     texture: '/solarsystemImages/NeptuneTexture.jpg',
     color: '#4B70DD', 
 
-    structure: {
-      coreRadius: 0.2, // rock
-      mantleRadius: 0.8, // icy
-      atmosphereRadius: 1.05, 
-      coreColor: '#968172',
-      mantleColor: '#2b96cc',
-      atmosphereColor: '#6a97ff'
-    },
+    structure: planetStructures.Neptune,
 
     size: 1.7,
     realDiameter: 3.87,
@@ -280,7 +259,13 @@ export const planets = [
     rotationalSpeed: 0.032,
 
     moons: [
-      { name: 'Triton', size: 0.28, distance: 4.5, orbitSpeed: -1.7, color: '#aabccc' },
+      { name: 'Triton', size: 0.28, distance: 4.5, orbitSpeed: -1.7, color: '#aabccc', orbitData: {
+        // Retrograde orbit (the only large moon in the solar system orbiting opposite its
+        // planet's rotation) — inclination > 90° to Neptune's equator naturally produces
+        // the correct retrograde appearance in the standard orbital rotation formulas.
+        semimajorAxis: 14.3272, eccentricity: 0.000016, inclination: 156.885,
+        longitudeOfAscendingNode: 0, argumentOfPerihelion: 0, meanAnomaly: 0, orbitalPeriod: 507880.0,
+      } },
     ],
     
     // elliptical
@@ -301,7 +286,7 @@ export const planets = [
 export { realisticSizeScale };
 
 // Helper function to calculate realistic planet size
-export function getPlanetSize(planet: typeof planets[0], useRealisticSize: boolean): number {
+export function getPlanetSize(planet: { size: number; realDiameter: number }, useRealisticSize: boolean): number {
   if (useRealisticSize) {
     return planet.realDiameter * realisticSizeScale;
   }

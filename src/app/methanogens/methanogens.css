@@ -1,0 +1,283 @@
+.meth-page {
+  margin: 0 3%;
+}
+
+.meth-page .divider {
+  margin: 0.5% 0 3%;
+  background-color: black;
+  width: 60%;
+  border: 1px solid black;
+}
+
+.meth-subtitle {
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  max-width: 60rem;
+  margin: 0.2rem 0 0.6rem;
+}
+
+.meth-byline {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  margin: 0 0 0.6rem;
+  line-height: 1.4;
+}
+
+.meth-section {
+  margin-bottom: 2.2rem;
+}
+
+.meth-section h2 {
+  border-bottom: 2px solid var(--brand);
+  padding-bottom: 0.25rem;
+  margin-bottom: 0.8rem;
+}
+
+.meth-section h3 {
+  margin-top: 1.4rem;
+  color: var(--brand-strong);
+}
+
+.meth-section p {
+  margin: 0.6rem 0;
+  max-width: 60rem;
+}
+
+.meth-methods-intro {
+  font-style: italic;
+}
+
+.meth-methods-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0.9rem;
+  margin-top: 0.8rem;
+}
+
+.meth-method-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  box-shadow: var(--shadow-card);
+}
+
+.meth-method-card h4 {
+  margin: 0 0 0.4rem;
+  color: var(--brand-strong);
+}
+
+.meth-method-card p {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+/* Tabs */
+.meth-tabs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.meth-tab {
+  cursor: pointer;
+  border: 1px solid var(--brand);
+  background: transparent;
+  color: var(--brand-strong);
+  padding: 0.45rem 1.2rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.meth-tab:hover {
+  background: var(--brand-soft);
+}
+
+.meth-tab-active {
+  background: var(--brand);
+  color: var(--surface-strong);
+}
+
+.meth-tab-panel {
+  animation: meth-fade-in 180ms ease;
+}
+
+@keyframes meth-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Toggle buttons (before/after, tree versions) */
+.meth-toggle-row {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.6rem 0 1rem;
+}
+
+.meth-toggle-btn {
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text-secondary);
+  padding: 0.35rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.88rem;
+}
+
+.meth-toggle-btn:hover {
+  border-color: var(--brand);
+}
+
+.meth-toggle-active {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: var(--surface-strong);
+  font-weight: 600;
+}
+
+/* Figures */
+.meth-figure {
+  max-width: 34rem;
+  margin: 1rem auto;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.7rem;
+  box-shadow: var(--shadow-card);
+}
+
+.meth-figure-wide {
+  max-width: 100%;
+}
+
+.meth-figure img {
+  border-radius: 6px;
+}
+
+.meth-figure figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.meth-figure-pair {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.meth-figure-pair .meth-figure {
+  flex: 1;
+  min-width: 16rem;
+}
+
+/* Cysteine conservation table */
+.cys-table-wrap {
+  overflow-x: auto;
+  margin: 1rem 0;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+}
+
+.cys-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.82rem;
+  min-width: 46rem;
+}
+
+.cys-table th,
+.cys-table td {
+  border: 1px solid var(--line);
+  padding: 0.35rem 0.45rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.cys-table thead th {
+  background: var(--brand-strong);
+  color: var(--surface-strong);
+  font-weight: 600;
+}
+
+.cys-row-label {
+  background: var(--surface-muted);
+  font-weight: 600;
+  text-align: left;
+  position: sticky;
+  left: 0;
+}
+
+.cys-cell {
+  cursor: default;
+  transition: transform 120ms ease;
+}
+
+.cys-cell:hover {
+  transform: scale(1.12);
+  position: relative;
+  z-index: 2;
+}
+
+.cys-empty {
+  background: var(--surface-muted);
+  color: transparent;
+}
+
+.cys-low {
+  background: #fbf6e3;
+}
+
+.cys-mid {
+  background: #cfe6b8;
+}
+
+.cys-high {
+  background: #7fbf5f;
+  color: #0f2a1d;
+  font-weight: 700;
+}
+
+.cys-legend {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.cys-legend-swatch {
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  vertical-align: middle;
+  margin-right: 0.15rem;
+}
+
+.meth-references {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  padding-left: 1.4rem;
+}
+
+.meth-references li {
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .meth-page {
+    margin: 0 1%;
+  }
+
+  .meth-figure-pair {
+    flex-direction: column;
+  }
+}

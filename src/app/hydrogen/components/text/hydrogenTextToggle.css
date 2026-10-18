@@ -1,0 +1,27 @@
+.hydrogenTextToggle {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.hydrogenTextToggle button {
+  flex: 1;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  border: 1px solid rgba(133, 169, 71, 0.4);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.hydrogenTextToggle button:hover {
+  border-color: #85A947;
+}
+
+.hydrogenTextToggle button.active {
+  background-color: #85A947;
+  border-color: #85A947;
+  color: #fff;
+}

@@ -37,6 +37,12 @@ function Header({ title = "Garrett Stoll" }: HeaderProps) {
     angle: 0,
     visible: true,
   });
+  const [introDancing, setIntroDancing] = React.useState(true);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => setIntroDancing(false), 5000);
+    return () => clearTimeout(timer);
+  }, []);
 
   // React.useEffect(() => {
   //   let leftTimeout: NodeJS.Timeout;
@@ -74,7 +80,7 @@ function Header({ title = "Garrett Stoll" }: HeaderProps) {
       <div className="leftTyroContainer">
         <Image
           key={left.src} // Add this line!
-          className={`logo pop-image${left.visible ? " visible" : ""}`}
+          className={`logo pop-image${left.visible ? " visible" : ""}${introDancing ? " tyro-intro-dance" : ""}`}
           src={left.src}
           alt="Tyro, the cat, on his back looking cute as hell"
           width={120}
@@ -92,7 +98,7 @@ function Header({ title = "Garrett Stoll" }: HeaderProps) {
       <div className="rightTyroContainer">
         <Image
           key={right.src} // Add this line!
-          className={`logo pop-image${right.visible ? " visible" : ""}`}
+          className={`logo pop-image${right.visible ? " visible" : ""}${introDancing ? " tyro-intro-dance" : ""}`}
           src={right.src}
           alt="Tyro, the cat, on his back looking cute as hell"
           width={120}

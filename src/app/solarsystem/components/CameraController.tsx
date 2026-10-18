@@ -1,9 +1,11 @@
 import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
+import { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 import { orbitalPosition, OrbitProps, simulationState } from '../utils'
 
 import { getPlanetSize } from '../data/planets'
+import type { PlanetProps } from './Planet'
 
 type CameraControllerProps = {
   focus: string;
@@ -11,11 +13,11 @@ type CameraControllerProps = {
     name: string;
     orbitData: OrbitProps;
     orbitMode: string;
-    moons?: any[];
+    moons?: PlanetProps['moons'];
     size?: number;
     realDiameter?: number;
   } | null;
-  orbitControlsRef: React.RefObject<any>;
+  orbitControlsRef: React.RefObject<OrbitControlsImpl | null>;
   useSimplifiedDistance: boolean;
   useRealisticSizes?: boolean;
 }
@@ -32,17 +34,47 @@ export default function CameraController({ focus, planetData, orbitControlsRef, 
       isJumpPending.current = false
       if (orbitControlsRef.current) {
         orbitControlsRef.current.target.set(0, 0, 0)
-        
+
         // Return to wide view if we were following
         if (prevFocus.current !== 'solarsystem' && prevFocus.current !== 'Sun') {
             camera.position.set(0, 10, 40)
         }
         orbitControlsRef.current.update()
       }
+      // Revert the near-plane tightening below — the wide solar-system view doesn't need it,
+      // and keeping it that small there would waste depth-buffer precision at long range.
+      if ((camera as THREE.PerspectiveCamera).near !== 0.1) {
+        (camera as THREE.PerspectiveCamera).near = 0.1;
+        (camera as THREE.PerspectiveCamera).updateProjectionMatrix();
+      }
+    } else if (focus === 'cosmic') {
+      // Cosmic Web is a "warp cut" to a different scale, not a continuous zoom — just
+      // hard-reset the camera to a framing that fits the Local Group once, then let
+      // OrbitControls take over (nothing to follow at this scale).
+      isFollowing.current = false
+      isJumpPending.current = false
+      if (orbitControlsRef.current) {
+        orbitControlsRef.current.target.set(0, 0, 0)
+        if (prevFocus.current !== 'cosmic') {
+          camera.position.set(0, 40, 130)
+        }
+        orbitControlsRef.current.update()
+      }
+      if ((camera as THREE.PerspectiveCamera).near !== 0.1) {
+        (camera as THREE.PerspectiveCamera).near = 0.1;
+        (camera as THREE.PerspectiveCamera).updateProjectionMatrix();
+      }
     } else if (focus && planetData) {
       isFollowing.current = true
       if (prevFocus.current !== focus) {
           isJumpPending.current = true
+      }
+      // Tighten the near plane so scroll-zooming in close on a true-to-scale thin layer
+      // (e.g. a planet's crust or atmosphere shell) doesn't get clipped by the camera's
+      // near plane before the shell fills a meaningful part of the view.
+      if ((camera as THREE.PerspectiveCamera).near !== 0.001) {
+        (camera as THREE.PerspectiveCamera).near = 0.001;
+        (camera as THREE.PerspectiveCamera).updateProjectionMatrix();
       }
     }
     prevFocus.current = focus
@@ -64,7 +96,7 @@ export default function CameraController({ focus, planetData, orbitControlsRef, 
         // Calculate max radius including moons
         let planetSize = 1;
         if (planetData.size !== undefined && planetData.realDiameter !== undefined) {
-          planetSize = useRealisticSizes ? getPlanetSize({ size: planetData.size, realDiameter: planetData.realDiameter } as any, true) : planetData.size;
+          planetSize = useRealisticSizes ? getPlanetSize({ size: planetData.size, realDiameter: planetData.realDiameter }, true) : planetData.size;
         }
         
         let maxRadius = planetSize;
