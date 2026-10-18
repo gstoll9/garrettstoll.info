@@ -8,7 +8,8 @@ export default function Home() {
         <strong>Experiments: </strong>
         <Link href="/solarsystem" style={{ margin: "0 10px", color: "#4da6ff" }}>Solar System</Link> |
         <Link href="/hydrogen" style={{ margin: "0 10px", color: "#4da6ff" }}>Hydrogen Atom</Link> |
-        <Link href="/brain" style={{ margin: "0 10px", color: "#4da6ff" }}>Brain Model</Link>
+        <Link href="/brain" style={{ margin: "0 10px", color: "#4da6ff" }}>Brain Model</Link> |
+        <Link href="/worldmap" style={{ margin: "0 10px", color: "#4da6ff" }}>World Map</Link>
       </div>
       <Resume />
     </div>

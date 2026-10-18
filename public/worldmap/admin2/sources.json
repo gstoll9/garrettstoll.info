@@ -1,0 +1,842 @@
+{
+ "united-states-of-america": {
+  "name": "Natural Earth",
+  "license": "Public Domain",
+  "url": "https://www.naturalearthdata.com"
+ },
+ "puerto-rico": {
+  "name": "Natural Earth",
+  "license": "Public Domain",
+  "url": "https://www.naturalearthdata.com"
+ },
+ "afghanistan": {
+  "name": "geoBoundaries (Afghanistan Information Management Services, Esri Disaster Response Program)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "angola": {
+  "name": "geoBoundaries (geoBoundaries, Wikimedia Commons)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "albania": {
+  "name": "geoBoundaries (geoBoundaries, Albania districts blank 2.svg)",
+  "license": "Creative Commons Attribution 2.5 Generic",
+  "url": "https://www.geoboundaries.org"
+ },
+ "argentina": {
+  "name": "geoBoundaries (Instituto Geografico Nacional and UNHCR, OCHA ROLAC)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "armenia": {
+  "name": "geoBoundaries (Government of Armenia, OCHA ROCCA)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "australia": {
+  "name": "geoBoundaries (Australian Bureau of Statistics)",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "austria": {
+  "name": "geoBoundaries (Federal Office for Metrology and Survey, Austria, Derived from ADM4 layer)",
+  "license": "Creative Commons Attribution-ShareAlike 2.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "azerbaijan": {
+  "name": "geoBoundaries (Wikipedia)",
+  "license": "Creative Commons Attribution-ShareAlike 3.0 Unported",
+  "url": "https://www.geoboundaries.org"
+ },
+ "burundi": {
+  "name": "geoBoundaries (New York University Spatial Data Repository, Stanford University, Map Maker Limited)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "benin": {
+  "name": "geoBoundaries (Map Maker Ltd., Stanford earthworks)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "bangladesh": {
+  "name": "geoBoundaries (Bangladesh Bureau of Statistics (BBS), OCHA ROAP)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "bulgaria": {
+  "name": "geoBoundaries (geoBoundaries, Wikimedia)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "bahamas": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "bosnia-and-herz": {
+  "name": "geoBoundaries (Wikimedia Commons)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "belarus": {
+  "name": "geoBoundaries (geoBoundaries, CIESIN)",
+  "license": "Creative Commons Attribution 3.0 License",
+  "url": "https://www.geoboundaries.org"
+ },
+ "belize": {
+  "name": "geoBoundaries (geoBoundaries, Wikipedia)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "bolivia": {
+  "name": "geoBoundaries (GeoBolivia, Derived from ADM3 layer)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "brazil": {
+  "name": "geoBoundaries (Instituto Brasileiro de Geografia e Estatística (IBGE), OCHA ROLAC)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "brunei": {
+  "name": "geoBoundaries (geoBoundaries, Wikimedia Commons; credit to user 'Rarelibra')",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "bhutan": {
+  "name": "geoBoundaries (OCHA ROAP)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "botswana": {
+  "name": "geoBoundaries (RCMRD)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "central-african-rep": {
+  "name": "geoBoundaries (geoBoundaries, UNHCR)",
+  "license": "Creative Commons Attribution 3.0 License",
+  "url": "https://www.geoboundaries.org"
+ },
+ "canada": {
+  "name": "geoBoundaries (Statistics Canada (StatCan))",
+  "license": "Open Government Canada 2.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "switzerland": {
+  "name": "geoBoundaries (Federal Office of Topography swisstopo)",
+  "license": "Federal Office of Topography swisstopo License",
+  "url": "https://www.geoboundaries.org"
+ },
+ "chile": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "china": {
+  "name": "geoBoundaries (National Administration of Surveying, Mapping and Geoinformation of China, Revolutionary GIS)",
+  "license": "Open Data Commons Public Domain Dedication and License (PDDL) v1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "cote-d-ivoire": {
+  "name": "geoBoundaries (World Bank)",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "cameroon": {
+  "name": "geoBoundaries (Open Africa)",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "dem-rep-congo": {
+  "name": "geoBoundaries (Referenciel Géographique Commun, OCHA DR Congo)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "congo": {
+  "name": "geoBoundaries (New York University Spatial Data Repository, Stanford University, Map Maker Limited)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "colombia": {
+  "name": "geoBoundaries (Departamento Administrativo Nacional de Estadistica)",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "comoros": {
+  "name": "geoBoundaries (Comoros National Disaster Management Agency (COSEP-Centre des secours et de la protection civil), OCHA ROSEA)",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "cabo-verde": {
+  "name": "geoBoundaries (OCHA ROWCA, OCHA ROWCA)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "costa-rica": {
+  "name": "geoBoundaries (geoBoundaries, Wikimedia Commons)",
+  "license": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
+  "url": "https://www.geoboundaries.org"
+ },
+ "cuba": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "cyprus": {
+  "name": "geoBoundaries (Wikipedia, Cyprus Department of Land Registry and Geometry)",
+  "license": "Creative Commons Attribution-ShareAlike 3.0 Unported",
+  "url": "https://www.geoboundaries.org"
+ },
+ "czechia": {
+  "name": "geoBoundaries (geoBoundaries, Wikimedia Commons)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "germany": {
+  "name": "geoBoundaries (Federal Agency for Cartography and Geodesy)",
+  "license": "Data license Germany - Attribution - Version 2.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "djibouti": {
+  "name": "geoBoundaries (FEWS, OCHA FISS)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "denmark": {
+  "name": "geoBoundaries (geoBoundaries, Wikimedia Commons)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "dominican-rep": {
+  "name": "geoBoundaries (Caribbean GeoPortal, N/A)",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "ecuador": {
+  "name": "geoBoundaries (INEC - Instituto Nacional de Estadística y Censos, OCHA ROLAC)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "egypt": {
+  "name": "geoBoundaries (OCHA ROMENA/HDX, Central Agency for Public Mobilization and Statistics (CAPMAS))",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "eritrea": {
+  "name": "geoBoundaries (OCHA ROSEA, OCHA ROSEA)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "estonia": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "ethiopia": {
+  "name": "geoBoundaries (Open Africa, Code for Ethiopia)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "finland": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "fiji": {
+  "name": "geoBoundaries (pacificdata.org)",
+  "license": "Creative Commons Attribution 4.0 (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "france": {
+  "name": "geoBoundaries (Institut national de l'information géographique et forestière (IGN-F))",
+  "license": "Etalab Open License 2.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "micronesia": {
+  "name": "geoBoundaries (OCHA ROP, Federated States of Micronesia Division of Statistics, 2010 Census of Population and Housing and Secretariat of the Pacific Community, Statistics for Development Division)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "gabon": {
+  "name": "geoBoundaries (geoBoundaries, Wikimedia)",
+  "license": "Creative Commons Attribution 3.0 License",
+  "url": "https://www.geoboundaries.org"
+ },
+ "united-kingdom": {
+  "name": "geoBoundaries (Office for National Statistics Open Geography Portal)",
+  "license": "Open Government Licence v3.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "georgia": {
+  "name": "geoBoundaries (geoBoundaries, Wikimedia Commons)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "ghana": {
+  "name": "geoBoundaries (USAID Ghana HPNO, Ghana Statistical Service)",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "guinea": {
+  "name": "geoBoundaries (World Food Programme, OCHA ROWCA)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "gambia": {
+  "name": "geoBoundaries (geoBoundaries, Knippenberg, Erwin, & Moritz, Meyer. “The Hidden Potential of Mobile Phone Data Insights on COVID-19 in the Gambia.” The World Bank Data Catalog)",
+  "license": "Creative Commons Attribution 4.0 (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "guinea-bissau": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "eq-guinea": {
+  "name": "geoBoundaries (World Resources Institute, Congo Forest Basin Atlas)",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "guatemala": {
+  "name": "geoBoundaries (Coordinadora Nacional Para La Reducción De Desastres, OCHA FISS)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "guam": {
+  "name": "geoBoundaries (United States Census Bureau, MAF/TIGER)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "guyana": {
+  "name": "geoBoundaries (DEVInfo LAC project, OCHA FISS)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "honduras": {
+  "name": "geoBoundaries (ICF - Instituto Nacional de Conservación y Desarrollo Forestal, Áreas Protegidas y Vida Silvestre, Gobierno de la República de Honduras)",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "croatia": {
+  "name": "geoBoundaries (Open Street Map, geoBoundaries)",
+  "license": "Creative Commons Attribution-ShareAlike 2.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "haiti": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "hungary": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "indonesia": {
+  "name": "geoBoundaries (Badan Pusat Statistik (BPS - Statistics Indonesia), World Food Programme, OCHA ROAP)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "india": {
+  "name": "geoBoundaries (Pathways Data Pvt. Ltd., lgdirectory.gov.in)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "ireland": {
+  "name": "geoBoundaries (Ordce Survey Ireland)",
+  "license": "Creative Commons Attribution 4.0 (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "iran": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "iraq": {
+  "name": "geoBoundaries (Iraq Central Statistics Office, OCHA Iraq)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "iceland": {
+  "name": "geoBoundaries (National Land Survey of Iceland)",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "israel": {
+  "name": "geoBoundaries (geoBoundaries, Wikimedia Commons)",
+  "license": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
+  "url": "https://www.geoboundaries.org"
+ },
+ "jamaica": {
+  "name": "geoBoundaries (Justin Meyers, Planning Office of Jamaica)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "jordan": {
+  "name": "geoBoundaries (geoBoundaries, Wikimedia Commons)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "japan": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Creative Commons Attribution-ShareAlike 2.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "kazakhstan": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "kenya": {
+  "name": "geoBoundaries (IEBC, OCHA ROSEA)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "kyrgyzstan": {
+  "name": "geoBoundaries (geoBoundaries, Wikipedia, Districts of Kyrgyzstan)",
+  "license": "Creative Commons Attribution-ShareAlike 3.0 Unported",
+  "url": "https://www.geoboundaries.org"
+ },
+ "cambodia": {
+  "name": "geoBoundaries (Open Development Mekong, Open Development Cambodia)",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "kiribati": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "south-korea": {
+  "name": "geoBoundaries (geoBoundaries, citypopulation.de)",
+  "license": "Creative Commons Attribution 3.0 License",
+  "url": "https://www.geoboundaries.org"
+ },
+ "kuwait": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "laos": {
+  "name": "geoBoundaries (National Geographic Department, OCHA ROAP)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "lebanon": {
+  "name": "geoBoundaries (geoBoundaries, Wikipedia)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "liberia": {
+  "name": "geoBoundaries (UNMIL, OCHA ROWCA)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "saint-lucia": {
+  "name": "geoBoundaries (Department of Physical Planning, Saint Lucia Open Data)",
+  "license": "Creative Commons Attribution 4.0 (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "lesotho": {
+  "name": "geoBoundaries (FAO and the Ministry of Local Government, OCHA ROSEA)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "lithuania": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "luxembourg": {
+  "name": "geoBoundaries (OpenStreetMap, Public Domain)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "latvia": {
+  "name": "geoBoundaries (Valsts zemes dienests)",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "morocco": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "madagascar": {
+  "name": "geoBoundaries (Madagascar National Disaster Management Office (BNGRC), OCHA ROSA)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "mexico": {
+  "name": "geoBoundaries (World Bank)",
+  "license": "Creative Commons Attribution 4.0 (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "macedonia": {
+  "name": "geoBoundaries (EuroGeographics, Regional IM Working Group - Europe)",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "mali": {
+  "name": "geoBoundaries (DNCT - Direction Nationale des Colelctivités Territorielles, DNP - Direction Nationale de la Population, United Nations Office for the Coordination of Humanitarian Affairs, Mali)",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "myanmar": {
+  "name": "geoBoundaries (Myanmar Analytics Project, USAID/Burma)",
+  "license": "Creative Commons Attribution 4.0 (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "mongolia": {
+  "name": "geoBoundaries (National Statistical Office of Mongolia, OCHA ROAP)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "mozambique": {
+  "name": "geoBoundaries (Mozambique INE (Instituto Nacional de Estatistica), OCHA ROSEA)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "mauritania": {
+  "name": "geoBoundaries (World Food Programme, OCHA ROWCA)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "malawi": {
+  "name": "geoBoundaries (National Statistics Office of Malawi, OCHA ROSEA)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "malaysia": {
+  "name": "geoBoundaries (geoBoundaries, citypopulation.de)",
+  "license": "Creative Commons Attribution 3.0 License",
+  "url": "https://www.geoboundaries.org"
+ },
+ "namibia": {
+  "name": "geoBoundaries (Stanford Digital Repository, Namibia Statistics Agency)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "niger": {
+  "name": "geoBoundaries (geoBoundaries, City Population)",
+  "license": "Creative Commons Attribution 3.0 License",
+  "url": "https://www.geoboundaries.org"
+ },
+ "nigeria": {
+  "name": "geoBoundaries (GRID3)",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "nicaragua": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "netherlands": {
+  "name": "geoBoundaries (National Georegister)",
+  "license": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
+  "url": "https://www.geoboundaries.org"
+ },
+ "norway": {
+  "name": "geoBoundaries (Geonorge, Mapping Authority of Norway)",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "nepal": {
+  "name": "geoBoundaries (geoBoundaries, Wikimedia Commons)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "new-zealand": {
+  "name": "geoBoundaries (Stats NZ)",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "oman": {
+  "name": "geoBoundaries (Oman National Geographic Structure)",
+  "license": "Other - Direct Permission",
+  "url": "https://www.geoboundaries.org"
+ },
+ "pakistan": {
+  "name": "geoBoundaries (geoBoundaries, Wikipedia)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "panama": {
+  "name": "geoBoundaries (Milton Solano, of the Smithsonian Tropical Research Institute, on ArcGIS online, GIS Laboratory. Smithsonian Tropical Research Institute, Panama, 2012)",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "peru": {
+  "name": "geoBoundaries (Instituto Geográfico Nacional - IGN, OCHA ROLAC)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "philippines": {
+  "name": "geoBoundaries (National Mapping and Resource Information Authority (NAMRIA), Philippines Statistics Authority (PSA), OCHA Philippines)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "palau": {
+  "name": "geoBoundaries (Pacific Data Hub, SPC Statistics for Development Division (SDD))",
+  "license": "Creative Commons Attribution 4.0 (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "papua-new-guinea": {
+  "name": "geoBoundaries (OCHA ROAP, Papua New Guinea National Statistics Office)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "poland": {
+  "name": "geoBoundaries (Geoboundaries, OpenStreetMap)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "north-korea": {
+  "name": "geoBoundaries (World Food Programme, OCHA ROAP)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "portugal": {
+  "name": "geoBoundaries (Wikipedia)",
+  "license": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
+  "url": "https://www.geoboundaries.org"
+ },
+ "paraguay": {
+  "name": "geoBoundaries (Direcion General de Estadica, Encuestas y Censos)",
+  "license": "Creative Commons Attribution 4.0 (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "palestine": {
+  "name": "geoBoundaries (Open Data Watch)",
+  "license": "Creative Commons Attribution 4.0 (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "qatar": {
+  "name": "geoBoundaries (geoBoundaries, Qatar Open Data Portal)",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "romania": {
+  "name": "geoBoundaries (Agentia Nationala de Cadastru si Publicitate Imobiliara)",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "russia": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "rwanda": {
+  "name": "geoBoundaries (Open Data Rwanda)",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "saudi-arabia": {
+  "name": "geoBoundaries (geoBoundaries, OpenStreetMap)",
+  "license": "Creative Commons Attribution-ShareAlike 2.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "sudan": {
+  "name": "geoBoundaries (OCHA ROSEA, Information Management Working Group)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "senegal": {
+  "name": "geoBoundaries (Government of Senegal, OCHA ROWCA)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "singapore": {
+  "name": "geoBoundaries (geoBoundaries, Urban Redevelopment Authority)",
+  "license": "Singapore Open Data License Version 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "solomon-is": {
+  "name": "geoBoundaries (Solomon Islands National Statistics Office (SINSO), OCHA ROAP)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "sierra-leone": {
+  "name": "geoBoundaries (Government of Sierra Leone, OCHA ROWCA)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "el-salvador": {
+  "name": "geoBoundaries (geoBoundaries)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "somalia": {
+  "name": "geoBoundaries (Global Polio Eradication Initiative (GPEI), Frank Salet)",
+  "license": "Creative Commons Attribution 4.0 (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "serbia": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "s-sudan": {
+  "name": "geoBoundaries (South Sudan Information Management Working Group (IMWG), National Bureau of Statistics (NBS), and OCHA, OCHA South Sudan)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "sao-tome-and-principe": {
+  "name": "geoBoundaries (geoBoundaries, OpenStreetMap)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "suriname": {
+  "name": "geoBoundaries (geoBoundaries, Wikimedia Commons)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "slovakia": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "slovenia": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "sweden": {
+  "name": "geoBoundaries (geoBoundaries, Wikimedia Commons)",
+  "license": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
+  "url": "https://www.geoboundaries.org"
+ },
+ "eswatini": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "syria": {
+  "name": "geoBoundaries (United Nations Cartographic Section (UNCS) and United Nations Office for the Coordination of Humanitarian Affairs (UNOCHA), OCHA ROSC)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "chad": {
+  "name": "geoBoundaries (OCHA Chad, OCHA Chad)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "togo": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Creative Commons Attribution-ShareAlike 2.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "thailand": {
+  "name": "geoBoundaries (Royal Thai Survey Department, OCHA ROAP)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "tajikistan": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "turkmenistan": {
+  "name": "geoBoundaries (CIESIN)",
+  "license": "Creative Commons Attribution-ShareAlike 3.0 Unported",
+  "url": "https://www.geoboundaries.org"
+ },
+ "timor-leste": {
+  "name": "geoBoundaries (WHO, OCHA ROAP)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "tonga": {
+  "name": "geoBoundaries (Pacific Data Hub)",
+  "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "tunisia": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "turkey": {
+  "name": "geoBoundaries (OpenStreetMap, OSM Boundaries)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "taiwan": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Creative Commons Attribution-ShareAlike 2.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "tanzania": {
+  "name": "geoBoundaries (Tanzania National Bureau of Statistics / UN OCHA ROSA, OCHA ROSA)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "uganda": {
+  "name": "geoBoundaries (geoBoundaries, Wikimedia Commons)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "ukraine": {
+  "name": "geoBoundaries (geoBoundaries, Wikimedia Commons)",
+  "license": "Public Domain",
+  "url": "https://www.geoboundaries.org"
+ },
+ "uruguay": {
+  "name": "geoBoundaries (geoBoundaries, Wikimedia Commons)",
+  "license": "Creative Commons Attribution-ShareAlike 3.0 Unported",
+  "url": "https://www.geoboundaries.org"
+ },
+ "uzbekistan": {
+  "name": "geoBoundaries (OCHA ROCCA)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "venezuela": {
+  "name": "geoBoundaries (Efrain Porto Tapiquen Geografia, SIG y Estudios Ambientales)",
+  "license": "Open Data Commons Open Database License 1.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "vietnam": {
+  "name": "geoBoundaries (OCHA ROAP, Government of Viet Nam)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "vanuatu": {
+  "name": "geoBoundaries (Secretarial of the Pacific Community (SPC), Statistics for Development Division, OCHA ROP)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "samoa": {
+  "name": "geoBoundaries (Pacific Data Hub, SPC Statistics for Development Division (SDD))",
+  "license": "Creative Commons Attribution 4.0 (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "kosovo": {
+  "name": "geoBoundaries (OpenStreetMap, Wambacher)",
+  "license": "Creative Commons Attribution-ShareAlike 2.0",
+  "url": "https://www.geoboundaries.org"
+ },
+ "yemen": {
+  "name": "geoBoundaries (Central Statistical Organization (CSO), OCHA Yemen)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "south-africa": {
+  "name": "geoBoundaries (OCHA ROSEA, South African Municipal Demarcation Board)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "zambia": {
+  "name": "geoBoundaries (GRID3, Office of the Surveyor General)",
+  "license": "Creative Commons Attribution 4.0 (CC BY 4.0)",
+  "url": "https://www.geoboundaries.org"
+ },
+ "zimbabwe": {
+  "name": "geoBoundaries (Zimbabwe National Statistics Agency (ZIMSTAT www.zimstat.co.zw) Central Statistics Office, OCHA ROSEA)",
+  "license": "Creative Commons Attribution 3.0 Intergovernmental Organisations (CC BY 3.0 IGO)",
+  "url": "https://www.geoboundaries.org"
+ }
+}

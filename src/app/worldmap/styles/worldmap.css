@@ -1,0 +1,462 @@
+/* ── Neutralise standardlayout-main when it wraps the wm-page ─────────── */
+:has(.wm-page) .standardlayout-main,
+:has(.wm-page) .container0 {
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  background-color: #0b1220 !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+}
+
+:has(.wm-page) .standardlayout-main {
+  height: 100vh !important;
+}
+
+.wm-page {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #0b1220;
+  color: #e6e9ef;
+  overflow: hidden;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+/* ── Map ─────────────────────────────────────────────────────────────── */
+.wm-map {
+  position: absolute;
+  inset: 0;
+}
+
+.wm-map svg {
+  display: block;
+  cursor: grab;
+}
+
+.wm-map svg:active {
+  cursor: grabbing;
+}
+
+.wm-sphere {
+  fill: #101c33;
+  stroke: #2a3a5c;
+  vector-effect: non-scaling-stroke;
+}
+
+.wm-graticule {
+  fill: none;
+  stroke: #1b2b4a;
+  stroke-width: 0.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.wm-country {
+  fill: #3b4a63;
+  stroke: #0b1220;
+  stroke-width: 0.6;
+  vector-effect: non-scaling-stroke;
+  cursor: pointer;
+  transition: fill 0.15s;
+}
+
+.wm-country:hover {
+  fill: #5b7bb0;
+}
+
+.wm-country.wm-selected {
+  fill: #e0a43a;
+}
+
+.wm-subregion {
+  fill: #c98f2e;
+  stroke: #0b1220;
+  stroke-width: 0.5;
+  vector-effect: non-scaling-stroke;
+  cursor: pointer;
+  transition: fill 0.15s;
+  animation: wm-fade-in 0.3s ease-out;
+}
+
+.wm-subregion:hover {
+  fill: #e8b558;
+}
+
+.wm-subregion.wm-selected {
+  fill: #ffd98a;
+  stroke: #fff;
+  stroke-width: 1.5;
+}
+
+/* While a subregion's districts are shown, its neighbours recede */
+.wm-subregions.wm-dimmed .wm-subregion:not(.wm-selected) {
+  fill: #8a6a32;
+}
+
+.wm-subregions.wm-dimmed .wm-subregion:not(.wm-selected):hover {
+  fill: #a9844a;
+}
+
+.wm-district {
+  fill: #f2c46d;
+  stroke: rgba(80, 52, 8, 0.7);
+  stroke-width: 0.8;
+  vector-effect: non-scaling-stroke;
+  cursor: pointer;
+  transition: fill 0.15s;
+  animation: wm-fade-in 0.3s ease-out;
+}
+
+.wm-district:hover {
+  fill: #ffe3a6;
+}
+
+.wm-district.wm-selected {
+  fill: #fff4d6;
+  stroke: #fff;
+  stroke-width: 1.5;
+}
+
+@keyframes wm-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.wm-labels text {
+  pointer-events: none;
+  text-anchor: middle;
+  dominant-baseline: central;
+  paint-order: stroke;
+  stroke-linejoin: round;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+.wm-label-country {
+  fill: #dfe5ef;
+  stroke: #0b1220;
+  stroke-width: 3px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.wm-label-sub {
+  fill: #2b1d04;
+  stroke: rgba(240, 196, 110, 0.85);
+  stroke-width: 2.5px;
+  font-weight: 600;
+}
+
+.wm-label-district {
+  fill: #3a2806;
+  stroke: rgba(255, 236, 190, 0.85);
+  stroke-width: 2.5px;
+  font-weight: 500;
+}
+
+.wm-label-district.wm-selected,
+.wm-label-sub.wm-selected {
+  fill: #000;
+  stroke: #ffd98a;
+}
+
+.wm-tooltip {
+  display: none;
+  position: absolute;
+  pointer-events: none;
+  padding: 4px 8px;
+  background: rgba(10, 15, 28, 0.92);
+  border: 1px solid #2f3e5e;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.wm-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8a96ad;
+}
+
+/* ── Search ──────────────────────────────────────────────────────────── */
+.wm-search {
+  position: absolute;
+  top: 16px;
+  left: 92px;
+  width: min(300px, calc(100% - 108px));
+  z-index: 20;
+}
+
+.wm-search input {
+  width: 100%;
+  padding: 10px 12px;
+  background: rgba(16, 24, 42, 0.95);
+  border: 1px solid #2f3e5e;
+  border-radius: 6px;
+  color: #e6e9ef;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.wm-search input:focus {
+  border-color: #5b7bb0;
+}
+
+.wm-search ul {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 4px 0;
+  background: rgba(16, 24, 42, 0.98);
+  border: 1px solid #2f3e5e;
+  border-radius: 6px;
+}
+
+.wm-search button {
+  width: 100%;
+  text-align: left;
+  padding: 6px 12px;
+  background: none;
+  border: 0;
+  color: #e6e9ef;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.wm-search button:hover {
+  background: #22314f;
+}
+
+/* ── Panel ───────────────────────────────────────────────────────────── */
+.wm-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 420px;
+  max-width: 100%;
+  overflow-y: auto;
+  padding: 20px 22px 32px;
+  background: rgba(13, 20, 36, 0.97);
+  border-left: 1px solid #24324f;
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.4);
+  z-index: 30;
+  animation: wm-slide-in 0.25s ease-out;
+}
+
+@keyframes wm-slide-in {
+  from { transform: translateX(40px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+.wm-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: none;
+  border: 0;
+  color: #8a96ad;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.wm-close:hover {
+  color: #fff;
+}
+
+.wm-crumbs {
+  margin-bottom: 10px;
+  padding-right: 24px;
+  color: #5b6a86;
+  font-size: 0.85rem;
+}
+
+.wm-source {
+  margin-top: 24px !important;
+  color: #5b6a86;
+  font-size: 0.75rem;
+}
+
+.wm-source a {
+  color: #7d8fb0;
+}
+
+.wm-credits {
+  position: absolute;
+  z-index: 10;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: rgba(11, 18, 32, 0.7);
+  color: #5b6a86;
+  font-size: 0.7rem;
+  transition: right 0.25s, bottom 0.25s;
+}
+
+.wm-credits a {
+  color: #7d8fb0;
+}
+
+.wm-breadcrumb {
+  display: inline;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: #8fb4ff;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.wm-breadcrumb:hover {
+  text-decoration: underline;
+}
+
+.wm-subs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0 12px;
+  margin-top: 8px !important;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.wm-subs li {
+  padding: 2px 0;
+}
+
+.wm-subs button {
+  padding: 0;
+  background: none;
+  border: 0;
+  color: #e8b558;
+  font-size: 0.88rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.wm-subs button:hover {
+  text-decoration: underline;
+}
+
+.wm-panel-header {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-right: 24px;
+}
+
+.wm-panel-header h2 {
+  margin: 0;
+  text-align: left;
+  background: none;
+  line-height: 1.2;
+  font-size: 1.4rem;
+  color: #fff;
+}
+
+.wm-thumb {
+  width: 72px;
+  max-height: 72px;
+  object-fit: contain;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.wm-desc {
+  margin: 4px 0 0;
+  color: #8a96ad;
+  font-size: 0.85rem;
+}
+
+.wm-extract {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #c9d0dc;
+}
+
+.wm-main-link {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: #e0a43a;
+  font-size: 0.9rem;
+}
+
+.wm-status,
+.wm-error {
+  color: #8a96ad;
+  font-size: 0.9rem;
+}
+
+.wm-error {
+  color: #e57373;
+}
+
+.wm-section {
+  margin-top: 18px;
+}
+
+.wm-section h3 {
+  margin: 0 0 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a96ad;
+  border-bottom: 1px solid #24324f;
+  padding-bottom: 4px;
+}
+
+.wm-section ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.wm-section li {
+  padding: 5px 0;
+}
+
+.wm-section a {
+  color: #8fb4ff;
+  text-decoration: none;
+  font-size: 0.92rem;
+}
+
+.wm-section a:hover {
+  text-decoration: underline;
+}
+
+.wm-link-desc {
+  display: block;
+  color: #7d889c;
+  font-size: 0.78rem;
+  margin-top: 1px;
+}
+
+.wm-more-toggle {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: #8a96ad;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.wm-more {
+  margin-top: 8px !important;
+}
+
+@media (max-width: 640px) {
+  .wm-panel {
+    top: auto;
+    height: 60%;
+    width: 100%;
+    border-left: 0;
+    border-top: 1px solid #24324f;
+  }
+}

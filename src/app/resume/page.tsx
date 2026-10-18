@@ -36,6 +36,9 @@ function Resume() {
             <Link className="projectItem" href="/knowledgegraph">
               <p className="projectText">Knowledge Graph</p>
             </Link>
+            <Link className="projectItem" href="/worldmap">
+              <p className="projectText">World Map</p>
+            </Link>
 
             {/* Class Notes */}
             {/* <h2 className="projectsTitle" style={{paddingTop: "10%"}}>Class Notes</h2>
