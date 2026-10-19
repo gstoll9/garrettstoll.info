@@ -1,0 +1,416 @@
+party_qid,name,short_name,color,alignment
+Q101116021,Popular Renewal,,,right-wing
+Q1021144,Civic Coalition,,,
+Q10225,Indian National Congress,INC,#00BFFF,
+Q10230,Bharatiya Janata Party,BJP,#F4C430,right-wing
+Q1024804,United National Congress,,#FCCC08,centre-left
+Q1037389,Malawi Congress Party,,#FF0000,centre-right
+Q1045162,People's Democratic Party of Tajikistan,,#EE973E,centre-left
+Q104581386,United Hearts Movement,,,
+Q104778590,Mekenchil,,#194A9A,
+Q1048242,Islamic Dawa Party,,#009900,
+Q104853338,Faʻatuatua i le Atua Samoa ua Tasi,,,
+Q105112,Swedish Social Democratic Party,,#ED1B34,centre-left
+Q1053668,Justicialist Party,,#104E8B,big tent
+Q105637541,United Democratic Alliance,,,
+Q106319619,Realizing Goals,,,centre-right
+Q10658,Scottish National Party,SNP,#FFF95D,centre-left
+Q1066799,Broad Front,,#084B8A,centre-left
+Q10691,Plaid Cymru,,#0AA77D,left-wing
+Q10728124,ANO 2011,,#261060,centre-right
+Q107566748,Jersey Alliance,,#236192,centre-right
+Q1076562,New Progressive Party,,#161687,centre-right
+Q108454548,Freedom Advances,,#7401DF,right-wing
+Q108837483,Brazil Union,,#40CCFF,centre-right
+Q1090630,Democrats,,#231F20,centre-right
+Q110097833,Somos Energía para Renovar Santa Cruz,,,
+Q110677493,People's Alliance,,,
+Q110832,Centre Party,,#124838,centrism
+Q110837,Left Party,,#B00000,left-wing
+Q110843,Moderate Party,,#019CDB,centre-right
+Q110947393,Azerbaijan Democratic Entrepreneurs Party,,,
+Q111077075,Amanat,,#55B49F,right-wing
+Q1126036,National Congress for Timorese Reconstruction,CNRT,#1E90FF,centre-left
+Q1127178,Mongolian People's Party,,#ED1B34,left-wing
+Q112939010,Equity Party,,,
+Q113163582,United List,,#FFAC01,centrism
+Q113453660,Europe Now,,,centre-right
+Q113501233,US,,#7E71B1,
+Q1141127,Social Democratic Alliance,,#FA3B45,centre-left
+Q1142687,KDU-ČSL,,#FFD700,centre-right
+Q1142913,Pheu Thai Party,PTP,#DA3731,big tent
+Q1143161,Social Democratic Party of Bosnia and Herzegovina,,#E32636,centre-left
+Q1144610,Republican Party of Armenia,,#D2691E,right-wing
+Q1145280,Ethiopian People's Revolutionary Democratic Front,,,
+Q114562488,Revolution for Prosperity,,,
+Q1146334,Uzbekistan Liberal Democratic Party,,,centre-right
+Q1148441,New Patriotic Party,NPP,#0070FF,centre-right
+Q11507096,AICHI IS TOP OF JAPAN,,,
+Q1152752,Democratic Party of Turkmenistan,,#1CC858,
+Q115806730,People's Power,,#E72323,
+Q1160192,Anders,,#3D35FF,centre-right
+Q1166149,All India N.R. Congress,,#FFC000,
+Q1185830,Democrats,,#99FF33,centre-right
+Q1185837,Democratic Action Party,,#ED1C24,
+Q1185876,Democratic Progressive Party,,#1E90FF,
+Q1186227,Democratic Party,,#2643A3,centre-right
+Q1186306,Indonesian Democratic Party – Struggle,,#DB2016,centre-left
+Q1195092,Nur Otan,,#1CA9C9,big tent
+Q12056111,Mayors for the Liberec Region,,#804E96,centre-right
+Q120971997,National Democratic Action,,#6F2892,centre-left
+Q1230558,miscellaneous right,,#ADC1FD,right-wing
+Q1230566,miscellaneous left,,#FFC0C0,left-wing
+Q1233269,Movement for Autonomies,,,centre-right
+Q1235589,People's Party for Reconstruction and Democracy,,#FFCC33,
+Q123585,Radical Civic Union,,#C40233,
+Q124254489,Q124254489,,,
+Q124408791,Tamilaga Vettri Kazhagam,,,
+Q125418097,Respect and Freedom Party,,#88E8FF,centre-right
+Q1254278,National Democratic Congress,,#FFD700,centrism
+Q1255291,New Democratic Party,,#FFCC29,
+Q1256720,Human Rights Protection Party,,#0047AB,centre-right
+Q1258283,Alliance of Independent Social Democrats,,#C90000,right-wing
+Q1277738,Antigua and Barbuda Labour Party,,,
+Q128605255,"People's Party (Thailand, 2024)",,#FF640B,centre-left
+Q1287573,Dominica Labour Party,,#F0001C,
+Q1288512,People's Electoral Movement,,,
+Q1292804,Saint Lucia Labour Party,,#DC241F,centre-left
+Q129844,Aam Aadmi Party,AAP,#266BBA,centre-left
+Q1318070,Union Solidarity and Development Party,,#006B31,right-wing extremism
+Q13212022,Pashtunkhwa Milli Awami Party,PMAP,#FF4500,
+Q1322751,Democratic Movement Party,,#2E8B57,big tent
+Q1322897,Brazilian Social Democracy Party,,#084B8A,centre-right
+Q13231807,Democratic Front,,#FF6600,
+Q13405290,Indonesian Justice and Unity Party,,#E4000E,
+Q134311805,Democratic Union of Builders,,,
+Q1344670,Christian Social People's Party,,#FFC300,centre-right
+Q135553930,Sovereign People's Party,,#0DA4B5,
+Q138198,Spanish Socialist Workers' Party,,#EF1C27,centre-left
+Q138345,Liberal Party of Canada,,#D71920,centre-left
+Q138546752,Progressive Bulgaria,,#204A41,
+Q1395049,Christian Democratic Party,,#0261A5,centrism
+Q1414708,Democratic Labour Party,,#ED1C24,centre-left
+Q1422826,Renovación Nacional,,#135BB8,centre-right
+Q1455532,Democratic Party of Côte d'Ivoire – African Democratic Rally,,#0FAF32,centre-right
+Q1460677,General People's Congress,,#FFCD00,centrism
+Q1472820,People's Force,,#FF6F00,right-wing
+Q1476937,Liberal Party of the Philippines,,#F0E68C,centre-left
+Q14924303,Forza Italia,,#00A2E8,centre-right
+Q150068,Republican Left of Catalonia,,#FFB232,centre-left
+Q1507720,Republican Proposal,,,centre-right
+Q1511101,Prosperous Justice Party,,#FFA500,Islamism
+Q1514253,Rally of the Togolese People,,#037338,right-wing
+Q151469,United Russia,,#2056AE,big tent
+Q15177537,Dialogue – The Greens' Party,,#39B54A,centre-left
+Q1518057,Progressive Conservative Association of Alberta,,,
+Q1536552,Golkar,,#FFFF00,
+Q1539301,Jamaica Labour Party,,#00A94C,centre-right
+Q1551163,Peoples Democratic Party,PDP,#006903,centre-right
+Q1561861,Nationalist Congress Party,,#00B2B2,centre-left
+Q1562850,Democratic Party of the Virgin Islands,,,
+Q1565799,Progressive Labour Party,,,
+Q156868,Civic Platform,,#FCA241,centre-right
+Q156874,Law and Justice,,#073A76,right-wing
+Q15717618,Morena,,#B62118,left-wing
+Q1576143,Brazilian Labour Party,,#005533,centre-right
+Q1579466,National Party of Honduras,,#0A408A,right-wing
+Q1582199,Central African Democratic Rally,,,
+Q1586610,Mayors and Independents,,#CD0F69,centrism
+Q15978686,Democratic Party of Korea,,#152484,centrism
+Q15980820,Bukidnon Paglaum,,#F0E68C,
+Q160188,Social Democratic Union of Macedonia,,#C0181F,centre-left
+Q1606430,United National Workers' Party,,#989898,
+Q1626979,Jammu & Kashmir National Conference,,#FF3D3D,
+Q1629663,Union for Democracy and Social Progress,,#CF1020,
+Q1668154,United Malays National Organisation,UMNO,#F21415,right-wing
+Q16792,Croatian Democratic Union of Bosnia and Herzegovina,,,
+Q167928,Union of Greens and Farmers,,#02723A,centre-right
+Q1682545,Janatha Vimukthi Peramuna,,#F90818,far-left politics
+Q170972,Socialist Party,,#E3265B,left-wing
+Q1723564,Kanak and Socialist National Liberation Front,,,
+Q17305307,Civil Contract,,#5169B1,centrism
+Q173152,Union for a Popular Movement,,#0066CC,right-wing
+Q17427,Chinese Communist Party,CCP,#DD0000,
+Q17515858,Modern Revolutionary Party,,#00416A,centre-left
+Q1756601,People's Justice Party,,#00ADEF,centre-left
+Q1757843,Brothers of Italy,,#003366,right-wing
+Q1759613,People's United Party,,#0066FF,centre-left
+Q1781632,United Party for National Development,,#FF0000,
+Q1785816,Congolese Party of Labour,,#DC241F,centre-left
+Q178888,Fatah,,,centre-left
+Q179111,Social Democratic Party of Austria,,#CE000C,centre-left
+Q1798571,Nationalist People's Coalition,,#4AA02C,
+Q18015490,People's Front,,#E4B122,right-wing
+Q1817797,People's Rally for Progress,,,
+Q18347306,Umbrella for Democratic Change,,,
+Q185088,People's Party,,#1D84CE,right-wing
+Q18510707,Latgale Party,,,
+Q18552710,NOVO,,#FF8511,right-wing
+Q186591,Pakistan Peoples Party,PPP,#000000,
+Q186867,Austrian People's Party,,#63C3D0,centre-right
+Q187009,Likud,,#01447B,right-wing
+Q190219,Norwegian Labour Party,,#E31836,centre-left
+Q19077,Justice and Development Party,JDP,#FFCC00,right-wing
+Q1910161,Zimbabwe African National Union – Patriotic Front,ZANU–PF,#008000,left-wing
+Q192187,Communist Party of the Russian Federation,,#D70000,left-wing
+Q193178,The Greens – The Green Alternative,,#88B626,centre-left
+Q19588325,Proud to serve Riga,,#004898,centre-right
+Q1964815,Nauru First,,#002780,centre-right
+Q1968011,National Movement for the Development of Society,,,
+Q1972521,People's Progressive Party,PPP/C,#BF1B2C,left-wing
+Q1972741,Pachakutik,,#FE2EC8,left-wing
+Q197864,United Socialist Party of Venezuela,,#F0001C,left-wing
+Q20012759,The Republicans,,#034EA2,right-wing
+Q2003166,People's Party,,,
+Q2007531,Pangu Party,,#51C106,centre-left
+Q200875,National Democratic Congress,NDC,#2E8B57,centre-left
+Q2033938,Sierra Leone People's Party,,#006600,centre-left
+Q204543,National Liberation Front,,#DC143C,big tent
+Q204716,New Zealand National Party,,#00529F,centre-right
+Q2054750,Social Democratic Party,,#70C846,
+Q2054789,Brazilian Socialist Party,,#FFBF00,
+Q2055003,Socialists' Party of Catalonia,,#E73B39,centre-left
+Q2058159,Patriotic Front,,#3063AE,centre-left
+Q206395,United Seychelles Party,,#FF0D13,left-wing
+Q20683858,Australian Labor Party (Australian Capital Territory Branch),,#DE3533,
+Q2069646,People's Progress Party,,#EB5A4A,
+Q20726013,Together for Corsica,,,
+Q20859150,Chile Vamos,,,centre-right
+Q21003570,Australian Labor Party (South Australian Branch),,#DE3533,centre-left
+Q210692,A Just Russia,,#B40404,centre-left
+Q210703,Israeli Labor Party,,#C61318,centre-left
+Q212101,Social Democrats,,#C82518,centre-left
+Q212115,Liberal Democratic Party of Russia,,#2862B3,right-wing
+Q213654,Christian Democrats,,#231977,centre-right
+Q21499745,Nippon Ishin no Kai,Ishin,#B8CE43,centre-right
+Q215350,Forza Italia,,#0087DC,centre-right
+Q216082,Australian Labor Party,ALP,#F00011,centre-left
+Q216517,Fianna Fáil,FF,#66BB66,centre-right
+Q216660,Nepali Congress,,#008000,
+Q217321,Venstre,,#01438E,centre-right
+Q218477,Polish People's Party,,#2ED397,centre-right
+Q220847,Freedom and Solidarity,,#9BC31C,centre-right
+Q2225652,Saskatchewan Party,,#025941,centre-right
+Q222897,SYRIZA,,#EE808F,centre-left
+Q223153,New Democracy,,#185CCB,centre-right
+Q2236823,"Socialist, Radical, Citizen and Miscellaneous Left",,#CC0000,
+Q2271402,National Council for the Defense of Democracy–Forces for the Defense of Democracy,,#CC0001,big tent
+Q2285614,Sikkim Democratic Front,SDF,#FF9933,
+Q23058731,Tobwaan Kiribati Party,,#0C528D,
+Q232595,Liberal Democratic Party,LDP,#D7003A,right-wing
+Q2366265,Social Liberal Party,,#008000,right-wing extremism
+Q23691290,Tapura Huiraatira,,#DD0000,
+Q23731823,Renaissance,,#FFD600,centre-left
+Q239333,People's Party for Freedom and Democracy,,#0328CB,centre-right
+Q239539,Christian Union,,#00A7EB,centrism
+Q2399535,Progressive Conservative Party of Newfoundland and Labrador,,,
+Q2420320,National Democratic Party,,#872890,left-wing
+Q2429562,Cook Islands Party,,#015A00,
+Q2434365,Partai Amanat Nasional,,#0000FF,centrism
+Q24863,Democrats for Andorra,,#F08013,centre-right
+Q2495179,United Democratic Party,,#FBFA60,centre-left
+Q250738,Saint Kitts and Nevis Labour Party,,#C0504D,centre-left
+Q25210911,Victorian Labor Party,,#F00011,centre-left
+Q253586,Serbian Progressive Party,,#242970,big tent
+Q25405448,Juntos Somos Río Negro,,,centre-right
+Q2566823,Progressive Liberal Party,,#FFD700,
+Q2578342,People's Democratic Party,,#324D7A,centrism
+Q2626213,Social Christian Party,,#009038,centre-right
+Q266582,Democratic Union of Hungarians in Romania,,#296633,centrism
+Q2669302,Partai Persatuan Pembangunan,,#00A100,
+Q2712780,Movement for the Future of Curaçao,,#FFFFFF,centre-right
+Q273749,Christian Democratic Appeal,,#1F9359,centre-right
+Q27389,Sandinista National Liberation Front,,,left-wing
+Q275441,Labour Party,,#DF111A,left-wing
+Q2788422,Independent Democratic Action,,#FFEB00,
+Q281986,Democratic Party,,#FFE000,centre-left
+Q2828960,Akbayan,,#FE0000,centre-left
+Q2838240,Alliance for Democracy in Mali,,#EB1D2A,centre-left
+Q284454,Pakistan Tehreek-e-Insaf,PTI,#E70A0A,centrism
+Q28551,People's Movement for the Liberation of Angola,,#F0001C,left-wing
+Q2867848,New Brunswick Liberal Association,,,
+Q2868020,Progressive Conservative Association of Nova Scotia,,,
+Q28841838,Article 1 – Democratic and Progressive Movement,,,left-wing
+Q28845510,Social Affirmation Movement,,,
+Q28982,New Flemish Alliance,,#F9CE19,centre-right
+Q2934607,Caledonia Together,,#00CCCC,centre-right
+Q29468,Republican Party,GOP,#E9151E,right-wing
+Q29534,Vetëvendosje!,,#CC0033,centre-left
+Q29552,Democratic Party,Dem,#003CBA,centrism
+Q2996378,Patriotic Pan-African Convergence,,,
+Q302210,Nacionalista Party,,#98FB98,centre-right
+Q304191,National Coalition Party,NCP,#136389,centre-right
+Q30668457,Liberal Party of Australia (Tasmanian Division),,#0047AB,
+Q31113,Kuomintang,KMT,#000099,centre-right
+Q31373,Vanua'aku Pati,,,left-wing
+Q3176618,Socialist Party of the Valencian Country,,#DD0000,centre-left
+Q3226266,The Rally,,,
+Q3240730,Lakas–CMD,,,centre-right
+Q3273397,Jharkhand Mukti Morcha,,#CC3333,
+Q327591,independent politician,Independent,#DDDDDD,
+Q3277586,Naga People's Front,,#28166F,
+Q3323457,Asturian Socialist Federation,,#DD0000,
+Q3326740,People's National Movement,PNM,,centre-left
+Q3326782,Pour La Réunion,,,
+Q3360918,Afghan Social Democratic Party,,,
+Q3366796,Labour Party,,#FF0000,
+Q371395,People's Action Party,PAP,#0052A1,centre-right
+Q371402,Communist Party of Cuba,,,left-wing
+Q372043,Slovakia,,#42B5C2,centre-right
+Q382674,National Resistance Movement,,#FFD700,big tent
+Q385258,Swiss People's Party,SVP/UDC,#009F4F,right-wing
+Q387006,Fidesz,,#FF6A00,right-wing
+Q41040535,Party of Hope,,#186439,
+Q4207219,NasDem Party,,#27408B,
+Q42418,Taliban,,,right-wing extremism
+Q4261459,Great Indonesia Movement Party,,#B79164,right-wing
+Q4262048,Aceh Party,,,
+Q427325,Communist Party of Vietnam,,,left-wing
+Q429642,Cambio Radical (Colombia),,#FF555F,
+Q430616,People's Party of the Russian Federation,,#D996B2,centrism
+Q43093,Basque Nationalist Party,,#4AAE4A,centrism
+Q4349891,European Solidarity,,#1B3892,centre-right
+Q4362,Social Democratic Party of Lithuania,,#E10514,centre-left
+Q44102,Party of Socialists and Democrats,,,
+Q44282,Sammarinese Christian Democratic Party,,#3C66B2,centre-right
+Q45376,Batkivshchyna,,#ED1C24,centre-right
+Q459960,Sudan People's Liberation Movement,SPLM,#0F47AF,big tent
+Q461886,Italian Communist Party,,#FF0000,left-wing
+Q46516,Georgian Dream,,#004A99,big tent
+Q467711,SWAPO Party,,#F0001C,left-wing
+Q4729266,All Progressives Congress,APC,#87BEEB,centre-left
+Q4732394,Alliance for Progress,,#000088,left-wing
+Q47520052,United Democrats,,,centre-left
+Q4763979,Anguilla Progressive Movement,,#008000,
+Q47720,The People of Freedom,,#0087DC,centre-right
+Q47729,Democratic Party,,#FFA500,centre-left
+Q47750,Lega Nord,,#00A651,right-wing
+Q47781,Union of the Centre,,#87CEFA,centrism
+Q483770,United New Democratic Party,,#FF8200,
+Q493685,Centre Party,,#008542,centrism
+Q49623,Workers’ Party of Korea,,#FF0000,far-left politics
+Q49673,Fatherland Union,,#E00831,centre-right
+Q496810,Bangladesh Nationalist Party,BNP,#0087DC,
+Q497464,African Party for the Independence of Cape Verde,,#CD000A,centre-left
+Q49762,Christian Democratic Union,,#000000,centre-right
+Q49763,Christian Social Union of Bavaria,,#008AC5,centre-right
+Q49766,Alliance '90/The Greens,,#409A3C,centre-left
+Q49768,Social Democratic Party of Germany,,#E3000F,centre-left
+Q504000,Communist Party of Brazil,,#DA251C,
+Q504564,FRELIMO,,#DC143C,left-wing
+Q506537,Communist Party of Nepal (Maoist Centre),,#8B0000,
+Q5166253,Convention for the Renewal of the Comoros,,,centre-left
+Q52292915,Servant of the People,,#38B34A,big tent
+Q5255716,Democratic Party of Guam,,#00A4E4,
+Q5255722,Democratic Party of Oregon,DPO,,
+Q5255729,Democratic Party of the Philippines,,#0054A5,
+Q526294,Slovenian Democratic Party,,#FCDC00,right-wing
+Q53025,Gibraltar Socialist Labour Party,,#D20D13,
+Q533384,Reformist Movement,,#002EFF,centre-right
+Q541679,Democrats of the Left,,#E30B5C,centre-left
+Q550159,Unity Party,,#026536,
+Q5505872,Party of Social Concord,,,
+Q55604511,Australian Labor Party (Northern Territory Branch),,#DE3533,
+Q55604512,Australian Labor Party (Queensland Branch),,#DE3533,
+Q55614046,Hugpong ng Pagbabago,,#C01D2E,
+Q56274977,Semilla Movement,,,centre-left
+Q56276763,Western Australian Labor Party,,#DE3533,
+Q571175,Siumut,,#FF0202,centre-left
+Q57986086,Nuevas Ideas,,#00ADEF,centre-right
+Q586364,Conservative Party of Norway,,#0065F1,centre-right
+Q5932301,Partido ng Manggagawa at Magsasaka,,#CC0000,
+Q595575,Social Democratic Party,,#FF9900,centre-right
+Q602131,Independent Democratic Union,,#00008B,centre-right
+Q605960,Socialist Forces Front,,#007FFF,centre-left
+Q60749150,Partido Federal ng Pilipinas,,#C01D2E,
+Q60775601,Union for Peace and Development Party,,,centre-right
+Q61750742,People's National Congress,,#24DBCB,
+Q633442,Jobbik,,#047B60,centre-right
+Q6343824,Kabalikat ng Malayang Pilipino,,#00008B,
+Q642882,Socialist Party of Albania,SP,#830E73,left-wing
+Q645787,Socialist Party,,#FF0000,centre-left
+Q6467449,Labour Party,LP,#F0DC82,centre-left
+Q6508513,Australian Labor Party (New South Wales Branch),,#DE3533,
+Q652091,Party of the Revolution,CCM,#228B22,centre-left
+Q657089,Workers' Party,,#DA1208,
+Q659739,Green Party of Switzerland,Greens,#84B414,left-wing
+Q66029902,Taiwan People's Party,TPP,#40E0D0,centrism
+Q662849,National Alliance,,#0148A4,right-wing
+Q663461,Liberal Democratic Party of Moldova,,#026C02,
+Q677505,Patriotic Union of Kurdistan,,#00A550,centre-left
+Q682969,Institutional Revolutionary Party,,#4DA663,centrism
+Q68340865,Cambiamo!,,#3241C2,centre-right
+Q684886,Labour Party,,#EE3224,centre-left
+Q6851928,Militant Socialist Movement,,,
+Q686098,Union of Right Forces,,#1935D0,centre-right
+Q686228,National Liberal Party,,#FFDD00,centre-right
+Q690240,Rwandan Patriotic Front,RPF,#0087DC,
+Q6926622,Movement for Change and Prosperity,MCAP,,
+Q6974870,National People's Party,NPP,#DB7093,
+Q6979208,National Unity Party,,#104A21,
+Q7049542,nonpartisanism,,,
+Q7076484,Uzbekistan National Revival Democratic Party,,,right-wing
+Q7140531,Partido Demokratiko Pilipino,,#FFD700,centre-left
+Q7165524,People's Democratic Movement,,#0FE1F1,
+Q7193584,The National Alliance,,#F5051C,
+Q7248774,Progressive Republican Party,,,centre-left
+Q7314695,Our Party,,#003366,
+Q732852,Progressive Party,,#3A5AA7,
+Q738439,Croatian Democratic Union,,#025EB1,right-wing
+Q738947,Estonian Reform Party,,#FBCF05,centre-right
+Q740420,Barbados Labour Party,,#EC2227,centre-left
+Q747333,Colombian Conservative Party,,#33A2FF,
+Q747910,Democrats 66,,#00AE41,centrism
+Q750673,Christian Democratic and Flemish,,#FF6200,centrism
+Q752259,Bulgarian Socialist Party,,#D71921,left-wing
+Q756180,Lao People's Revolutionary Party,,#CE1126,left-wing
+Q761877,Democratic Alliance,,#005BA6,centrism
+Q76382,Sinn Féin,SF,#326760,left-wing
+Q766275,Hungarian Democratic Forum,,#008000,
+Q767010,Party of the Democratic Revolution,,#FFCD00,centre-left
+Q769308,Cambodian People's Party,CPP,#1E90FF,big tent
+Q774542,New Democratic Party of Manitoba,,#F78F20,centre-left
+Q784586,Authenticity and Modernity Party,,#0331A1,centre-left
+Q7886485,Union for the Republic,,#327ADC,centrism
+Q7888308,United Nationalist Alliance,,,
+Q7889009,United Opposition,,#0000FF,
+Q7902341,Utah Democratic Party,,,
+Q7933937,Virgin Islands Party,,,
+Q79854,Communist Party of the Soviet Union,,#D40000,left-wing
+Q799577,Pakistan Muslim League (N),PML(N),#228B22,
+Q8058167,Young Guard of United Russia,,,
+Q8074317,Zoram Nationalist Party,,,
+Q808210,Barisan Nasional,,#000080,
+Q815348,Christian Democracy,,#FFFFFF,centrism
+Q821929,Direction – Social Democracy,,#D82222,left-wing
+Q823648,Socialist Party of Chile,,#FF0000,left-wing
+Q826977,Progressive Conservative Party of Ontario,,,centre-right
+Q828099,Civic Democratic Party,,#034EA2,right-wing
+Q828392,People's Party – Movement for a Democratic Slovakia,,#73C2FB,
+Q830323,Social Democratic Party of Croatia,,#ED1C24,centre-left
+Q83162,African National Congress,,#006600,centre-left
+Q847263,Socialist Party,,#FF66FF,centre-left
+Q849580,Socialist Party,,#FF0000,left-wing
+Q851087,National Action Party,,#0957A4,right-wing
+Q85412437,People Power Party,PPP,#E61E2B,right-wing
+Q856027,Social Democratic Party of the Faroe Islands,,#A73033,centre-left
+Q863376,People's Front for Democracy and Justice,,,big tent
+Q86674609,Ecological Party of Uzbekistan,,#308052,
+Q876402,New Azerbaijan Party,,#0070C3,
+Q8794,Primero Justicia,,,
+Q903671,Harmony Centre,,#FF9074,
+Q903822,Democratic Progressive Party,DPP,#1B9431,centre-left
+Q923843,Liberals for Åland,,#8E96CB,centrism
+Q926973,Republicans,,#4DBCE7,
+Q928949,Colorado Party,,#EF1B1A,right-wing
+Q929804,N/A,,,
+Q935996,Revolutionary Front for an Independent East Timor,,#FF0000,
+Q939354,Vooruit,,#FF2900,centre-left
+Q945717,Internal Macedonian Revolutionary Organization – Democratic Party for Macedonian National Unity,VMRO-DPMNE,#CC0000,
+Q946306,Our Party,,#B80404,liberalism
+Q953447,Cameroon People's Democratic Movement,CPDM,#73C2FB,big tent
+Q96099072,We Can!,,#C3D746,
+Q9630,Labour Party,,#DC241F,centre-left
+Q96754424,Voice – Social Democracy,,#830F38,centre-left
+Q97180861,National People's Party,,,
+Q98347378,"African Patriots of Senegal for Work, Ethics and Fraternity",,,

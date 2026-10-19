@@ -1,0 +1,460 @@
+iso3,language_qid,language
+ABW,Q33856,Papiamento
+ABW,Q7411,Dutch
+AFG,Q36670,Pashayi
+AFG,Q33049,Balochi
+AFG,Q161804,Nuristani
+AFG,Q58680,Pashto
+AFG,Q9267,Turkmen
+AFG,Q178440,Dari
+AFG,Q13955,Arabic
+AFG,Q1772864,Pamir
+AFG,Q9264,Uzbek
+AGO,Q5146,Portuguese
+AIA,Q1860,English
+ALA,Q9027,Swedish
+ALB,Q8748,Albanian
+AND,Q7026,Catalan
+ARE,Q13955,Arabic
+ARG,Q1321,Spanish
+ARM,Q8785,Armenian
+ASC,Q1860,English
+ASM,Q34011,Samoan
+ASM,Q1860,English
+ATB,Q1860,English
+ATF,Q150,French
+ATG,Q1860,English
+ATG,Q1321,Spanish
+ATN,Q9043,Norwegian
+AUS,Q1860,English
+AUT,Q188,German
+AUT,Q36668,Austrian Sign Language
+AZE,Q9292,Azerbaijani
+AZE,Q55698568,Azerbaijani Sign Language
+BDI,Q150,French
+BDI,Q33583,Kirundi
+BDI,Q1860,English
+BEL,Q188,German
+BEL,Q150,French
+BEL,Q7411,Dutch
+BEN,Q150,French
+BES,Q33856,Papiamento
+BES,Q1860,English
+BES,Q7411,Dutch
+BFA,Q32706,Dioula
+BFA,Q32934,Bissa
+BFA,Q36096,Mooré
+BGD,Q9610,Bangla
+BGR,Q7918,Bulgarian
+BHR,Q13955,Arabic
+BHS,Q1860,English
+BIH,Q9303,Bosnian
+BIH,Q9299,Serbian
+BIH,Q6654,Croatian
+BLM,Q150,French
+BLR,Q9091,Belarusian
+BLR,Q7737,Russian
+BLZ,Q1860,English
+BMU,Q1860,English
+BOL,Q5218,Quechua
+BOL,Q1321,Spanish
+BOL,Q35876,Guarani
+BOL,Q4627,Aymara
+BRA,Q5146,Portuguese
+BRB,Q2524014,Bajan Creole
+BRB,Q1860,English
+BRN,Q7979,British English
+BRN,Q9237,Malay
+BTN,Q33081,Dzongkha
+BWA,Q1860,English
+CAF,Q33954,Sango
+CAF,Q150,French
+CAN,Q1860,English
+CAN,Q150,French
+CCK,Q1860,English
+CHE,Q150,French
+CHE,Q652,Italian
+CHE,Q188,German
+CHE,Q13199,Romansh
+CHL,Q1321,Spanish
+CHN,Q24841726,Putonghua
+CIV,Q150,French
+CMR,Q150,French
+CMR,Q1860,English
+COD,Q150,French
+COG,Q150,French
+COK,Q1860,English
+COK,Q36745,Cook Islands Maori
+COL,Q1321,Spanish
+COM,Q150,French
+COM,Q13955,Arabic
+COM,Q33077,Comorian
+CPV,Q5146,Portuguese
+CPV,Q35963,Cape Verdean Creole
+CRI,Q1321,Spanish
+CRQ,Q1860,English
+CRQ,Q150,French
+CUB,Q1321,Spanish
+CUW,Q1860,English
+CUW,Q33856,Papiamento
+CUW,Q7411,Dutch
+CXR,Q1860,English
+CYM,Q1860,English
+CYP,Q256,Turkish
+CYP,Q36510,Modern Greek
+CZE,Q9056,Czech
+DEU,Q188,German
+DJI,Q150,French
+DJI,Q13955,Arabic
+DMA,Q1860,English
+DNK,Q9035,Danish
+DOM,Q1321,Spanish
+DZA,Q61053330,Standard Algerian Berber
+DZA,Q13955,Arabic
+ECU,Q1321,Spanish
+ECU,Q1740805,Northern Quichua
+ECU,Q617291,Shuar
+EGY,Q13955,Arabic
+ERI,Q1860,English
+ERI,Q13955,Arabic
+ERI,Q34124,Tigrinya
+ESH,Q13955,Arabic
+ESP,Q1321,Spanish
+EST,Q9072,Estonian
+ETH,Q28244,Amharic
+FIN,Q9027,Swedish
+FIN,Q1412,Finnish
+FJI,Q33295,Fijian
+FJI,Q46728,Fiji Hindi
+FJI,Q1860,English
+FLK,Q7979,British English
+FRA,Q150,French
+FRO,Q25258,Faroese
+FRO,Q9035,Danish
+FSM,Q1860,English
+GAB,Q150,French
+GBR,Q1860,English
+GEO,Q8108,Georgian
+GGY,Q1860,English
+GHA,Q1860,English
+GIB,Q7979,British English
+GIN,Q150,French
+GIN,Q1339026,languages of Guinea
+GMB,Q1860,English
+GNB,Q5146,Portuguese
+GNQ,Q1321,Spanish
+GNQ,Q150,French
+GNQ,Q5146,Portuguese
+GRC,Q9129,Greek
+GRD,Q1860,English
+GRD,Q4252500,Grenadian Creole English
+GRL,Q25355,Greenlandic
+GTM,Q1321,Spanish
+GUF,Q150,French
+GUF,Q1363072,Guianan Creole
+GUM,Q1860,English
+GUM,Q33262,Chamorro
+GUY,Q1860,English
+HKG,Q727694,Standard Chinese
+HMD,Q1860,English
+HND,Q1321,Spanish
+HRV,Q6654,Croatian
+HTI,Q33491,Haitian Creole
+HTI,Q150,French
+HUN,Q9067,Hungarian
+IDN,Q9240,Indonesian
+IMN,Q12175,Manx
+IMN,Q1860,English
+IND,Q1568,Hindi
+IND,Q1860,English
+IOT,Q1860,English
+IRL,Q9142,Irish
+IRL,Q1860,English
+IRN,Q9168,Persian
+IRQ,Q36368,Kurdish language
+IRQ,Q13955,Arabic
+ISL,Q294,Icelandic
+ISR,Q9288,Hebrew
+ITA,Q652,Italian
+JAM,Q1860,English
+JAM,Q35939,Jamaican Patois
+JEY,Q2047043,Jersey Legal French
+JEY,Q1860,English
+JEY,Q56430,Jèrriais
+JOR,Q13955,Arabic
+JPN,Q5287,Japanese
+JTN,Q1860,English
+KAZ,Q7737,Russian
+KAZ,Q9252,Kazakh
+KEN,Q1860,English
+KEN,Q7838,Swahili
+KGZ,Q9255,Kyrgyz
+KHM,Q9205,Khmer
+KIR,Q1860,English
+KIR,Q30898,Gilbertese
+KNA,Q1860,English
+KOR,Q9176,Korean
+KOR,Q3073428,Korean Sign Language
+KWT,Q13955,Arabic
+LAO,Q9211,Lao
+LBN,Q13955,Arabic
+LBR,Q1860,English
+LBY,Q13955,Arabic
+LCA,Q1860,English
+LIE,Q188,German
+LKA,Q13267,Sinhala
+LKA,Q5885,Tamil
+LSO,Q1860,English
+LSO,Q34340,Sesotho
+LTU,Q9083,Lithuanian
+LUX,Q9051,Luxembourgish
+LUX,Q150,French
+LUX,Q188,German
+LVA,Q9078,Latvian
+MAC,Q5146,Portuguese
+MAC,Q727694,Standard Chinese
+MAC,Q9186,Cantonese
+MAF,Q150,French
+MAR,Q7598268,Standard Moroccan Tamazight
+MAR,Q13955,Arabic
+MCO,Q150,French
+MDA,Q7913,Romanian
+MDG,Q150,French
+MDG,Q7930,Malagasy
+MDV,Q32656,Maldivian
+MEX,Q13354,Yucatec Maya
+MEX,Q13300,Nahuatl
+MEX,Q1321,Spanish
+MHL,Q36280,Marshallese
+MHL,Q1860,English
+MID,Q1860,English
+MKD,Q8748,Albanian
+MKD,Q9296,Macedonian
+MLI,Q36186,Maninka
+MLI,Q1234776,Dogon
+MLI,Q33795,Senufo
+MLI,Q36905,Kassonke
+MLI,Q56231,Hassaniya Arabic
+MLI,Q33243,Bambara
+MLI,Q33454,Fula
+MLI,Q4670066,Tamasheq
+MLI,Q12628055,Bobo
+MLI,Q36660,Soninke
+MLI,Q36187,Minyanka
+MLI,Q505198,Songhay
+MLI,Q35021,Bozo
+MLT,Q1860,English
+MLT,Q9166,Maltese
+MMR,Q9228,Burmese
+MNE,Q8821,Montenegrin
+MNG,Q9246,Mongolian
+MNP,Q1860,English
+MNP,Q33262,Chamorro
+MNP,Q28427,Carolinian
+MOZ,Q5146,Portuguese
+MRT,Q13955,Arabic
+MRT,Q150,French
+MSR,Q1860,English
+MUS,Q1860,English
+MUS,Q150,French
+MWI,Q1860,English
+MWI,Q33273,Chewa
+MWI,Q34138,Tumbuka
+MYS,Q9237,Malay
+MYT,Q150,French
+MYT,Q34075,Maore
+MYT,Q5150795,Bushi
+NAM,Q1860,English
+NCL,Q150,French
+NER,Q56475,Hausa
+NFK,Q1860,English
+NFK,Q33797,Norfuk
+NGA,Q1860,English
+NIC,Q1321,Spanish
+NIU,Q1860,English
+NIU,Q33790,Niuean
+NLD,Q7411,Dutch
+NOR,Q25164,Nynorsk
+NOR,Q56463,Sámi
+NOR,Q9043,Norwegian
+NOR,Q25167,Bokmål
+NPL,Q33823,Nepali
+NRU,Q13307,Nauruan
+NRU,Q1860,English
+NZL,Q1860,English
+NZL,Q36451,Māori
+NZL,Q36239,New Zealand Sign Language
+OMN,Q13955,Arabic
+PAK,Q1617,Urdu
+PAK,Q1860,English
+PAN,Q1321,Spanish
+PCN,Q1860,English
+PCN,Q36554,Pitkern
+PER,Q1321,Spanish
+PER,Q4627,Aymara
+PER,Q5218,Quechua
+PHL,Q2530387,Taglish
+PHL,Q1860,English
+PHL,Q33298,Filipino
+PLW,Q1860,English
+PLW,Q5287,Japanese
+PLW,Q33776,Palauan
+PNG,Q33617,Hiri Motu
+PNG,Q25044405,Papua New Guinean Sign Language
+PNG,Q34159,Tok Pisin
+PNG,Q1860,English
+POL,Q809,Polish
+PRI,Q1860,English
+PRI,Q1321,Spanish
+PRK,Q9176,Korean
+PRK,Q18784,North Korean standard language
+PRT,Q5146,Portuguese
+PRY,Q1321,Spanish
+PRY,Q35876,Guarani
+PSE,Q13955,Arabic
+PYF,Q150,French
+QAT,Q13955,Arabic
+REU,Q150,French
+ROU,Q7913,Romanian
+RUS,Q7737,Russian
+RWA,Q33573,Kinyarwanda
+RWA,Q1860,English
+RWA,Q150,French
+RWA,Q7838,Swahili
+SAU,Q13955,Arabic
+SDN,Q1860,English
+SDN,Q13955,Arabic
+SEN,Q35095,Badyara
+SEN,Q35006,Balanta
+SEN,Q34257,Wolof
+SEN,Q150,French
+SGP,Q727694,Standard Chinese
+SGP,Q5885,Tamil
+SGP,Q1860,English
+SGP,Q9237,Malay
+SGS,Q1860,English
+SHN,Q1860,English
+SJM,Q9043,Norwegian
+SLB,Q1860,English
+SLE,Q1860,English
+SLE,Q35744,Krio
+SLV,Q1321,Spanish
+SMR,Q652,Italian
+SOM,Q13955,Arabic
+SOM,Q13275,Somali
+SPM,Q150,French
+SRB,Q9299,Serbian
+SSD,Q1860,English
+STP,Q5146,Portuguese
+SUR,Q7411,Dutch
+SVK,Q9058,Slovak
+SVN,Q9063,Slovene
+SWE,Q9027,Swedish
+SWZ,Q1860,English
+SWZ,Q34014,Swazi
+SXM,Q1860,English
+SXM,Q7411,Dutch
+SYC,Q150,French
+SYC,Q34015,Seychellois Creole
+SYC,Q1860,English
+SYR,Q13955,Arabic
+TCA,Q1860,English
+TCD,Q150,French
+TCD,Q13955,Arabic
+TGO,Q150,French
+THA,Q9217,Thai
+TJK,Q9260,Tajik
+TKL,Q34097,Tokelauan
+TKL,Q1860,English
+TKM,Q9267,Turkmen
+TLS,Q5146,Portuguese
+TLS,Q34125,Tetum
+TON,Q34094,Tongan
+TON,Q1860,English
+TTO,Q1860,English
+TUN,Q13955,Arabic
+TUR,Q256,Turkish
+TUV,Q1860,English
+TUV,Q34055,Tuvaluan
+TWN,Q35132,Amis
+TWN,Q262828,Standard Taiwanese Mandarin
+TWN,Q56278342,Kinmen dialect
+TWN,Q34019,Taiwanese Sign Language
+TWN,Q716627,Kavalan
+TWN,Q11071864,Truku
+TWN,Q36778,Taiwanese Hokkien
+TWN,Q172244,Kanakanavu
+TWN,Q19599280,Matsu dialect
+TWN,Q718269,Sakizaya
+TWN,Q61055662,Wuqiu dialect
+TWN,Q715755,Paiwan
+TWN,Q716599,Saaroa
+TWN,Q716690,Puyuma
+TWN,Q715766,Atayal
+TWN,Q716681,Tsou
+TWN,Q49232,Rukai
+TWN,Q715760,Yami
+TWN,Q716686,Seediq
+TWN,Q716695,Saisiyat
+TWN,Q2391532,Taiwanese Hakka
+TWN,Q56505,Bunun
+TZA,Q1860,English
+TZA,Q7838,Swahili
+UGA,Q7838,Swahili
+UGA,Q1860,English
+UKR,Q8798,Ukrainian
+UMI,Q1860,English
+USA,Q33569,Hawaiian
+USA,Q1321,Spanish
+USA,Q34011,Samoan
+USA,Q33262,Chamorro
+USA,Q28427,Carolinian
+UZB,Q9264,Uzbek
+VAT,Q397,Latin
+VAT,Q652,Italian
+VCT,Q1860,English
+VEN,Q3322064,Venezuelan Sign Language
+VEN,Q1321,Spanish
+VGB,Q1860,English
+VIR,Q1860,English
+VNM,Q9199,Vietnamese
+VUT,Q1860,English
+VUT,Q35452,Bislama
+VUT,Q150,French
+WLF,Q150,French
+WLF,Q35334,Futunan
+WLF,Q36979,Wallisian
+WSM,Q34011,Samoan
+WSM,Q1860,English
+XKS,Q8748,Albanian
+XKS,Q9299,Serbian
+YEM,Q13955,Arabic
+ZAF,Q32704,Venda
+ZAF,Q13218,Xhosa
+ZAF,Q34137,Tswana
+ZAF,Q34340,Sesotho
+ZAF,Q36785,Southern Ndebele
+ZAF,Q34327,Tsonga
+ZAF,Q10179,Zulu
+ZAF,Q14196,Afrikaans
+ZAF,Q33890,Northern Sotho
+ZAF,Q34014,Swazi
+ZAF,Q3322093,South African Sign Language
+ZAF,Q1860,English
+ZMB,Q1860,English
+ZWE,Q33614,Khoisan
+ZWE,Q13218,Xhosa
+ZWE,Q8826802,Barwe
+ZWE,Q13311,Ndau
+ZWE,Q34101,Tonga
+ZWE,Q1860,English
+ZWE,Q34004,Shona
+ZWE,Q35613,Northern Ndebele
+ZWE,Q34340,Sesotho
+ZWE,Q33273,Chewa
+ZWE,Q34137,Tswana
+ZWE,Q33672,Kalanga
+ZWE,Q8072097,Zimbabwe Sign Language
+ZWE,Q34327,Tsonga
+ZWE,Q3553981,Nambya
+ZWE,Q32704,Venda

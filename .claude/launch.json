@@ -4,8 +4,25 @@
     {
       "name": "garrettstoll-dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 3000
+    },
+    {
+      "name": "worldmap-isolated",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "next",
+        "dev",
+        "-p",
+        "3007"
+      ],
+      "port": 3007,
+      "env": {
+        "NEXT_DIST_DIR": ".next-isolated"
+      }
     }
   ]
 }

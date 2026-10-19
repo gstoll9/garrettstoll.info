@@ -1,0 +1,258 @@
+iso3,iso2,iso_numeric,name,wikidata,map_slug,capital,currency,region,income_group
+ABW,AW,533,Aruba,Q21203,aruba,Oranjestad,Aruban florin,Latin America & Caribbean,High income
+AFG,AF,004,Afghanistan,Q889,afghanistan,Kabul,afghani,"Middle East, North Africa, Afghanistan & Pakistan",Low income
+AGO,AO,024,Angola,Q916,angola,Luanda,kwanza,Sub-Saharan Africa,Lower middle income
+AIA,AI,660,Anguilla,Q25228,anguilla,The Valley,Eastern Caribbean dollar,,
+ALA,AX,248,Åland,Q5689,aland,Mariehamn,euro,,
+ALB,AL,008,Albania,Q222,albania,Tirana,Albanian lek,Europe & Central Asia,Upper middle income
+AND,AD,020,Andorra,Q228,andorra,Andorra la Vella,euro,Europe & Central Asia,High income
+ARE,AE,784,United Arab Emirates,Q878,united-arab-emirates,Abu Dhabi,United Arab Emirates dirham,"Middle East, North Africa, Afghanistan & Pakistan",High income
+ARG,AR,032,Argentina,Q414,argentina,Buenos Aires,Argentine convertible peso,Latin America & Caribbean,Upper middle income
+ARM,AM,051,Armenia,Q399,armenia,Yerevan,Armenian dram,Europe & Central Asia,Upper middle income
+ASC,AC,,Ascension,Q31890709,,Georgetown,,,
+ASM,AS,016,American Samoa,Q16641,american-samoa,Pago Pago,United States dollar,East Asia & Pacific,High income
+ATA,AQ,,Antarctica,Q51,,,,,
+ATB,,080,British Antarctic Territory,Q165783,,Rothera Research Station,pound sterling,,
+ATF,TF,260,French Southern and Antarctic Lands,Q129003,fr-s-antarctic-lands,Port-aux-Français,euro,,
+ATG,AG,028,Antigua and Barbuda,Q781,antigua-and-barb,St. John's,Eastern Caribbean dollar,Latin America & Caribbean,High income
+ATN,,216,Queen Maud Land,Q189999,,,Norwegian krone,,
+AUS,AU,036,Australia,Q408,ashmore-and-cartier-is,Canberra,Australian dollar,East Asia & Pacific,High income
+AUT,AT,040,Austria,Q40,austria,Vienna,euro,Europe & Central Asia,High income
+AZE,AZ,031,Azerbaijan,Q227,azerbaijan,Baku,Azerbaijani manat,Europe & Central Asia,Upper middle income
+BDI,BI,108,Burundi,Q967,burundi,Gitega,Burundian franc,Sub-Saharan Africa,Low income
+BEL,BE,056,Belgium,Q31,belgium,Brussels,euro,Europe & Central Asia,High income
+BEN,BJ,204,Benin,Q962,benin,Porto-Novo,West African CFA franc,Sub-Saharan Africa,Lower middle income
+BES,BQ,535,Caribbean Netherlands,Q27561,,,United States dollar,,
+BFA,BF,854,Burkina Faso,Q965,burkina-faso,Ouagadougou,West African CFA franc,Sub-Saharan Africa,Low income
+BGD,BD,050,Bangladesh,Q902,bangladesh,Dhaka,Bangladeshi taka,South Asia,Lower middle income
+BGR,BG,100,Bulgaria,Q219,bulgaria,Sofia,euro,Europe & Central Asia,High income
+BHR,BH,048,Bahrain,Q398,bahrain,Manama,Bahraini dinar,"Middle East, North Africa, Afghanistan & Pakistan",High income
+BHS,BS,044,The Bahamas,Q778,bahamas,Nassau,Bahamian dollar,Latin America & Caribbean,High income
+BIH,BA,070,Bosnia and Herzegovina,Q225,bosnia-and-herz,Sarajevo,convertible mark,Europe & Central Asia,Upper middle income
+BLM,BL,652,Saint Barthélemy,Q25362,st-barthelemy,Gustavia,euro,,
+BLR,BY,112,Belarus,Q184,belarus,Minsk,Belarusian ruble,Europe & Central Asia,Upper middle income
+BLZ,BZ,084,Belize,Q242,belize,Belmopan,Belize dollar,Latin America & Caribbean,Upper middle income
+BMU,BM,060,Bermuda,Q23635,bermuda,Hamilton,Bermudian dollar,North America,High income
+BOL,BO,068,Bolivia,Q750,bolivia,La Paz,boliviano,Latin America & Caribbean,Lower middle income
+BRA,BR,076,Brazil,Q155,brazil,Brasília,Brazilian real,Latin America & Caribbean,Upper middle income
+BRB,BB,052,Barbados,Q244,barbados,Bridgetown,Barbadian dollar,Latin America & Caribbean,High income
+BRN,BN,096,Brunei,Q921,brunei,Bandar Seri Begawan,Brunei dollar,East Asia & Pacific,High income
+BTN,BT,064,Bhutan,Q917,bhutan,Thimphu,ngultrum,South Asia,Lower middle income
+BVT,BV,074,Bouvet Island,Q23408,,,,,
+BWA,BW,072,Botswana,Q963,botswana,Gaborone,Botswana pula,Sub-Saharan Africa,Upper middle income
+CAF,CF,140,Central African Republic,Q929,central-african-rep,Bangui,Central African CFA franc,Sub-Saharan Africa,Low income
+CAN,CA,124,Canada,Q16,canada,Ottawa,Canadian dollar,North America,High income
+CCK,CC,166,Cocos (Keeling) Islands,Q36004,,West Island,Australian dollar,,
+CHE,CH,756,Switzerland,Q39,switzerland,Bern,Swiss franc,Europe & Central Asia,High income
+CHL,CL,152,Chile,Q298,chile,Santiago,Chilean peso,Latin America & Caribbean,High income
+CHN,CN,156,People's Republic of China,Q148,china,Beijing,renminbi,East Asia & Pacific,Upper middle income
+CIV,CI,384,Ivory Coast,Q1008,cote-d-ivoire,Yamoussoukro,West African CFA franc,Sub-Saharan Africa,Lower middle income
+CMR,CM,120,Cameroon,Q1009,cameroon,Yaoundé,Central African CFA franc,Sub-Saharan Africa,Lower middle income
+COD,CD,180,Democratic Republic of the Congo,Q974,dem-rep-congo,Kinshasa,Congolese franc,Sub-Saharan Africa,Low income
+COG,CG,178,Republic of the Congo,Q971,congo,Brazzaville,Central African CFA franc,Sub-Saharan Africa,Lower middle income
+COK,CK,184,Cook Islands,Q26988,cook-is,Avarua,Cook Islands dollar,,
+COL,CO,170,Colombia,Q739,colombia,Bogotá,Colombian peso,Latin America & Caribbean,Upper middle income
+COM,KM,174,Comoros,Q970,comoros,Moroni,Comorian franc,Sub-Saharan Africa,Lower middle income
+CPV,CV,132,Cape Verde,Q1011,cabo-verde,Praia,Cape Verdean escudo,Sub-Saharan Africa,Upper middle income
+CRI,CR,188,Costa Rica,Q800,costa-rica,San José,Costa Rican colón,Latin America & Caribbean,High income
+CRQ,CQ,,Sark,Q3405693,,,,,
+CUB,CU,192,Cuba,Q241,cuba,Havana,Cuban peso,Latin America & Caribbean,Upper middle income
+CUW,CW,531,Curaçao,Q25279,curacao,Willemstad,Caribbean guilder,Latin America & Caribbean,High income
+CXR,CX,162,Christmas Island,Q31063,,Flying Fish Cove,Australian dollar,,
+CYM,KY,136,Cayman Islands,Q5785,cayman-is,George Town,Cayman Islands dollar,Latin America & Caribbean,High income
+CYP,CY,196,Cyprus,Q229,cyprus,Nicosia,euro,Europe & Central Asia,High income
+CZE,CZ,203,Czech Republic,Q213,czechia,Prague,Czech koruna,Europe & Central Asia,High income
+DEU,DE,276,Germany,Q183,germany,Berlin,euro,Europe & Central Asia,High income
+DJI,DJ,262,Djibouti,Q977,djibouti,Djibouti,Djiboutian franc,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income
+DMA,DM,212,Dominica,Q784,dominica,Roseau,Eastern Caribbean dollar,Latin America & Caribbean,Upper middle income
+DNK,DK,208,Denmark,Q35,denmark,Copenhagen,Danish krone,Europe & Central Asia,High income
+DOM,DO,214,Dominican Republic,Q786,dominican-rep,Santo Domingo,Dominican peso,Latin America & Caribbean,Upper middle income
+DZA,DZ,012,Algeria,Q262,algeria,Algiers,Algerian dinar,"Middle East, North Africa, Afghanistan & Pakistan",Upper middle income
+ECU,EC,218,Ecuador,Q736,ecuador,Quito,United States dollar,Latin America & Caribbean,Upper middle income
+EGY,EG,818,Egypt,Q79,egypt,Cairo,Egyptian pound,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income
+ERI,ER,232,Eritrea,Q986,eritrea,Asmara,nakfa,Sub-Saharan Africa,Low income
+ESH,EH,732,Western Sahara,Q6250,w-sahara,,الدراهم المغربي,,
+ESP,ES,724,Spain,Q29,spain,Madrid,euro,Europe & Central Asia,High income
+EST,EE,233,Estonia,Q191,estonia,Tallinn,euro,Europe & Central Asia,High income
+ETH,ET,231,Ethiopia,Q115,ethiopia,Addis Ababa,bir,Sub-Saharan Africa,Low income
+FIN,FI,246,Finland,Q33,finland,Helsinki,euro,Europe & Central Asia,High income
+FJI,FJ,242,Fiji,Q712,fiji,Suva,Fijian dollar,East Asia & Pacific,Upper middle income
+FLK,FK,238,Falkland Islands,Q9648,falkland-is,Stanley,Falkland Islands pound,,
+FRA,FR,250,France,Q142,france,Paris,euro,Europe & Central Asia,High income
+FRO,FO,234,Faroe Islands,Q4628,faeroe-is,Tórshavn,Faroese króna,Europe & Central Asia,High income
+FSM,FM,583,Federated States of Micronesia,Q702,micronesia,Palikir,United States dollar,East Asia & Pacific,Upper middle income
+FXX,,249,metropolitan France,Q212429,,Paris,euro,,
+GAB,GA,266,Gabon,Q1000,gabon,Libreville,Central African CFA franc,Sub-Saharan Africa,Upper middle income
+GBR,GB,826,United Kingdom,Q145,united-kingdom,London,pound sterling,Europe & Central Asia,High income
+GEO,GE,268,Georgia,Q230,georgia,Tbilisi,Georgian lari,Europe & Central Asia,Upper middle income
+GGY,GG,831,Guernsey,Q25230,guernsey,Saint Peter Port,pound sterling,,
+GHA,GH,288,Ghana,Q117,ghana,Accra,Ghana cedi,Sub-Saharan Africa,Lower middle income
+GIB,GI,292,Gibraltar,Q1410,,Gibraltar,Gibraltar pound,Europe & Central Asia,High income
+GIN,GN,324,Guinea,Q1006,guinea,Conakry,Guinean franc,Sub-Saharan Africa,Lower middle income
+GLP,GP,312,Guadeloupe,Q17012,,Basse-Terre,euro,,
+GMB,GM,270,The Gambia,Q1005,gambia,Banjul,dalasi,Sub-Saharan Africa,Low income
+GNB,GW,624,Guinea-Bissau,Q1007,guinea-bissau,Bissau,West African CFA franc,Sub-Saharan Africa,Low income
+GNQ,GQ,226,Equatorial Guinea,Q983,eq-guinea,Ciudad de la Paz,Central African CFA franc,Sub-Saharan Africa,Upper middle income
+GRC,GR,300,Greece,Q41,greece,Athens,euro,Europe & Central Asia,High income
+GRD,GD,308,Grenada,Q769,grenada,St. George's,Eastern Caribbean dollar,Latin America & Caribbean,Upper middle income
+GRL,GL,304,Greenland,Q223,greenland,Nuuk,Danish krone,Europe & Central Asia,High income
+GTM,GT,320,Guatemala,Q774,guatemala,Guatemala City,quetzal,Latin America & Caribbean,Upper middle income
+GUF,GF,254,French Guiana,Q3769,,Cayenne,euro,,
+GUM,GU,316,Guam,Q16635,guam,Hagåtña,United States dollar,East Asia & Pacific,High income
+GUY,GY,328,Guyana,Q734,guyana,Georgetown,Guyanese dollar,Latin America & Caribbean,High income
+HKG,HK,344,Hong Kong,Q8646,hong-kong,,Hong Kong dollar,East Asia & Pacific,High income
+HMD,HM,334,Heard Island and McDonald Islands,Q131198,heard-i-and-mcdonald-is,,,,
+HND,HN,340,Honduras,Q783,honduras,Tegucigalpa,Honduran lempira,Latin America & Caribbean,Lower middle income
+HRV,HR,191,Croatia,Q224,croatia,Zagreb,euro,Europe & Central Asia,High income
+HTI,HT,332,Haiti,Q790,haiti,Port-au-Prince,gourde,Latin America & Caribbean,Lower middle income
+HUN,HU,348,Hungary,Q28,hungary,Budapest,forint,Europe & Central Asia,High income
+IDN,ID,360,Indonesia,Q252,indonesia,Jakarta,rupiah,East Asia & Pacific,Upper middle income
+IMN,IM,833,Isle of Man,Q9676,isle-of-man,Douglas,Manx pound,Europe & Central Asia,High income
+IND,IN,356,India,Q668,india,New Delhi,Indian rupee,South Asia,Lower middle income
+IOT,IO,086,British Indian Ocean Territory,Q43448,br-indian-ocean-ter,Diego Garcia,United States dollar,,
+IRL,IE,372,Ireland,Q27,ireland,Dublin,euro,Europe & Central Asia,High income
+IRN,IR,364,Iran,Q794,iran,Tehran,Iranian rial,"Middle East, North Africa, Afghanistan & Pakistan",Upper middle income
+IRQ,IQ,368,Iraq,Q796,iraq,Baghdad,Iraqi dinar,"Middle East, North Africa, Afghanistan & Pakistan",Upper middle income
+ISL,IS,352,Iceland,Q189,iceland,Reykjavík,Icelandic króna,Europe & Central Asia,High income
+ISR,IL,376,Israel,Q801,israel,Jerusalem,new shekel,"Middle East, North Africa, Afghanistan & Pakistan",High income
+ITA,IT,380,Italy,Q38,italy,Rome,euro,Europe & Central Asia,High income
+JAM,JM,388,Jamaica,Q766,jamaica,Kingston,Jamaican dollar,Latin America & Caribbean,Upper middle income
+JEY,JE,832,Jersey,Q785,jersey,Saint Helier,pound sterling,,
+JOR,JO,400,Jordan,Q810,jordan,Amman,Jordanian dinar,"Middle East, North Africa, Afghanistan & Pakistan",Upper middle income
+JPN,JP,392,Japan,Q17,japan,Tokyo,yen,East Asia & Pacific,High income
+JTN,,396,Johnston Atoll,Q131008,,,United States dollar,,
+KAZ,KZ,398,Kazakhstan,Q232,kazakhstan,Astana,Kazakhstani tenge,Europe & Central Asia,Upper middle income
+KEN,KE,404,Kenya,Q114,kenya,Nairobi,Kenyan shilling,Sub-Saharan Africa,Lower middle income
+KGZ,KG,417,Kyrgyzstan,Q813,kyrgyzstan,Bishkek,Kyrgyz som,Europe & Central Asia,Lower middle income
+KHM,KH,116,Cambodia,Q424,cambodia,Phnom Penh,riel,East Asia & Pacific,Lower middle income
+KIR,KI,296,Kiribati,Q710,kiribati,South Tarawa,Kiribati dollar,East Asia & Pacific,Lower middle income
+KNA,KN,659,Saint Kitts and Nevis,Q763,st-kitts-and-nevis,Basseterre,Eastern Caribbean dollar,Latin America & Caribbean,High income
+KOR,KR,410,South Korea,Q884,south-korea,Seoul,won,East Asia & Pacific,High income
+KWT,KW,414,Kuwait,Q817,kuwait,Kuwait City,Kuwaiti dinar,"Middle East, North Africa, Afghanistan & Pakistan",High income
+LAO,LA,418,Laos,Q819,laos,Vientiane,Lao kip,East Asia & Pacific,Lower middle income
+LBN,LB,422,Lebanon,Q822,lebanon,Beirut,Lebanese pound,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income
+LBR,LR,430,Liberia,Q1014,liberia,Monrovia,Liberian dollar,Sub-Saharan Africa,Low income
+LBY,LY,434,Libya,Q1016,libya,Tripoli,Libyan dinar,"Middle East, North Africa, Afghanistan & Pakistan",Upper middle income
+LCA,LC,662,Saint Lucia,Q760,saint-lucia,Castries,Eastern Caribbean dollar,Latin America & Caribbean,Upper middle income
+LIE,LI,438,Liechtenstein,Q347,liechtenstein,Vaduz,Swiss franc,Europe & Central Asia,High income
+LKA,LK,144,Sri Lanka,Q854,sri-lanka,Sri Jayawardenepura Kotte,Sri Lankan rupee,South Asia,Upper middle income
+LSO,LS,426,Lesotho,Q1013,lesotho,Maseru,loti,Sub-Saharan Africa,Lower middle income
+LTU,LT,440,Lithuania,Q37,lithuania,Vilnius,euro,Europe & Central Asia,High income
+LUX,LU,442,Luxembourg,Q32,luxembourg,Luxembourg,euro,Europe & Central Asia,High income
+LVA,LV,428,Latvia,Q211,latvia,Riga,euro,Europe & Central Asia,High income
+MAC,MO,446,Macau,Q14773,macao,,Hong Kong dollar,East Asia & Pacific,High income
+MAF,MF,663,Saint-Martin,Q126125,st-martin,Marigot,euro,Latin America & Caribbean,High income
+MAR,MA,504,Morocco,Q1028,morocco,Rabat,Moroccan dirham,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income
+MCO,MC,492,Monaco,Q235,monaco,Monaco,euro,Europe & Central Asia,High income
+MDA,MD,498,Moldova,Q217,moldova,Chișinău,Moldovan leu,Europe & Central Asia,Upper middle income
+MDG,MG,450,Madagascar,Q1019,madagascar,Antananarivo,ariary,Sub-Saharan Africa,Low income
+MDV,MV,462,Maldives,Q826,maldives,Malé,Maldivian rufiyaa,South Asia,Upper middle income
+MEX,MX,484,Mexico,Q96,mexico,Mexico City,peso,Latin America & Caribbean,Upper middle income
+MHL,MH,584,Marshall Islands,Q709,marshall-is,Majuro,SOV,East Asia & Pacific,Upper middle income
+MID,,488,Midway Atoll,Q47863,,,United States dollar,,
+MKD,MK,807,North Macedonia,Q221,macedonia,Skopje,Macedonian denar,Europe & Central Asia,Upper middle income
+MLI,ML,466,Mali,Q912,mali,Bamako,West African CFA franc,Sub-Saharan Africa,Low income
+MLT,MT,470,Malta,Q233,malta,Valletta,euro,"Middle East, North Africa, Afghanistan & Pakistan",High income
+MMR,MM,104,Myanmar,Q836,myanmar,Naypyidaw,kyat,East Asia & Pacific,Lower middle income
+MNE,ME,499,Montenegro,Q236,montenegro,Podgorica,euro,Europe & Central Asia,Upper middle income
+MNG,MN,496,Mongolia,Q711,mongolia,Ulaanbaatar,Mongolian tögrög,East Asia & Pacific,Upper middle income
+MNP,MP,580,Northern Mariana Islands,Q16644,n-mariana-is,Saipan,United States dollar,East Asia & Pacific,High income
+MOZ,MZ,508,Mozambique,Q1029,mozambique,Maputo,Mozambican metical,Sub-Saharan Africa,Low income
+MRT,MR,478,Mauritania,Q1025,mauritania,Nouakchott,Mauritanian ouguiya,Sub-Saharan Africa,Lower middle income
+MSR,MS,500,Montserrat,Q13353,montserrat,Brades,Eastern Caribbean dollar,,
+MTQ,MQ,474,Martinique,Q17054,,Fort-de-France,euro,,
+MUS,MU,480,Mauritius,Q1027,mauritius,Port Louis,Mauritian rupee,Sub-Saharan Africa,Upper middle income
+MWI,MW,454,Malawi,Q1020,malawi,Lilongwe,Malawian kwacha,Sub-Saharan Africa,Low income
+MYS,MY,458,Malaysia,Q833,malaysia,Kuala Lumpur,Malaysian ringgit,East Asia & Pacific,Upper middle income
+MYT,YT,175,Mayotte,Q17063,,Mamoudzou,euro,,
+NAM,NA,516,Namibia,Q1030,namibia,Windhoek,rand,Sub-Saharan Africa,Lower middle income
+NCL,NC,540,New Caledonia,Q33788,new-caledonia,Nouméa,CFP Franc,East Asia & Pacific,High income
+NER,NE,562,Niger,Q1032,niger,Niamey,West African CFA franc,Sub-Saharan Africa,Low income
+NFK,NF,574,Norfolk Island,Q31057,norfolk-island,Kingston,Australian dollar,,
+NGA,NG,566,Nigeria,Q1033,nigeria,Abuja,naira,Sub-Saharan Africa,Lower middle income
+NIC,NI,558,Nicaragua,Q811,nicaragua,Managua,Nicaraguan córdoba,Latin America & Caribbean,Lower middle income
+NIU,NU,570,Niue,Q34020,niue,Alofi,New Zealand dollar,,
+NLD,NL,528,Kingdom of the Netherlands,Q29999,netherlands,Amsterdam,Aruban florin,Europe & Central Asia,High income
+NOR,NO,578,Norway,Q20,norway,Oslo,Norwegian krone,Europe & Central Asia,High income
+NPL,NP,524,Nepal,Q837,nepal,Kathmandu,Nepalese rupee,South Asia,Lower middle income
+NRU,NR,520,Nauru,Q697,nauru,Yaren District,Australian dollar,East Asia & Pacific,High income
+NZL,NZ,554,New Zealand,Q664,new-zealand,Wellington,New Zealand dollar,East Asia & Pacific,High income
+OMN,OM,512,Oman,Q842,oman,Muscat,Omani rial,"Middle East, North Africa, Afghanistan & Pakistan",High income
+PAK,PK,586,Pakistan,Q843,pakistan,Islamabad,Pakistani rupee,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income
+PAN,PA,591,Panama,Q804,panama,Panama City,Panamanian balboa,Latin America & Caribbean,High income
+PCN,PN,612,Pitcairn Islands,Q35672,pitcairn-is,Adamstown,Pitcairn Islands dollar,,
+PER,PE,604,Peru,Q419,peru,Lima,Nuevo sol,Latin America & Caribbean,Upper middle income
+PHL,PH,608,Philippines,Q928,philippines,Manila,Philippine peso,East Asia & Pacific,Upper middle income
+PLW,PW,585,Palau,Q695,palau,Ngerulmud,United States dollar,East Asia & Pacific,High income
+PNG,PG,598,Papua New Guinea,Q691,papua-new-guinea,Port Moresby,kina,East Asia & Pacific,Lower middle income
+POL,PL,616,Poland,Q36,poland,Warsaw,złoty,Europe & Central Asia,High income
+PRI,PR,630,Puerto Rico,Q1183,puerto-rico,San Juan,United States dollar,Latin America & Caribbean,High income
+PRK,KP,408,North Korea,Q423,north-korea,Pyongyang,North Korean won,East Asia & Pacific,Low income
+PRT,PT,620,Portugal,Q45,portugal,Lisbon,euro,Europe & Central Asia,High income
+PRY,PY,600,Paraguay,Q733,paraguay,Asunción,Paraguayan guaraní,Latin America & Caribbean,Upper middle income
+PSE,PS,275,Palestine,Q219060,palestine,East Jerusalem,new shekel,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income
+PYF,PF,258,French Polynesia,Q30971,fr-polynesia,Papeete,CFP Franc,East Asia & Pacific,High income
+QAT,QA,634,Qatar,Q846,qatar,Doha,Qatari riyal,"Middle East, North Africa, Afghanistan & Pakistan",High income
+REU,RE,638,Réunion,Q17070,,Saint-Denis,euro,,
+ROU,RO,642,Romania,Q218,romania,Bucharest,Romanian leu,Europe & Central Asia,High income
+RUS,RU,643,Russia,Q159,russia,Moscow,Russian ruble,Europe & Central Asia,High income
+RWA,RW,646,Rwanda,Q1037,rwanda,Kigali,Rwandan franc,Sub-Saharan Africa,Low income
+SAU,SA,682,Saudi Arabia,Q851,saudi-arabia,Riyadh,Saudi riyal,"Middle East, North Africa, Afghanistan & Pakistan",High income
+SDN,SD,729,Sudan,Q1049,sudan,Khartoum,Sudanese pound,Sub-Saharan Africa,Low income
+SEN,SN,686,Senegal,Q1041,senegal,Dakar,West African CFA franc,Sub-Saharan Africa,Lower middle income
+SGP,SG,702,Singapore,Q334,singapore,Singapore,Singapore dollar,East Asia & Pacific,High income
+SGS,GS,239,South Georgia and the South Sandwich Islands,Q35086,s-geo-and-the-is,King Edward Point,pound sterling,,
+SHN,SH,654,"Saint Helena, Ascension and Tristan da Cunha",Q192184,saint-helena,Jamestown,Saint Helena pound,,
+SJM,SJ,744,Svalbard and Jan Mayen,Q842829,,,Norwegian krone,,
+SLB,SB,090,Solomon Islands,Q685,solomon-is,Honiara,Solomon Islands dollar,East Asia & Pacific,Lower middle income
+SLE,SL,694,Sierra Leone,Q1044,sierra-leone,Freetown,leone,Sub-Saharan Africa,Low income
+SLV,SV,222,El Salvador,Q792,el-salvador,San Salvador,Bitcoin,Latin America & Caribbean,Upper middle income
+SMR,SM,674,San Marino,Q238,san-marino,San Marino,euro,Europe & Central Asia,High income
+SOM,SO,706,Somalia,Q1045,somalia,Mogadishu,Somali shilling,Sub-Saharan Africa,Low income
+SPM,PM,666,Saint Pierre and Miquelon,Q34617,st-pierre-and-miquelon,Saint-Pierre,euro,,
+SRB,RS,688,Serbia,Q403,serbia,Belgrade,Serbian dinar,Europe & Central Asia,Upper middle income
+SSD,SS,728,South Sudan,Q958,s-sudan,Juba,South Sudanese pound,Sub-Saharan Africa,Low income
+STP,ST,678,São Tomé and Príncipe,Q1039,sao-tome-and-principe,São Tomé,São Tomé and Príncipe dobra,Sub-Saharan Africa,Lower middle income
+SUR,SR,740,Suriname,Q730,suriname,Paramaribo,Surinamese dollar,Latin America & Caribbean,Upper middle income
+SVK,SK,703,Slovakia,Q214,slovakia,Bratislava,euro,Europe & Central Asia,High income
+SVN,SI,705,Slovenia,Q215,slovenia,Ljubljana,euro,Europe & Central Asia,High income
+SWE,SE,752,Sweden,Q34,sweden,Stockholm,Swedish krona,Europe & Central Asia,High income
+SWZ,SZ,748,Eswatini,Q1050,eswatini,Mbabane,lilangeni,Sub-Saharan Africa,Lower middle income
+SXM,SX,534,Sint Maarten,Q26273,sint-maarten,Philipsburg,Caribbean guilder,Latin America & Caribbean,High income
+SYC,SC,690,Seychelles,Q1042,seychelles,Victoria,Seychellois rupee,Sub-Saharan Africa,High income
+SYR,SY,760,Syria,Q858,syria,Damascus,Syrian pound,"Middle East, North Africa, Afghanistan & Pakistan",Low income
+TCA,TC,796,Turks and Caicos Islands,Q18221,turks-and-caicos-is,Cockburn Town,United States dollar,Latin America & Caribbean,High income
+TCD,TD,148,Chad,Q657,chad,N'Djamena,Central African CFA franc,Sub-Saharan Africa,Low income
+TGO,TG,768,Togo,Q945,togo,Lomé,West African CFA franc,Sub-Saharan Africa,Lower middle income
+THA,TH,764,Thailand,Q869,thailand,Bangkok,baht,East Asia & Pacific,Upper middle income
+TJK,TJ,762,Tajikistan,Q863,tajikistan,Dushanbe,Tajikistani somoni,Europe & Central Asia,Lower middle income
+TKL,TK,772,Tokelau,Q36823,,,New Zealand dollar,,
+TKM,TM,795,Turkmenistan,Q874,turkmenistan,Ashgabat,Turkmenistan new manat,Europe & Central Asia,Upper middle income
+TLS,TL,626,Timor-Leste,Q574,timor-leste,Dili,East Timor centavo coins,East Asia & Pacific,Lower middle income
+TON,TO,776,Tonga,Q678,tonga,Nukuʻalofa,Tongan paʻanga,East Asia & Pacific,Upper middle income
+TTO,TT,780,Trinidad and Tobago,Q754,trinidad-and-tobago,Port of Spain,Trinidad and Tobago dollar,Latin America & Caribbean,High income
+TUN,TN,788,Tunisia,Q948,tunisia,Tunis,Tunisian dinar,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income
+TUR,TR,792,Turkey,Q43,turkey,Ankara,Turkish lira,Europe & Central Asia,Upper middle income
+TUV,TV,798,Tuvalu,Q672,,Funafuti,Tuvaluan dollar,East Asia & Pacific,Upper middle income
+TWN,TW,158,Taiwan,Q865,taiwan,Taipei,New Taiwan dollar,,
+TZA,TZ,834,Tanzania,Q924,tanzania,Dodoma,Tanzanian shilling,Sub-Saharan Africa,Lower middle income
+UGA,UG,800,Uganda,Q1036,uganda,Kampala,Ugandan shilling,Sub-Saharan Africa,Low income
+UKR,UA,804,Ukraine,Q212,ukraine,Kyiv,hryvnia,Europe & Central Asia,Upper middle income
+UMI,UM,581,United States Minor Outlying Islands,Q16645,,,United States dollar,,
+URY,UY,858,Uruguay,Q77,uruguay,Montevideo,Uruguayan peso,Latin America & Caribbean,High income
+USA,US,840,United States,Q30,united-states-of-america,"Washington, D.C.",United States dollar,North America,High income
+UZB,UZ,860,Uzbekistan,Q265,uzbekistan,Tashkent,Uzbek som,Europe & Central Asia,Lower middle income
+VAT,VA,336,Vatican City,Q237,vatican,Vatican City,euro,,
+VCT,VC,670,Saint Vincent and the Grenadines,Q757,st-vin-and-gren,Kingstown,Eastern Caribbean dollar,Latin America & Caribbean,Upper middle income
+VEN,VE,862,Venezuela,Q717,venezuela,Caracas,sovereign bolivar,Latin America & Caribbean,Lower middle income
+VGB,VG,092,British Virgin Islands,Q25305,british-virgin-is,Road Town,United States dollar,Latin America & Caribbean,High income
+VIR,VI,850,United States Virgin Islands,Q11703,u-s-virgin-is,Charlotte Amalie,United States dollar,Latin America & Caribbean,High income
+VNM,VN,704,Vietnam,Q881,vietnam,Hanoi,Vietnamese đồng,East Asia & Pacific,Upper middle income
+VUT,VU,548,Vanuatu,Q686,vanuatu,Port Vila,Vanuatu vatus,East Asia & Pacific,Lower middle income
+WLF,WF,876,Wallis and Futuna,Q35555,wallis-and-futuna-is,Mata-Utu,CFP Franc,,
+WSM,WS,882,Samoa,Q683,samoa,Apia,Samoan tālā,East Asia & Pacific,Upper middle income
+XKS,XK,,Kosovo,Q1246,,Pristina,euro,,
+YEM,YE,887,Yemen,Q805,yemen,Sanaa,Yemeni Rial,"Middle East, North Africa, Afghanistan & Pakistan",Low income
+ZAF,ZA,710,South Africa,Q258,south-africa,Cape Town,rand,Sub-Saharan Africa,Upper middle income
+ZMB,ZM,894,Zambia,Q953,zambia,Lusaka,Zambian Kwacha,Sub-Saharan Africa,Lower middle income
+ZWE,ZW,716,Zimbabwe,Q954,zimbabwe,Harare,rand,Sub-Saharan Africa,Lower middle income

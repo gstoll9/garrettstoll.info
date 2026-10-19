@@ -5,6 +5,7 @@ import { feature } from 'topojson-client';
 import type { Topology, GeometryCollection } from 'topojson-specification';
 import type { Feature, Geometry } from 'geojson';
 import { wikiTitleFor } from '../lib/countryNames';
+import type { Capital } from '../lib/db';
 
 export type Country = {
   key: string;
@@ -55,18 +56,23 @@ type Props = {
   districts: Subregion[];
   selectedDistrictKey: string | null;
   onSelectDistrict: (d: Subregion) => void;
+  // Capital(s) of the selected region, marked on the map
+  capitals: Capital[];
+  // Data colouring of one level's shapes: fill colour and tooltip value per shape key
+  choropleth: { level: 0 | 1 | 2; fills: Map<string, string>; labels: Map<string, string> } | null;
   onLoad?: (countries: Country[]) => void;
   insets: Insets;
 };
 
 export default function WorldMap({
   selectedKey, onSelect, subregions, selectedSubKey, onSelectSubregion,
-  districts, selectedDistrictKey, onSelectDistrict, onLoad, insets,
+  districts, selectedDistrictKey, onSelectDistrict, capitals, choropleth, onLoad, insets,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const gRef = useRef<SVGGElement>(null);
   const labelsRef = useRef<SVGGElement>(null);
+  const capitalsRef = useRef<SVGGElement>(null);
   const transformRef = useRef<d3.ZoomTransform>(d3.zoomIdentity);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
@@ -74,10 +80,11 @@ export default function WorldMap({
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [countries, setCountries] = useState<Country[]>([]);
 
-  // Load the topology lazily so the ~750KB JSON is its own chunk
+  // Country shapes: world-atlas's countries-50m.json, served from public/ (copied by
+  // scripts/build-admin1.mjs) so it loads as a static file rather than a code chunk
   useEffect(() => {
-    import('world-atlas/countries-50m.json').then(mod => {
-      const topo = (mod.default ?? mod) as unknown as Topology<{ countries: GeometryCollection<{ name: string }> }>;
+    fetch('/worldmap/countries-50m.json').then(r => r.json()).then(json => {
+      const topo = json as Topology<{ countries: GeometryCollection<{ name: string }> }>;
       const fc = feature(topo, topo.objects.countries);
       const list = fc.features.map((f, i) => ({
         key: f.id != null ? `${f.id}-${f.properties.name}` : `${f.properties.name}-${i}`,
@@ -151,6 +158,16 @@ export default function WorldMap({
     if (!g) return;
     const t = transformRef.current;
     const placed: [number, number, number, number][] = [];
+    // Capitals first, so region labels make room for them
+    capitals.forEach((c, i) => {
+      const el = capitalsRef.current?.children[i] as SVGGElement | undefined;
+      const p = projection([c.lon, c.lat]);
+      if (!el || !p) return;
+      const [x, y] = t.apply(p);
+      el.setAttribute('transform', `translate(${x},${y})`);
+      const tw = c.name.length * 12 * 0.58;
+      placed.push([x - 9, y - 9, x + 12 + tw, y + 9]);
+    });
     labels.forEach((l, i) => {
       const el = g.children[i] as SVGTextElement | undefined;
       if (!el) return;
@@ -178,7 +195,7 @@ export default function WorldMap({
   };
   const layoutRef = useRef(layoutLabels);
   layoutRef.current = layoutLabels;
-  useEffect(() => { layoutRef.current(); }, [labels]);
+  useEffect(() => { layoutRef.current(); }, [labels, capitals]);
 
   const sphere = useMemo(() => path({ type: 'Sphere' }) ?? '', [path]);
   const graticule = useMemo(() => path(d3.geoGraticule10()) ?? '', [path]);
@@ -240,6 +257,11 @@ export default function WorldMap({
     tip.style.top = `${e.clientY - r.top + 12}px`;
   };
   const hideTooltip = () => { if (tooltipRef.current) tooltipRef.current.style.display = 'none'; };
+  // Inline fill (and value in the tooltip) for shapes of the coloured level
+  const choroFill = (lvl: 0 | 1 | 2, key: string) =>
+    choropleth?.level === lvl ? { fill: choropleth.fills.get(key) } : undefined;
+  const withValue = (lvl: 0 | 1 | 2, key: string, text: string) =>
+    choropleth?.level === lvl && choropleth.labels.has(key) ? `${text} · ${choropleth.labels.get(key)}` : text;
 
   return (
     <div className="wm-map" ref={containerRef}>
@@ -249,7 +271,7 @@ export default function WorldMap({
         height={size.height}
         onClick={() => onSelect(null)}
       >
-        <g ref={gRef}>
+        <g ref={gRef} className={choropleth ? `wm-choro wm-choro-${choropleth.level}` : undefined}>
           <path className="wm-sphere" d={sphere} />
           <path className="wm-graticule" d={graticule} />
           {paths.map((p, i) => (
@@ -257,8 +279,9 @@ export default function WorldMap({
               key={p.key}
               d={p.d}
               className={`wm-country${p.key === selectedKey ? ' wm-selected' : ''}`}
+              style={choroFill(0, p.key)}
               onClick={e => { e.stopPropagation(); onSelect(countries[i]); }}
-              onMouseMove={e => moveTooltip(e, countries[i].name)}
+              onMouseMove={e => moveTooltip(e, withValue(0, p.key, countries[i].name))}
               onMouseLeave={hideTooltip}
             />
           ))}
@@ -268,10 +291,11 @@ export default function WorldMap({
                 key={p.key}
                 d={p.d}
                 className={`wm-subregion${p.key === selectedSubKey ? ' wm-selected' : ''}`}
+                style={choroFill(1, p.key)}
                 onClick={e => { e.stopPropagation(); onSelectSubregion(subregions[i]); }}
                 onMouseMove={e => {
                   const s = subregions[i];
-                  moveTooltip(e, s.type ? `${s.name} · ${s.type}` : s.name);
+                  moveTooltip(e, withValue(1, p.key, s.type ? `${s.name} · ${s.type}` : s.name));
                 }}
                 onMouseLeave={hideTooltip}
               />
@@ -283,10 +307,11 @@ export default function WorldMap({
                 key={p.key}
                 d={p.d}
                 className={`wm-district${p.key === selectedDistrictKey ? ' wm-selected' : ''}`}
+                style={choroFill(2, p.key)}
                 onClick={e => { e.stopPropagation(); onSelectDistrict(districts[i]); }}
                 onMouseMove={e => {
                   const d = districts[i];
-                  moveTooltip(e, d.type ? `${d.name} · ${d.type}` : d.name);
+                  moveTooltip(e, withValue(2, p.key, d.type ? `${d.name} · ${d.type}` : d.name));
                 }}
                 onMouseLeave={hideTooltip}
               />
@@ -304,6 +329,14 @@ export default function WorldMap({
             </text>
           ))}
         </g>
+        <g className="wm-capitals" ref={capitalsRef}>
+          {capitals.map(c => (
+            <g key={c.qid}>
+              <path className="wm-capital-star" d={STAR} />
+              <text className="wm-capital-label" x={11} y={0} dominantBaseline="central">{c.name}</text>
+            </g>
+          ))}
+        </g>
       </svg>
       <div className="wm-tooltip" ref={tooltipRef} />
       {countries.length === 0 && <div className="wm-loading">Loading map…</div>}
@@ -312,6 +345,13 @@ export default function WorldMap({
 }
 
 const LABEL_CLASS = ['wm-label-country', 'wm-label-sub', 'wm-label-district'] as const;
+
+// Five-pointed star centred on the origin, outer radius 7px
+const STAR = Array.from({ length: 10 }, (_, i) => {
+  const r = i % 2 ? 3 : 7;
+  const a = (Math.PI / 5) * i - Math.PI / 2;
+  return `${i ? 'L' : 'M'}${(r * Math.cos(a)).toFixed(2)},${(r * Math.sin(a)).toFixed(2)}`;
+}).join('') + 'Z';
 
 // Countries like the US, France or Russia have far-flung territories; framing or labelling
 // their full extent misplaces things, so use the largest polygon instead.

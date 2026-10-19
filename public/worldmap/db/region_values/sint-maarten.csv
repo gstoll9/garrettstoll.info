@@ -1,0 +1,9 @@
+region_key,code,year,value,unit
+sint-maarten/sint-maarten,gdp,2021,1384640000,United States dollar
+sint-maarten/sint-maarten,gdp,2022,1571560000,United States dollar
+sint-maarten/sint-maarten,life_expectancy,2007,74.5439,year
+sint-maarten/sint-maarten,life_expectancy,2008,74.5366,year
+sint-maarten/sint-maarten,life_expectancy,2009,75.5878,year
+sint-maarten/sint-maarten,life_expectancy,2012,73.0537,year
+sint-maarten/sint-maarten,population,2014,37132,
+sint-maarten/sint-maarten,population,2020,43847,
