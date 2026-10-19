@@ -215,5 +215,5 @@ export default function WorldMapPage() {
     </div>
   );
 
-  return StandardLayout({ title: 'World Map', main, headerMode: 'tyro-only' });
+  return StandardLayout({ title: 'World Map', main, headerMode: 'tyro-only', variant: 'plain' });
 }

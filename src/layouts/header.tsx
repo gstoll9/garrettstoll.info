@@ -1,118 +1,58 @@
 "use client"
 import "./styles/header.css";
 import Image from "next/image";
-import * as React from "react";
 import Link from "next/link";
-
-const images = [
-  "/TyroImages/PuppyEyes.png",
-  "/TyroImages/HighFive.png",
-  "/TyroImages/AnOfferYouCantRefuse.png",
-];
-
-function getRandomImage(current: string) {
-  let filtered = images.filter(img => img !== current);
-  if (filtered.length === 0) filtered = images;
-  return filtered[Math.floor(Math.random() * filtered.length)];
-}
-
-function getRandomAngle() {
-  // Random angle between -30 and 30 degrees
-  return Math.random() * 60 - 30;
-}
+import * as React from "react";
 
 type HeaderProps = {
   title?: string;
 }
 
-function Header({ title = "Garrett Stoll" }: HeaderProps) {
+const NAV_LINKS = [
+  { href: "/#work", label: "Work" },
+  { href: "/#experience", label: "Experience" },
+  { href: "/#skills", label: "Skills" },
+];
 
-  const [left, setLeft] = React.useState({
-    src: images[0],
-    angle: 0,
-    visible: true,
-  });
-  const [right, setRight] = React.useState({
-    src: images[0],
-    angle: 0,
-    visible: true,
-  });
-  const [introDancing, setIntroDancing] = React.useState(true);
+function Header({ title }: HeaderProps) {
+  const [scrolled, setScrolled] = React.useState(false);
 
   React.useEffect(() => {
-    const timer = setTimeout(() => setIntroDancing(false), 5000);
-    return () => clearTimeout(timer);
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // React.useEffect(() => {
-  //   let leftTimeout: NodeJS.Timeout;
-  //   let rightTimeout: NodeJS.Timeout;
-
-  //   function schedulePop(setter: typeof setLeft, getCurrent: () => { src: string }) {
-  //     const delay = 1000 + Math.random() * 3000;
-  //     setTimeout(() => {
-  //       const currentSrc = getCurrent().src;
-  //       setter(prev => ({ ...prev, visible: false }));
-  //       setTimeout(() => {
-  //         setter({
-  //           src: getRandomImage(currentSrc),
-  //           angle: getRandomAngle(),
-  //           visible: true,
-  //         });
-  //         schedulePop(setter, getCurrent); // Schedule next pop using latest state
-  //       }, 300); // match CSS transition duration
-  //     }, delay);
-  //   }
-
-  //   leftTimeout = setTimeout(() => schedulePop(setLeft, () => left), 1000);
-  //   rightTimeout = setTimeout(() => schedulePop(setRight, () => right), 2000);
-
-  //   return () => {
-  //     clearTimeout(leftTimeout);
-  //     clearTimeout(rightTimeout);
-  //   };
-  //   // eslint-disable-next-line
-  // }, []);
-
   return (
-    <Link href="/resume">
-    <header>
-      <div className="leftTyroContainer">
-        <Image
-          key={left.src} // Add this line!
-          className={`logo pop-image${left.visible ? " visible" : ""}${introDancing ? " tyro-intro-dance" : ""}`}
-          src={left.src}
-          alt="Tyro, the cat, on his back looking cute as hell"
-          width={120}
-          height={120}
-          sizes="100%"
-          style={{
-            transition: "opacity 0.3s, transform 0.3s",
-            opacity: left.visible ? 1 : 0,
-            transform: `scale(${left.visible ? 1 : 0.7}) rotate(${left.angle}deg)`,
-          }}
-          unoptimized
-        />
-      </div>
-      <h1 className="headerText">{title}</h1>
-      <div className="rightTyroContainer">
-        <Image
-          key={right.src} // Add this line!
-          className={`logo pop-image${right.visible ? " visible" : ""}${introDancing ? " tyro-intro-dance" : ""}`}
-          src={right.src}
-          alt="Tyro, the cat, on his back looking cute as hell"
-          width={120}
-          height={120}
-          sizes="100%"
-          style={{
-            transition: "opacity 0.3s, transform 0.3s",
-            opacity: right.visible ? 1 : 0,
-            transform: `scale(${right.visible ? 1 : 0.7}) rotate(${right.angle}deg)`,
-          }}
-        />
+    <header className={`site-header${scrolled ? " is-scrolled" : ""}`}>
+      <div className="site-header-inner">
+        <Link href="/" className="site-brand" aria-label="Garrett Stoll — home">
+          <span className="site-brand-avatar">
+            <Image
+              src="/TyroImages/TyroAvatar.png"
+              alt=""
+              width={96}
+              height={96}
+              className="site-brand-tyro"
+            />
+          </span>
+          <span className="site-brand-name">Garrett Stoll</span>
+        </Link>
+        {title && (
+          <>
+            <span className="site-crumb-sep" aria-hidden="true">/</span>
+            <span className="site-crumb">{title}</span>
+          </>
+        )}
+        <nav className="site-nav" aria-label="Primary">
+          {NAV_LINKS.map((l) => (
+            <Link key={l.href} href={l.href} className="site-nav-link">{l.label}</Link>
+          ))}
+          <a href="mailto:garrettstoll@gmail.com" className="site-nav-cta">Contact</a>
+        </nav>
       </div>
     </header>
-    </Link>
   );
 }
 

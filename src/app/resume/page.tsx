@@ -1,403 +1,627 @@
 "use client"
 import Image from "next/image";
 import Link from "next/link";
+import * as React from "react";
 import "./resume.css";
 import StandardLayout from "@/layouts/standardLayout";
 
+const EMAIL = "garrettstoll@gmail.com";
+const GITHUB = "https://github.com/gstoll9";
+
+/* ── Work ──────────────────────────────────────────────────────────────────
+   This list is the map of "live" pages. Experimental pages are deliberately
+   left out and only reachable by direct URL:
+     Class Notes: /numericalmethods, /structuralbioinformatics, /threeBody
+     Games:       /solitaire, /freeplay                                     */
+
+type IconName = "lattice" | "helix" | "orbit" | "atom" | "neuron" | "graph" | "globe" | "mine" | "scale";
+
+type WorkItem = {
+  href: string;
+  title: string;
+  blurb: string;
+  icon: IconName;
+  hue: number;
+};
+
+const WORK: { group: string; items: WorkItem[] }[] = [
+  {
+    group: "Research",
+    items: [
+      {
+        href: "/hubbardmodel",
+        title: "Hubbard Model",
+        blurb: "Simulating the Hubbard model and optimizing the Gutzwiller projection for cold-atom quantum computing.",
+        icon: "lattice",
+        hue: 262,
+      },
+      {
+        href: "/methanogens",
+        title: "Methanogens",
+        blurb: "Homology modeling, motif analysis and phylogenetics of uncharacterized M. jannaschii proteins.",
+        icon: "helix",
+        hue: 162,
+      },
+      {
+        href: "/organoidintelligence",
+        title: "Ethics of Organoid Intelligence",
+        blurb: "An ethics paper on lab-grown brain organoids used for computation, and a case for proactive ethics.",
+        icon: "scale",
+        hue: 120,
+      },
+    ],
+  },
+  {
+    group: "Projects",
+    items: [
+      {
+        href: "/solarsystem",
+        title: "Solar System",
+        blurb: "A real-ephemeris 3D solar system with to-scale planetary cutaways and a true-shape asteroid belt.",
+        icon: "orbit",
+        hue: 32,
+      },
+      {
+        href: "/hydrogen",
+        title: "Hydrogen Atom",
+        blurb: "Schrödinger-equation electron clouds, wavefunctions and real NIST spectra for elements 1–36.",
+        icon: "atom",
+        hue: 205,
+      },
+      {
+        href: "/brain",
+        title: "Human Brain",
+        blurb: "A procedural 3D brain you can slice into cross-sections and explore region by region.",
+        icon: "neuron",
+        hue: 340,
+      },
+      {
+        href: "/knowledgegraph",
+        title: "Knowledge Graph",
+        blurb: "Build, filter and export first-order-logic knowledge graphs in an interactive 3D view.",
+        icon: "graph",
+        hue: 285,
+      },
+      {
+        href: "/worldmap",
+        title: "World Map",
+        blurb: "An interactive atlas linking every country, subregion and district to its Wikipedia page.",
+        icon: "globe",
+        hue: 190,
+      },
+    ],
+  },
+  {
+    group: "Games",
+    items: [
+      {
+        href: "/minesweeper",
+        title: "Minesweeper",
+        blurb: "The classic, rebuilt — with a probability-based hint system for when you're stuck.",
+        icon: "mine",
+        hue: 8,
+      },
+    ],
+  },
+];
+
+/* ── Resume content ────────────────────────────────────────────────────── */
+
+const CAPABILITIES = [
+  { title: "AI, ML & ETL pipelines", text: "From scraping and parsing to fine-tuned, locally hosted LLMs." },
+  { title: "Data mining & visualization", text: "Cleaning messy data and turning it into dashboards and interactive visuals." },
+  { title: "Cloud & HPC", text: "AWS pipelines, MPI and OpenMP — making slow code fast." },
+  { title: "Frontend development", text: "React, Next.js and Microsoft Power Apps." },
+];
+
+type Role = {
+  logo: string;
+  logoAlt: string;
+  org: string;
+  role: string;
+  dates: string;
+  bullets?: string[];
+  projects?: { name: string; bullets: string[]; stack: string[] }[];
+  stack?: string[];
+};
+
+const EXPERIENCE: Role[] = [
+  {
+    logo: "/resumeImages/DataAnnotationLogo.svg",
+    logoAlt: "Data Annotation logo",
+    org: "Data Annotation",
+    role: "Programming Analyst / AI Trainer",
+    dates: "Jan 2025 — Aug 2025",
+    bullets: [
+      "Evaluated AI responses for correctness and instruction following for programming, math, physics, and biology prompts",
+      "Created reasoning problems in math and biology that AI is unable to answer",
+    ],
+  },
+  {
+    logo: "/resumeImages/BAHlogo.png",
+    logoAlt: "Booz Allen Hamilton logo",
+    org: "Booz Allen Hamilton",
+    role: "Data Scientist",
+    dates: "Nov 2022 — Sep 2024",
+    projects: [
+      {
+        name: "Web Scraping AI Pipeline",
+        bullets: [
+          "Led a team of three to automate collecting news articles, identifying target articles, and parsing them for information stored in a database",
+        ],
+        stack: ["Selenium", "Pandas", "LangChain", "Transformers", "Mistral"],
+      },
+      {
+        name: "Locally Hosted Fine-Tuned Installable LLM",
+        bullets: [
+          "Co-led the design and development of an installable program pairing a locally hosted fine-tuned LLM with a responsive frontend",
+          "The tool rewrites job postings to Defense Cyber Workforce standards",
+        ],
+        stack: ["Python", "PyTorch", "Transformers", "JavaScript", "React.js", "Qt Creator"],
+      },
+      {
+        name: "User Productivity Team",
+        bullets: ["Created a Databricks dashboard to visualize device inventory and individual user patterns"],
+        stack: ["Python", "SQL", "Databricks", "Splunk"],
+      },
+      {
+        name: "Internal PowerApp",
+        bullets: [
+          "Developed a Microsoft PowerApp to automate onboarding and improve cross-contract communication, reducing project timelines",
+        ],
+        stack: ["PowerApps", "PowerAutomate", "PowerBI", "Dataverse", "SharePoint", "Teams"],
+      },
+    ],
+  },
+  {
+    logo: "/resumeImages/SummitConsultingLogo.png",
+    logoAlt: "Summit Consulting logo",
+    org: "Summit Consulting, LLC",
+    role: "Intern",
+    dates: "Aug 2021 — Dec 2021",
+    bullets: [
+      "Led a team of three to implement an ETL pipeline on Amazon Web Services",
+      "Worked with the federal database management system, IPEDS",
+      "Web-scraped 5 websites using Beautiful Soup and Selenium",
+      "Data processing using pandas; statistical modeling using sklearn",
+    ],
+  },
+];
+
+const RESEARCH: Role[] = [
+  {
+    logo: "/resumeImages/VTlogo.png",
+    logoAlt: "Virginia Tech logo",
+    org: "Virginia Tech · Dr. Vito Scarola",
+    role: "Research Assistant",
+    dates: "Jan 2021 — Dec 2021",
+    bullets: [
+      "Simulated the Hubbard model in Python, then developed a combinatorial optimization algorithm to dynamically implement the Gutzwiller projection",
+      "Algorithm optimization resulting in an 8-fold speed up",
+    ],
+    stack: ["NumPy", "mpi4py", "Matplotlib"],
+  },
+  {
+    logo: "/resumeImages/VTlogo.png",
+    logoAlt: "Virginia Tech logo",
+    org: "Virginia Tech · Dr. Bob White",
+    role: "Research Assistant",
+    dates: "Aug 2017 — Dec 2019",
+    bullets: [
+      "Wet lab and computational biochemistry research experience",
+      "Studied metalloprotein families, radical SAM enzymes, and novel thiol molecules",
+      "Protein homology modeling, molecular docking simulations, comparative genomics, GC-MS, liquid chromatography, and chemical assays",
+    ],
+  },
+];
+
+const EDUCATION = [
+  {
+    logo: "/resumeImages/templeLogo.png",
+    logoAlt: "Temple University logo",
+    school: "Temple University",
+    college: "College of Science and Technology",
+    degree: "PSM in High-Performance Computing for Scientific Applications",
+    dates: "Aug 2025 — Present",
+  },
+  {
+    logo: "/resumeImages/VTlogo.png",
+    logoAlt: "Virginia Tech logo",
+    school: "Virginia Tech",
+    college: "College of Science",
+    degree: "BS in Computational Modeling and Data Analytics",
+    detail: "Minors: Computer Science, Mathematics",
+    dates: "Aug 2016 — Dec 2021",
+  },
+];
+
+const SKILLS = [
+  { group: "Languages", items: ["Python", "C", "C++", "Go", "Java", "JavaScript", "TypeScript", "HTML", "CSS", "SQL", "R / Tidyverse"] },
+  {
+    group: "Python",
+    items: ["PyTorch", "Transformers", "LangChain", "PySpark", "pandas", "NumPy", "SciPy", "scikit-learn", "statsmodels", "mpi4py", "Flask", "Beautiful Soup", "Selenium", "Matplotlib"],
+  },
+  { group: "JavaScript", items: ["Node.js", "React.js", "Next.js", "d3.js", "three.js"] },
+  { group: "Data", items: ["Databricks", "MySQL", "Splunk"] },
+  { group: "Tools", items: ["Bash", "Git", "MPI", "OpenMP", "Qiskit", "Microsoft 365", "Power Apps", "Power Automate", "Power BI"] },
+];
+
+const BAH_BADGES = ["Docker", "Angular", "React", "CSS", "JavaScript", "Java", "Spring Boot", "SQL", "AI Aware", "Machine Learning", "Python"];
+
+
+/* ── Small pieces ──────────────────────────────────────────────────────── */
+
+function WorkIcon({ name }: { name: IconName }) {
+  const common = { fill: "none", stroke: "currentColor", strokeWidth: 1.6, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  switch (name) {
+    case "lattice":
+      return (
+        <svg viewBox="0 0 24 24" {...common}>
+          <path d="M5 5h14M5 12h14M5 19h14M5 5v14M12 5v14M19 5v14" opacity=".35" />
+          {[5, 12, 19].flatMap((x) => [5, 12, 19].map((y) => <circle key={`${x}-${y}`} cx={x} cy={y} r="1.8" fill="currentColor" stroke="none" />))}
+        </svg>
+      );
+    case "helix":
+      return (
+        <svg viewBox="0 0 24 24" {...common}>
+          <path d="M7 3c0 4.5 10 4.5 10 9s-10 4.5-10 9" />
+          <path d="M17 3c0 4.5-10 4.5-10 9s10 4.5 10 9" />
+          <path d="M9 6.5h6M9 17.5h6M10.5 12h3" opacity=".5" />
+        </svg>
+      );
+    case "orbit":
+      return (
+        <svg viewBox="0 0 24 24" {...common}>
+          <circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none" />
+          <ellipse cx="12" cy="12" rx="10" ry="5.5" transform="rotate(-20 12 12)" />
+          <circle cx="20.6" cy="9" r="1.6" fill="currentColor" stroke="none" />
+        </svg>
+      );
+    case "atom":
+      return (
+        <svg viewBox="0 0 24 24" {...common}>
+          <circle cx="12" cy="12" r="1.8" fill="currentColor" stroke="none" />
+          <ellipse cx="12" cy="12" rx="10" ry="4" />
+          <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)" />
+          <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)" />
+        </svg>
+      );
+    case "neuron":
+      return (
+        <svg viewBox="0 0 24 24" {...common}>
+          <circle cx="12" cy="11" r="3" />
+          <path d="M12 14v7M12 21l-2.5 1M12 21l2.5 1M9.4 9.5 5 6M5 6 3 6.5M5 6l-.3-2.2M14.6 9.5 19 5.5M19 5.5l2 .4M19 5.5l-.2-2M9 11.5l-5.5 2M15 11.5l5.5 2.5" />
+        </svg>
+      );
+    case "graph":
+      return (
+        <svg viewBox="0 0 24 24" {...common}>
+          <path d="M6 6l12 3M6 6l3 12M18 9l-9 9M18 9l1 9M9 18h10" opacity=".55" />
+          <circle cx="6" cy="6" r="2.2" fill="currentColor" stroke="none" />
+          <circle cx="18" cy="9" r="2.2" fill="currentColor" stroke="none" />
+          <circle cx="9" cy="18" r="2.2" fill="currentColor" stroke="none" />
+          <circle cx="19" cy="18" r="1.6" fill="currentColor" stroke="none" />
+        </svg>
+      );
+    case "scale":
+      return (
+        <svg viewBox="0 0 24 24" {...common}>
+          <path d="M12 3v18M8 21h8M4 7h16M12 5l0 2" />
+          <path d="M6 7l-3 7a3 3 0 0 0 6 0zM18 7l-3 7a3 3 0 0 0 6 0z" />
+        </svg>
+      );
+    case "globe":
+      return (
+        <svg viewBox="0 0 24 24" {...common}>
+          <circle cx="12" cy="12" r="9.5" />
+          <ellipse cx="12" cy="12" rx="4.2" ry="9.5" />
+          <path d="M2.8 9h18.4M2.8 15h18.4" />
+        </svg>
+      );
+    case "mine":
+      return (
+        <svg viewBox="0 0 24 24" {...common}>
+          <circle cx="12" cy="12" r="5.5" fill="currentColor" stroke="none" />
+          <path d="M12 2.5v4M12 17.5v4M2.5 12h4M17.5 12h4M5.3 5.3l2.8 2.8M15.9 15.9l2.8 2.8M5.3 18.7l2.8-2.8M15.9 8.1l2.8-2.8" />
+          <circle cx="10" cy="10" r="1.3" fill="#fff" stroke="none" />
+        </svg>
+      );
+  }
+}
+
+function ArrowIcon() {
+  return (
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M5 10h10M11 5.5 15.5 10 11 14.5" />
+    </svg>
+  );
+}
+
+function Chips({ items, tone = "default" }: { items: string[]; tone?: "default" | "brand" }) {
+  return (
+    <ul className={`chips chips--${tone}`}>
+      {items.map((s) => <li key={s} className="chip">{s}</li>)}
+    </ul>
+  );
+}
+
+function Logo({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div className="logo-tile">
+      <Image src={src} alt={alt} width={96} height={96} unoptimized={src.endsWith(".svg")} />
+    </div>
+  );
+}
+
+function RoleCard({ r }: { r: Role }) {
+  return (
+    <article className="role reveal">
+      <Logo src={r.logo} alt={r.logoAlt} />
+      <div className="role-body">
+        <header className="role-head">
+          <div>
+            <h3 className="role-title">{r.role}</h3>
+            <p className="role-org">{r.org}</p>
+          </div>
+          <span className="role-dates">{r.dates}</span>
+        </header>
+        {r.bullets && (
+          <ul className="role-bullets">
+            {r.bullets.map((b) => <li key={b}>{b}</li>)}
+          </ul>
+        )}
+        {r.stack && <Chips items={r.stack} />}
+        {r.projects && (
+          <div className="role-projects">
+            {r.projects.map((p) => (
+              <div key={p.name} className="role-project">
+                <h4>{p.name}</h4>
+                <ul className="role-bullets">
+                  {p.bullets.map((b) => <li key={b}>{b}</li>)}
+                </ul>
+                <Chips items={p.stack} />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </article>
+  );
+}
+
+function SectionHead({ eyebrow, title, children }: { eyebrow: string; title: string; children?: React.ReactNode }) {
+  return (
+    <div className="section-head reveal">
+      <p className="eyebrow">{eyebrow}</p>
+      <h2>{title}</h2>
+      {children && <p className="section-lead">{children}</p>}
+    </div>
+  );
+}
+
+/* ── Page ──────────────────────────────────────────────────────────────── */
+
 function Resume() {
+  const rootRef = React.useRef<HTMLDivElement>(null);
+
+  // Fade sections in as they scroll into view (content stays visible without JS)
+  React.useEffect(() => {
+    const root = rootRef.current;
+    if (!root || !("IntersectionObserver" in window)) return;
+    root.classList.add("can-animate");
+    const els = root.querySelectorAll(".reveal");
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add("is-visible");
+          io.unobserve(e.target);
+        }
+      }),
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+  const year = new Date().getFullYear();
 
   const page = (
-      <div className="resume-container">
-        <div className="sameLine">
-
-          {/* Projects */}
-          <div className="projects">
-            {/* Research */}
-            <h2 className="projectsTitle">Research</h2>
-            <div className="headerDivider" />
-
-            <Link className="projectItem" href="/hubbardmodel">
-              <p className="projectText">Hubbard Model</p>
-            </Link>
-            <Link className="projectItem" href="/methanogens">
-              <p className="projectText">Methanogens</p>
-            </Link>
-
-            {/* Projects */}
-            <h2 className="projectsTitle" style={{paddingTop: "10%"}}>Projects</h2>
-            <div className="headerDivider" />
-            
-            <Link className="projectItem" href="/solarsystem">
-              <p className="projectText">Solar System</p>
-            </Link>
-            <Link className="projectItem" href="/hydrogen">
-              <p className="projectText">Hydrogen Atom</p>
-            </Link>
-            <Link className="projectItem" href="/brain">
-              <p className="projectText">Human Brain</p>
-            </Link>
-            <Link className="projectItem" href="/knowledgegraph">
-              <p className="projectText">Knowledge Graph</p>
-            </Link>
-            <Link className="projectItem" href="/worldmap">
-              <p className="projectText">World Map</p>
-            </Link>
-
-            {/* Class Notes */}
-            {/* <h2 className="projectsTitle" style={{paddingTop: "10%"}}>Class Notes</h2>
-            <div className="headerDivider" />
-
-            <Link className="projectItem" href="/numericalmethods">
-              <p className="projectText">Numerical Methods</p>
-            </Link>
-            <Link className="projectItem" href="/structuralbioinformatics">
-              <p className="projectText">Structural Bioinformatics</p>
-            </Link>
-            <Link className="projectItem" href="/threeBody">
-              <p className="projectText">Three-Body Problem</p>
-            </Link> */}
-
-            {/* Games */}
-            <h2 className="projectsTitle" style={{paddingTop: "10%"}}>Games</h2>
-            <div className="headerDivider" />
-
-            <Link className="projectItem" href="/minesweeper">
-              <p className="projectText">Minesweeper</p>
-            </Link>
-            {/* <Link className="projectItem" href="/solitaire">
-              <p className="projectText">Solitaire</p>
-            </Link>
-            <Link className="projectItem" href="/freeplay">
-              <p className="projectText">Free Play</p>
-            </Link> */}
+    <div className="home" ref={rootRef}>
+      {/* Hero */}
+      <section className="hero" id="top">
+        <div className="wrap hero-grid">
+          <div className="hero-copy">
+            <p className="hero-status"><span className="status-dot" aria-hidden="true" /> PSM in High-Performance Computing · Temple University</p>
+            <h1 className="hero-title">
+              Hi, I&apos;m Garrett.<br />
+              <span className="hero-title-accent">I build with data, physics &amp; code.</span>
+            </h1>
+            <p className="hero-lead">
+              Data scientist working across machine learning, high-performance computing and scientific
+              simulation — from LLM pipelines at Booz Allen Hamilton to quantum and biochemistry research.
+              This site is where I build interactive explorations of the things I find fascinating.
+            </p>
+            <div className="hero-actions">
+              <a className="btn btn-primary" href={`mailto:${EMAIL}`}>Get in touch</a>
+              <a className="btn btn-ghost" href="#work">Explore my work <ArrowIcon /></a>
+              <a className="btn btn-link" href={GITHUB} target="_blank" rel="noreferrer">GitHub</a>
+            </div>
+            <ul className="hero-traits">
+              <li>Natural leader</li>
+              <li>Fast learner</li>
+              <li>Creative problem solver</li>
+            </ul>
           </div>
 
-          <div className="resume">
-            <div className="sameLine" id="intro">
-              {/* <p className="introText">Welcome to garrettstoll.info! I will be using this website to share projects I have put together. They will span my various interests including data science, biochemistry, physics, and AI. Right now you can check out my undergraduate research on simulating the Hubbard Model, explore our solar system, or see how the Schrodinger equation can visualize atoms. You can expect regular updates to these pages and more! For consulting or employment inquiries, please email me at <a href="mailto:garrettstoll@gmail.com">garrettstoll@gmail.com</a>. Have fun, and enjoy this site responsibly!</p> */}
-              <div style={{ flex: '3' }}>  
-                <h2 className="section-header" style={{ width: '100%' }}>Summary of Qualifications</h2>
-                <div className="subheaderDivider" style={{ width: '100%' }} />
-                <div className="sameLine">
-                  <div style={{ flex: '1' }}>
-                    <ul className="resume-list">
-                      <li style={{marginBottom: "1.5%"}}>Implementing AI, ML, and ETL pipelines</li>
-                      <li style={{marginBottom: "1.5%"}}>Data mining, cleaning, and visualizations</li>
-                      <li style={{marginBottom: "1.5%"}}>Cloud and high-performance computing</li>
-                      <li style={{marginBottom: "1.5%"}}>Frontend development using React.js and Microsoft Power Apps</li>
-                    </ul>
-                  </div>
-                  <div style={{ flex: '1' }}>
-                    <ul className="resume-list">
-                      <li style={{marginBottom: "1.5%"}}>Natural leader</li>
-                      <li style={{marginBottom: "1.5%"}}>Fast learner</li>
-                      <li style={{marginBottom: "1.5%"}}>Creative problem solver</li>
-                      <li style={{marginBottom: "1.5%"}}>Blockchain, Computational Biochemistry, and Quantum Physics research</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="profilePicContainer" style={{ flex: '2' }}>
-                <Image
-                  className="introPic"
-                  src="/resumeImages/profilePic.png"
-                  alt="Picture of Garrett Stoll"
-                  width={256}
-                  height={256}
-                  sizes="10vw"
-                />
-              </div>
+          <div className="hero-visual">
+            <div className="portrait">
+              <Image
+                src="/resumeImages/profilePic.png"
+                alt="Portrait of Garrett Stoll"
+                width={420}
+                height={420}
+                priority
+                className="portrait-img"
+              />
             </div>
-
-            <h2 className="section-header">Education</h2>
-            <div className="subheaderDivider" />
-
-            {/* Temple University */}
-            <div className="sameLine">
-              <div className="resumePicContainer">
-                <Image
-                  className="logo"
-                  src="/resumeImages/templeLogo.png"
-                  alt="Temple Logo"
-                  width={0}
-                  height={0}
-                  sizes="100%"
-                />
-              </div>
-              <div className="jobText">
-                <div className="sameLine">
-                  <h3 className="job-header">Temple University College of Science and Technology</h3>
-                  <i className="date">Aug 2025 &mdash; Present</i>
-                </div>
-                <p>PSM in High-Performance Computing for Scientific Applications</p>
-              </div>
-            </div>
-
-            {/* Virginia Tech */}
-            <div className="sameLine" style={{ marginTop: "1%" }}>
-              <div className="resumePicContainer">
-                <Image
-                  className="logo"
-                  src="/resumeImages/VTLogo.png"
-                  alt="Virginia Tech Logo"
-                  width={0}
-                  height={0}
-                  sizes="100%"
-                />
-              </div>
-              <div className="jobText">
-                <div className="sameLine">
-                  <h3 className="job-header">Virginia Tech College of Science</h3>
-                  <i className="date">Aug 2016 &mdash; Dec 2021</i>
-                </div>
-                <p>BS in Computational Modeling and Data Analytics</p>
-                <p>Minors: Computer Science, Mathematics</p>
-              </div>
-            </div>
-
-            <h2  className="section-header">Professional Experience</h2>
-            <div className="subheaderDivider" />
-
-            {/* Data Annotation */}
-            <div className="sameLine">
-              <div className="resumePicContainer">
-                <Image
-                  className="logo"
-                  src="/resumeImages/DataAnnotationLogo.svg"
-                  alt="Data Annotation Logo"
-                  width={0}
-                  height={0}
-                  sizes="100%"
-                />
-              </div>
-              <div className="jobText">
-                <div className="sameLine">
-                  <h3 className="job-header">Data Annotation &mdash; Programming Analyst/AI Trainer</h3>
-                  <i className="date">Jan 2025 &mdash; Aug 2025</i>
-                </div>
-                <ul className="resume-list">
-                  <li>Evaluated AI responses for correctness and instruction following for programming, math, physics, and biology prompts</li>
-                  <li>Created reasoning problems in math and biology that AI is unable to answer</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Booz */}
-            <div className="sameLine" style={{ marginTop: "1%" }}>
-              <div className="resumePicContainer">
-                <Image
-                  className="logo"
-                  src="/resumeImages/BAHLogo.png"
-                  alt="Booz Allen Hamilton Logo"
-                  width={0}
-                  height={0}
-                  sizes="100%"
-                />
-              </div>
-              <div className="jobText">
-                <div className="sameLine">
-                  <h3 className="job-header">Booz Allen Hamilton &mdash; Data Scientist</h3>
-                  <i className="date">Nov 2022 &mdash; Sep 2024</i>
-                </div>
-                <h4 className="task-header">Web Scraping AI Pipeline</h4>
-                <ul className="resume-list">
-                  <li>Lead a team of three to automate the process of collecting news articles, identifying target articles, and parsing those articles for information to be stored in a database</li>
-                  <li>Utilized Selenium, Pandas, Langchain, Transformers, and Mistral</li>
-                </ul>
-                <h4 className="task-header">Locally Hosted Fine-Tuned Installable LLM</h4>
-                <ul className="resume-list">
-                  <li>Co-led the design and development of an installable program that incorporated a locally hosted fine-tuned LLM and a responsive frontend interface</li>
-                  <li>The tool rewrites job postings to Defense Cyber Workforce standards</li>
-                  <li>Utilized Python, PyTorch, Transformers, JavaScript, React.js, and Qt Creator</li>
-                </ul>
-                <h4 className="task-header">User Productivity Team</h4>
-                <ul className="resume-list">
-                  <li>Created a dashboard in Databricks to visualize device inventory and individual user patterns</li>
-                  <li>Utilized Python, SQL, Databricks, and Splunk</li>
-                </ul>
-                <h4 className="task-header">Internal PowerApp</h4>
-                <ul className="resume-list">
-                  <li>Developed a Microsoft PowerApp to automate onboarding processes and improve cross-contract communications to reduce project timelines</li>
-                  <li>Utilized PowerApps, PowerAutomate, PowerBI, Dataverse, Sharepoint, and Microsoft Teams</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Summit */}
-            <div className="sameLine" style={{ marginTop: "1%" }}>
-              <div className="resumePicContainer">
-                <Image
-                  className="logo"
-                  src="/resumeImages/SummitConsultingLogo.png"
-                  alt="Summit Consulting Logo"
-                  width={0}
-                  height={0}
-                  sizes="100%"
-                />
-              </div>
-              <div className="jobText">
-                <div className="sameLine">
-                <h3 className="job-header">Summit Consulting, LLC &mdash; Intern</h3>
-                <i className="date">Aug 2021 &mdash; Dec 2021</i>
-                </div>
-                <ul className="resume-list">
-                  <li>Lead a team of three to implement an ETL pipeline on Amazon Web Services</li>
-                  <li>Worked with the federal database management system, IPEDS</li>
-                  <li>Web-scraped 5 websites using beautiful soup and selenium</li>
-                  <li>Data Processing using pandas</li>
-                  <li>Statistical modeling using sklearn</li>
-                </ul>
-              </div>
-            </div>
-
-            <h2 className="section-header">Research Experience</h2>
-            <div className="subheaderDivider" />
-
-            <div className="sameLine">
-              <div className="resumePicContainer">
-                <Image
-                  className="logo"
-                  src="/resumeImages/VTLogo.png"
-                  alt="Virginia Tech Logo"
-                  width={0}
-                  height={0}
-                  sizes="100%"
-                />
-              </div>
-              <div className="research">
-                {/* Dr. Scarola */}
-                <div className="sameLine">
-                  <div className="jobText">
-                    <div className="sameLine">
-                    <h3 className="job-header">Virginia Tech, Dr. Vito Scarola &mdash; Research Assistant</h3>
-                    <i className="date">Jan 2021 &mdash; Dec 2021</i>
-                    </div>
-                    <ul className="resume-list">
-                      <li>Using Python, I simulated the Hubbard model, then developed a combinatorial optimization algorithm to dynamically implement the Gutzwiller Projection</li>
-                      <li>Utilized numpy for complex analysis, mpi4py for high-performance computing, and matplotlib for data visualizations</li>
-                      <li>Algorithm optimization resulting in an 8-fold speed up</li>
-                    </ul>
-                  </div>
-                </div>
-                {/* Dr. White */}
-                <div className="sameLine">  
-                  <div className="jobText">
-                    <div className="sameLine">
-                      <h3 className="job-header">Virginia Tech, Dr. Bob White &mdash; Research Assistant</h3>
-                      <i className="date">Aug 2017 &mdash; Dec 2019</i>
-                    </div>
-                    <ul className="resume-list">
-                      <li>Wet lab and Computational Biochemistry research experience</li>
-                      <li>Studied metalloprotein families, radical SAM enzymes, and novel thiol molecules</li>
-                      <li>Conducted protein homology modeling, molecular docking simulations, comparative genomics, gas chromatography-mass spectrometry (GCMS), liquid chromatography, and chemical assays</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <h2 className="section-header">Technical Skills</h2>
-            <div className="subheaderDivider" />
-
-            <div className="sameLine">
-              <div className="resumePicContainer">
-                <Image
-                  className="logo"
-                  src="/resumeImages/toolsLogo.png"
-                  alt="Python, JavaScript, and SQL Logos"
-                  width={0}
-                  height={0}
-                  sizes="100%"
-                />
-              </div>
-              <div className="jobText">
-                <h3 className="job-header">Programming Languages</h3>
-                <p>Python, C, C++, Go, Java, JavaScript, TypeScript, HTML, CSS, SQL, R and Tidyverse</p>
-                
-                <h3 className="job-header">Python Libraries</h3>
-                <p>flask, pytorch, pyspark, pandas, sklearn, statsmodel, numpy, scipy, mpi4py, beautiful soup, selenium, matplotlib, langchain, transformers</p>
-                
-                <h3 className="job-header">JavaScript Packages/Frameworks</h3>
-                <p>Node.js, React.js, Next.js, d3.js, three.js</p>
-                
-                <h3 className="job-header">Databases</h3>
-                <p>Databricks, MySQL, Splunk</p>
-                
-                <h3 className="job-header">Other Tools</h3>
-                <p>Bash, Git, MPI, OpenMP, Qiskit, Microsoft &mdash; 365, Power Apps, Power Automate, Power BI</p>
-              </div>
-            </div>
-
-            <h2 className="section-header">Certificates</h2>
-            <div className="subheaderDivider" />
-            <div className="sameLine">
-              <div className="resumePicContainer">
-                <Image
-                  className="logo"
-                  src="/resumeImages/BAHIBMLogo.png"
-                  alt="Booz Allen Hamilton and IBM logos side by side"
-                  width={0}
-                  height={0}
-                  sizes="100%"
-                />
-              </div>
-              <div className="jobText"> 
-                <ul className="resume-list">
-                  <li>IBM Associate Developer</li>
-                    <ul style={{marginBottom: '1%'}}><li style={{listStyle: "disc", color:"black"}}>Quantum Computation using Qiskit</li></ul>
-                  <li>Booz Allen Hamilton Technical Badges</li>
-                      <div style={{ display: 'flex', width: '50%' }}>
-                      <ul style={{ flex: '1' }}>
-                        <li style={{listStyle: "disc", color:"black"}}>Docker</li>
-                        <li style={{listStyle: "disc", color:"black"}}>Angular</li>
-                        <li style={{listStyle: "disc", color:"black"}}>React</li>
-                        <li style={{listStyle: "disc", color:"black"}}>CSS</li>
-                        <li style={{listStyle: "disc", color:"black"}}>JavaScript</li>
-                      </ul>
-                      <ul style={{ flex: '1' }}>
-                        <li style={{listStyle: "disc", color:"black"}}>Java</li>
-                        <li style={{listStyle: "disc", color:"black"}}>Spring Boot</li>
-                        <li style={{listStyle: "disc", color:"black"}}>SQL</li>
-                        <li style={{listStyle: "disc", color:"black"}}>AI Aware</li>
-                        <li style={{listStyle: "disc", color:"black"}}>Machine Learning</li>
-                        <li style={{listStyle: "disc", color:"black"}}>Python</li>
-                      </ul>
-                      </div>
-                </ul>
-              </div>
-            </div>
-
-            <h2 className="section-header">Volunteer Work</h2>
-            <div className="subheaderDivider" />
-            <div className="sameLine">
-              <div className="resumePicContainer">
-                <Image
-                  className="logo"
-                  src="/resumeImages/PeteyGreeneLogo.png"
-                  alt="Petey Greene Program Logo"
-                  width={0}
-                  height={0}
-                  sizes="100%"
-                />
-              </div>
-              <div className="jobText">
-                <div className="sameLine">
-                <h3 className="job-header">The Petey Greene Program &mdash; Tutor</h3>
-                <i className="date">Jun 2025 &mdash; Present</i>
-                </div>
-                <ul className="resume-list">
-                  <li>Tutoring incarcerated people in reading and math in preparation for their GEDs</li>
-                </ul>
-              </div>
-            </div>
-
           </div>
-        </div>  
-      </div>
+        </div>
+      </section>
+
+      {/* Capabilities */}
+      <section className="section section--tight">
+        <div className="wrap">
+          <div className="caps">
+            {CAPABILITIES.map((c, i) => (
+              <div key={c.title} className="cap reveal" style={{ transitionDelay: `${i * 60}ms` }}>
+                <span className="cap-num">0{i + 1}</span>
+                <h3>{c.title}</h3>
+                <p>{c.text}</p>
+              </div>
+            ))}
+          </div>
+          <p className="caps-note reveal">
+            Research background in <strong>blockchain</strong>, <strong>computational biochemistry</strong> and <strong>quantum physics</strong>.
+          </p>
+        </div>
+      </section>
+
+      {/* Work */}
+      <section className="section" id="work">
+        <div className="wrap">
+          <SectionHead eyebrow="Selected work" title="Research, projects & games">
+            Interactive pages built from real data and real math — click in and poke around.
+          </SectionHead>
+          {WORK.map((g) => (
+            <div key={g.group} className="work-group">
+              <h3 className="work-group-title reveal">{g.group}</h3>
+              <div className="work-grid">
+                {g.items.map((w, i) => (
+                  <Link
+                    key={w.href}
+                    href={w.href}
+                    className="work-card reveal"
+                    style={{ "--hue": w.hue, transitionDelay: `${i * 50}ms` } as React.CSSProperties}
+                  >
+                    <span className="work-icon"><WorkIcon name={w.icon} /></span>
+                    <span className="work-title">{w.title}</span>
+                    <span className="work-blurb">{w.blurb}</span>
+                    <span className="work-cta">Open <ArrowIcon /></span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Experience */}
+      <section className="section section--alt" id="experience">
+        <div className="wrap">
+          <SectionHead eyebrow="Experience" title="Where I've worked" />
+          <div className="roles">
+            {EXPERIENCE.map((r) => <RoleCard key={r.org} r={r} />)}
+          </div>
+
+          <SectionHead eyebrow="Research" title="In the lab" />
+          <div className="roles">
+            {RESEARCH.map((r) => <RoleCard key={r.org} r={r} />)}
+          </div>
+        </div>
+      </section>
+
+      {/* Education */}
+      <section className="section">
+        <div className="wrap">
+          <SectionHead eyebrow="Education" title="Where I've studied" />
+          <div className="edu-grid">
+            {EDUCATION.map((e) => (
+              <article key={e.school} className="edu reveal">
+                <Logo src={e.logo} alt={e.logoAlt} />
+                <div>
+                  <span className="role-dates">{e.dates}</span>
+                  <h3 className="edu-school">{e.school}</h3>
+                  <p className="edu-college">{e.college}</p>
+                  <p className="edu-degree">{e.degree}</p>
+                  {e.detail && <p className="edu-detail">{e.detail}</p>}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Skills */}
+      <section className="section section--alt" id="skills">
+        <div className="wrap">
+          <SectionHead eyebrow="Toolkit" title="Technical skills" />
+          <div className="skills">
+            {SKILLS.map((s) => (
+              <div key={s.group} className="skill-row reveal">
+                <h3>{s.group}</h3>
+                <Chips items={s.items} />
+              </div>
+            ))}
+          </div>
+
+          <div className="extras">
+            <article className="extra reveal">
+              <Logo src="/resumeImages/BAHIBMLogo.png" alt="Booz Allen Hamilton and IBM logos" />
+              <div>
+                <p className="eyebrow">Certificates</p>
+                <h3>IBM Associate Developer</h3>
+                <p className="extra-sub">Quantum computation using Qiskit</p>
+                <h3 className="extra-gap">Booz Allen Hamilton Technical Badges</h3>
+                <Chips items={BAH_BADGES} tone="brand" />
+              </div>
+            </article>
+            <article className="extra reveal">
+              <Logo src="/resumeImages/PeteyGreeneLogo.png" alt="Petey Greene Program logo" />
+              <div>
+                <p className="eyebrow">Volunteer</p>
+                <h3>The Petey Greene Program — Tutor</h3>
+                <span className="role-dates">Jun 2025 — Present</span>
+                <p className="extra-sub">Tutoring incarcerated people in reading and math in preparation for their GEDs.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact */}
+      <section className="contact" id="contact">
+        <div className="wrap">
+          <div className="contact-card reveal">
+            <Image
+              src="/TyroImages/AnOfferYouCantRefuse.png"
+              alt="Tyro the cat lounging like a mob boss"
+              width={323}
+              height={284}
+              className="contact-tyro"
+            />
+            <div className="contact-copy">
+              <p className="eyebrow eyebrow--light">Let&apos;s talk</p>
+              <h2>Tyro has an offer you can&apos;t refuse.</h2>
+              <p>
+                I&apos;m open to data science, machine learning and scientific-computing roles and consulting.
+                Reach out — he insists.
+              </p>
+              <div className="hero-actions">
+                <a className="btn btn-light" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+                <a className="btn btn-outline-light" href={GITHUB} target="_blank" rel="noreferrer">GitHub</a>
+              </div>
+            </div>
+          </div>
+          <footer className="site-footer">
+            <span>© {year} Garrett Stoll</span>
+            <a href="#top">Back to top ↑</a>
+          </footer>
+        </div>
+      </section>
+    </div>
   );
 
-  return StandardLayout({main: page});
-        
+  return StandardLayout({ main: page, variant: "plain" });
 }
 
 export default Resume;

@@ -22,7 +22,7 @@ const displaySerif = localFont({
 
 export const metadata: Metadata = {
   title: "Garrett Stoll",
-  description: "The Garrett Stoll website",
+  description: "Garrett Stoll — data scientist working across machine learning, high-performance computing and scientific simulation.",
 };
 
 export default function RootLayout({

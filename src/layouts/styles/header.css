@@ -1,95 +1,149 @@
-header {
-  position: relative;
-  z-index: 1;
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
   width: 100%;
-  min-height: 92px;
-  padding: 0.35rem 0.8rem;
-  border-bottom: 1px solid rgba(239, 255, 242, 0.18);
-  background: linear-gradient(145deg, rgba(11, 45, 30, 0.9), rgba(38, 109, 70, 0.82));
-  backdrop-filter: blur(8px);
-  color: #f7fff9;
-  text-align: center;
+  height: var(--site-header-h);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: saturate(1.4) blur(12px);
+  -webkit-backdrop-filter: saturate(1.4) blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.site-header.is-scrolled {
+  border-bottom-color: var(--line);
+  box-shadow: 0 6px 20px -16px rgba(16, 24, 20, 0.4);
+}
+
+.site-header-inner {
+  height: 100%;
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
   display: flex;
   align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
 }
 
-.leftTyroContainer {
-  flex: 1;
-  min-height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
+.site-brand {
+  display: inline-flex;
   align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+  color: var(--text-primary);
+  text-decoration: none;
 }
 
-.headerText {
-  flex: 8;
-  margin: 0;
-  padding: 0.35rem 0;
-  color: #f8fff8;
-  font-size: clamp(1.25rem, 2.4vw, 2rem);
-  letter-spacing: 0.045em;
-  text-transform: uppercase;
-  text-shadow: 0 2px 10px rgba(5, 21, 14, 0.35);
+.site-brand:hover {
+  color: var(--text-primary);
 }
 
-.rightTyroContainer {
-  flex: 1;
-  min-height: 100%;
-  text-align: center;
+.site-brand-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--surface-muted);
+  box-shadow: 0 0 0 1px var(--line-strong), 0 0 0 3px var(--surface);
+  transition: transform 200ms ease;
+}
+
+.site-brand-tyro {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.site-brand:hover .site-brand-avatar {
+  animation: tyro-wiggle 700ms ease-in-out;
+}
+
+.site-brand-name {
+  font-weight: 650;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.site-crumb-sep {
+  color: var(--text-tertiary);
+  font-weight: 300;
+}
+
+.site-crumb {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.site-nav {
+  margin-left: auto;
   display: flex;
-  justify-content: center;
   align-items: center;
-  transform: scaleX(-1);
+  gap: 0.25rem;
+  flex-shrink: 0;
 }
 
-.logo {
-  width: min(92px, 100%);
-  height: auto;
+.site-nav-link {
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 160ms ease, color 160ms ease;
 }
 
-.leftTyroContainer .logo.tyro-intro-dance,
-.rightTyroContainer .logo.tyro-intro-dance,
-.leftTyroContainer .logo:hover,
-.rightTyroContainer .logo:hover {
-  animation: tyro-dance 2.2s ease-in-out infinite;
+.site-nav-link:hover {
+  color: var(--text-primary);
+  background: var(--brand-soft);
 }
 
-.rightTyroContainer .logo.tyro-intro-dance {
-  animation-delay: 0.5s;
+.site-nav-cta {
+  margin-left: 0.35rem;
+  padding: 0.42rem 0.95rem;
+  border-radius: 999px;
+  background: var(--text-primary);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 160ms ease, transform 160ms ease;
 }
 
-@keyframes tyro-dance {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  20% { transform: translateY(-5px) rotate(-8deg); }
-  40% { transform: translateY(0) rotate(0deg); }
-  60% { transform: translateY(-4px) rotate(8deg); }
-  80% { transform: translateY(0) rotate(-3deg); }
+.site-nav-cta:hover {
+  color: #fff;
+  background: var(--brand-strong);
+  transform: translateY(-1px);
 }
 
-.logo.pop-image {
-  opacity: 0;
-  transform: scale(0.7) rotate(0deg);
-  transition: opacity 0.3s, transform 0.3s;
-  will-change: opacity, transform;
-}
-.logo.pop-image.visible {
-  opacity: 1;
-  transform: scale(1) rotate(0deg);
+@keyframes tyro-wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-12deg); }
+  50% { transform: rotate(9deg); }
+  75% { transform: rotate(-5deg); }
 }
 
-@media (max-width: 768px) {
-  header {
-    min-height: 74px;
-    padding: 0.25rem 0.45rem;
+@media (max-width: 760px) {
+  .site-nav-link {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-brand-name {
+    font-size: 0.95rem;
   }
 
-  .headerText {
-    font-size: clamp(1rem, 5.5vw, 1.4rem);
-    letter-spacing: 0.03em;
-  }
-
-  .logo {
-    width: min(64px, 100%);
+  .site-header:has(.site-crumb) .site-brand-name,
+  .site-header:has(.site-crumb) .site-crumb-sep {
+    display: none;
   }
 }

@@ -4,6 +4,7 @@ import { GameControls } from "./components/GameControls";
 import { useState } from "react";
 import { useMinesweeper } from "./hooks/useMinesweeper";
 import StandardLayout from "@/layouts/standardLayout";
+import "./styles/Minesweeper.css";
 
 export default function Home() {
   const [rows, setRows] = useState(10);
@@ -39,6 +40,10 @@ export default function Home() {
 
   const main = (
     <div className="minesweeper-container">
+      <header className="ms-header">
+        <h1>Minesweeper</h1>
+        <p>Click to reveal, flag what you suspect. Turn on hints to see each tile&apos;s mine probability.</p>
+      </header>
       <GameControls
         remainingMines={remainingMines}
         elapsedTime={elapsedTime}
@@ -47,6 +52,7 @@ export default function Home() {
         onSettings={handleSettings}
         flagging={flagging}
         onFlagging={toggleFlagging}
+        hintsEnabled={hintsEnabled}
       />
       <GameBoard 
         board={board}
@@ -55,6 +61,7 @@ export default function Home() {
         gameState={gameState}
         defaultMineProbability={mines / (rows * cols)}
         hintsEnabled={hintsEnabled}
+        onRestart={handleRestart}
       />
     </div>
   );

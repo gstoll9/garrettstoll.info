@@ -29,6 +29,7 @@ export const Cell: React.FC<CellProps> = ({ cell, onClick, onRightClick, hintsEn
     let className = "cell";
     if (cell.isRevealed) className += " revealed";
     if (cell.isFlagged) className += " flagged";
+    if (cell.isRevealed && !cell.hasMine && cell.adjacentMines) className += ` n${cell.adjacentMines}`;
 
     let content = "";
     if (cell.isRevealed) {
@@ -50,7 +51,7 @@ export const Cell: React.FC<CellProps> = ({ cell, onClick, onRightClick, hintsEn
                     hintsEnabled && !cell.isRevealed && !cell.isFlagged
                         ? getProbabilityColor(cell.mineProbability ?? 0)
                         : undefined,
-                fontSize: hintsEnabled && !cell.isRevealed && !cell.isFlagged ? '10px' : '16px', // Smaller font for percentages
+                fontSize: hintsEnabled && !cell.isRevealed && !cell.isFlagged ? 'clamp(8px, 2.4vw, 11px)' : undefined, // Smaller font for percentages
                 color: hintsEnabled && !cell.isRevealed && !cell.isFlagged ? 'white' : undefined, // White text for visibility
                 fontWeight: hintsEnabled && !cell.isRevealed && !cell.isFlagged ? 'bold' : 'bold',
               }}

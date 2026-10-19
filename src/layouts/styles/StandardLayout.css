@@ -2,54 +2,74 @@
   min-height: 100dvh;
   width: 100%;
   position: relative;
-  display: grid;
-  grid-template-rows: auto 1fr;
+  display: flex;
+  flex-direction: column;
 }
 
 .standardlayout-main {
   display: flex;
   flex-direction: column;
   position: relative;
-  width: min(1380px, calc(100% - 2rem));
-  margin: 0.9rem auto 1.4rem;
-  overflow: scroll;
-  border-radius: 24px;
-  border: 1px solid color-mix(in srgb, var(--brand) 22%, transparent);
-  padding: clamp(0.8rem, 1.2vw, 1.4rem);
-  box-shadow: var(--shadow-soft);
-  background:
-    linear-gradient(180deg, #d4caae, #c2b89a);
+  min-width: 0;
 }
 
+/* Centered content surface used by text/article pages */
+.standardlayout-main--card {
+  width: min(var(--content-max), calc(100% - 2 * var(--gutter)));
+  margin: clamp(0.5rem, 2vw, 1.25rem) auto clamp(1.5rem, 4vw, 3rem);
+  padding: clamp(1.1rem, 3.5vw, 2.75rem);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+  overflow-x: auto;
+}
+
+/* Flex children default to min-width:auto, which lets one wide equation or
+   table stretch the whole column past the viewport */
+.standardlayout-main--card > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.standardlayout-main--plain {
+  width: 100%;
+  flex: 1;
+}
+
+/* Floating Tyro home button for full-bleed interactive pages */
 .tyro-home-link {
   position: absolute;
-  top: 1rem;
-  left: 1rem;
-  z-index: 10;
-  overflow: hidden;
-  border-radius: 999px;
-  padding: 0.35rem;
-  background-color: rgba(255, 255, 255, 0.28);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(5px);
-  transition: transform 170ms ease, background-color 170ms ease;
+  top: 0.85rem;
+  left: 0.85rem;
+  z-index: 60;
 }
 
-.tyro-home-link:hover {
-  transform: translateY(-2px);
-  background-color: rgba(255, 255, 255, 0.42);
+.tyro-home-link a {
+  display: block;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.85), 0 8px 24px rgba(0, 0, 0, 0.45);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.tyro-home-link a:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 0 0 2px #fff, 0 12px 28px rgba(0, 0, 0, 0.55);
 }
 
 .tyro-home-image {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  overflow: hidden;
-  transition: transform 170ms ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.tyro-home-image.tyro-intro-dance,
-.tyro-home-link:hover .tyro-home-image {
+.tyro-home-link a.tyro-intro-dance,
+.tyro-home-link:has(.tyro-intro-dance) a,
+.tyro-home-link a:hover {
   animation: tyro-dance 2.2s ease-in-out infinite;
 }
 
@@ -61,12 +81,15 @@
   80% { transform: translateY(0) rotate(-3deg); }
 }
 
-@media (max-width: 768px) {
-  .standardlayout-main {
-    width: calc(100% - 1rem);
-    margin: 0.7rem auto 0.9rem;
-    border-radius: 16px;
-    padding: 0.8rem;
+@media (max-width: 640px) {
+  .standardlayout-main--card {
+    width: 100%;
+    margin: 0 0 1.5rem;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+    box-shadow: none;
+    padding: 1.25rem var(--gutter) 2rem;
   }
 
   .tyro-home-link {
@@ -74,8 +97,26 @@
     left: 0.6rem;
   }
 
-  .tyro-home-image {
-    width: 48px;
-    height: 48px;
+  .tyro-home-link a {
+    width: 44px;
+    height: 44px;
   }
+}
+
+/* Full-bleed interactive pages fill whatever the header leaves */
+.container0--tyro-only .standardlayout-main,
+.container0--none .standardlayout-main {
+  flex: 1;
+}
+
+/* Baseline typography for simple text pages that don't style their own headings */
+.standardlayout-main--card h1 {
+  margin-top: 0;
+  font-size: clamp(1.9rem, 5vw, 2.8rem);
+  letter-spacing: -0.03em;
+}
+
+.standardlayout-main--card h2 {
+  margin-top: 2rem;
+  font-size: clamp(1.3rem, 3vw, 1.6rem);
 }

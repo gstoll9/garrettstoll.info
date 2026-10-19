@@ -1,17 +1,12 @@
 .solitaire-container {
     height: 100%;
     width: 100%;
-    background-color: ddarkgreen;
+    border-radius: var(--radius);
+    background-color: #2e7d32; /* felt green */
+    overflow-x: auto;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #2e7d32; /* green background */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.board {
+.solitaire-container .board {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -19,12 +14,12 @@ body {
   align-items: center;
 }
 
-.row {
+.solitaire-container .row {
   display: flex;
   gap: 1rem;
 }
 
-.pile {
+.solitaire-container .pile {
   position: relative;
   width: 64px;
   min-height: 96px;
@@ -36,7 +31,7 @@ body {
   text-align: center;
 }
 
-.card {
+.solitaire-container .card {
   position: absolute;
   width: 64px;
   height: 96px;
@@ -54,15 +49,15 @@ body {
   cursor: grab;
 }
 
-.card.red {
+.solitaire-container .card.red {
   color: red;
 }
 
-.card.black {
+.solitaire-container .card.black {
   color: black;
 }
 
-.card-back {
+.solitaire-container .card-back {
   background-color: navy;
   color: white;
   display: flex;

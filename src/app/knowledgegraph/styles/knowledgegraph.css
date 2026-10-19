@@ -85,3 +85,38 @@
 .kg-button-primary:hover {
   background: #3b6ca2;
 }
+/* Fill the viewport (tyro-only header has no layout height) */
+:has(.kg-page) .standardlayout-main {
+  width: 100% !important;
+  height: 100dvh !important;
+  border-radius: 0 !important;
+}
+
+.kg-page {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Leave room for the floating Tyro home button */
+.kg-sidebar {
+  padding-top: 84px;
+}
+
+/* ── Small screens: graph on top, tools as a scrollable bottom sheet ───── */
+@media (max-width: 768px) {
+  .kg-page {
+    flex-direction: column-reverse;
+  }
+
+  .kg-sidebar {
+    width: 100%;
+    max-height: 45dvh;
+    padding: 16px;
+    border-right: 0;
+    border-top: 1px solid #222;
+  }
+
+  .kg-canvas-container {
+    min-height: 0;
+  }
+}

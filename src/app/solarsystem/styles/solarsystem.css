@@ -231,6 +231,11 @@
     width: min(190px, 50vw);
   }
 
+  .solarLabel {
+    font-size: 10px;
+    letter-spacing: 0.04em;
+  }
+
   .planetPicker {
     margin-left: 0;
   }

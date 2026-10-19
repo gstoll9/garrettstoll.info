@@ -1,7 +1,25 @@
 .minesweeper-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #f0f0f0;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ms-header {
+  width: 100%;
+  margin-bottom: 1.25rem;
+}
+
+.ms-header h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
+  letter-spacing: -0.03em;
+}
+
+.ms-header p {
+  margin: 0.3rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
 }

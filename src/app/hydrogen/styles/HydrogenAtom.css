@@ -12,16 +12,9 @@
 
 :has(.hydrogenPage) .standardlayout-main {
   width: 100% !important;
-  min-height: calc(100dvh - 92px - 1.8rem) !important;
-  height: calc(100dvh - 92px - 1.8rem) !important;
+  min-height: calc(100dvh - var(--site-header-h)) !important;
+  height: calc(100dvh - var(--site-header-h)) !important;
   border-radius: 0 !important;
-}
-
-@media (max-width: 768px) {
-  :has(.hydrogenPage) .standardlayout-main {
-    min-height: calc(100dvh - 74px - 1.2rem) !important;
-    height: calc(100dvh - 74px - 1.2rem) !important;
-  }
 }
 
 /* ── Fill the main area completely ─────────────────────────────────────────── */

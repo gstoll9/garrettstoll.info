@@ -17,49 +17,37 @@ function HubbardModelPage() {
     };
 
     const page = (
-        <div style={{ margin: "0% 3%" }}>
-            <h1>Hubbard Model</h1>
-            <div className="divider" />
-            <div style={{ display: "flex" }}>
-                <div style={{ order: 0, flex: 1 }}>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;This page is a summary of the undergraduate research I did with <a href="https://scarola.phys.vt.edu/">Dr. Vito Scarola</a> (2021). Our goal was to create code that simulated the three-site Hubbard Model and find solutions that minimize U(t) while keeping the system in a singly occupied state (or the Heisenberg state). I was able to accomplish this for the n and n,n-site Hubbard Model.</p>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;The Hubbard Model is useful in quantum computing when very cold particles are trapped in a laser lattice. To perform computational operations on these particles, we need them to be in singly occupied states. This research aims to do that while minimizing the energy input.</p>
+        <article className="hubbard">
+            <header className="hubbard-hero">
+                <p className="hubbard-eyebrow">Undergraduate research · Virginia Tech · 2021</p>
+                <h1>Hubbard Model</h1>
+            </header>
+            <div className="hubbard-intro">
+                <div className="hubbard-intro-text">
+                    <p>This page is a summary of the undergraduate research I did with <a href="https://scarola.phys.vt.edu/">Dr. Vito Scarola</a> (2021). Our goal was to create code that simulated the three-site Hubbard Model and find solutions that minimize U(t) while keeping the system in a singly occupied state (or the Heisenberg state). I was able to accomplish this for the n and n,n-site Hubbard Model.</p>
+                    <p>The Hubbard Model is useful in quantum computing when very cold particles are trapped in a laser lattice. To perform computational operations on these particles, we need them to be in singly occupied states. This research aims to do that while minimizing the energy input.</p>
                     <p>From Wikipedia, <a href="https://en.wikipedia.org/wiki/Hubbard_model">Hubbard Model</a>:</p>
                     <blockquote cite="https://en.wikipedia.org/wiki/Hubbard_model">
                         The Hubbard model is a useful approximation for particles in a periodic potential at sufficiently low temperatures... and long-range interactions between the particles can be ignored.
                     </blockquote>
-                    <br />
-                    <p><b>You can find my code on Github <a href="https://github.com/gstoll9/Hubbard-Model">here.</a></b></p>
-                    <p>(See ExampleScript.ipynb for more solutions)</p>
+                    <p className="hubbard-code">
+                        <a className="hubbard-button" href="https://github.com/gstoll9/Hubbard-Model">View the code on GitHub →</a>
+                        <span>See ExampleScript.ipynb for more solutions</span>
+                    </p>
                 </div>
-                <div style={{ order: 1, flex: 1, display: "flex", flexDirection: "row", alignItems: "center", margin: "0% 10%" }}>
-                    <div style={{ order: 0, flex: 1, textAlign: "center", alignItems: "center"}}>
-                        <Image
-                            style={{ order: 0, flex: 4, margin: "1% 3%", objectFit: "cover" }}
-                            src={`/hubbardmodelImages/scarola.png`}
-                            alt="Dr. Vito Scarola "
-                            width={256}
-                            height={256}
-                            sizes="100%"
-                        />
-                        <p style={{ order: 1, flex: 1}}><a href="https://scarola.phys.vt.edu/">Dr. Vito Scarola</a></p>
-                    </div>
-                    <div style={{ order: 0, flex: 1, textAlign: "center", alignItems: "center"}}>
-                        <Image
-                            style={{ order: 1, flex: 4, margin: "1% 3%", objectFit: "scale-down" }}
-                            src={`/resumeImages/profilePic.png`}
-                            alt="Garrett Stoll"
-                            width={256}
-                            height={256}
-                            sizes="100%"
-                        />
-                        <p style={{ order: 1, flex: 1}}>Garrett Stoll</p>
-                    </div>
+                <div className="hubbard-people">
+                    <figure>
+                        <Image src={`/hubbardmodelImages/scarola.png`} alt="Dr. Vito Scarola" width={256} height={256} />
+                        <figcaption><a href="https://scarola.phys.vt.edu/">Dr. Vito Scarola</a></figcaption>
+                    </figure>
+                    <figure>
+                        <Image src={`/resumeImages/profilePic.png`} alt="Garrett Stoll" width={256} height={256} />
+                        <figcaption>Garrett Stoll</figcaption>
+                    </figure>
                 </div>
             </div>
-            
-            <br />
-            <p>The Hubbard Model Hamiltonian</p>
+
+            <h2>The Hamiltonian</h2>
             <BlockMath math="
                 H=
                 -t
@@ -74,7 +62,7 @@ function HubbardModelPage() {
                 \bigg)
             " />
             <p>Where</p>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", paddingLeft: "2rem" }}>
+            <div className="hubbard-terms">
                 <div>
                     <p><InlineMath math="t" /> - hopping parameter (tunneling amplitude)</p>
                     <p><InlineMath math="c_{i,\sigma}^\dagger" /> - creation operator at site i with spin <InlineMath math="\sigma" /></p>
@@ -131,13 +119,11 @@ function HubbardModelPage() {
                     \uparrow \quad \downarrow \quad \uparrow \\
                 \end{matrix}
             " /> */}
-            <h1>Solutions</h1>
-            <div className="divider" />
-            {Object.entries(options).map(([key, label]) => (
-                <div key={key} style={{ display: "flex", alignItems: "center", marginBottom: "0.5rem" }}>
-                    <label style={{ display: "flex", alignItems: "center" }}>
+            <h2>Solutions</h2>
+            <div className="hubbard-tabs" role="radiogroup" aria-label="Solution">
+                {Object.entries(options).map(([key, label]) => (
+                    <label key={key} className={`hubbard-tab${plotId === key ? " is-active" : ""}`}>
                         <input
-                            style={{ marginRight: "0.3rem" }}
                             type="radio"
                             name="solution-options"
                             value={label}
@@ -146,16 +132,17 @@ function HubbardModelPage() {
                         />
                         {label}
                     </label>
-                </div>
-            ))}
-            <Image
-                style={{ height: "auto", width: "70%", margin: "1% 3%" }}
-                src={`/hubbardmodelImages/${plotId}.png`}
-                alt="the chosen solution"
-                width={0}
-                height={0}
-                sizes="100%"
-            />
+                ))}
+            </div>
+            <div className="hubbard-plot">
+                <Image
+                    src={`/hubbardmodelImages/${plotId}.png`}
+                    alt={`Solution plot: ${options[plotId as keyof typeof options]}`}
+                    width={0}
+                    height={0}
+                    sizes="(max-width: 900px) 100vw, 900px"
+                />
+            </div>
 {/* 
             <h1>Next Steps</h1>
             <div className="divider" />
@@ -213,7 +200,7 @@ function HubbardModelPage() {
                     </div>
                 ))}
             </div> */}
-        </div>
+        </article>
     );
 
     return StandardLayout({title: "Hubbard Model", main: page});
