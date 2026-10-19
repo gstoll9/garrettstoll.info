@@ -1,0 +1,1454 @@
+legislature_qid,iso3,region_key,parent_qid,name,seats,wikipedia
+Q1283189,ABW,,,Estates of Aruba,21,Parliament of Aruba
+Q1969479,AGO,,,National Assembly of Angola,220,National Assembly (Angola)
+Q4763974,AIA,,,Anguilla House of Assembly,11,House of Assembly (Anguilla)
+Q1091494,ALA,,,Parliament of Åland,30,Parliament of Åland
+Q1135960,ALB,,,Parliament of Albania,140,Parliament of Albania
+Q24824,AND,,,General Council of Andorra,28,General Council (Andorra)
+Q5440456,ARE,,,Federal Supreme Council,,Federal Supreme Council
+Q646190,ARG,,,Argentine National Congress,,Argentine National Congress
+Q1337463,ARM,,,National Assembly of Armenia,107,National Assembly (Armenia)
+Q1267503,ASM,,,American Samoa Fono,,American Samoa Fono
+Q1280751,ATG,,,Parliament of Antigua and Barbuda,,Parliament of Antigua and Barbuda
+Q382118,AUS,,,Parliament of Australia,227,Parliament of Australia
+Q4817650,AUT,,,Austrian Parliament,,Austrian Parliament
+Q330600,AZE,,,National Assembly of Azerbaijan,125,National Assembly (Azerbaijan)
+Q7138930,BDI,,,Parliament of Burundi,,Parliament of Burundi
+Q1137059,BEL,,,Belgian Federal Parliament,,Belgian Federal Parliament
+Q1969527,BEN,,,National Assembly,109,National Assembly (Benin)
+Q1684080,BGD,,,Jatiya Sangsad,350,Jatiya Sangsad
+Q639704,BGR,,,National Assembly of Bulgaria,240,National Assembly (Bulgaria)
+Q3242616,BHR,,,National Assembly of Bahrain,,National Assembly (Bahrain)
+Q1572486,BHS,,,Parliament of The Bahamas,54,Parliament of the Bahamas
+Q2604031,BIH,,,Parliamentary Assembly of Bosnia and Herzegovina,,Parliamentary Assembly of Bosnia and Herzegovina
+Q1798607,BLR,,,National Assembly of the Republic of Belarus,174,National Assembly of the Republic of Belarus
+Q1965042,BLZ,,,National Assembly,,National Assembly (Belize)
+Q7138929,BMU,,,Parliament of Bermuda,47,Parliament of Bermuda
+Q1968458,BOL,,,Plurinational Legislative Assembly,166,Plurinational Legislative Assembly
+Q949699,BRA,,,National Congress of Brazil,,Brazilian National Congress
+Q2565909,BRB,,,Parliament of Barbados,,Parliament of Barbados
+Q2396996,BRN,,,Legislative Council of Brunei,37,Legislative Council of Brunei
+Q2080399,BTN,,,Parliament of Bhutan,,Parliament of Bhutan
+Q859658,BWA,,,National Assembly of Botswana,63,National Assembly of Botswana
+Q1577158,CAF,,,National Assembly,100,National Assembly (Central African Republic)
+Q475689,CAN,,,Parliament of Canada,443,Parliament of Canada
+Q684719,CHE,,,Federal Assembly of Switzerland,246,Federal Assembly (Switzerland)
+Q1968468,CHL,,,National Congress of Chile,,National Congress of Chile
+Q19211,CHN,,,National People's Congress,2987,National People's Congress
+Q27881072,CIV,,,Parliament of Ivory Coast,,Parliament of Ivory Coast
+Q25039919,CMR,,,Parliament of Cameroon,,Parliament of Cameroon
+Q282928,COD,,,Parliament of the Democratic Republic of the Congo,,Parliament of the Democratic Republic of the Congo
+Q4345421,COG,,,Parliament of the Republic of the Congo,,Parliament of the Republic of the Congo
+Q7138950,COK,,,Parliament of the Cook Islands,24,Parliament of the Cook Islands
+Q1284236,COL,,,Congress of Colombia,,Congress of Colombia
+Q1573424,COM,,,Assembly of the Union of the Comoros,33,Assembly of the Union of the Comoros
+Q1718790,CPV,,,National Assembly of Cape Verde,72,National Assembly (Cape Verde)
+Q1386962,CRI,,,Legislative Assembly of Costa Rica,57,Legislative Assembly of Costa Rica
+Q9189683,CRQ,,,Chief Pleas,30,Chief Pleas
+Q720753,CUB,,,National Assembly of People's Power,470,National Assembly of People's Power
+Q2326816,CUW,,,Parliament of Curaçao,21,Parliament of Curaçao
+Q3625554,CYM,,,Parliament of the Cayman Islands,18,Parliament of the Cayman Islands
+Q1112381,CYP,,,House of Representatives,56,House of Representatives (Cyprus)
+Q2347172,CZE,,,Parliament of the Czech Republic,,Parliament of the Czech Republic
+Q146138,DEU,,,Bundesrat,69,German Bundesrat
+Q154797,DEU,,,German Bundestag,630,Bundestag
+Q1139363,DJI,,,National Assembly,65,National Assembly (Djibouti)
+Q1297237,DMA,,,House of Assembly of Dominica,21,House of Assembly of Dominica
+Q209151,DNK,,,Folketing,179,Folketing
+Q595411,DOM,,,Congress of the Dominican Republic,,Congress of the Dominican Republic
+Q3142337,DZA,,,Parliament of Algeria,,Parliament of Algeria
+Q1319595,ECU,,,National Assembly,137,National Assembly (Ecuador)
+Q2584535,EGY,,,Parliament of Egypt,596,Parliament of Egypt
+Q2094027,ERI,,,National Assembly,104,National Assembly (Eritrea)
+Q219692,ESP,,,Cortes Generales,,Cortes Generales
+Q217799,EST,,,Riigikogu,101,Riigikogu
+Q257899,ETH,,,Federal Parliamentary Assembly,,Federal Parliamentary Assembly
+Q643412,FIN,,,Parliament of Finland,200,Parliament of Finland
+Q4345425,FJI,,,Parliament of Fiji,51,Parliament of Fiji
+Q3365321,FLK,,,Legislative Assembly of the Falkland Islands,11,Legislative Assembly of the Falkland Islands
+Q632552,FRA,,,French Parliament,,French Parliament
+Q509668,FRO,,,Løgting,33,Løgting
+Q1287548,FSM,,,Congress of the Federated States of Micronesia,14,Congress of the Federated States of Micronesia
+Q4345413,GAB,,,Parliament of Gabon,,Parliament of Gabon
+Q11010,GBR,,,Parliament of the United Kingdom,1433,Parliament of the United Kingdom
+Q1417210,GEO,,,Parliament of Georgia,150,Parliament of Georgia
+Q1368324,GGY,,,States of Guernsey,45,States of Guernsey
+Q1807513,GHA,,,Parliament of Ghana,275,Parliament of Ghana
+Q128852,GIB,,,Parliament of Gibraltar,17,Gibraltar Parliament
+Q1853235,GIN,,,National Assembly,114,National Assembly (Guinea)
+Q1427127,GMB,,,National Assembly of The Gambia,58,National Assembly of the Gambia
+Q740533,GNB,,,National People's Assembly,100,National People's Assembly (Guinea-Bissau)
+Q16878152,GNQ,,,Parliament of Equatorial Guinea,170,Parliament of Equatorial Guinea
+Q477089,GRC,,,Hellenic Parliament,300,Hellenic Parliament
+Q1253647,GRD,,,Parliament of Grenada,29,Parliament of Grenada
+Q1257966,GRL,,,Inatsisartut,31,Inatsisartut
+Q1136026,GTM,,,Congress of the Republic of Guatemala,160,Congress of the Republic of Guatemala
+Q19543845,GUF,,,Assembly of French Guiana,,Assembly of French Guiana
+Q1563896,GUM,,,Legislature of Guam,15,Legislature of Guam
+Q1512579,GUY,,,National Assembly,65,National Assembly (Guyana)
+Q19208,HKG,,,Legislative Council of Hong Kong,90,Legislative Council of Hong Kong
+Q1415847,HND,,,National Congress of Honduras,128,National Congress of Honduras
+Q371576,HRV,,,Parliament of Croatia,151,Croatian Parliament
+Q742110,HTI,,,Parliament of Haiti,,National Assembly (Haiti)
+Q648716,HUN,,,National Assembly,199,National Assembly (Hungary)
+Q818711,IDN,,,People's Consultative Assembly,732,People's Consultative Assembly
+Q827704,IMN,,,Tynwald,,Tynwald
+Q695252,IND,,,Parliament of India,,Parliament of India
+Q129821,IRL,,,Oireachtas,,Oireachtas
+Q378605,IRN,,,Islamic Consultative Assembly,290,Islamic Consultative Assembly
+Q1973075,IRQ,,,Council of Representatives of Iraq,329,Council of Representatives (Iraq)
+Q131279,ISL,,,Althing,63,Althing
+Q133396,ISR,,,The Knesset,120,Knesset
+Q1117578,ITA,,,Italian Parliament,,Italian Parliament
+Q122635,JAM,,,Parliament of Jamaica,84,Parliament of Jamaica
+Q946944,JEY,,,States Assembly,49,States Assembly
+Q820697,JOR,,,Parliament of Jordan,,Parliament of Jordan
+Q202384,JPN,,,National Diet,,National Diet
+Q2995409,KAZ,,,Parliament of Kazakhstan,,Parliament of Kazakhstan
+Q14468380,KEN,,,Parliament of Kenya,,Parliament of Kenya
+Q578193,KGZ,,,Supreme Council,120,Supreme Council (Kyrgyzstan)
+Q1320418,KHM,,,Parliament of Cambodia,,Parliament of Cambodia
+Q1281107,KIR,,,House of Assembly of Kiribati,45,House of Assembly (Kiribati)
+Q654504,KNA,,,National Assembly,15,National Assembly (Saint Kitts and Nevis)
+Q494162,KOR,,,National Assembly,300,National Assembly (South Korea)
+Q1139228,KWT,,,National Assembly of Kuwait,50,National Assembly (Kuwait)
+Q1188525,LAO,,,National Assembly,164,National Assembly of Laos
+Q1422275,LBN,,,Parliament of Lebanon,128,Parliament of Lebanon
+Q4345418,LBR,,,Legislature of Liberia,,Legislature of Liberia
+Q17443556,LBY,,,House of Representatives,200,House of Representatives (Libya)
+Q22120968,LBY,,,High Council of State,145,High Council of State (Libya)
+Q1563736,LCA,,,Parliament of Saint Lucia,,Parliament of Saint Lucia
+Q1149644,LIE,,,Landtag of Liechtenstein,25,Landtag of Liechtenstein
+Q1450753,LKA,,,Parliament of Sri Lanka,225,Parliament of Sri Lanka
+Q4345419,LSO,,,Parliament of Lesotho,,Parliament of Lesotho
+Q374152,LTU,,,Seimas,141,Seimas
+Q517449,LUX,,,Chamber of Deputies,60,Chamber of Deputies (Luxembourg)
+Q822919,LVA,,,Saeima,100,Saeima
+Q550133,MAC,,,Legislative Assembly of Macau,29,Legislative Assembly of Macau
+Q3004884,MAR,,,Parliament of Morocco,,Parliament of Morocco
+Q1127198,MCO,,,National Council,24,National Council (Monaco)
+Q555809,MDA,,,Parliament of the Republic of Moldova,101,Parliament of Moldova
+Q3919000,MDG,,,Parliament of Madagascar,,Parliament of Madagascar
+Q650066,MDV,,,People's Majlis,85,People's Majlis
+Q1484825,MEX,,,Congress of the Union,,Congress of the Union
+Q1280186,MHL,,,Legislature of the Marshall Islands,33,Nitijela
+Q1258164,MKD,,,Assembly of North Macedonia,123,Assembly of North Macedonia
+Q1138071,MLI,,,National Assembly,147,National Assembly (Mali)
+Q1817866,MLT,,,Parliament of Malta,67,Parliament of Malta
+Q3363019,MMR,,,Assembly of the Union,,Pyidaungsu Hluttaw
+Q1579497,MNE,,,Parliament of Montenegro,81,Parliament of Montenegro
+Q1544714,MNG,,,State Great Khural,76,State Great Khural
+Q1565625,MNP,,,Northern Mariana Islands Commonwealth Legislature,,Northern Mariana Islands Commonwealth Legislature
+Q1848595,MOZ,,,Assembly of the Republic,250,Assembly of the Republic (Mozambique)
+Q1138935,MRT,,,National Assembly,176,National Assembly (Mauritania)
+Q21029427,MSR,,,Legislative Assembly of Montserrat,11,Legislative Assembly of Montserrat
+Q2994263,MTQ,,,Regional Council of Martinique,,Regional Council of Martinique
+Q1854129,MUS,,,National Assembly of Mauritius,70,National Assembly (Mauritius)
+Q1577811,MWI,,,National Assembly,193,National Assembly (Malawi)
+Q2986392,MYS,,,Parliament of Malaysia,,Parliament of Malaysia
+Q4167580,NAM,,,Parliament of Namibia,,Parliament of Namibia
+Q1969585,NER,,,National Assembly,171,National Assembly (Niger)
+Q7051064,NFK,,,Norfolk Legislative Assembly,9,Norfolk Island Legislative Assembly
+Q2635070,NGA,,,National Assembly of Nigeria,,National Assembly (Nigeria)
+Q1969591,NIC,,,Asamblea Nacional de Nicaragua,92,National Assembly (Nicaragua)
+Q1643140,NIU,,,Niue Assembly,20,Niue Assembly
+Q109016,NOR,,,Stortinget,169,Storting
+Q3896143,NPL,,,Parliament of Nepal,,Federal Parliament of Nepal
+Q1972029,NRU,,,Parliament of Nauru,19,Parliament of Nauru
+Q1520966,NZL,,,New Zealand Parliament,120,New Zealand Parliament
+Q5176472,OMN,,,Council of Oman,,Council of Oman
+Q2665089,PAK,,,Parliament of Pakistan,,Parliament of Pakistan
+Q1368588,PAN,,,National Assembly of Panama,71,National Assembly (Panama)
+Q6083065,PCN,,,Island Council,10,Island Council (Pitcairn)
+Q1357543,PER,,,Congress of the Republic of Peru,130,
+Q1542985,PHL,,,Congress of the Philippines,,Congress of the Philippines
+Q1384462,PLW,,,Palau National Congress,,Palau National Congress
+Q24563,PNG,,,National Parliament of Papua New Guinea,111,National Parliament of Papua New Guinea
+Q2102558,POL,,,Parliament of Poland,560,Parliament of Poland
+Q3625555,PRI,,,Legislative Assembly of Puerto Rico,,Legislative Assembly of Puerto Rico
+Q714698,PRK,,,Supreme People's Assembly,687,Supreme People's Assembly
+Q740564,PRT,,,Assembly of the Republic,230,Assembly of the Republic (Portugal)
+Q2511660,PRY,,,Congress of Paraguay,,Congress of Paraguay
+Q339033,PSE,,,Palestinian Legislative Council,132,Palestinian Legislative Council
+Q818691,QAT,,,Consultative Assembly of Qatar,45,Shura Council of Qatar
+Q1813360,ROU,,,Parliament of Romania,466,Parliament of Romania
+Q457869,RUS,,,Federal Assembly of the Russian Federation,,Federal Assembly (Russia)
+Q4162795,RWA,,,Parliament of Rwanda,,Parliament of Rwanda
+Q28715615,SAU,,,Bureau of Experts at the Saudi Council of Ministers,,
+Q818708,SAU,,,Consultative Assembly of Saudi Arabia,150,Consultative Assembly of Saudi Arabia
+Q4902948,SDN,,,National Legislature,,National Legislature of Sudan
+Q1853640,SEN,,,National Assembly,165,National Assembly (Senegal)
+Q1517231,SGP,,,Parliament of Singapore,99,Parliament of Singapore
+Q727851,SLB,,,National Parliament of Solomon Islands,50,National Parliament of Solomon Islands
+Q1138130,SLE,,,Parliament of Sierra Leone,124,Parliament of Sierra Leone
+Q1812873,SLV,,,Legislative Assembly of El Salvador,60,Legislative Assembly of El Salvador
+Q817979,SMR,,,Grand and General Council,60,Great and General Council
+Q176597,SOM,,,Federal Parliament of Somalia,,Federal Parliament of Somalia
+Q2994335,SPM,,,Territorial Council of Saint Pierre and Miquelon,19,Territorial Council of Saint Pierre and Miquelon
+Q920222,SRB,,,National Assembly of Serbia,250,National Assembly (Serbia)
+Q5018721,SSD,,,National Legislature of South Sudan,,Transitional National Legislature (South Sudan)
+Q1267064,STP,,,Asamblea Nacional de Santo Tomé y Príncipe,55,National Assembly (São Tomé and Príncipe)
+Q1760847,SUR,,,National Assembly,51,National Assembly (Suriname)
+Q1139204,SVK,,,National Council of the Slovak Republic,150,National Council of Slovakia
+Q1288169,SVN,,,Slovenian Parliament,,Slovenian Parliament
+Q272930,SWE,,,Parliament of Sweden,349,Riksdag
+Q7138942,SWZ,,,Parliament of Eswatini,,Parliament of Eswatini
+Q388526,SXM,,,Parliament of Sint Maarten,15,Parliament of Sint Maarten
+Q676484,SYC,,,National Assembly of Seychelles,31,National Assembly (Seychelles)
+Q1372196,SYR,,,People's Assembly of Syria,210,People's Assembly of Syria
+Q7855481,TCA,,,Parliament of the Turks and Caicos Islands,21,Parliament of the Turks and Caicos Islands
+Q1599346,TCD,,,National Assembly,155,National Assembly of Chad
+Q1969578,TGO,,,National Assembly,81,National Assembly (Togo)
+Q1368318,THA,,,National Assembly of Thailand,500,National Assembly of Thailand
+Q2011165,TJK,,,Supreme Assembly,97,Supreme Assembly (Tajikistan)
+Q106506537,TKM,,,National Council of Turkmenistan,,National Council of Turkmenistan
+Q680806,TLS,,,National Parliament,65,National Parliament of Timor-Leste
+Q1287831,TON,,,Legislative Assembly of Tonga,26,Legislative Assembly of Tonga
+Q7138943,TTO,,,Parliament of Trinidad and Tobago,,Parliament of Trinidad and Tobago
+Q18342090,TUN,,,Assembly of the Representatives of the People,217,Assembly of the Representatives of the People
+Q274918,TUR,,,Grand National Assembly of Turkey,600,Grand National Assembly of Turkey
+Q897278,TUV,,,Parliament of Tuvalu,16,Parliament of Tuvalu
+Q715869,TWN,,,Legislative Yuan,113,Legislative Yuan
+Q1138299,TZA,,,National Assembly,393,National Assembly (Tanzania)
+Q2052850,UGA,,,Parliament of Uganda,529,Parliament of Uganda
+Q176296,UKR,,,Verkhovna Rada,450,Verkhovna Rada
+Q1501988,URY,,,General Assembly of Uruguay,,General Assembly of Uruguay
+Q11268,USA,,,United States Congress,535,United States Congress
+Q1583318,UZB,,,Oliy Majlis,250,Oliy Majlis
+Q7478146,VAT,,,Pontifical Commission for the Vatican City State,7,Pontifical Commission for Vatican City State
+Q1138357,VCT,,,House of Assembly of Saint Vincent and the Grenadines,21,House of Assembly of Saint Vincent and the Grenadines
+Q1585014,VEN,,,National Assembly  of Venezuela,285,National Assembly of Venezuela
+Q5914704,VGB,,,House of Assembly of the British Virgin Islands,15,House of Assembly of the British Virgin Islands
+Q6518465,VIR,,,Legislature of the Virgin Islands,15,Legislature of the Virgin Islands
+Q1765001,VNM,,,National Assembly of Vietnam,498,National Assembly of Vietnam
+Q764201,VUT,,,Parliament of Vanuatu,52,Parliament of Vanuatu
+Q2867129,WLF,,,Territorial Assembly of Wallis and Futuna,20,Territorial Assembly of Wallis and Futuna
+Q1269555,WSM,,,Legislative Assembly of Samoa,51,Legislative Assembly of Samoa
+Q1246562,XKS,,,Assembly of the Republic of Kosovo,120,Assembly of Kosovo
+Q34665845,YEM,,,Parliament of Yemen,,
+Q2185780,ZAF,,,Parliament of South Africa,,Parliament of South Africa
+Q1784088,ZMB,,,National Assembly,166,National Assembly of Zambia
+Q2083905,ZWE,,,Parliament of Zimbabwe,,Parliament of Zimbabwe
+Q2867113,DZA,algeria/boumerdes,,People's Provincial Assembly,,People's Provincial Assembly
+Q41144060,ARG,argentina/entre-rios,,legislature of Entre Ríos,51,
+Q40323553,ARG,argentina/salta,,Legislature of Salta Province,83,Legislature of Salta
+Q40324095,ARG,argentina/jujuy,,Chamber of Deputies of Jujuy,48,Legislature of Jujuy
+Q5795771,ARG,argentina/formosa,,Formosa Chamber of Deputies,30,Chamber of Deputies of Formosa
+Q41144628,ARG,argentina/misiones,,Chamber of Deputies of Misiones,40,Chamber of Representatives of Misiones
+Q28501741,ARG,argentina/chaco,,Chamber of Deputies of Chaco,32,Chamber of Deputies of Chaco
+Q40323800,ARG,argentina/corrientes,,Legislature of Corrientes,45,
+Q41142156,ARG,argentina/catamarca,,legislature of Catamarca province,57,
+Q41142641,ARG,argentina/la-rioja,,legislature of La Rioja,36,
+Q40323203,ARG,argentina/san-juan,,Chamber of Deputies of San Juan,36,
+Q41142964,ARG,argentina/mendoza,,legislature of Mendoza,86,
+Q41144338,ARG,argentina/neuquen,,legislature of Neuquen,35,Legislature of Neuquén
+Q18419590,ARG,argentina/chubut,,Chubut legislature,27,Legislature of Chubut
+Q41143698,ARG,argentina/rio-negro,,Legislature of Río Negro,46,Legislature of Río Negro
+Q5795778,ARG,argentina/santa-cruz,,Santa Cruz Chamber of Deputies,24,Chamber of Deputies of Santa Cruz
+Q16589934,ARG,argentina/tierra-del-fuego,,Legislature of Tierra del Fuego,15,Legislature of Tierra del Fuego
+Q40316062,ARG,argentina/buenos-aires,,Legislature of Buenos Aires Province,138,
+Q4985519,ARG,argentina/buenos-aires-2,,Buenos Aires City Legislature,60,Buenos Aires City Legislature
+Q5972575,ARG,argentina/santa-fe,,legislature of Santa Fe,69,Legislature of Santa Fe
+Q41143317,ARG,argentina/tucuman,,legislature of Tucumán,49,
+Q41143220,ARG,argentina/santiago-del-estero,,Chamber of Deputies of Santiago del Estero,40,
+Q41143529,ARG,argentina/san-luis,,legislature of San Luis,52,
+Q5795776,ARG,argentina/la-pampa,,La Pampa Chamber of Deputies,30,Chamber of Deputies of La Pampa
+Q5972573,ARG,argentina/cordoba,,legislature of Córdoba,70,Legislature of Córdoba
+Q8052572,ARM,armenia/yerevan,,Yerevan Municipality,65,Yerevan City Council
+Q1283189,ABW,aruba/aruba,,Estates of Aruba,21,Parliament of Aruba
+Q3365500,,australia/western-australia,,Parliament of Western Australia,,Parliament of Western Australia
+Q7138951,,australia/northern-territory,,Parliament of the Northern Territory,,Parliament of the Northern Territory
+Q3054418,,australia/south-australia,,Parliament of South Australia,,Parliament of South Australia
+Q3365548,,australia/queensland,,Parliament of Queensland,93,Parliament of Queensland
+Q3365521,,australia/new-south-wales,,Parliament of New South Wales,,Parliament of New South Wales
+Q1848835,,australia/victoria,,Parliament of Victoria,128,Parliament of Victoria
+Q3365524,,australia/tasmania,,Parliament of Tasmania,,Parliament of Tasmania
+Q494915,,australia/australian-capital-territory,,Australian Capital Territory Legislative Assembly,25,Australian Capital Territory Legislative Assembly
+Q1803965,AUT,austria/lower-austria,,Landtag of Lower Austria,56,Landtag of Lower Austria
+Q2011602,AUT,austria/upper-austria,,Landtag of Upper Austria,56,Landtag of Upper Austria
+Q1014864,AUT,austria/burgenland,,Landtag of Burgenland,36,Landtag of Burgenland
+Q2533514,AUT,austria/vorarlberg,,Landtag of Vorarlberg,36,Landtag of Vorarlberg
+Q1668433,AUT,austria/tyrol,,Landtag of Tyrol,36,Landtag of Tyrol
+Q1435177,AUT,austria/salzburg,,Landtag of Salzburg,36,Landtag of Salzburg
+Q1795425,AUT,austria/carinthia,,Landtag of Carinthia,36,Landtag of Carinthia
+Q1566907,AUT,austria/styria,,Landtag of Styria,48,Landtag of Styria
+Q1796480,AUT,austria/vienna,,Municipal Council and Landtag of Vienna,100,Municipal Council and Landtag of Vienna
+Q27919241,BLR,belarus/minsk-2,,Minsk City Council of Deputies,,Minsk City Council of Deputies
+Q435623,BEL,belgium/brussels-capital,,Parliament of the Brussels-Capital Region,89,Parliament of the Brussels-Capital Region
+Q9633239,BRA,brazil/rio-grande-do-sul,,Legislative Assembly of Rio Grande do Sul,55,Legislative Assembly of Rio Grande do Sul
+Q9633200,BRA,brazil/roraima,,Legislative Assembly of Roraima,24,Legislative Assembly of Roraima
+Q12469964,BRA,brazil/para,,Legislative Assembly of Pará,41,Legislative Assembly of Pará
+Q16142333,BRA,brazil/acre,,Legislative Assembly of Acre,24,Legislative Assembly of Acre
+Q9633212,BRA,brazil/amapa,,Legislative Assembly of Amapá,24,Legislative Assembly of the State of Amapá
+Q9633190,BRA,brazil/mato-grosso-do-sul,,Legislative Assembly of Mato Grosso do Sul,24,Legislative Assembly of Mato Grosso do Sul
+Q9633230,BRA,brazil/parana,,Legislative Assembly of Paraná,54,Legislative Assembly of Paraná
+Q9633207,BRA,brazil/santa-catarina,,Legislative Assembly of Santa Catarina,40,Legislative Assembly of Santa Catarina
+Q6518202,BRA,brazil/amazonas,,Legislative Assembly of Amazonas,24,Legislative Assembly of Amazonas
+Q16494760,BRA,brazil/rondonia,,Legislative Assembly of Rondônia,24,Legislative Assembly of the State of Rondônia
+Q16498710,BRA,brazil/mato-grosso,,Legislative Assembly of Mato Grosso,24,Legislative Assembly of Mato Grosso
+Q9633221,BRA,brazil/maranhao,,Legislative Assembly of Maranhão,42,Legislative Assembly of Maranhão
+Q16494759,BRA,brazil/piaui,,Legislative Assembly of Piauí,30,Legislative Assembly of Piauí
+Q13163502,BRA,brazil/ceara,,Legislative Assembly of Ceará,46,Legislative Assembly of Ceará
+Q12270300,BRA,brazil/rio-grande-do-norte,,Legislative Assembly of Rio Grande do Norte,24,Legislative Assembly of Rio Grande do Norte
+Q9633173,BRA,brazil/paraiba,,Legislative Assembly of Paraíba,36,Legislative Assembly of Paraíba
+Q9633197,BRA,brazil/pernambuco,,Legislative Assembly of Pernambuco,49,Legislative Assembly of Pernambuco
+Q16142313,BRA,brazil/alagoas,,Legislative Assembly of Alagoas,27,Legislative Assembly of Alagoas
+Q9633202,BRA,brazil/sergipe,,Legislative Assembly of Sergipe,24,Legislative Assembly of Sergipe
+Q9633175,BRA,brazil/bahia,,Legislative Assembly of Bahia,63,Legislative Assembly of Bahia
+Q9633218,BRA,brazil/espirito-santo,,Legislative Assembly of Espírito Santo,30,Legislative Assembly of Espírito Santo
+Q6583209,BRA,brazil/rio-de-janeiro,,Legislative Assembly of Rio de Janeiro,70,Legislative Assembly of Rio de Janeiro
+Q4808730,BRA,brazil/sao-paulo,,Legislative Assembly of São Paulo,94,Legislative Assembly of São Paulo
+Q9633183,BRA,brazil/goias,,Legislative Assembly of Goiás,41,Legislative Assembly of Goiás
+Q10262893,BRA,brazil/federal,,Legislative Chamber of Federal District,24,Legislative Chamber of the Federal District
+Q12243888,BRA,brazil/minas-gerais,,Legislative Assembly of Minas Gerais,77,Legislative Assembly of Minas Gerais
+Q9633245,BRA,brazil/tocantins,,Legislative Assembly of Tocantins,24,Legislative Assembly of the State of Tocantins
+Q6560903,CAN,canada/alberta,,Legislature of Alberta,,Alberta Legislature
+Q6596422,CAN,canada/saskatchewan,,Legislature of Saskatchewan,,Saskatchewan Legislature
+Q15150769,CAN,canada/manitoba,,Legislature of Manitoba,,Manitoba Legislature
+Q6593026,CAN,canada/ontario,,Parliament of Ontario,,Legislature of Ontario
+Q15150880,CAN,canada/quebec,,Legislature of Quebec,,Parliament of Quebec
+Q3251036,CAN,canada/new-brunswick,,Legislature of New Brunswick,,New Brunswick Legislature
+Q17108558,CAN,canada/yukon,,Legislature of Yukon,,Legislature of Yukon
+Q15212694,CAN,canada/nunavut,,Legislature of Nunavut,,
+Q15150636,CAN,canada/newfoundland-and-labrador,,General Assembly of Newfoundland and Labrador,,General Assembly of Newfoundland and Labrador
+Q3246027,CAN,canada/nova-scotia,,General Assembly of Nova Scotia,,General Assembly of Nova Scotia
+Q15302873,CAN,canada/northwest-territories,,Legislature of the Northwest Territories,,
+Q54830875,CHL,chile/arica-y-parinacota,,Regional Council of Arica and Parinacota,14,Regional Council of Arica y Parinacota
+Q54830951,CHL,chile/tarapaca,,Regional Council of Tarapacá,14,
+Q54830869,CHL,chile/antofagasta,,Regional Council of Antofagasta,16,Regional Council of Antofagasta
+Q54830880,CHL,chile/atacama,,Regional Council of Atacama,14,Regional Council of Atacama
+Q54830889,CHL,chile/coquimbo,,Regional Council of Coquimbo,16,Regional Council of Coquimbo
+Q54830948,CHL,chile/santiago,,Regional Council of the Metropolitan Region of Santiago,34,
+Q54830954,CHL,chile/valparaiso,,Regional Council of Valparaíso,28,Regional Council of Valparaíso
+Q54830922,CHL,chile/maule,,Regional Council of Maule,20,Regional Council of Maule
+Q54830929,CHL,chile/o-higgins,,Regional Council of O'Higgins,16,Regional Council of O'Higgins
+Q56481368,CHL,chile/nuble,,Regional Council of Ñuble,,Regional Council of Ñuble
+Q54830872,CHL,chile/araucania,,Regional Council of La Araucanía,20,Regional Council of La Araucanía
+Q54830886,CHL,chile/biobio,,Regional Council of Biobío,27,Regional Council of Biobío
+Q54830895,CHL,chile/los-rios,,Regional Council of Los Ríos,14,
+Q54830892,CHL,chile/los-lagos,,Regional Council of Los Lagos,16,Regional Council of Los Lagos
+Q54830883,CHL,chile/aysen,,Regional Council of Aysén,14,Regional Council of Aysén
+Q54830916,CHL,chile/magellan-and-the-chilean-antarctic,,Regional Council of Magallanes y la Antártica Chilena,14,Regional Council of Magallanes y la Antártica Chilena
+Q106761155,CHN,china/xinjiang,,Xinjiang Uyghur Autonomous Regional People's Congress,,Xinjiang Uygur Autonomous Regional People's Congress
+Q106651987,CHN,china/tibet,,Tibet Autonomous Regional People's Congress,,Tibet Autonomous Region People's Congress
+Q106086185,CHN,china/inner-mongolia,,Inner Mongolian Autonomous Regional People's Congress,,Inner Mongolia Autonomous Regional People's Congress
+Q97348031,CHN,china/gansu,,Q97348031,,
+Q106037528,CHN,china/yunnan,,Q106037528,,
+Q106775820,CHN,china/heilongjiang,,Q106775820,,
+Q97301220,CHN,china/jilin,,Jilin Provincial People's Congress,,
+Q106037356,CHN,china/liaoning,,Liaoning Provincial People's Congress,,
+Q106088295,CHN,china/guangxi,,Q106088295,,
+Q106029485,CHN,china/guangdong,,Guangdong Provincial People's Congress,,Guangdong Provincial People's Congress
+Q86732481,CHN,china/hainan,,Hainan Provincial People's Congress,,
+Q106036638,CHN,china/fujian,,Fujian Provincial People's Congress,,Fujian Provincial People's Congress
+Q11148806,CHN,china/zhejiang,,Zhejiang Provincial People's Congress,,Zhejiang Provincial People's Congress
+Q20687987,CHN,china/shanghai,,Shanghai People's Congress,838,Shanghai Municipal People's Congress
+Q106777376,CHN,china/jiangsu,,Jiangsu Provincial People's Congress,,Jiangsu Provincial People's Congress
+Q97300959,CHN,china/shandong,,Shandong Provincial People's Congress,,
+Q106088340,CHN,china/hebei,,Hebei Provincial People's Congress,,
+Q106030292,CHN,china/tianjin,,Tianjin Municipal People's Congress,,Tianjin Municipal People's Congress
+Q106079162,CHN,china/beijing,,Beijing Municipal People's Congress,,Beijing Municipal People's Congress
+Q106036737,CHN,china/sichuan,,Sichuan Provincial People's Congress,,Sichuan Provincial People's Congress
+Q102407957,CHN,china/chongqing,,Chongqing Municipal People's Congress,867,Chongqing Municipal People's Congress
+Q106037617,CHN,china/guizhou,,Q106037617,,
+Q106037277,CHN,china/hunan,,Hunan Provincial People's Congress,,Hunan Provincial People's Congress
+Q106033018,CHN,china/ningxia,,Q106033018,,
+Q106037475,CHN,china/shaanxi,,Shaanxi People's Congress,,
+Q106088413,CHN,china/qinghai,,Q106088413,,
+Q106071054,CHN,china/shanxi,,Shanxi Provincial People's Congress,,
+Q11141631,CHN,china/henan,,Q11141631,,
+Q106038171,CHN,china/hubei,,Hubei Provincial People's Congress,,Hubei Provincial People's Congress
+Q55716265,CHN,china/anhui,,Q55716265,,
+Q51092555,COL,colombia/narino,,departmental assembly of Nariño,13,
+Q51092569,COL,colombia/putumayo,,departmental assembly of Putumayo,11,
+Q51092558,COL,colombia/choco,,departmental assembly of Chocó,11,
+Q51092587,COL,colombia/guainia,,departmental assembly of Guainía,11,
+Q51092573,COL,colombia/vaupes,,departmental assembly of Vaupés,11,
+Q51092596,COL,colombia/amazonas,,departmental assembly of Amazonas,11,
+Q5707807,COL,colombia/la-guajira,,departmental assembly of La Guajira,11,
+Q21564847,COL,colombia/cesar,,departmental assembly of Cesar,11,
+Q51092570,COL,colombia/norte-de-santander,,departmental assembly of Norte de Santander,13,
+Q51092556,COL,colombia/arauca,,departmental assembly of Arauca,11,
+Q51092546,COL,colombia/boyaca,,departmental assembly of Boyacá,16,
+Q51092561,COL,colombia/cauca,,departmental assembly of Cauca,13,
+Q5260098,COL,colombia/valle-del-cauca,,departmental assembly of Valle del Cauca,21,Department Assembly of Valle del Cauca
+Q18170765,COL,colombia/antioquia,,departmental assembly of Antioquia,26,
+Q51092574,COL,colombia/cordoba,,departmental assembly of Córdoba,,
+Q51092582,COL,colombia/sucre,,departmental assembly of Sucre,11,
+Q51092559,COL,colombia/bolivar,,departmental assembly of Bolívar,14,
+Q51092565,COL,colombia/atlantico,,departmental assembly of Atlántico,14,
+Q51092552,COL,colombia/magdalena,,departmental assembly of Magdalena,13,
+Q51092590,COL,colombia/archipelago-of-saint-andrews,,"departmental assembly of the archipelago of Saint Andréws, Providence and Saint Catalina",11,
+Q51092549,COL,colombia/caqueta,,departmental assembly of Caquetá,11,
+Q51092577,COL,colombia/huila,,departmental assembly of Huila,12,
+Q51092595,COL,colombia/guaviare,,departmental assembly of Guaviare,11,
+Q51092564,COL,colombia/caldas,,departmental assembly of Caldas,16,
+Q51092547,COL,colombia/casanare,,departmental assembly of Casanare,11,
+Q51092583,COL,colombia/meta,,departmental assembly of Meta,11,
+Q5780806,COL,colombia/bogota,,Bogotá city council,45,Bogotá City Council
+Q51092579,COL,colombia/santander,,departmental assembly of Santander,16,
+Q51092572,COL,colombia/tolima,,departmental assembly of Tolima,15,
+Q51092551,COL,colombia/quindio,,departmental assembly of Quindío,11,
+Q51092568,COL,colombia/cundinamarca,,departmental assembly of Cundinamarca,16,
+Q51092550,COL,colombia/risaralda,,departmental assembly of Risaralda,12,
+Q2326816,CUW,curacao/curacao,,Parliament of Curaçao,21,Parliament of Curaçao
+Q20982295,CZE,czechia/south-moravian,,South Moravian Region Assembly,65,
+Q10857287,CZE,czechia/prague,,Prague City Assembly,65,Prague City Assembly
+Q7252614,COD,dem-rep-congo/kinshasa,,Provincial Assembly of Kinshasa,,Provincial Assembly of Kinshasa
+Q131329112,DNK,denmark/southern-denmark,,Q131329112,,
+Q131329116,DNK,denmark/central-denmark,,Q131329116,,
+Q131329120,DNK,denmark/north-denmark,,Q131329120,,
+Q131329098,DNK,denmark/zealand,,Q131329098,,
+Q131329054,DNK,denmark/denmark,,Q131329054,,
+Q2920049,GEO,georgia/tbilisi,,Tbilisi City Assembly,50,Tbilisi City Assembly
+Q884824,DEU,germany/saxony,,Landtag of Saxony,120,Landtag of Saxony
+Q641439,DEU,germany/bavaria,,Landtag of Bavaria,205,Landtag of Bavaria
+Q314690,DEU,germany/rhineland-palatinate,,Landtag of Rhineland-Palatinate,101,Landtag of Rhineland-Palatinate
+Q260372,DEU,germany/saarland,,Landtag of Saarland,51,Landtag of Saarland
+Q449304,DEU,germany/schleswig-holstein,,Landtag of Schleswig-Holstein,69,Landtag of Schleswig-Holstein
+Q319994,DEU,germany/lower-saxony,,Landtag of Lower Saxony,146,Landtag of Lower Saxony
+Q571436,DEU,germany/north-rhine-westphalia,,Landtag of North Rhine-Westphalia,195,Landtag of North Rhine-Westphalia
+Q455697,DEU,germany/baden-wurttemberg,,Landtag of Baden-Württemberg,154,Landtag of Baden-Württemberg
+Q521764,DEU,germany/brandenburg,,Landtag of Brandenburg,88,Landtag of Brandenburg
+Q882738,DEU,germany/mecklenburg-western-pomerania,,Landtag of Mecklenburg-Vorpommern,79,Landtag of Mecklenburg-Vorpommern
+Q317147,DEU,germany/free-hanseatic-bremen,,Bürgerschaft of Bremen,87,Bürgerschaft of Bremen
+Q636377,DEU,germany/hamburg,,Hamburg Parliament,123,Hamburg Parliament
+Q510511,DEU,germany/hesse,,Landtag of Hesse,133,Landtag of Hesse
+Q896075,DEU,germany/thuringia,,Landtag of Thuringia,88,Landtag of Thuringia
+Q884829,DEU,germany/saxony-anhalt,,Landtag of Saxony-Anhalt,97,Landtag of Saxony-Anhalt
+Q640859,DEU,germany/berlin,,Berlin House of Representatives,159,Berlin House of Representatives
+Q1563896,GUM,guam/guam,,Legislature of Guam,15,Legislature of Guam
+Q109255416,HUN,hungary/szabolcs-szatmar-bereg,,Szabolcs-Szatmár-Bereg County Assembly,,Szabolcs-Szatmár-Bereg County Assembly
+Q107132318,HUN,hungary/bacs-kiskun,,Bács-Kiskun County Assembly,,Bács-Kiskun County Assembly
+Q427049,IND,india/arunachal-pradesh,,Arunachal Pradesh Legislative Assembly,60,Arunachal Pradesh Legislative Assembly
+Q7513808,IND,india/sikkim,,Sikkim Legislative Assembly,32,Sikkim Legislative Assembly
+Q3350930,IND,india/west-bengal,,West Bengal Legislative Assembly,295,West Bengal Legislative Assembly
+Q4808385,IND,india/assam,,Assam Legislative Assembly,126,Assam Legislative Assembly
+Q664403,IND,india/uttarakhand,,Uttarakhand Legislative Assembly,70,Uttarakhand Legislative Assembly
+Q16056691,IND,india/nagaland,,Nagaland Legislative Assembly,60,Nagaland Legislative Assembly
+Q6749828,IND,india/manipur,,Manipur Legislative Assembly,60,Manipur Legislative Assembly
+Q6884693,IND,india/mizoram,,Mizoram Legislative Assembly,40,Mizoram Legislative Assembly
+Q7843860,IND,india/tripura,,Tripura Legislative Assembly,60,Tripura Legislative Assembly
+Q6809008,IND,india/meghalaya,,Meghalaya Legislative Assembly,60,Meghalaya Legislative Assembly
+Q7260271,IND,india/punjab,,Punjab Legislative Assembly,117,Punjab Legislative Assembly
+Q7285832,IND,india/rajasthan,,Rajasthan Legislative Assembly,200,Rajasthan Legislative Assembly
+Q1743621,IND,india/gujarat,,Gujarat Legislative Assembly,182,Gujarat Legislative Assembly
+Q3633627,IND,india/himachal-pradesh,,Himachal Pradesh Legislative Assembly,68,Himachal Pradesh Legislative Assembly
+Q6148015,IND,india/jammu-and-kashmir,,Jammu and Kashmir Legislative Assembly,114,Jammu and Kashmir Legislative Assembly
+Q4907068,IND,india/bihar,,Bihar Legislature,,Bihar Legislature
+Q7903336,IND,india/uttar-pradesh,,Uttar Pradesh Legislature,,Uttar Pradesh Legislature
+Q3764174,IND,india/andhra-pradesh,,Andhra Pradesh Legislature,,Andhra Pradesh Legislature
+Q5471613,IND,india/odisha,,Odisha Legislative Assembly,147,Odisha Legislative Assembly
+Q52188366,IND,india/maharashtra,,Maharashtra Legislature,,
+Q5575081,IND,india/goa,,Goa Legislative Assembly,40,Goa Legislative Assembly
+Q6372863,IND,india/karnataka,,Karnataka Legislature,,Karnataka Legislature
+Q3462542,IND,india/kerala,,Kerala Legislative Assembly,140,Kerala Legislative Assembly
+Q3391663,IND,india/puducherry,,Puducherry Legislative Assembly,30,Puducherry Legislative Assembly
+Q7681292,IND,india/tamil-nadu,,Tamil Nadu Legislative Assembly,234,Tamil Nadu Legislative Assembly
+Q12429757,IND,india/jharkhand,,Jharkhand Legislative Assembly,82,Jharkhand Legislative Assembly
+Q6727600,IND,india/madhya-pradesh,,Madhya Pradesh Legislative Assembly,231,Madhya Pradesh Legislative Assembly
+Q5094831,IND,india/chhattisgarh,,Chhattisgarh Legislative Assembly,91,Chhattisgarh Legislative Assembly
+Q5677950,IND,india/haryana,,Haryana Legislative Assembly,90,Haryana Legislative Assembly
+Q17107628,IND,india/telangana,,Legislature of Telangana,,
+Q25470477,IDN,indonesia/east-kalimantan,,East Kalimantan Regional House of Representatives,,
+Q25470911,IDN,indonesia/east-nusa-tenggara,,East Nusa Tenggara Regional House of Representatives,,
+Q25461972,IDN,indonesia/west-kalimantan,,West Kalimantan Regional House of Representatives,,West Kalimantan Regional House of Representatives
+Q12481399,IDN,indonesia/papua,,Papua House of Representatives,,
+Q25461658,IDN,indonesia/east-java,,East Java Regional House of Representatives,,East Java Regional House of Representatives
+Q25470766,IDN,indonesia/maluku,,Maluku Regional House of Representatives,,
+Q25470912,IDN,indonesia/west-nusa-tenggara,,West Nusa Tenggara Regional House of Representatives,,West Nusa Tenggara Regional House of Representatives
+Q128444350,IDN,indonesia/south-sulawesi,,South Sulawesi Regional House of Representatives,,
+Q25461159,IDN,indonesia/central-java,,Central Java Regional House of Representatives,,Central Java Regional House of Representatives
+Q25461665,IDN,indonesia/west-java,,West Java Regional House of Representatives,,West Java Regional House of Representatives
+Q16300292,IDN,indonesia/jakarta,,Jakarta Regional House of Representatives,106,Jakarta Regional House of Representatives
+Q25461131,IDN,indonesia/banten,,Banten Regional House of Representatives,,
+Q25463081,IDN,indonesia/yogyakarta,,Special Region of Yogyakarta Regional House of Representatives,,Special Region of Yogyakarta Regional House of Representatives
+Q25462216,IDN,indonesia/southeast-sulawesi,,Southeast Sulawesi Regional House of Representatives,,
+Q65213994,IDN,indonesia/west-papua,,West Papua House of Representatives,,
+Q25470682,IDN,indonesia/central-sulawesi,,Central Sulawesi Regional House of Representatives,,
+Q65213993,IDN,indonesia/north-maluku,,North Maluku Regional House of Representatives,,
+Q25461939,IDN,indonesia/riau-islands,,Riau Islands Regional House of Representatives,,
+Q25461918,IDN,indonesia/riau,,Riau Regional House of Representatives,,
+Q25462229,IDN,indonesia/gorontalo,,Gorontalo Regional House of Representatives,,
+Q25462208,IDN,indonesia/north-sulawesi,,North Sulawesi Regional House of Representatives,,
+Q65212150,IDN,indonesia/west-sulawesi,,West Sulawesi Regional House of Representatives,,
+Q25470765,IDN,indonesia/jambi,,Jambi Regional House of Representatives,,
+Q25470684,IDN,indonesia/south-sumatra,,South Sumatra Regional House of Representatives,,
+Q25470764,IDN,indonesia/lampung,,Lampung Regional House of Representatives,,
+Q25470767,IDN,indonesia/bengkulu,,Bengkulu Regional House of Representatives,,
+Q19725336,IDN,indonesia/west-sumatra,,West Sumatra Regional House of Representatives,,West Sumatra Regional House of Representatives
+Q25461838,IDN,indonesia/north-sumatra,,North Sumatra Regional House of Representatives,,North Sumatra Regional House of Representatives
+Q12481397,IDN,indonesia/aceh,,Aceh House of Representatives,,Aceh House of Representatives
+Q25461958,IDN,indonesia/central-kalimantan,,Central Kalimantan Regional House of Representatives,,
+Q25470475,IDN,indonesia/south-kalimantan,,South Kalimantan Regional House of Representatives,,South Kalimantan Regional House of Representatives
+Q25461928,IDN,indonesia/bali,,Bali Regional House of Representatives,,Bali Regional House of Representatives
+Q25461933,IDN,indonesia/bangka-belitung-islands,,Bangka Belitung Islands Regional House of Representatives,,
+Q54931434,IRL,ireland/donegal,,legislative body of Donegal County Council,37,
+Q54931429,IRL,ireland/leitrim,,legislative body of Leitrim County Council,18,
+Q54931433,IRL,ireland/cavan,,legislative body of Cavan County Council,18,
+Q54931435,IRL,ireland/monaghan,,legislative body of Monaghan County Council,18,
+Q54931494,IRL,ireland/louth,,legislative body of Louth County Council,29,
+Q54931531,IRL,ireland/wicklow,,legislative body of Wicklow County Council,32,
+Q54931514,IRL,ireland/wexford,,legislative body of Wexford County Council,34,
+Q54931488,IRL,ireland/kilkenny,,legislative body of Kilkenny County Council,24,
+Q54931556,IRL,ireland/waterford,,legislative body of Waterford City and County Council,32,
+Q54931541,IRL,ireland/cork,,legislative body of Cork County Council,55,
+Q54931541,IRL,ireland/cork-2,,legislative body of Cork County Council,55,
+Q54931545,IRL,ireland/kerry,,legislative body of Kerry County Council,33,
+Q54931547,IRL,ireland/limerick,,legislative body of Limerick City and County Council,40,
+Q54931536,IRL,ireland/clare,,legislative body of Clare County Council,28,
+Q54931428,IRL,ireland/galway,,legislative body of Galway County Council,39,
+Q54931428,IRL,ireland/galway-2,,legislative body of Galway County Council,39,
+Q54931430,IRL,ireland/mayo,,legislative body of Mayo County Council,30,
+Q54931432,IRL,ireland/sligo,,legislative body of Sligo County Council,18,
+Q54931502,IRL,ireland/meath,,legislative body of Meath County Council,40,
+Q5450180,IRL,ireland/fingal,,Fingal County Council,,Fingal County Council
+Q54931487,IRL,ireland/kildare,,legislative body of Kildare County Council,40,
+Q54931475,IRL,ireland/carlow,,legislative body of Carlow County Council,18,
+Q54931490,IRL,ireland/laois,,legislative body of Laois County Council,19,
+Q54931506,IRL,ireland/offaly,,legislative body of Offaly County Council,19,
+Q54931510,IRL,ireland/westmeath,,legislative body of Westmeath County Council,20,
+Q54931492,IRL,ireland/longford,,legislative body of Longford County Council,18,
+Q54931431,IRL,ireland/roscommon,,legislative body of Roscommon County Council,18,
+Q54931427,IRL,ireland/tipperary,,legislative body of Tipperary County Council,40,
+Q54931427,IRL,ireland/tipperary-2,,legislative body of Tipperary County Council,40,
+Q54931556,IRL,ireland/waterford-2,,legislative body of Waterford City and County Council,32,
+Q54931547,IRL,ireland/limerick-2,,legislative body of Limerick City and County Council,40,
+Q130407521,ITA,italy/verbano-cusio-ossola,,Provincial Council of Verbano-Cusio-Ossola,,
+Q130407766,ITA,italy/varese,,Provincial Council of Varese,,
+Q130411218,ITA,italy/como,,Provincial Council of Como,,
+Q130411255,ITA,italy/sondrio,,Provincial Council of Sondrio,,
+Q3687389,ITA,italy/trentino-south-tyrol,,Regional council of Trentino-Alto Adige/Südtirol,70,Regional Council of Trentino-Alto Adige/Südtirol
+Q130409493,ITA,italy/imperia,,Provincial Council of Imperia,,
+Q130411154,ITA,italy/cuneo,,Provincial Council of Cuneo,,
+Q130409989,ITA,italy/turin,,Provincial Council of Turin,,
+Q130407494,ITA,italy/rimini,,Provincial Council of Rimini,,
+Q130407607,ITA,italy/pesaro-and-urbino,,Provincial Council of Pesaro and Urbino,,
+Q130411252,ITA,italy/belluno,,Provincial Council of Belluno,,
+Q130411979,ITA,italy/udine,,Provincial Council of Udine,,
+Q130411950,ITA,italy/gorizia,,Provincial Council of Gorizia,,
+Q130412057,ITA,italy/trieste,,Provincial Council of Trieste,,
+Q130410003,ITA,italy/venice,,Provincial Council of Venice,,
+Q130410878,ITA,italy/padua,,Provincial Council of Padua,,
+Q130411069,ITA,italy/rovigo,,Provincial Council of Rovigo,,
+Q130410792,ITA,italy/ferrara,,Provincial Council of Ferrara,,
+Q130410833,ITA,italy/ravenna,,Provincial Council of Ravenna,,
+Q130410795,ITA,italy/forli-cesena,,Provincial Council of Forlì-Cesena,,
+Q130407600,ITA,italy/ancona,,Provincial Council of Ancona,,
+Q130407605,ITA,italy/macerata,,Provincial Council of Macerata,,
+Q130407546,ITA,italy/fermo,,Provincial Council of Fermo,,
+Q130407597,ITA,italy/ascoli-piceno,,Provincial Council of Ascoli Piceno,,
+Q130410753,ITA,italy/teramo,,Provincial Council of Teramo,,
+Q130407742,ITA,italy/pescara,,Provincial Council of Pescara,,
+Q130410756,ITA,italy/chieti,,Provincial Council of Chieti,,
+Q130407675,ITA,italy/campobasso,,Provincial Council of Campobasso,,
+Q130411005,ITA,italy/foggia,,Provincial Council of Foggia,,
+Q130407548,ITA,italy/barletta-andria-trani,,Provincial Council of Barletta-Andria-Trani,,
+Q130409999,ITA,italy/bari,,Provincial Council of Bari,,
+Q130407761,ITA,italy/brindisi,,Provincial Council of Brindisi,,
+Q130410961,ITA,italy/lecce,,Provincial Council of Lecce,,
+Q130410963,ITA,italy/taranto,,Provincial Council of Taranto,,
+Q130407679,ITA,italy/matera,,Provincial Council of Matera,,
+Q130407902,ITA,italy/cosenza,,Provincial Council of Cosenza,,
+Q130407517,ITA,italy/crotone,,Provincial Council of Crotone,,
+Q130407900,ITA,italy/catanzaro,,Provincial Council of Catanzaro,,
+Q130410008,ITA,italy/reggio-calabria,,Provincial Council of Reggio Calabria,,
+Q130407519,ITA,italy/vibo-valentia,,Provincial Council of Vibo Valentia,,
+Q130407682,ITA,italy/potenza,,Provincial Council of Potenza,,
+Q130410932,ITA,italy/salerno,,Provincial Council of Salerno,,
+Q130409985,ITA,italy/naples,,Provincial Council of Naples,,
+Q130411301,ITA,italy/caserta,,Provincial Council of Caserta,,
+Q130407829,ITA,italy/latina,,Provincial Council of Latina,,
+Q130409986,ITA,italy/rome,,Provincial Council of Rome,,
+Q130407827,ITA,italy/viterbo,,Provincial Council of Viterbo,,
+Q130407277,ITA,italy/grosseto,,Provincial Council of Grosseto,,
+Q130407326,ITA,italy/livorno,,Provincial Council of Livorno,,
+Q130407323,ITA,italy/pisa,,Provincial Council of Pisa,,
+Q130407362,ITA,italy/lucca,,Provincial Council of Lucca,,
+Q130407451,ITA,italy/massa-carrara,,Provincial Council of Massa-Carrara,,
+Q130409488,ITA,italy/la-spezia,,Provincial Council of La Spezia,,
+Q21190095,ITA,italy/liguria,,Regional Council of Liguria,31,Regional Council of Liguria
+Q130407753,ITA,italy/savona,,Provincial Council of Savona,,
+Q130412721,ITA,italy/trapani,,provincial council of Trapani,,
+Q130412439,ITA,italy/messina,,Provincial Council of Messina,,
+Q130412167,ITA,italy/palermo,,Provincial Council of Palermo,,
+Q130412712,ITA,italy/agrigento,,Provincial Council of Agrigento,,
+Q130412715,ITA,italy/caltanissetta,,Provincial Council of Caltanissetta,,
+Q130412686,ITA,italy/ragusa,,Provincial Council of Ragusa,,
+Q130412718,ITA,italy/syracuse,,Provincial Council of Syracuse,,
+Q130412223,ITA,italy/catania,,Provincial Council of Catania,,
+Q130409532,ITA,italy/sassari,,Provincial Council of Sassari,,
+Q130409526,ITA,italy/nuoro,,Provincial Council of Nuoro,,
+Q130409530,ITA,italy/oristano,,Provincial Council of Oristano,,
+Q130410019,ITA,italy/cagliari,,Provincial Council of Cagliari,,
+Q130412671,ITA,italy/enna,,Provincial Council of Enna,,
+Q130411305,ITA,italy/benevento,,Provincial Council of Benevento,,
+Q130411139,ITA,italy/asti,,Provincial Council of Asti,,
+Q130410918,ITA,italy/bergamo,,Provincial Council of Bergamo,,
+Q130410897,ITA,italy/brescia,,Provincial Council of Brescia,,
+Q130411200,ITA,italy/cremona,,Provincial Council of Cremona,,
+Q130411174,ITA,italy/mantua,,Provincial Council of Mantua,,
+Q130409987,ITA,italy/milan,,Provincial Council of Milan,,
+Q130407515,ITA,italy/lecco,,Provincial Council of Lecco,,
+Q130407550,ITA,italy/monza-and-brianza,,Provincial Council of Monza and Brianza,,
+Q130407516,ITA,italy/lodi,,Provincial Council of Lodi,,
+Q130407320,ITA,italy/siena,,Provincial Council of Siena,,
+Q130407330,ITA,italy/arezzo,,Provincial Council of Arezzo,,
+Q130407368,ITA,italy/florence,,Provincial Council of Florence,,
+Q130407764,ITA,italy/vercelli,,Provincial Council of Vercelli,,
+Q130411222,ITA,italy/pavia,,Provincial Council of Pavia,,
+Q130407824,ITA,italy/rieti,,Provincial Council of Rieti,,
+Q130410959,ITA,italy/novara,,Provincial Council of Novara,,
+Q130411054,ITA,italy/alessandria,,Provincial Council of Alessandria,,
+Q130411075,ITA,italy/vicenza,,Provincial Council of Vicenza,,
+Q130410882,ITA,italy/verona,,Provincial Council of Verona,,
+Q130411057,ITA,italy/treviso,,Provincial Council of Treviso,,
+Q130407876,ITA,italy/piacenza,,Provincial Council of Piacenza,,
+Q130410850,ITA,italy/parma,,Provincial Council of Parma,,
+Q130410021,ITA,italy/reggio-emilia,,Provincial Council of Reggio Emilia,,
+Q130410852,ITA,italy/modena,,Provincial Council of Modena,,
+Q130410014,ITA,italy/bologna,,Provincial Council of Bologna,,
+Q130407365,ITA,italy/pistoia,,Provincial Council of Pistoia,,
+Q130407491,ITA,italy/terni,,Provincial Council of Terni,,
+Q130407490,ITA,italy/perugia,,Provincial Council of Perugia,,
+Q130407820,ITA,italy/frosinone,,Provincial Council of Frosinone,,
+Q130411307,ITA,italy/avellino,,Provincial Council of Avellino,,
+Q130410659,ITA,italy/l-aquila,,Provincial Council of L'Aquila,,
+Q130412011,ITA,italy/pordenone,,Provincial Council of Pordenone,,
+Q130407666,ITA,italy/isernia,,Provincial Council of Isernia,,
+Q130407514,ITA,italy/biella,,Provincial Council of Biella,,
+Q130407366,ITA,italy/prato,,Provincial Council of Prato,,
+Q11676848,JPN,japan/kagoshima-prefecture,,Kagoshima Prefectural Assembly,51,Kagoshima Prefectural Assembly
+Q11432915,JPN,japan/oita-prefecture,,Ōita Prefectural Assembly,43,
+Q11592631,JPN,japan/fukuoka-prefecture,,Fukuoka Prefectural Assembly,86,Fukuoka Prefectural Assembly
+Q11384776,JPN,japan/saga-prefecture,,Saga Prefectural Assembly,38,
+Q11652776,JPN,japan/nagasaki-prefecture,,Nagasaki Prefectural Assembly,46,
+Q11568335,JPN,japan/kumamoto-prefecture,,Kumamoto Prefectural Assembly,48,
+Q11454487,JPN,japan/miyazaki-prefecture,,Miyazaki Prefectural Assembly,39,
+Q11490001,JPN,japan/tokushima-prefecture,,Tokushima Prefectural Assembly,39,
+Q11667415,JPN,japan/kagawa-prefecture,,Kagawa Prefectural Assembly,41,
+Q11493683,JPN,japan/ehime-prefecture,,Ehime Prefectural Assembly,47,
+Q11672495,JPN,japan/kochi-prefecture,,Kōchi Prefectural Assembly,37,
+Q11476535,JPN,japan/shimane-prefecture,,Shimane Prefectural Assembly,37,
+Q11467119,JPN,japan/yamaguchi-prefecture,,Yamaguchi Prefectural Assembly,47,
+Q11674607,JPN,japan/tottori-prefecture,,Tottori Prefectural Assembly,35,
+Q11393166,JPN,japan/hyogo-prefecture,,Hyōgo Prefectural Assembly,87,Hyōgo Prefectural Assembly
+Q11375296,JPN,japan/kyoto-prefecture,,Kyōto Prefectural Assembly,60,Kyoto Prefectural Assembly
+Q11591505,JPN,japan/fukui-prefecture,,Fukui Prefectural Assembly,37,
+Q11586046,JPN,japan/ishikawa-prefecture,,Ishikawa Prefectural Assembly,43,
+Q11456557,JPN,japan/toyama-prefecture,,Toyama Prefectural Assembly,40,
+Q11503163,JPN,japan/niigata-prefecture,,Niigata Prefectural Assembly,53,
+Q11468581,JPN,japan/yamagata-prefecture,,Yamagata Prefectural Assembly,44,
+Q11595540,JPN,japan/akita-prefecture,,Akita Prefectural Assembly,43,
+Q11662294,JPN,japan/aomori-prefecture,,Aomori Prefectural Assembly,48,
+Q11474798,JPN,japan/iwate-prefecture,,Iwate Prefectural Assembly,48,Iwate Prefectural Assembly
+Q11453798,JPN,japan/miyagi-prefecture,,Miyagi Prefectural Assembly,59,
+Q11593337,JPN,japan/fukushima-prefecture,,Fukushima Prefectural Assembly,58,
+Q11617515,JPN,japan/ibaraki-prefecture,,Ibaraki Prefectural Assembly,63,Ibaraki Prefectural Assembly
+Q11406405,JPN,japan/chiba-prefecture,,Chiba Prefectural Assembly,95,Chiba Prefectural Assembly
+Q7813951,JPN,japan/tokyo,,Tokyo Metropolitan Assembly,127,Tokyo Metropolitan Assembly
+Q11589236,JPN,japan/kanagawa-prefecture,,Kanagawa Prefectural Assembly,115,Kanagawa Prefectural Assembly
+Q11663260,JPN,japan/shizuoka-prefecture,,Shizuoka Prefectural Assembly,69,
+Q4696581,JPN,japan/aichi-prefecture,,Aichi Prefectural Assembly,106,Aichi Prefectural Assembly
+Q6843517,JPN,japan/mie-prefecture,,Mie Prefectural Assembly,51,Mie Prefectural Assembly
+Q11417490,JPN,japan/wakayama-prefecture,,Wakayama Prefectural Assembly,42,Wakayama Prefectural Assembly
+Q11441231,JPN,japan/osaka-prefecture,,Osaka Prefectural Assembly,88,Osaka Prefectural Assembly
+Q11472361,JPN,japan/okayama-prefecture,,Okayama Prefectural Assembly,55,
+Q11484898,JPN,japan/hiroshima-prefecture,,Hiroshima Prefectural Assembly,64,Hiroshima Prefectural Assembly
+Q7082028,JPN,japan/okinawa-prefecture,,Okinawa Prefectural Assembly,48,Okinawa Prefectural Assembly
+Q11609711,JPN,japan/gunma-prefecture,,Gunma Prefectural Assembly,50,
+Q11654386,JPN,japan/nagano-prefecture,,Nagano Prefectural Assembly,58,
+Q11535308,JPN,japan/tochigi-prefecture,,Tochigi Prefectural Assembly,50,
+Q11471583,JPN,japan/gifu-prefecture,,Gifu Prefectural Assembly,46,
+Q11564699,JPN,japan/shiga-prefecture,,Shiga Prefectural Assembly,44,
+Q11426811,JPN,japan/saitama-prefecture,,Saitama Prefectural Assembly,94,Saitama Prefectural Assembly
+Q11469749,JPN,japan/yamanashi-prefecture,,Yamanashi Prefectural Assembly,38,
+Q11445247,JPN,japan/nara-prefecture,,Nara Prefectural Assembly,44,Nara Prefectural Assembly
+Q946944,JEY,jersey/jersey,,States Assembly,49,States Assembly
+Q2089528,LVA,latvia/riga,,Riga City Council,,Riga City Council
+Q1207089,MYS,malaysia/sabah,,Sabah State Legislative Assembly,79,Sabah State Legislative Assembly
+Q281138,MYS,malaysia/sarawak,,Sarawak State Legislative Assembly,82,Sarawak State Legislative Assembly
+Q15059070,MUS,mauritius/port-louis,,Municipal City Council of Port Louis,,Municipal City Council of Port Louis
+Q130457306,MUS,mauritius/rodrigues,,Rodrigues Regional Assembly,18,
+Q5160894,MEX,mexico/sonora,,Congress of Sonora,33,Congress of Sonora
+Q5160856,MEX,mexico/baja-california,,Congress of Baja California,25,Congress of Baja California
+Q5783176,MEX,mexico/chihuahua,,Congress of Chihuahua,33,Congress of Chihuahua
+Q5160861,MEX,mexico/coahuila,,Congress of Coahuila,25,Congress of Coahuila
+Q5160897,MEX,mexico/tamaulipas,,Congress of Tamaulipas,35,Congress of Tamaulipas
+Q254534,MEX,mexico/nuevo-leon,,Congress of Nuevo Leon,42,Congress of Nuevo León
+Q5160888,MEX,mexico/quintana-roo,,Congress of Quintana Roo,25,Congress of Quintana Roo
+Q5160860,MEX,mexico/campeche,,Congress of Campeche,35,Congress of Campeche
+Q5160896,MEX,mexico/tabasco,,Congress of Tabasco,35,Congress of Tabasco
+Q5160858,MEX,mexico/chiapas,,Congress of Chiapas,40,Congress of Chiapas
+Q5160862,MEX,mexico/colima,,Congress of Colima,25,Congress of Colima
+Q53542914,MEX,mexico/nayarit,,Congress of Nayarit,30,
+Q53542913,MEX,mexico/baja-california-sur,,Congress of Baja California Sur,21,Congress of Baja California Sur
+Q5783180,MEX,mexico/sinaloa,,Congress of Sinaloa,40,Congress of Sinaloa
+Q5160907,MEX,mexico/yucatan,,Congress of Yucatán,25,Congress of Yucatán
+Q24337177,MEX,mexico/veracruz,,Congress of Veracruz,50,Congress of Veracruz
+Q5160874,MEX,mexico/jalisco,,Congress of Jalisco,39,Congress of Jalisco
+Q5160879,MEX,mexico/michoacan,,Congress of Michoacan,40,Congress of Michoacán
+Q610045,MEX,mexico/guerrero,,Congress of Guerrero,46,Congress of Guerrero
+Q60969424,MEX,mexico/oaxaca,,Congress of Oaxaca,42,Congress of Oaxaca
+Q5160913,MEX,mexico/state-of-mexico,,Congress of the Estado de México,75,Congress of the State of Mexico
+Q5160887,MEX,mexico/puebla,,Congress of Puebla,41,Congress of Puebla
+Q5783178,MEX,mexico/morelos,,Congress of Morelos,30,Congress of Morelos
+Q53542917,MEX,mexico/queretaro,,Congress of Queretaro,25,
+Q28924553,MEX,mexico/hidalgo,,Congress of Hidalgo,30,Congress of Hidalgo
+Q5160871,MEX,mexico/guanajuato,,Congress of Guanajuato,36,Congress of Guanajuato
+Q53542918,MEX,mexico/san-luis-potosi,,Congress of San Luis Potosí,27,Congress of San Luis Potosí
+Q5160905,MEX,mexico/zacatecas,,Congress of Zacatecas,30,Congress of Zacatecas
+Q53542909,MEX,mexico/aguascalientes,,Congress of Aguascalientes,27,
+Q20014631,MEX,mexico/durango,,Congress of Durango,25,Congress of Durango
+Q53542920,MEX,mexico/tlaxcala,,Congress of Tlaxcala,25,
+Q2867085,MEX,mexico/mexico,,Legislative Assembly of the Federal District,,Legislative Assembly of Mexico City
+Q33673835,MDA,moldova/calarasi,,Călărași County Council,,
+Q114640735,MDA,moldova/balti,,Q114640735,,
+Q5707839,MAR,morocco/ceuta,,Assembly of Ceuta,,Assembly of Ceuta
+Q2881125,MAR,morocco/melilla,,Assembly of Melilla,,Assembly of Melilla
+Q1565625,MNP,n-mariana-is/northern-mariana-islands,,Northern Mariana Islands Commonwealth Legislature,,Northern Mariana Islands Commonwealth Legislature
+Q27648058,NLD,netherlands/north-brabant,,States-Provincial of North Brabant,,
+Q62079205,NLD,netherlands/bonaire,,Island Council of Bonaire,11,
+Q62079210,NLD,netherlands/saba,,Island Council of Saba,7,
+Q27647191,NLD,netherlands/utrecht,,States-Provincial of Utrecht,49,Provincial Council of Utrecht
+Q59518841,NGA,nigeria/kebbi-state,,Kebbi State House of Assembly,24,
+Q59518862,NGA,nigeria/niger-state,,Niger State House of Assembly,27,
+Q59518844,NGA,nigeria/kwara-state,,Kwara State House of Assembly,24,Kwara State House of Assembly
+Q28450719,NGA,nigeria/ogun-state,,Ogun State House Of Assembly,26,Ogun State House of Assembly
+Q59518867,NGA,nigeria/oyo-state,,Oyo State House of Assembly,32,
+Q6472612,NGA,nigeria/lagos,,Lagos State House of Assembly,40,Lagos State House of Assembly
+Q59518810,NGA,nigeria/borno-state,,Borno State House of Assembly,28,
+Q59518801,NGA,nigeria/adamawa-state,,Adamawa State House of Assembly,25,
+Q59518872,NGA,nigeria/taraba-state,,Taraba State House of Assembly,24,
+Q59518808,NGA,nigeria/benue-state,,Benue State House of Assembly,29,
+Q59518811,NGA,nigeria/cross-river-state,,Cross River State House of Assembly,25,Cross River State House of Assembly
+Q59518870,NGA,nigeria/sokoto-state,,Sokoto State House of Assembly,30,Sokoto State House of Assembly
+Q59518875,NGA,nigeria/zamfara-state,,Zamfara State House of Assembly,24,
+Q59518873,NGA,nigeria/yobe-state,,Yobe State House of Assembly,24,Yobe State House of Assembly
+Q59518839,NGA,nigeria/katsina-state,,Katsina State House of Assembly,34,
+Q25053386,NGA,nigeria/jigawa-state,,Jigawa State House of Assembly,30,Jigawa State House of Assembly
+Q23038224,NGA,nigeria/ondo-state,,Ondo State House of Assembly,26,Ondo State House of Assembly
+Q59518814,NGA,nigeria/delta-state,,Delta State House of Assembly,29,Delta State House of Assembly
+Q59518804,NGA,nigeria/bayelsa-state,,Bayelsa State House of Assembly,24,
+Q7338303,NGA,nigeria/rivers-state,,Rivers State House of Assembly,32,Rivers State House of Assembly
+Q30592701,NGA,nigeria/akwa-ibom-state,,Akwa Ibom State House of Assembly,26,Akwa Ibom State House of Assembly
+Q21043169,NGA,nigeria/abia-state,,Abia State House of Assembly,24,Abia State House of Assembly
+Q59518815,NGA,nigeria/ebonyi-state,,Ebonyi State House of Assembly,24,
+Q28406862,NGA,nigeria/anambra-state,,Anambra State House Of Assembly,30,Anambra State House of Assembly
+Q59518817,NGA,nigeria/edo-state,,Edo State House of Assembly,24,Edo State House of Assembly
+Q59518803,NGA,nigeria/bauchi-state,,Bauchi State House of Assembly,31,Bauchi State House of Assembly
+Q59518868,NGA,nigeria/plateau-state,,Plateau State House of Assembly,24,
+Q59518861,NGA,nigeria/nasarawa-state,,Nasarawa State House of Assembly,24,
+Q59518833,NGA,nigeria/gombe-state,,Gombe State House of Assembly,24,
+Q59518830,NGA,nigeria/enugu-state,,Enugu State House of Assembly,24,
+Q59518842,NGA,nigeria/kogi-state,,Kogi State House of Assembly,25,
+Q59518864,NGA,nigeria/osun-state,,Osun State House of Assembly,26,
+Q59518836,NGA,nigeria/imo-state,,Imo State House of Assembly,27,
+Q59518829,NGA,nigeria/ekiti-state,,Ekiti State House of Assembly,26,
+Q59518837,NGA,nigeria/kaduna-state,,Kaduna State House of Assembly,34,
+Q6364192,NGA,nigeria/kano-state,,Kano State House of Assembly,40,Kano State House of Assembly
+Q17053564,PAK,pakistan/gilgit-baltistan,,Gilgit-Baltistan Legislative Assembly,33,Gilgit-Baltistan Assembly
+Q2597438,PAK,pakistan/khyber-pakhtunkhwa,,Provincial Assembly of Khyber Pakhtunkhwa Province,145,Provincial Assembly of Khyber Pakhtunkhwa
+Q2867116,PAK,pakistan/balochistan,,Provincial Assembly of Balochistan,65,Provincial Assembly of Balochistan
+Q975150,PAK,pakistan/punjab,,Provincial Assembly of Punjab Province,371,Provincial Assembly of Punjab
+Q2867119,PAK,pakistan/sindh,,Provincial Assembly of Sindh,168,Provincial Assembly of Sindh
+Q18209789,PAK,pakistan/azad-kashmir,,Azad Jammu & Kashmir Legislative Assembly,49,Azad Kashmir Legislative Assembly
+Q28172637,PAK,pakistan/islamabad-capital-territory,,Islamabad Metropolitan Corporation,77,Islamabad Metropolitan Corporation
+Q51839123,PRY,paraguay/boqueron,,departmental board of Boqueron,7,
+Q51839121,PRY,paraguay/presidente-hayes,,departmental board of Presidente Hayes,8,
+Q51839115,PRY,paraguay/central,,departmental board of Central,21,
+Q51839125,PRY,paraguay/asuncion,,Municipal Board of Asuncion,24,
+Q51839114,PRY,paraguay/alto-parana,,departmental board of Alto Parana,21,
+Q51839103,PRY,paraguay/itapua,,departmental board of Itapua,21,
+Q51839117,PRY,paraguay/neembucu,,departmental board of Ñeembucú,8,
+Q51839104,PRY,paraguay/misiones,,departmental board of Misiones,10,
+Q51839124,PRY,paraguay/alto-paraguay,,departmental board of Alto Paraguay,7,
+Q51839097,PRY,paraguay/concepcion,,departmental board of Concepcion,12,
+Q51839118,PRY,paraguay/amambay,,departmental board of Amambay,9,
+Q51839120,PRY,paraguay/canindeyu,,departmental board of Canindeyú,10,
+Q51839098,PRY,paraguay/san-pedro,,departmental board of San Pedro,18,
+Q51839101,PRY,paraguay/caaguazu,,departmental board of Caaguazu,20,
+Q51839099,PRY,paraguay/cordillera,,departmental board of Cordillera,16,
+Q51839102,PRY,paraguay/caazapa,,departmental board of Caazapa,11,
+Q51839107,PRY,paraguay/paraguari,,departmental board of Paraguari,15,
+Q51839100,PRY,paraguay/guaira,,departmental board of Guairá,13,
+Q12184118,PER,peru/lima,,Metropolitan Municipality of Lima,,Metropolitan Municipality of Lima
+Q12184118,PER,peru/lima-2,,Metropolitan Municipality of Lima,,Metropolitan Municipality of Lima
+Q30239036,PER,peru/callao,,Q30239036,,
+Q4694608,PHL,philippines/agusan-del-norte,,Agusan del Norte Provincial Board,,Agusan del Norte Provincial Board
+Q104850193,PHL,philippines/zamboanga-del-norte,,Zamboanga del Norte Provincial Board,,Zamboanga del Norte Provincial Board
+Q4709465,PHL,philippines/albay,,Albay Provincial Board,,Albay Provincial Board
+Q22330307,PHL,philippines/siquijor,,Siquijor Provincial Board,,Siquijor Provincial Board
+Q4938196,PHL,philippines/bohol,,Bohol Provincial Board,,Bohol Provincial Board
+Q22330280,PHL,philippines/cebu,,Cebu Provincial Board,,Cebu Provincial Board
+Q4701431,PHL,philippines/aklan,,Aklan Provincial Board,,Aklan Provincial Board
+Q4694609,PHL,philippines/agusan-del-sur,,Agusan del Sur Provincial Board,,Agusan del Sur Provincial Board
+Q4668700,PHL,philippines/abra,,Abra Provincial Board,,Abra Provincial Board
+Q7514834,POL,poland/silesian-voivodeship,,Silesian Regional Assembly,,Silesian Voivodeship Sejmik
+Q9334992,POL,poland/lesser-poland-voivodeship,,Lesser Poland Regional Assembly,,Lesser Poland Voivodeship Sejmik
+Q7630914,POL,poland/podkarpackie-voivodeship,,Podkarpackie Regional Assembly,,Podkarpackie Voivodeship Sejmik
+Q6693812,POL,poland/lower-silesian-voivodeship,,Lower Silesian Regional Assembly,,Lower Silesian Voivodeship Sejmik
+Q11835771,POL,poland/opole-voivodeship,,Opole Regional Assembly,,Opole Voivodeship Sejmik
+Q7206870,POL,poland/podlaskie-voivodeship,,Podlaskie Regional Assembly,,Podlaskie Voivodeship Sejmik
+Q9334994,POL,poland/warmian-masurian-voivodeship,,Warmian-Masurian Regional Assembly,,Warmian–Masurian Voivodeship Sejmik
+Q6695699,POL,poland/lubusz-voivodeship,,Lubusz Regional Assembly,,Lubusz Voivodeship Sejmik
+Q7986274,POL,poland/west-pomeranian-voivodeship,,West Pomeranian Regional Assembly,,West Pomeranian Voivodeship Sejmik
+Q7227271,POL,poland/pomeranian-voivodeship,,Pomeranian Regional Assembly,,Pomeranian Voivodeship Sejmik
+Q9334993,POL,poland/masovian-voivodeship,,Masovian Regional Assembly,,Masovian Voivodeship Sejmik
+Q5600722,POL,poland/greater-poland-voivodeship,,Greater Poland Regional Assembly,,Greater Poland Voivodeship Sejmik
+Q8082349,POL,poland/swietokrzyskie-voivodeship,,Świętokrzyskie Regional Assembly,,Świętokrzyskie Voivodeship Sejmik
+Q2867080,PRT,portugal/madeira,,Legislative Assembly of Madeira,47,Legislative Assembly of Madeira
+Q3625555,PRI,puerto-rico/puerto-rico,,Legislative Assembly of Puerto Rico,,Legislative Assembly of Puerto Rico
+Q89485190,ROU,romania/satu-mare,,Satu Mare County Council,,
+Q89484733,ROU,romania/arad,,Arad County Council,,
+Q89484739,ROU,romania/bihor,,Bihor County Council,,
+Q29042970,ROU,romania/timis,,Timiș County Council,,
+Q89485160,ROU,romania/mehedinti,,Mehedinți County Council,,
+Q89485112,ROU,romania/dolj,,Dolj County Council,,
+Q33673835,ROU,romania/calarasi,,Călărași County Council,,
+Q89485211,ROU,romania/teleorman,,Teleorman County Council,,
+Q89485128,ROU,romania/giurgiu,,Giurgiu County Council,,
+Q89485096,ROU,romania/constanta,,Constanța County Council,,
+Q89485177,ROU,romania/olt,,Olt County Council,,
+Q89485087,ROU,romania/caras-severin,,Caraș-Severin County Council,,
+Q89485082,ROU,romania/botosani,,Botoșani County Council,,
+Q56822548,ROU,romania/iasi,,Iași County Council,,
+Q89485219,ROU,romania/vaslui,,Vaslui County Council,,
+Q89485123,ROU,romania/galati,,Galați County Council,,
+Q89485202,ROU,romania/suceava,,Suceava County Council,,
+Q89485156,ROU,romania/maramures,,Maramureș County Council,,
+Q89485215,ROU,romania/tulcea,,Tulcea County Council,,
+Q89485091,ROU,romania/cluj,,Cluj County Council,,
+Q89485077,ROU,romania/bistrita-nasaud,,Bistrița-Năsăud County Council,,
+Q89485207,ROU,romania/salaj,,Sălaj County Council,,
+Q89485118,ROU,romania/dambovita,,Dâmbovița County Council,,
+Q89485149,ROU,romania/ilfov,,Ilfov County Council,,
+Q89484735,ROU,romania/arges,,Argeș County Council,,
+Q89485134,ROU,romania/gorj,,Gorj County Council,,
+Q89485145,ROU,romania/hunedoara,,Hunedoara County Council,,
+Q89485227,ROU,romania/valcea,,Vâlcea County Council,,
+Q89485183,ROU,romania/prahova,,Prahova County Council,,
+Q89485103,ROU,romania/covasna,,Covasna County Council,,
+Q89485223,ROU,romania/vrancea,,Vrancea County Council,,
+Q29042981,ROU,romania/buzau,,Buzău County Council,,
+Q30242880,ROU,romania/brasov,,Brașov County Council,,
+Q89485196,ROU,romania/sibiu,,Sibiu County Council,,
+Q89485167,ROU,romania/mures,,Mureș County Council,,
+Q89485140,ROU,romania/harghita,,Harghita County Council,,
+Q89485172,ROU,romania/neamt,,Neamț County Council,,
+Q89484738,ROU,romania/bacau,,Bacău County Council,,
+Q89484732,ROU,romania/alba,,Alba County Council,,
+Q89485083,ROU,romania/braila,,Brăila County Council,,
+Q30243383,ROU,romania/ialomita,,Ialomița County Council,,
+Q5531805,ROU,romania/bucharest,,Bucharest City Council,55,General Council of Bucharest
+Q4146670,RUS,russia/altai-republic,,State Assembly of the Altai Republic,41,State Assembly of the Altai Republic
+Q4383029,RUS,russia/pskov,,Legislative Assembly of Pskov Oblast,26,Legislative Assembly of Pskov Oblast
+Q4184900,RUS,russia/krasnodar-krai,,Legislative Assembly of Krasnodar Krai,70,Legislative Assembly of Krasnodar Krai
+Q4313272,RUS,russia/karachay-cherkess-republic,,People's Assembly of the Karachay-Cherkess Republic,50,People's Assembly of Karachay-Cherkessia
+Q4345415,RUS,russia/kabardino-balkaria,,Parliament of the Kabardino-Balkar Republic,70,Parliament of the Kabardino-Balkarian Republic
+Q4345422,RUS,russia/republic-of-north-ossetia-alania,,Parliament of North Ossetia–Alania,70,Parliament of the Republic of North Ossetia–Alania
+Q7165465,RUS,russia/republic-of-ingushetia,,People's Assembly of the Republic of Ingushetia,32,People's Assembly of the Republic of Ingushetia
+Q4345427,RUS,russia/chechen-republic,,Parliament of the Chechen Republic,41,Parliament of the Chechen Republic
+Q4313275,RUS,russia/republic-of-dagestan,,People's Assembly of the Republic of Dagestan,90,People's Assembly of the Republic of Dagestan
+Q4308091,RUS,russia/murmansk,,Murmansk Oblast Duma,32,Murmansk Oblast Duma
+Q4184904,RUS,russia/karelia,,Legislative Assembly of the Republic of Karelia,36,Legislative Assembly of the Republic of Karelia
+Q4184917,RUS,russia/leningrad,,Legislative Assembly of Leningrad Oblast,50,Legislative Assembly of Leningrad Oblast
+Q4209540,RUS,russia/kaliningrad,,Legislative Assembly of Kaliningrad Oblast,40,Legislative Assembly of Kaliningrad Oblast
+Q4424945,RUS,russia/smolensk,,Smolensk Oblast Duma,48,Smolensk Oblast Duma
+Q18106,RUS,russia/bryansk,,Bryansk Oblast Duma,60,Bryansk Oblast Duma
+Q4248828,RUS,russia/kursk,,Kursk Oblast Duma,45,Kursk Oblast Duma
+Q4081709,RUS,russia/belgorod,,Belgorod Oblast Duma,50,Belgorod Oblast Duma
+Q4125387,RUS,russia/voronezh,,Voronezh Oblast Duma,56,Voronezh Oblast Duma
+Q4184929,RUS,russia/rostov,,Legislative Assembly of Rostov Oblast,60,Legislative Assembly of Rostov Oblast
+Q4313297,RUS,russia/republic-of-buryatia,,People's Khural of the Republic of Buryatia,66,People's Khural of the Republic of Buryatia
+Q4109076,RUS,russia/tuva-republic,,Great Khural of Tuva,32,Great Khural of Tuva
+Q4184911,RUS,russia/zabaykalsky-krai,,Legislative Assembly of Zabaykalsky Krai,50,Legislative Assembly of Zabaykalsky Krai
+Q4184907,RUS,russia/amur,,Legislative Assembly of Amur Oblast,27,Legislative Assembly of Amur Oblast
+Q4184910,RUS,russia/jewish,,Legislative Assembly of the Jewish Autonomous Oblast,19,Legislative Assembly of the Jewish Autonomous Oblast
+Q4184893,RUS,russia/khabarovsk-krai,,Legislative Duma of Khabarovsk Krai,36,Legislative Duma of Khabarovsk Krai
+Q4184925,RUS,russia/primorsky-krai,,Legislative Assembly of Primorsky Krai,40,Legislative Assembly of Primorsky Krai
+Q4467481,RUS,russia/tyumen,,Tyumen Oblast Duma,48,Tyumen Oblast Duma
+Q6445912,RUS,russia/kurgan,,Kurgan Oblast Duma,34,Kurgan Oblast Duma
+Q4184920,RUS,russia/omsk,,Legislative Assembly of Omsk Oblast,44,Legislative Assembly of Omsk Oblast
+Q4184924,RUS,russia/novosibirsk,,Legislative Assembly of Novosibirsk Oblast,76,Legislative Assembly of Novosibirsk Oblast
+Q4184935,RUS,russia/chelyabinsk,,Legislative Assembly of Chelyabinsk Oblast,60,Legislative Assembly of Chelyabinsk Oblast
+Q4146670,RUS,russia/altai-republic-2,,State Assembly of the Altai Republic,41,State Assembly of the Altai Republic
+Q4184921,RUS,russia/orenburg,,Legislative Assembly of Orenburg Oblast,47,Legislative Assembly of Orenburg Oblast
+Q4408437,RUS,russia/saratov,,Saratov Oblast Duma,40,Saratov Oblast Duma
+Q4146541,RUS,russia/astrakhan,,Duma of the Astrakhan Region,44,Duma of Astrakhan Oblast
+Q4122951,RUS,russia/volgograd,,Volgograd Oblast Duma,38,Volgograd Oblast Duma
+Q2559023,RUS,russia/autonomous-republic-of-crimea,,Supreme Council of Crimea,100,Verkhovna Rada of Crimea
+Q4273874,RUS,russia/magadan,,Magadan Oblast Duma,21,Magadan Oblast Duma
+Q4409406,RUS,russia/sakhalin,,Sakhalin Oblast Duma,28,Sakhalin Oblast Duma
+Q15985376,RUS,russia/sevastopol,,Legislative Assembly of Sevastopol,24,Legislative Assembly of Sevastopol
+Q2659239,RUS,russia/sevastopol,,Sevastopol Municipality,,Sevastopol City Council
+Q15975355,RUS,russia/chukotka-autonomous-okrug,,Duma of Chukotka Autonomous Okrug,15,Duma of the Chukotka Autonomous Okrug
+Q16652988,RUS,russia/yamalo-nenets-autonomous-okrug,,Legislative Assembly of the Yamalo-Nenets Autonomous Okrug,22,Legislative Assembly of the Yamalo-Nenets Autonomous Okrug
+Q4426102,RUS,russia/nenets-autonomous-okrug,,Assembly of Deputies of the Nenets Autonomous Okrug,19,Assembly of Deputies of the Nenets Autonomous Okrug
+Q2037704,RUS,russia/sakha-republic,,State Assembly of the Sakha Republic,70,State Assembly of the Sakha Republic
+Q2390550,RUS,russia/saint-petersburg,,Legislative Assembly of Saint Petersburg,50,Legislative Assembly of Saint Petersburg
+Q4070652,RUS,russia/arkhangelsk,,Arkhangelsk Oblast Assembly of Deputies,47,Arkhangelsk Oblast Assembly of Deputies
+Q4184916,RUS,russia/krasnoyarsk-krai,,Legislative Assembly of Krasnoyarsk Krai,52,Legislative Assembly of Krasnoyarsk Krai
+Q4313296,RUS,russia/republic-of-kalmykia,,People's Khural of Kalmykia,27,People's Khural of Kalmykia
+Q4184914,RUS,russia/kamchatka-krai,,Legislative Assembly of Kamchatka Krai,28,Legislative Assembly of Kamchatka Krai
+Q4146671,RUS,russia/bashkortostan,,State Assembly of Bashkortostan,110,State Assembly of the Republic of Bashkortostan
+Q4184930,RUS,russia/sverdlovsk,,Legislative Assembly of Sverdlovsk Oblast,50,Legislative Assembly of Sverdlovsk Oblast
+Q4170550,RUS,russia/khanty-mansi-autonomous-okrug,,Duma of Khanty-Mansi Autonomous Okrug — Yugra,38,Duma of Khanty-Mansi Autonomous Okrug — Yugra
+Q4262494,RUS,russia/lipetsk,,Lipetsk Oblast Council of Deputies,42,Lipetsk Oblast Council of Deputies
+Q16704460,RUS,russia/tambov,,Tambov Oblast Duma,50,Tambov Oblast Duma
+Q4184894,RUS,russia/tomsk,,Legislative Duma of Tomsk Oblast,42,Legislative Duma of Tomsk Oblast
+Q4146734,RUS,russia/republic-of-tatarstan,,State Council of the Republic of Tatarstan,100,State Council of the Republic of Tatarstan
+Q4184933,RUS,russia/ulyanovsk,,Legislative Assembly of Ulyanovsk Oblast,36,Legislative Assembly of Ulyanovsk Oblast
+Q4184922,RUS,russia/penza,,Legislative Assembly of Penza Oblast,36,Legislative Assembly of Penza Oblast
+Q4426243,RUS,russia/kemerovo,,Legislative Assembly of Kemerovo Oblast,46,Legislative Assembly of Kemerovo Oblast
+Q4336886,RUS,russia/oryol,,Oryol Oblast Council of People's Deputies,50,Oryol Oblast Council of People's Deputies
+Q12357499,RUS,russia/irkutsk,,Irkutsk Legislative Assembly,45,Legislative Assembly of Irkutsk Oblast
+Q4109070,RUS,russia/republic-of-khakassia,,Supreme Council of Khakassia,50,Supreme Council of the Republic of Khakassia
+Q4146669,RUS,russia/republic-of-mordovia,,State Assembly of the Republic of Mordovia,48,State Assembly of the Republic of Mordovia
+Q4184913,RUS,russia/kaluga,,Regional parliament of Kaluga,40,Legislative Assembly of Kaluga Oblast
+Q4235558,RUS,russia/kostroma,,Kostroma Oblast Duma,35,Kostroma Oblast Duma
+Q4538835,RUS,russia/yaroslavl,,Yaroslavl Oblast Duma,46,Yaroslavl Oblast Duma
+Q4184909,RUS,russia/vladimir,,Legislative Assembly of Vladimir Oblast,38,Legislative Assembly of Vladimir Oblast
+Q4402628,RUS,russia/ryazan,,Ryazan Oblast Duma,40,Ryazan Oblast Duma
+Q4196597,RUS,russia/ivanovo,,Ivanovo Oblast Duma,30,Ivanovo Oblast Duma
+Q4184918,RUS,russia/nizhny-novgorod,,Legislative Assembly of Nizhny Novgorod Region,50,Legislative Assembly of Nizhny Novgorod Oblast
+Q4465216,RUS,russia/tula,,Tula Oblast Duma,36,Tula Oblast Duma
+Q4146740,RUS,russia/chuvash-republic,,State Council of the Chuvash Republic,44,State Council of the Chuvash Republic
+Q4184897,RUS,russia/vologda,,Legislative Assembly of Vologda Oblast,34,Legislative Assembly of Vologda Oblast
+Q4322496,RUS,russia/novgorod,,Novgorod Oblast Duma,32,Novgorod Oblast Duma
+Q4184932,RUS,russia/tver,,Legislative Assembly of Tver Oblast,40,Legislative Assembly of Tver Oblast
+Q4303926,RUS,russia/moscow,,Moscow Oblast Duma,50,Moscow Oblast Duma
+Q2041767,RUS,russia/moscow-2,,Moscow City Duma,45,Moscow City Duma
+Q7603047,RUS,russia/mari-el-republic,,State Assembly of the Mari El Republic,52,State Assembly of the Mari El Republic
+Q4184915,RUS,russia/kirov,,Legislative Assembly of Kirov Region,40,Legislative Assembly of Kirov Oblast
+Q4146733,RUS,russia/udmurt-republic,,State Council of the Udmurt Republic,60,State Council of the Udmurt Republic
+Q24436,RUS,russia/komi-republic,,State Council of the Komi Republic,30,State Council of the Komi Republic
+Q4184928,RUS,russia/perm-krai,,Legislative Assembly of Perm Krai,60,Legislative Assembly of Perm Krai
+Q4406358,RUS,russia/samara,,Samara Regional Duma,50,Samara Regional Duma
+Q4170549,RUS,russia/stavropol-krai,,Regional Parliament of Stavropol Krai,50,Duma of Stavropol Krai
+Q4146731,RUS,russia/republic-of-adygea,,State Council — Khase of the Republic of Adygea,50,State Council of the Republic of Adygea
+Q139676263,RWA,rwanda/kigali,,Council of the City of Kigali,,
+Q6518247,SHN,saint-helena/saint-helena,,Legislative Council of Saint Helena,21,Legislative Council of Saint Helena
+Q388526,SXM,sint-maarten/sint-maarten,,Parliament of Sint Maarten,15,Parliament of Sint Maarten
+Q12796398,SVN,slovenia/ljubljana,,City Council of the Municipality of Ljubljana,,
+Q15262569,ZAF,south-africa/northern-cape,,Northern Cape Provincial Legislature,30,Northern Cape Provincial Legislature
+Q6449892,ZAF,south-africa/kwazulu-natal,,KwaZulu-Natal Legislature,80,KwaZulu-Natal Legislature
+Q17053115,ZAF,south-africa/free-state,,Free State Legislature,30,Free State Provincial Legislature
+Q5330037,ZAF,south-africa/eastern-cape,,Eastern Cape Provincial Legislature,72,Eastern Cape Provincial Legislature
+Q6549944,ZAF,south-africa/limpopo,,Limpopo Legislature,49,Limpopo Provincial Legislature
+Q17080170,ZAF,south-africa/north-west,,North West Provincial Legislature,33,North West Provincial Legislature
+Q17068721,ZAF,south-africa/mpumalanga,,Mpumalanga Provincial Legislature,30,Mpumalanga Provincial Legislature
+Q17081929,ZAF,south-africa/western-cape,,Western Cape Provincial Parliament,42,Western Cape Provincial Parliament
+Q5527909,ZAF,south-africa/gauteng,,Gauteng Provincial Legislature,73,Gauteng Provincial Legislature
+Q16093243,KOR,south-korea/gangwon,,Gangwon State Council,44,
+Q20779829,KOR,south-korea/gyeonggi,,Gyeonggido Assembly,128,
+Q41070,KOR,south-korea/south-chungcheong,,South Chungcheong,,South Chungcheong Province
+Q16099448,KOR,south-korea/incheon,,Incheon Metropolitan Council,37,Incheon Metropolitan Council
+Q21060148,KOR,south-korea/north-jeolla,,North Jeolla Province municipal council,38,
+Q16099669,KOR,south-korea/south-jeolla,,South Jeolla Province municipal council,58,
+Q16094835,KOR,south-korea/south-gyeongsang,,South Gyeongsang Province municipal council,55,
+Q16096697,KOR,south-korea/busan,,Busan municipal council,47,Busan Metropolitan Council
+Q16099049,KOR,south-korea/ulsan,,Ulsan Metropolitan Council,22,Ulsan Metropolitan Council
+Q16093885,KOR,south-korea/north-gyeongsang,,North Gyeongsang Province municipal council,60,Gyeongsangbuk-do Provincial Council
+Q16100817,KOR,south-korea/jeju,,Jeju municipal council,36,Jeju Provincial Council
+Q12601388,KOR,south-korea/seoul,,Seoul municipal council,110,Seoul Metropolitan Council
+Q16095510,KOR,south-korea/daejeon,,Daejeon municipal council,22,Daejeon Metropolitan Council
+Q16097908,KOR,south-korea/sejong,,Sejong City municipal council,15,Sejong City Council
+Q16100304,KOR,south-korea/north-chungcheong,,North Chungcheong Province municipal council,31,
+Q16094335,KOR,south-korea/gwangju,,Gwangju municipal council,22,Gwangju Metropolitan Council
+Q16095349,KOR,south-korea/daegu,,Daegu municipal council,30,Daegu Metropolitan Council
+Q2742602,ESP,spain/navarre,,Parliament of Navarre,50,Parliament of Navarre
+Q4890912,ESP,spain/gipuzkoa,,General Assemblies of Gipuzkoa,,General Assembly of Gipuzkoa
+Q8206177,ESP,spain/murcia,,Regional Assembly of Murcia,,Regional Assembly of Murcia
+Q432108,ESP,spain/asturias,,General Junta of the Principality of Asturias,,General Junta of the Principality of Asturias
+Q3129766,ESP,spain/biscay,,General Assemblies of Biscay,,
+Q4589988,ESP,spain/la-rioja,,Parliament of La Rioja,,Parliament of La Rioja
+Q4891258,ESP,spain/araba-alava,,General Assemblies of Álava,,General Assembly of Álava
+Q139971,ESP,spain/community-of-madrid,,Assembly of Madrid,136,Assembly of Madrid
+Q2994335,SPM,st-pierre-and-miquelon/saint-pierre-and-miquelon,,Territorial Council of Saint Pierre and Miquelon,19,Territorial Council of Saint Pierre and Miquelon
+Q2275463,CHE,switzerland/valais,,Grand Council of Valais,130,Grand Council of Valais
+Q2048795,CHE,switzerland/ticino,,Grand Council of Ticino,90,Grand Council of Ticino
+Q1843380,CHE,switzerland/grisons,,Grand Council of Grisons,120,Grand Council of Grisons
+Q1728100,CHE,switzerland/schaffhausen,,Cantonal Council of Schaffhausen,60,
+Q1547525,CHE,switzerland/thurgau,,Grand Council of Thurgau,130,Grand Council of Thurgau
+Q2110002,CHE,switzerland/zurich,,Cantonal Council of Zürich,180,Cantonal Council of Zurich
+Q664357,CHE,switzerland/aargau,,Grand Council of Aargau,140,Grand Council of Aargau
+Q670958,CHE,switzerland/basel-stadt,,Grand Council of Basel-Stadt,100,Grand Council of Basel-Stadt
+Q1803685,CHE,switzerland/basel-landschaft,,Landrat of Basel-Landschaft,90,
+Q2082614,CHE,switzerland/st-gallen,,Cantonal Council of Sankt Gallen,120,Cantonal Council of St. Gallen
+Q2678577,CHE,switzerland/solothurn,,Cantonal Council of Solothurn,100,Cantonal Council of Solothurn
+Q2391710,CHE,switzerland/jura,,Parliament of Jura,60,Parliament of Jura
+Q509892,CHE,switzerland/geneva,,Grand Council of Geneva,100,Grand Council of Geneva
+Q2131740,CHE,switzerland/vaud,,Grand Council of Vaud,150,Grand Council of Vaud
+Q2529663,CHE,switzerland/neuchatel,,Grand Council of Neuchâtel,100,Grand Council of Neuchâtel
+Q664547,CHE,switzerland/bern,,Grand Council of the Canton of Bern,160,Grand Council of Bern
+Q2732017,CHE,switzerland/lucerne,,Cantonal Council of Lucerne,120,Cantonal Council of Lucerne
+Q1948527,CHE,switzerland/zug,,Cantonal Council of Zug,80,
+Q1287500,CHE,switzerland/uri,,Landrat of Uri,64,Landrat of Uri
+Q1728101,CHE,switzerland/schwyz,,Cantonal Council of Schwyz,100,Cantonal Council of Schwyz
+Q1147334,CHE,switzerland/glarus,,Landrat of Glarus,60,
+Q1323059,CHE,switzerland/glarus,,Landsgemeinde Glarus,,
+Q1755180,CHE,switzerland/nidwalden,,Landrat of Nidwalden,60,
+Q664559,CHE,switzerland/fribourg,,Grand Council of Fribourg,110,Grand Council of Fribourg
+Q1728098,CHE,switzerland/obwalden,,Cantonal Council of Obwalden,55,Cantonal Council of Obwalden
+Q4775545,CHE,switzerland/appenzell-ausserrhoden,,Cantonal Council of Appenzell Ausserrhoden,65,Cantonal Council of Appenzell Ausserrhoden
+Q1547522,CHE,switzerland/appenzell-innerrhoden,,Grand Council of Appenzell Innerrhoden,50,Grand Council of Appenzell Innerrhoden
+Q17315146,CHE,switzerland/appenzell-innerrhoden,,Landsgemeinde Appenzell Innerrhoden,,
+Q11112210,TWN,taiwan/taoyuan,,Taoyuan City Council,60,Taoyuan City Council
+Q11084065,TWN,taiwan/hsinchu,,Hsinchu County Council,36,Hsinchu County Council
+Q11084017,TWN,taiwan/hsinchu-2,,Hsinchu City Council,33,Hsinchu City Council
+Q15904162,TWN,taiwan/miaoli,,Miaoli County Council,38,Miaoli County Council
+Q11070079,TWN,taiwan/changhua,,Changhua County Council,54,Changhua County Council
+Q15908941,TWN,taiwan/yunlin,,Yunlin County Council,43,Yunlin County Council
+Q10924150,TWN,taiwan/chiayi,,Chiayi County Council,37,Chiayi County Council
+Q7676191,TWN,taiwan/tainan,,Tainan City Council,57,Tainan City Council
+Q6366073,TWN,taiwan/kaohsiung,,Kaohsiung City Council,66,Kaohsiung City Council
+Q15903185,TWN,taiwan/pingtung,,Pingtung County Council,55,Pingtung County Council
+Q15908339,TWN,taiwan/taitung,,Taitung County Council,30,Taitung County Council
+Q15909304,TWN,taiwan/hualien,,Hualien County Council,33,Hualien County Council
+Q15909148,TWN,taiwan/yilan,,Yilan County Council,34,Yilan County Council
+Q11081523,TWN,taiwan/new-taipei,,New Taipei City Council,80,New Taipei City Council
+Q10930444,TWN,taiwan/keelung,,Keelung City Council,31,Keelung City Council
+Q15914537,TWN,taiwan/kinmen,,Kinmen County Council,19,Kinmen County Council
+Q15915051,TWN,taiwan/penghu,,Penghu County Council,19,Penghu County Council
+Q10907927,TWN,taiwan/nantou,,Nantou County Council,37,Nantou County Council
+Q7676278,TWN,taiwan/taipei,,Taipei City Council,63,Taipei City Council
+Q10924120,TWN,taiwan/chiayi-2,,Chiayi City Council,24,Chiayi City Council
+Q13022003,THA,thailand/bangkok,,Bangkok Metropolitan Council,,Bangkok Metropolitan Council
+Q4220207,UKR,ukraine/kyiv,,Kyiv City Council,120,Kyiv City Council
+Q1028960,UKR,ukraine/chernivtsi,,Chernivtsi Oblast Council,,Chernivtsi Oblast Council
+Q12135218,UKR,ukraine/odessa,,Odesa Oblast Council,,Odesa Oblast Council
+Q6400700,UKR,ukraine/kharkiv,,Kharkiv Oblast Council,,Kharkiv Oblast Council
+Q11838569,UKR,ukraine/luhansk,,Luhansk Oblast Council,,Luhansk Oblast Council
+Q11781010,UKR,ukraine/mykolaiv,,Mykolaiv Oblast Council,,Mykolaiv Oblast Council
+Q12116590,UKR,ukraine/kirovohrad,,Kirovohrad Oblast Council,,Kirovohrad Oblast Council
+Q4220207,UKR,ukraine/kyiv-2,,Kyiv City Council,120,Kyiv City Council
+Q7972258,USA,united-states-of-america/washington,,Washington State Legislature,,Washington State Legislature
+Q4256974,USA,united-states-of-america/idaho,,Idaho Legislature,,Idaho Legislature
+Q3567567,USA,united-states-of-america/montana,,Montana Legislature,,Montana Legislature
+Q7055026,USA,united-states-of-america/north-dakota,,North Dakota Legislative Assembly,,North Dakota Legislative Assembly
+Q1117432,USA,united-states-of-america/minnesota,,Minnesota Legislature,,Minnesota Legislature
+Q3270273,USA,united-states-of-america/michigan,,Michigan Legislature,,Michigan Legislature
+Q7080820,USA,united-states-of-america/ohio,,Ohio General Assembly,,Ohio General Assembly
+Q2867077,USA,united-states-of-america/pennsylvania,,Pennsylvania General Assembly,,Pennsylvania General Assembly
+Q3270268,USA,united-states-of-america/new-york,,New York State Legislature,,New York State Legislature
+Q2867076,USA,united-states-of-america/vermont,,Vermont General Assembly,,Vermont General Assembly
+Q7008154,USA,united-states-of-america/new-hampshire,,New Hampshire General Court,,New Hampshire General Court
+Q2749841,USA,united-states-of-america/maine,,Maine Legislature,,Maine Legislature
+Q2747172,USA,united-states-of-america/arizona,,Arizona State Legislature,,Arizona State Legislature
+Q3084210,USA,united-states-of-america/california,,California State Legislature,,California State Legislature
+Q7010195,USA,united-states-of-america/new-mexico,,New Mexico Legislature,,New Mexico Legislature
+Q2653964,USA,united-states-of-america/texas,,Texas Legislature,,Texas Legislature
+Q719894,USA,united-states-of-america/alaska,,Alaska Legislature,,Alaska State Legislature
+Q6689290,USA,united-states-of-america/louisiana,,Louisiana State Legislature,,Louisiana State Legislature
+Q6879217,USA,united-states-of-america/mississippi,,Mississippi Legislature,,Mississippi Legislature
+Q3270265,USA,united-states-of-america/alabama,,Alabama Legislature,,Alabama Legislature
+Q3556484,USA,united-states-of-america/florida,,Florida Legislature,,Florida Legislature
+Q3103766,USA,united-states-of-america/georgia,,Georgia General Assembly,,Georgia General Assembly
+Q980284,USA,united-states-of-america/south-carolina,,South Carolina General Assembly,,South Carolina General Assembly
+Q10566263,USA,united-states-of-america/north-carolina,,North Carolina General Assembly,,North Carolina General Assembly
+Q530970,USA,united-states-of-america/virginia,,Virginia General Assembly,,Virginia General Assembly
+Q10566065,USA,united-states-of-america/maryland,,Maryland General Assembly,,Maryland General Assembly
+Q5253303,USA,united-states-of-america/delaware,,Delaware General Assembly,,Delaware General Assembly
+Q2867079,USA,united-states-of-america/new-jersey,,New Jersey Legislature,,New Jersey Legislature
+Q5161534,USA,united-states-of-america/connecticut,,Connecticut General Assembly,,Connecticut General Assembly
+Q7320919,USA,united-states-of-america/rhode-island,,Rhode Island General Assembly,,Rhode Island General Assembly
+Q1453540,USA,united-states-of-america/massachusetts,,Massachusetts General Court,,Massachusetts General Court
+Q7101257,USA,united-states-of-america/oregon,,Oregon Legislative Assembly,,Oregon Legislative Assembly
+Q5684411,USA,united-states-of-america/hawaii,,Hawaii State Legislature,,Hawaii State Legislature
+Q2384499,USA,united-states-of-america/utah,,Utah State Legislature,,Utah State Legislature
+Q3270276,USA,united-states-of-america/wyoming,,Wyoming Legislature,,Wyoming Legislature
+Q3555619,USA,united-states-of-america/nevada,,Nevada Legislature,,Nevada Legislature
+Q5148810,USA,united-states-of-america/colorado,,Colorado General Assembly,,Colorado General Assembly
+Q2304409,USA,united-states-of-america/south-dakota,,South Dakota Legislature,,South Dakota Legislature
+Q996610,USA,united-states-of-america/nebraska,,Nebraska Legislature,49,Nebraska Legislature
+Q3270271,USA,united-states-of-america/kansas,,Kansas Legislature,,Kansas Legislature
+Q583952,USA,united-states-of-america/oklahoma,,Oklahoma Legislature,,Oklahoma Legislature
+Q6064424,USA,united-states-of-america/iowa,,Iowa General Assembly,,Iowa General Assembly
+Q6879566,USA,united-states-of-america/missouri,,Missouri General Assembly,,Missouri General Assembly
+Q3270274,USA,united-states-of-america/wisconsin,,Wisconsin Legislature,,Wisconsin State Legislature
+Q1437547,USA,united-states-of-america/illinois,,Illinois General Assembly,,Illinois General Assembly
+Q6392265,USA,united-states-of-america/kentucky,,Kentucky General Assembly,,Kentucky General Assembly
+Q2747168,USA,united-states-of-america/arkansas,,Arkansas General Assembly,,Arkansas General Assembly
+Q7700086,USA,united-states-of-america/tennessee,,Tennessee General Assembly,,Tennessee General Assembly
+Q7986861,USA,united-states-of-america/west-virginia,,West Virginia Legislature,,West Virginia Legislature
+Q3634937,USA,united-states-of-america/indiana,,Indiana General Assembly,,Indiana General Assembly
+Q139486644,URY,uruguay/artigas,,Q139486644,,
+Q5783839,VEN,venezuela/delta-amacuro,,Legislative Council of Delta Amacuro,,
+Q5783833,VEN,venezuela/bolivar,,Legislative Council of Bolívar,,
+Q579836,VEN,venezuela/zulia,,Legislative Council of Zulia,15,Legislative Council of Zulia
+Q5783859,VEN,venezuela/tachira,,Legislative Council of Táchira,,
+Q5783824,VEN,venezuela/apure,,Legislative Council of Apure,,
+Q5783866,VEN,venezuela/merida,,Legislative Council of Mérida,,
+Q5783856,VEN,venezuela/trujillo,,Legislative Council of Trujillo,,
+Q5783841,VEN,venezuela/falcon,,Legislative Council of Falcón,,
+Q5783863,VEN,venezuela/yaracuy,,Legislative Council of Yaracuy,,
+Q5692374,VEN,venezuela/carabobo,,Legislative Council of Carabobo,,
+Q5783826,VEN,venezuela/aragua,,Consejo Legislativo del Estado Bolivariano de Aragua,,
+Q5783861,VEN,venezuela/vargas-state,,Legislative Council of Vargas,,
+Q5783831,VEN,venezuela/miranda,,Legislative Council of Miranda,,
+Q5783821,VEN,venezuela/anzoategui,,Legislative Council of Anzoátegui,,
+Q5783853,VEN,venezuela/sucre,,Legislative Council of Sucre,,
+Q5783847,VEN,venezuela/monagas,,Legislative Council of Monagas,,
+Q5783849,VEN,venezuela/nueva-esparta,,Legislative Council of Nueva Esparta,,
+Q5783843,VEN,venezuela/guarico-state,,Legislative Council of Guárico,,
+Q5783837,VEN,venezuela/cojedes,,Legislative Council of Cojedes,,Legislative Council of Cojedes
+Q5783828,VEN,venezuela/barinas,,Legislative Council of Barinas,,
+Q5783845,VEN,venezuela/lara,,Legislative Council of Lara,,
+Q5783851,VEN,venezuela/portuguesa,,Legislative Council of Portuguesa,,
+Q19543845,FRA,france/french-guiana,,Assembly of French Guiana,,Assembly of French Guiana
+Q20723546,FRA,france/hauts-de-france,,Regional Council of the Hauts-de-France,,Regional Council of Hauts-de-France
+Q2994260,FRA,france/pays-de-la-loire,,Regional Council of Pays de la Loire,93,Regional Council of Pays de la Loire
+Q2301457,FRA,france/brittany,,Regional Council of Brittany,,Regional Council of Brittany
+Q2994263,FRA,france/martinique,,Regional Council of Martinique,,Regional Council of Martinique
+Q2564988,FRA,france/corsica,,Assembly of Corsica,,Corsican Assembly
+Q647976,FRA,france/centre-val-de-loire,,Regional Council of Centre-Val de Loire,,Regional Council of Centre-Val de Loire
+Q285714,GBR,united-kingdom/northern-ireland,,Northern Ireland Assembly,90,Northern Ireland Assembly
+Q493517,GBR,united-kingdom/wales,,Senedd,96,Senedd
+Q206171,GBR,united-kingdom/scotland,,Scottish Parliament,129,Scottish Parliament
+Q4705857,USA,Q107146,,Alameda County Board of Supervisors,,Alameda County Board of Supervisors
+Q6682069,USA,Q104994,,Los Angeles County Board of Supervisors,,Los Angeles County Board of Supervisors
+Q127789718,USA,Q111774,,El Paso County Board of County Commissioners,,
+Q139489896,USA,Q488874,,Hillsborough County Board of County Commissioners,,
+Q30255397,USA,Q494624,,Broward County Board of County Commissioners,,
+Q139553759,USA,Q501029,,Lake County Board of County Commissioners,,
+Q139814390,USA,Q501067,,Osceola County Commission,5,
+Q16980374,USA,Q487704,,Honolulu City Council,,Honolulu City Council
+Q139814638,USA,Q498116,,Kenton County Fiscal Court,,
+Q136171433,USA,Q491931,,Lexington–Fayette Urban County Council,,Lexington-Fayette Urban County Council
+Q4852810,USA,Q5092,,Baltimore City Council,14,Baltimore City Council
+Q61810469,USA,Q488659,,Montgomery County Council,9,Montgomery County Council (Maryland)
+Q137827233,USA,Q489873,,St. Charles County Council,,
+Q102432792,USA,Q490505,,Board of Hudson County Commissioners,9,
+Q130967832,USA,Q114843,,Erie County Legislature,20,
+Q131387875,USA,Q156278,,Smith County Commissioners Court,5,
+Q105742706,USA,Q484556,,Salt Lake County Council,,Salt Lake County Council
+Q100217575,USA,Q49259,,Virginia Beach City Council,11,Virginia Beach City Council
+Q60746997,USA,Q340608,,Chesterfield County Board of Supervisors,,Chesterfield County Board of Supervisors
+Q140753432,USA,Q337270,,New Kent County Board of Supervisors,,
+Q5430157,USA,Q341915,,Fairfax County Board of Supervisors,,Fairfax County Board of Supervisors
+Q112620642,USA,Q107126,,Arlington County Board,5,
+Q17079880,USA,Q495310,,Loudoun County Board of Supervisors,,Loudoun County Board of Supervisors
+Q140753433,USA,Q513792,,Powhatan County Board of Supervisors,,
+Q140753365,USA,Q341679,,Hanover County Board of Supervisors,,
+Q60786576,USA,Q341639,,Henrico County Board of Supervisors,,Henrico County Board of Supervisors
+Q133837291,USA,Q43421,,Richmond City Council,,
+Q140753457,USA,Q506191,,Goochland County Board of Supervisors,,
+Q6411382,USA,Q108861,,King County Council,,King County Council
+Q5795768,ARG,argentina/entre-rios,Q41144060,Chamber of Deputies of Entre Ríos,34,
+Q4985544,ARG,argentina/buenos-aires,Q40316062,Buenos Aires Province Chamber of Deputies,92,Buenos Aires Province Chamber of Deputies
+Q3014316,MEX,,Q1484825,Chamber of Deputies,500,Chamber of Deputies (Mexico)
+Q2119518,CHL,,Q1968468,Chamber of Deputies,155,Chamber of Deputies of Chile
+Q1834804,BRA,,Q949699,Chamber of Deputies,513,Chamber of Deputies (Brazil)
+Q41143524,ARG,argentina/san-luis,Q41143529,Chamber of Deputies of San Luis,43,
+Q41142955,ARG,argentina/mendoza,Q41142964,Chamber of Deputies of Mendoza,48,
+Q41142185,ARG,argentina/catamarca,Q41142156,Chamber of Deputies of Catamarca,41,
+Q40323792,ARG,argentina/corrientes,Q40323800,Chamber of Deputies of Corrientes,30,
+Q40323582,ARG,argentina/salta,Q40323553,Chamber of Deputies of Salta,60,Chamber of Deputies of Salta
+Q20081431,BOL,,Q1968458,Chamber of Deputies of Bolivia,130,Chamber of Deputies (Bolivia)
+Q20022012,ARG,argentina/santa-fe,Q5972575,Chamber of Deputies of Santa Fe,50,Chamber of Deputies of Santa Fe
+Q841424,ITA,,Q1117578,Chamber of Deputies of Italy,400,Chamber of Deputies (Italy)
+Q775767,GNQ,,Q16878152,Chamber of People's Representatives,100,Chamber of Deputies (Equatorial Guinea)
+Q629133,ARG,,Q646190,Chamber of Deputies of Argentina,257,Argentine Chamber of Deputies
+Q539149,ESP,,Q219692,Congress of Deputies,350,Congress of Deputies
+Q320306,ROU,,Q1813360,Chamber of Deputies of Romania,380,Chamber of Deputies (Romania)
+Q320292,RWA,,Q4162795,Chamber of Deputies,80,Chamber of Deputies (Rwanda)
+Q320290,PRY,,Q2511660,Chamber of Deputies,80,Chamber of Deputies of Paraguay
+Q320287,HTI,,Q742110,Chamber of Deputies,119,Chamber of Deputies (Haiti)
+Q320280,DOM,,Q595411,Chamber of Deputies,183,Chamber of Deputies of the Dominican Republic
+Q320265,CZE,,Q2347172,Chamber of Deputies of the Parliament of the Czech Republic,200,Chamber of Deputies of the Czech Republic
+Q5915308,NPL,,Q3896143,House of Representatives,275,House of Representatives (Nepal)
+Q5914707,SWZ,,Q7138942,House of Assembly of Eswatini,70,House of Assembly of Eswatini
+Q5914694,BMU,,Q7138929,House of Assembly of Bermuda,36,House of Assembly of Bermuda
+Q4744878,ASM,,Q1267503,American Samoa House of Representatives,21,American Samoa House of Representatives
+Q4386693,,australia/victoria,Q1848835,Victorian Legislative Assembly,88,Victorian Legislative Assembly
+Q4118178,BHR,,Q3242616,Council of Representatives,40,Council of Representatives (Bahrain)
+Q1347545,BEL,,Q1137059,Chamber of Representatives,150,Chamber of Representatives (Belgium)
+Q1282775,LCA,,Q1563736,House of Assembly of Saint Lucia,17,House of Assembly of Saint Lucia
+Q1266832,ATG,,Q1280751,House of Representatives of Antigua and Barbuda,19,House of Representatives (Antigua and Barbuda)
+Q1234896,KHM,,Q1320418,National Assembly,123,National Assembly (Cambodia)
+Q1207092,MYS,,Q2986392,Dewan Rakyat,222,Dewan Rakyat
+Q1141206,MDG,,Q3919000,National Assembly,160,National Assembly (Madagascar)
+Q1138713,LSO,,Q4345419,National Assembly,120,National Assembly (Lesotho)
+Q1138354,GRD,,Q1253647,House of Representatives of Grenada,16,House of Representatives (Grenada)
+Q1133185,ETH,,Q257899,House of Peoples' Representatives,547,House of Peoples' Representatives
+Q2948139,BHS,,Q1572486,House of Assembly,39,
+Q2867120,,australia/tasmania,Q3365524,Tasmanian House of Assembly,35,Tasmanian House of Assembly
+Q2670027,IDN,,Q818711,the House of Representatives of the Republic of Indonesia,580,House of Representatives (Indonesia)
+Q2579023,BTN,,Q2080399,National Assembly of Bhutan,47,National Assembly (Bhutan)
+Q2145199,TTO,,Q7138943,House of Representatives,41,House of Representatives (Trinidad and Tobago)
+Q2118228,PLW,,Q1384462,House of Delegates of Palau,16,House of Delegates of Palau
+Q1969587,COG,,Q4345421,National Assembly,153,National Assembly (Republic of the Congo)
+Q1969569,SDN,,Q4902948,National Assembly,426,National Assembly of Sudan
+Q1969545,GAB,,Q4345413,National Assembly,143,National Assembly of Gabon
+Q1968103,SSD,,Q5018721,National Legislative Assembly,550,National Legislative Assembly
+Q1769673,NAM,,Q4167580,National Assembly,104,National Assembly (Namibia)
+Q1701225,KEN,,Q14468380,National Assembly,349,National Assembly (Kenya)
+Q1649622,BLR,,Q1798607,House of Representatives,110,House of Representatives (Belarus)
+Q1634099,CMR,,Q25039919,National Assembly of Cameroon,180,National Assembly (Cameroon)
+Q1631396,ZWE,,Q2083905,National Assembly of Zimbabwe,210,National Assembly of Zimbabwe
+Q1574334,COD,,Q282928,National Assembly,500,National Assembly (Democratic Republic of the Congo)
+Q1573929,CIV,,Q27881072,National Assembly,255,National Assembly (Ivory Coast)
+Q1572773,MAR,,Q3004884,House of Representatives of Morocco,395,House of Representatives (Morocco)
+Q1568676,SVN,,Q1288169,National Assembly,90,National Assembly (Slovenia)
+Q1518223,PAK,,Q2665089,National Assembly (Pakistan),342,National Assembly of Pakistan
+Q1517320,CAN,canada/manitoba,Q15150769,Legislative Assembly of Manitoba,57,Legislative Assembly of Manitoba
+Q1516957,IMN,,Q827704,House of Keys,24,House of Keys
+Q1516914,CAN,canada/new-brunswick,Q3251036,Legislative Assembly of New Brunswick,49,Legislative Assembly of New Brunswick
+Q1501976,EGY,,Q2584535,House of Representatives,596,House of Representatives (Egypt)
+Q1484102,YEM,,Q34665845,House of Representatives,301,House of Representatives (Yemen)
+Q21078126,SOM,,Q176597,House of the People,261,
+Q20080342,JAM,,Q122635,House of Representatives of Jamaica,63,
+Q9390783,,australia/new-south-wales,Q3365521,New South Wales Legislative Assembly,93,New South Wales Legislative Assembly
+Q9390763,TJK,,Q2011165,Assembly of Representatives,63,Assembly of Representatives (Tajikistan)
+Q7987530,,australia/western-australia,Q3365500,Western Australian Legislative Assembly,59,Western Australian Legislative Assembly
+Q7566117,,australia/south-australia,Q3054418,South Australian House of Assembly,47,South Australian House of Assembly
+Q7058704,MNP,,Q1565625,Northern Mariana Islands House of Representatives,20,Northern Mariana Islands House of Representatives
+Q7058704,MNP,n-mariana-is/northern-mariana-islands,Q1565625,Northern Mariana Islands House of Representatives,20,Northern Mariana Islands House of Representatives
+Q6518225,UZB,,Q1583318,Legislative Chamber of Uzbekistan,150,Legislative Chamber of Uzbekistan
+Q871363,AUT,,Q4817650,National Council of Austria,183,National Council (Austria)
+Q827805,BLZ,,Q1965042,House of Representatives,31,House of Representatives (Belize)
+Q818704,OMN,,Q5176472,Consultative Assembly of Oman,90,Consultative Assembly (Oman)
+Q720003,BDI,,Q7138930,National Assembly,121,National Assembly (Burundi)
+Q715641,RUS,,Q457869,State Duma,450,State Duma
+Q678545,PHL,,Q1542985,House of Representatives of the Philippines,292,House of Representatives of the Philippines
+Q676078,CHE,,Q684719,National Council of Switzerland,200,National Council (Switzerland)
+Q665693,NGA,,Q2635070,House of Representatives of Nigeria,360,House of Representatives (Nigeria)
+Q659587,JPN,,Q202384,House of Representatives,475,House of Representatives (Japan)
+Q651981,IRL,,Q129821,Dáil Éireann,174,Dáil Éireann
+Q633590,DZA,,Q3142337,People's National Assembly,407,People's National Assembly
+Q570619,BRB,,Q2565909,House of Assembly of Barbados,30,House of Assembly of Barbados
+Q320304,JOR,,Q820697,House of Representatives of Jordan,150,House of Representatives (Jordan)
+Q320273,CAN,canada/nova-scotia,Q3246027,Nova Scotia House of Assembly,51,Nova Scotia House of Assembly
+Q320268,BIH,,Q2604031,House of Representatives of Bosnia and Herzegovina,42,House of Representatives of Bosnia and Herzegovina
+Q258843,CAN,canada/newfoundland-and-labrador,Q15150636,Newfoundland and Labrador House of Assembly,40,Newfoundland and Labrador House of Assembly
+Q240823,ZAF,,Q2185780,National Assembly of South Africa,400,National Assembly (South Africa)
+Q230003,IND,,Q695252,Lok Sabha,545,Lok Sabha
+Q193582,FRA,,Q632552,National Assembly,577,National Assembly (France)
+Q169652,PRI,,Q3625555,House of Representatives of Puerto Rico,51,House of Representatives of Puerto Rico
+Q169652,PRI,puerto-rico/puerto-rico,Q3625555,House of Representatives of Puerto Rico,51,House of Representatives of Puerto Rico
+Q98964,POL,,Q2102558,Sejm of the Republic of Poland,460,Sejm
+Q1334620,BHR,,Q3242616,Consultative Council of Bahrain,40,Consultative Council (Bahrain)
+Q1207095,MYS,,Q2986392,Dewan Negara,70,Dewan Negara
+Q967407,ETH,,Q257899,House of Federation,112,House of Federation
+Q953810,SVN,,Q1288169,National Council of Slovenia,40,National Council (Slovenia)
+Q3244676,,australia/new-south-wales,Q3365521,New South Wales Legislative Council,42,New South Wales Legislative Council
+Q2994121,,australia/tasmania,Q3365524,Tasmanian Legislative Council,15,Tasmanian Legislative Council
+Q2994118,,australia/western-australia,Q3365500,Western Australian Legislative Council,36,Western Australian Legislative Council
+Q2993867,SDN,,Q4902948,Council of States,32,Council of States of Sudan
+Q2948392,BOL,,Q1968458,Senate of Bolivia,36,Chamber of Senators (Bolivia)
+Q11005,GBR,,Q11010,House of Commons,650,House of Commons of the United Kingdom
+Q383590,CAN,,Q475689,House of Commons,343,House of Commons of Canada
+Q1809086,CAN,canada/ontario,Q6593026,Legislative Assembly of Ontario,124,Legislative Assembly of Ontario
+Q9390785,,australia/northern-territory,Q7138951,Northern Territory Legislative Assembly,25,Northern Territory Legislative Assembly
+Q1127591,IRL,,Q129821,Seanad Éireann,60,Seanad Éireann
+Q2867078,CAN,canada/northwest-territories,Q15302873,Legislative Assembly of the Northwest Territories,19,Legislative Assembly of the Northwest Territories
+Q1812866,CAN,canada/alberta,Q6560903,Legislative Assembly of Alberta,87,Legislative Assembly of Alberta
+Q1537375,CAN,canada/saskatchewan,Q6596422,Legislative Assembly of Saskatchewan,61,Legislative Assembly of Saskatchewan
+Q1492249,CAN,canada/quebec,Q15150880,National Assembly of Quebec,125,National Assembly of Quebec
+Q1418426,PHL,,Q1542985,Senate of the Philippines,24,Senate of the Philippines
+Q11701,USA,,Q11268,United States House of Representatives,435,United States House of Representatives
+Q6518214,,australia/queensland,Q3365548,Legislative Assembly of Queensland,93,Legislative Assembly of Queensland
+Q908022,CAN,canada/yukon,Q17108558,Yukon Legislative Assembly,19,Yukon Legislative Assembly
+Q783401,AUS,,Q382118,Australian House of Representatives,151,Australian House of Representatives
+Q783330,AUS,,Q382118,Australian Senate,76,Australian Senate
+Q548911,JPN,,Q202384,House of Councillors to the Emperor,248,Senate (Japan)
+Q320303,URY,,Q1501988,Chamber of Representatives,99,Chamber of Representatives of Uruguay
+Q66096,USA,,Q11268,United States Senate,100,United States Senate
+Q841180,CAN,,Q475689,Senate of Canada,105,Senate of Canada
+Q679687,IMN,,Q827704,Legislative Council of the Isle of Man,11,Legislative Council of the Isle of Man
+Q11007,GBR,,Q11010,House of Lords,808,House of Lords
+Q2718576,MAR,,Q3004884,House of Councillors of Morocco,120,House of Councillors (Morocco)
+Q2718547,BIH,,Q2604031,House of Peoples of Bosnia and Herzegovina,15,House of Peoples of Bosnia and Herzegovina
+Q2668484,BTN,,Q2080399,National Council of Bhutan,25,National Council (Bhutan)
+Q2119509,DZA,,Q3142337,Council of the Nation,144,Council of the Nation
+Q2119484,ZAF,,Q2185780,National Council of Provinces,90,National Council of Provinces
+Q2118693,IDN,,Q818711,Regional Representative Council,152,Regional Representative Council
+Q2117607,OMN,,Q5176472,state council of Oman,86,Council of State (Oman)
+Q1969272,NAM,,Q4167580,National Council of Namibia,42,National Council (Namibia)
+Q1512428,BLR,,Q1798607,Council of the Republic of Belarus,64,Council of the Republic (Belarus)
+Q1454821,SSD,,Q5018721,Council of States,100,Council of States (South Sudan)
+Q25683566,SOM,,Q176597,Upper House of Somalia,54,Senate of Somalia
+Q19921131,TJK,,Q2011165,National Assembly of Tajikistan,33,National Assembly of Tajikistan
+Q12239042,YEM,,Q34665845,Shura Council,111,Shura Council (Yemen)
+Q9302011,,australia/victoria,Q1848835,Victorian Legislative Council,40,Victorian Legislative Council
+Q8349995,NPL,,Q3896143,National Assembly,59,National Assembly (Nepal)
+Q7566128,,australia/south-australia,Q3054418,South Australian Legislative Council,22,South Australian Legislative Council
+Q7058709,MNP,,Q1565625,Northern Mariana Islands Senate,10,Northern Mariana Islands Senate
+Q7058709,MNP,n-mariana-is/northern-mariana-islands,Q1565625,Northern Mariana Islands Senate,10,Northern Mariana Islands Senate
+Q609037,CHE,,Q684719,Council of States of Switzerland,46,Council of States (Switzerland)
+Q557150,AUT,,Q4817650,Federal Council of Austria,60,Federal Council (Austria)
+Q244730,IND,,Q695252,Rajya Sabha,233,Rajya Sabha
+Q186473,RUS,,Q457869,Federation Council,200,Federation Council (Russia)
+Q1137584,LBR,,Q4345418,House of Representatives,73,House of Representatives of Liberia
+Q1571756,COL,,Q1284236,Chamber of Representatives of Colombia,172,Chamber of Representatives of Colombia
+Q64744338,EGY,,Q2584535,Senate of Egypt,300,Senate (Egypt)
+Q6124883,ARG,argentina/buenos-aires,Q40316062,Senate of Buenos Aires Province,46,Buenos Aires Province Senate
+Q5795791,ARG,argentina/entre-rios,Q41144060,Senate of Entre Ríos,17,
+Q4744880,ASM,,Q1267503,American Samoa Senate,18,American Samoa Senate
+Q3955193,PRI,,Q3625555,Senate of Puerto Rico,27,Senate of Puerto Rico
+Q3955193,PRI,puerto-rico/puerto-rico,Q3625555,Senate of Puerto Rico,27,Senate of Puerto Rico
+Q3510889,COD,,Q282928,Senate of the Democratic Republic of the Congo,109,Senate (Democratic Republic of the Congo)
+Q3510869,TTO,,Q7138943,Senate of Trinidad and Tobago,31,Senate (Trinidad and Tobago)
+Q3510861,RWA,,Q4162795,Senate of Rwanda,26,Senate (Rwanda)
+Q3510854,JOR,,Q820697,Senate of Jordan,65,Senate (Jordan)
+Q3510853,MDG,,Q3919000,Senate,18,Senate (Madagascar)
+Q3510846,GAB,,Q4345413,Senate,102,Senate of Gabon
+Q3510840,COG,,Q4345421,Senate,52,Senate (Republic of the Congo)
+Q3510838,BDI,,Q7138930,Senate,39,Senate (Burundi)
+Q3510836,CMR,,Q25039919,Senate of Cameroon,100,Senate (Cameroon)
+Q3510833,BHS,,Q1572486,Senate of the Bahamas,16,Senate of the Bahamas
+Q1355042,BEL,,Q1137059,Senate of Belgium,60,Senate (Belgium)
+Q1316045,KAZ,,Q2995409,Senate of Kazakhstan,47,Senate of Kazakhstan
+Q1254591,GRD,,Q1253647,Senate of Grenada,13,Senate (Grenada)
+Q1254104,ATG,,Q1280751,Senate of Antigua and Barbuda,17,Senate (Antigua and Barbuda)
+Q1149788,URY,,Q1501988,Chamber of senators,30,Senate of Uruguay
+Q1142439,LBR,,Q4345418,Senate of Liberia,30,Senate of Liberia
+Q969494,PLW,,Q1384462,Senate of Palau,9,Senate of Palau
+Q927191,LSO,,Q4345419,Senate of Lesotho,33,Senate of Lesotho
+Q3055339,KHM,,Q1320418,Senate of Cambodia,61,Senate (Cambodia)
+Q2993611,NGA,,Q2635070,Senate of Nigeria,109,Senate of Nigeria
+Q2571392,PAK,,Q2665089,Senate of Pakistan,104,Senate of Pakistan
+Q2398781,COL,,Q1284236,Senate of Colombia,102,Senate of Colombia
+Q2119458,CHL,,Q1968468,Senate of Chile,50,Senate of Chile
+Q2119413,BRA,,Q949699,Federal Senate of Brazil,81,Federal Senate (Brazil)
+Q2119404,PRY,,Q2511660,Senate of Paraguay,45,Senate of Paraguay
+Q2119267,DOM,,Q595411,Senate of the Dominican Republic,32,Senate of the Dominican Republic
+Q2118303,ARG,,Q646190,Argentine Senate,72,Argentine Senate
+Q2117771,SWZ,,Q7138942,Senate of Eswatini,30,Senate of Eswatini
+Q2117711,UZB,,Q1583318,Senate of Uzbekistan,100,Senate of Uzbekistan
+Q1563075,LCA,,Q1563736,Senate of Saint Lucia,11,Senate of Saint Lucia
+Q1466018,ROU,,Q1813360,Senate,155,Senate of Romania
+Q41143516,ARG,argentina/san-luis,Q41143529,Senate of San Luis,9,
+Q41142948,ARG,argentina/mendoza,Q41142964,Senate of Mendoza,38,
+Q41142147,ARG,argentina/catamarca,Q41142156,Senate of Catamarca,16,
+Q40323796,ARG,argentina/corrientes,Q40323800,Senate of Corrientes,15,
+Q40323546,ARG,argentina/salta,Q40323553,Senate of Salta,23,Senate of Salta
+Q27897650,JAM,,Q122635,Senate of Jamaica,21,
+Q27881014,CIV,,Q27881072,Senate,99,Senate of Ivory Coast
+Q16934005,BMU,,Q7138929,Senate of Bermuda,11,Senate of Bermuda
+Q16554674,ARG,argentina/santa-fe,Q5972575,Senate of Santa Fe,19,Senate of Santa Fe
+Q14759322,GNQ,,Q16878152,Senate of Equatorial Guinea,70,Senate (Equatorial Guinea)
+Q6978858,KEN,,Q14468380,Senate of Kenya,67,Senate of Kenya
+Q855343,ESP,,Q219692,Senate of Spain,266,Senate of Spain
+Q827490,BLZ,,Q1965042,Senate of Belize,13,Senate (Belize)
+Q659211,ZWE,,Q2083905,Senate of Zimbabwe,40,Senate of Zimbabwe
+Q633872,ITA,,Q1117578,Senate of the Republic,205,Senate of the Republic (Italy)
+Q586461,BRB,,Q2565909,Senate of Barbados,21,Senate of Barbados
+Q389423,CZE,,Q2347172,Senate of the Czech Republic,81,Senate of the Czech Republic
+Q264113,MEX,,Q1484825,Senate of the Republic,128,Senate of the Republic (Mexico)
+Q215987,FRA,,Q632552,Senate,348,Senate (France)
+Q98975,POL,,Q2102558,Senate of Poland,100,Senate of Poland
+Q2867082,CAN,canada/nunavut,Q15212694,Legislative Assembly of Nunavut,22,Legislative Assembly of Nunavut
+Q458185,ITA,italy/trentino-south-tyrol,Q3687389,Landtag of South Tyrol,35,Landtag of South Tyrol
+Q17152221,IND,india/telangana,Q17107628,Telangana Legislative Council,40,Telangana Legislative Council
+Q15717249,IND,india/karnataka,Q6372863,Karnataka Legislative Council,75,Karnataka Legislative Council
+Q7903335,IND,india/uttar-pradesh,Q7903336,Uttar Pradesh Legislative Council,100,Uttar Pradesh Legislative Council
+Q6733344,IND,india/maharashtra,Q52188366,Maharashtra Legislative Council,78,Maharashtra Legislative Council
+Q4907067,IND,india/bihar,Q4907068,Bihar Legislative Council,75,Bihar Legislative Council
+Q4754369,IND,india/andhra-pradesh,Q3764174,Andhra Pradesh Legislative Council,58,Andhra Pradesh Legislative Council
+Q17152219,IND,india/telangana,Q17107628,Telangana Legislative Assembly,120,Telangana Legislative Assembly
+Q7903333,IND,india/uttar-pradesh,Q7903336,Uttar Pradesh Legislative Assembly,404,Uttar Pradesh Legislative Assembly
+Q6733343,IND,india/maharashtra,Q52188366,Maharashtra Legislative Assembly,289,Maharashtra Legislative Assembly
+Q6372858,IND,india/karnataka,Q6372863,Karnataka Legislative Assembly,225,Karnataka Legislative Assembly
+Q4907056,IND,india/bihar,Q4907068,Bihar Legislative Assembly,243,Bihar Legislative Assembly
+Q3687325,ITA,italy/trentino-south-tyrol,Q3687389,Provincial Council of Trentino,35,
+Q1494581,USA,united-states-of-america/louisiana,Q6689290,Louisiana House of Representatives,105,Louisiana House of Representatives
+Q1494564,USA,united-states-of-america/georgia,Q3103766,Georgia House of Representatives,180,Georgia House of Representatives
+Q1494548,USA,united-states-of-america/colorado,Q5148810,Colorado House of Representatives,65,Colorado House of Representatives
+Q1494467,USA,united-states-of-america/connecticut,Q5161534,Connecticut House of Representatives,151,Connecticut House of Representatives
+Q1444543,USA,united-states-of-america/arizona,Q2747172,Arizona House of Representatives,60,Arizona House of Representatives
+Q1392642,USA,united-states-of-america/indiana,Q3634937,Indiana House of Representatives,100,Indiana House of Representatives
+Q1299487,USA,united-states-of-america/south-carolina,Q980284,South Carolina House of Representatives,124,South Carolina House of Representatives
+Q910613,USA,united-states-of-america/utah,Q2384499,Utah House of Representatives,75,Utah House of Representatives
+Q910543,USA,united-states-of-america/vermont,Q2867076,Vermont House of Representatives,150,Vermont House of Representatives
+Q909676,USA,united-states-of-america/hawaii,Q5684411,Hawaii House of Representatives,51,Hawaii House of Representatives
+Q909041,USA,united-states-of-america/alabama,Q3270265,Alabama House of Representatives,105,Alabama House of Representatives
+Q909020,USA,united-states-of-america/florida,Q3556484,Florida House of Representatives,120,Florida House of Representatives
+Q909004,USA,united-states-of-america/maine,Q2749841,Maine House of Representatives,151,Maine House of Representatives
+Q908954,USA,united-states-of-america/illinois,Q1437547,Illinois House of Representatives,118,Illinois House of Representatives
+Q827550,USA,united-states-of-america/texas,Q2653964,Texas House of Representatives,150,Texas House of Representatives
+Q720324,USA,united-states-of-america/alaska,Q719894,Alaska House of Representatives,40,Alaska House of Representatives
+Q521389,USA,united-states-of-america/north-carolina,Q10566263,North Carolina House of Representatives,120,North Carolina House of Representatives
+Q277228,USA,united-states-of-america/ohio,Q7080820,Ohio House of Representatives,99,Ohio House of Representatives
+Q2145221,USA,united-states-of-america/oregon,Q7101257,Oregon House of Representatives,60,Oregon House of Representatives
+Q2145213,USA,united-states-of-america/tennessee,Q7700086,Tennessee House of Representatives,99,Tennessee House of Representatives
+Q1802872,USA,united-states-of-america/washington,Q7972258,Washington House of Representatives,98,Washington House of Representatives
+Q1734753,USA,united-states-of-america/rhode-island,Q7320919,Rhode Island House of Representatives,75,Rhode Island House of Representatives
+Q1494716,USA,united-states-of-america/kentucky,Q6392265,Kentucky House of Representatives,100,Kentucky House of Representatives
+Q1494590,USA,united-states-of-america/michigan,Q3270273,Michigan House of Representatives,110,Michigan House of Representatives
+Q6984747,USA,united-states-of-america/nebraska,Q996610,Nebraska House of Representatives,,Nebraska House of Representatives
+Q177147,USA,united-states-of-america/arkansas,Q2747168,Arkansas Senate,35,Arkansas Senate
+Q1494573,USA,united-states-of-america/alabama,Q3270265,Alabama Senate,35,Alabama Senate
+Q1494569,USA,united-states-of-america/georgia,Q3103766,Georgia State Senate,56,Georgia State Senate
+Q1494554,USA,united-states-of-america/connecticut,Q5161534,Connecticut Senate,36,Connecticut State Senate
+Q1494541,USA,united-states-of-america/louisiana,Q6689290,Louisiana State Senate,39,Louisiana State Senate
+Q1494534,USA,united-states-of-america/nevada,Q3555619,Nevada Senate,21,Nevada Senate
+Q1494453,USA,united-states-of-america/colorado,Q5148810,Colorado Senate,35,Colorado Senate
+Q1480298,USA,united-states-of-america/new-jersey,Q2867079,New Jersey Senate,40,New Jersey Senate
+Q1424259,USA,united-states-of-america/rhode-island,Q7320919,Rhode Island Senate,38,Rhode Island Senate
+Q1412814,USA,united-states-of-america/wisconsin,Q3270274,Wisconsin State Senate,33,Wisconsin State Senate
+Q1408760,USA,united-states-of-america/indiana,Q3634937,Indiana Senate,50,Indiana Senate
+Q1392427,USA,united-states-of-america/hawaii,Q5684411,Hawaii Senate,25,Hawaii Senate
+Q951681,USA,united-states-of-america/missouri,Q6879566,Missouri Senate,34,Missouri Senate
+Q917311,USA,united-states-of-america/minnesota,Q1117432,Minnesota Senate,67,Minnesota Senate
+Q910898,USA,united-states-of-america/oklahoma,Q583952,Oklahoma Senate,48,Oklahoma Senate
+Q909666,USA,united-states-of-america/wyoming,Q3270276,Wyoming Senate,31,Wyoming Senate
+Q909050,USA,united-states-of-america/maine,Q2749841,Maine Senate,35,Maine Senate
+Q909035,USA,united-states-of-america/delaware,Q5253303,Delaware State Senate,21,Delaware Senate
+Q598101,USA,united-states-of-america/utah,Q2384499,Utah State Senate,29,Utah State Senate
+Q515426,USA,united-states-of-america/texas,Q2653964,Texas Senate,31,Texas Senate
+Q429756,USA,united-states-of-america/south-dakota,Q2304409,South Dakota Senate,35,South Dakota Senate
+Q250949,USA,united-states-of-america/arizona,Q2747172,Arizona Senate,30,Arizona Senate
+Q123199,USA,united-states-of-america/florida,Q3556484,Florida Senate,40,Florida Senate
+Q2269889,USA,united-states-of-america/washington,Q7972258,Washington State Senate,49,Washington State Senate
+Q2269878,USA,united-states-of-america/west-virginia,Q7986861,West Virginia Senate,34,West Virginia Senate
+Q2269875,USA,united-states-of-america/south-carolina,Q980284,South Carolina Senate,46,South Carolina Senate
+Q2269864,USA,united-states-of-america/pennsylvania,Q2867077,Pennsylvania State Senate,50,Pennsylvania State Senate
+Q2269863,USA,united-states-of-america/north-carolina,Q10566263,North Carolina Senate,50,North Carolina Senate
+Q2269859,USA,united-states-of-america/oregon,Q7101257,Oregon State Senate,30,Oregon State Senate
+Q2269857,USA,united-states-of-america/north-dakota,Q7055026,North Dakota Senate,47,North Dakota Senate
+Q2269844,USA,united-states-of-america/new-mexico,Q7010195,New Mexico Senate,42,New Mexico Senate
+Q1772204,USA,united-states-of-america/tennessee,Q7700086,Tennessee Senate,33,Tennessee Senate
+Q1747983,USA,united-states-of-america/virginia,Q530970,Senate of Virginia,40,Virginia Senate
+Q1722258,USA,united-states-of-america/new-york,Q3270268,New York State Senate,63,New York State Senate
+Q1656259,USA,united-states-of-america/ohio,Q7080820,Ohio Senate,33,Ohio Senate
+Q1539609,USA,united-states-of-america/vermont,Q2867076,Vermont Senate,30,Vermont Senate
+Q1526814,USA,united-states-of-america/california,Q3084210,California State Senate,40,California State Senate
+Q1525955,USA,united-states-of-america/kansas,Q3270271,Kansas Senate,40,Kansas Senate
+Q1525928,USA,united-states-of-america/mississippi,Q6879217,Mississippi State Senate,52,Mississippi State Senate
+Q1525558,USA,united-states-of-america/montana,Q3567567,Montana Senate,50,Montana Senate
+Q1517713,USA,united-states-of-america/illinois,Q1437547,Illinois Senate,59,Illinois Senate
+Q1494879,USA,united-states-of-america/kentucky,Q6392265,Kentucky Senate,38,Kentucky Senate
+Q1494863,USA,united-states-of-america/idaho,Q4256974,Idaho Senate,35,Idaho Senate
+Q1494790,USA,united-states-of-america/iowa,Q6064424,Iowa Senate,50,Iowa Senate
+Q1494665,USA,united-states-of-america/massachusetts,Q1453540,Massachusetts Senate,40,Massachusetts Senate
+Q1494656,USA,united-states-of-america/maryland,Q10566065,Maryland Senate,47,Maryland Senate
+Q1494600,USA,united-states-of-america/michigan,Q3270273,Michigan Senate,38,Michigan Senate
+Q144574,USA,united-states-of-america/alaska,Q719894,Alaska Senate,20,Alaska State Senate
+Q1525949,USA,united-states-of-america/new-hampshire,Q7008154,New Hampshire Senate,24,New Hampshire Senate
+Q1494527,USA,united-states-of-america/nevada,Q3555619,Nevada State Assembly,42,Nevada State Assembly
+Q1494460,USA,united-states-of-america/massachusetts,Q1453540,Massachusetts House of Representatives,160,Massachusetts House of Representatives
+Q1470702,USA,united-states-of-america/new-york,Q3270268,New York State Assembly,150,New York State Assembly
+Q1455914,USA,united-states-of-america/new-jersey,Q2867079,New Jersey General Assembly,80,New Jersey General Assembly
+Q1257237,USA,united-states-of-america/montana,Q3567567,Montana House of Representatives,100,Montana House of Representatives
+Q1236853,USA,united-states-of-america/wisconsin,Q3270274,Wisconsin State Assembly,99,Wisconsin State Assembly
+Q1026858,USA,united-states-of-america/california,Q3084210,California State Assembly,80,California State Assembly
+Q910886,USA,united-states-of-america/oklahoma,Q583952,Oklahoma House of Representatives,101,Oklahoma House of Representatives
+Q909027,USA,united-states-of-america/arkansas,Q2747168,Arkansas House of Representatives,100,Arkansas House of Representatives
+Q782050,USA,united-states-of-america/minnesota,Q1117432,Minnesota House of Representatives,134,Minnesota House of Representatives
+Q526732,USA,united-states-of-america/south-dakota,Q2304409,South Dakota House of Representatives,70,South Dakota House of Representatives
+Q473124,USA,united-states-of-america/delaware,Q5253303,Delaware House of Representatives,41,Delaware House of Representatives
+Q320278,USA,united-states-of-america/west-virginia,Q7986861,West Virginia House of Delegates,100,West Virginia House of Delegates
+Q320275,USA,united-states-of-america/virginia,Q530970,Virginia House of Delegates,100,Virginia House of Delegates
+Q165752,USA,united-states-of-america/maryland,Q10566065,Maryland House of Delegates,141,Maryland House of Delegates
+Q2145228,USA,united-states-of-america/wyoming,Q3270276,Wyoming House of Representatives,60,Wyoming House of Representatives
+Q2145217,USA,united-states-of-america/pennsylvania,Q2867077,Pennsylvania House of Representatives,203,Pennsylvania House of Representatives
+Q1746909,USA,united-states-of-america/new-mexico,Q7010195,New Mexico House of Representatives,70,New Mexico House of Representatives
+Q1536328,USA,united-states-of-america/north-dakota,Q7055026,North Dakota House of Representatives,94,North Dakota House of Representatives
+Q1525939,USA,united-states-of-america/new-hampshire,Q7008154,New Hampshire House of Representatives,400,New Hampshire House of Representatives
+Q1525933,USA,united-states-of-america/mississippi,Q6879217,Mississippi House of Representatives,122,Mississippi House of Representatives
+Q1525922,USA,united-states-of-america/missouri,Q6879566,Missouri House of Representatives,163,Missouri House of Representatives
+Q1525545,USA,united-states-of-america/kansas,Q3270271,Kansas House of Representatives,125,Kansas House of Representatives
+Q1494870,USA,united-states-of-america/idaho,Q4256974,Idaho House of Representatives,70,Idaho House of Representatives
+Q1494785,USA,united-states-of-america/iowa,Q6064424,Iowa House of Representatives,100,Iowa House of Representatives

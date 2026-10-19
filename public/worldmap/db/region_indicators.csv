@@ -1,0 +1,8 @@
+code,name,topic,wikidata_property
+population,Population,demographics,P1082
+life_expectancy,Life expectancy,demographics,P2250
+hdi,Human Development Index,demographics,P1081
+gdp,GDP (nominal),economy,P2131
+gdp_per_capita,GDP per capita (nominal),economy,P2132
+unemployment,Unemployment rate,economy,P1198
+median_income,Median household income,economy,P3529

@@ -2,6 +2,14 @@
 import { useEffect, useMemo, useState } from 'react';
 import { CountryWiki, WikiLink, fetchCountryWiki, searchTitle, titleFromWikidata } from '../lib/wikipedia';
 import type { Subregion } from './WorldMap';
+import { CountryData, RegionData, loadCountryData, loadRegionData } from '../lib/db';
+import {
+  DemographicsTab, EconomyTab, GovernmentTab,
+  RegionDemographicsTab, RegionEconomyTab, RegionGovernmentTab, regionTabs,
+} from './CountryTabs';
+
+const TABS = ['Overview', 'Government', 'Economy', 'Demographics'] as const;
+export type Tab = typeof TABS[number];
 
 // Results persist across selections for the session
 const cache = new Map<string, CountryWiki>();
@@ -14,6 +22,7 @@ type Props = {
   searchHint?: string;
   displayName: string;
   subtitle?: string | null;
+  capital?: string;
   // Parents, outermost first, clickable to go back up
   crumbs?: { name: string; onClick: () => void }[];
   // Child regions to list (a country's subregions or a subregion's districts)
@@ -21,12 +30,42 @@ type Props = {
   onSelectSubregion?: (s: Subregion) => void;
   // Attribution for the district boundaries shown
   source?: { name: string; license: string; url: string };
+  // The map slug of the country being viewed (keys its database rows)
+  mapSlug?: string;
+  // Set when viewing a subregion or US county: its key in the regions table
+  regionKey?: string;
+  // Selected tab; owned by the page so it carries over when switching countries
+  tab?: Tab;
+  onTabChange?: (t: Tab) => void;
   onClose: () => void;
 };
 
 export default function CountryPanel({
-  articleTitle, wikidata, searchHint, displayName, subtitle, crumbs, subregions, onSelectSubregion, source, onClose,
+  articleTitle, wikidata, searchHint, displayName, subtitle, crumbs, subregions, onSelectSubregion, source, mapSlug, regionKey, capital, tab: tabProp, onTabChange, onClose,
 }: Props) {
+  // Country or subregion statistics; undefined while loading, null if there are none
+  const [stats, setStats] = useState<
+    { kind: 'country'; d: CountryData } | { kind: 'region'; d: RegionData } | null | undefined
+  >(undefined);
+
+  useEffect(() => {
+    if (!mapSlug) { setStats(null); return; }
+    let stale = false;
+    const load = regionKey
+      ? loadRegionData(regionKey, mapSlug).then(d => d && { kind: 'region' as const, d })
+      : loadCountryData(mapSlug).then(d => d && { kind: 'country' as const, d });
+    load
+      .then(s => { if (!stale) setStats(s); })
+      .catch(err => { console.error('Failed to load data', err); if (!stale) setStats(null); });
+    return () => { stale = true; };
+  }, [mapSlug, regionKey]);
+
+  // Tabs with something to show; Overview always
+  const available: Tab[] = !stats ? ['Overview']
+    : stats.kind === 'country' ? [...TABS]
+    : TABS.filter(t => t === 'Overview' || regionTabs(stats.d)[t]);
+  const tab = tabProp && available.includes(tabProp) ? tabProp : 'Overview';
+
   const cacheKey = wikidata ?? (searchHint ? `${displayName}|${searchHint}` : articleTitle);
   const [data, setData] = useState<CountryWiki | null>(cache.get(cacheKey) ?? null);
   const [error, setError] = useState<string | null>(null);
@@ -75,9 +114,36 @@ export default function CountryPanel({
           {(data?.summary.description || subtitle) && (
             <p className="wm-desc">{data?.summary.description ?? subtitle}</p>
           )}
+          {capital && <p className="wm-capital"><span aria-hidden>★</span> Capital: {capital}</p>}
         </div>
       </div>
 
+      {available.length > 1 && (
+        <div className="wm-tabs" role="tablist">
+          {available.map(t => (
+            <button key={t} role="tab" aria-selected={tab === t} className={tab === t ? 'wm-tab-active' : ''} onClick={() => onTabChange?.(t)}>
+              {t}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {tab !== 'Overview' && stats?.kind === 'country' && (
+        <div className="wm-tabpanel">
+          {tab === 'Government' && <GovernmentTab d={stats.d} />}
+          {tab === 'Economy' && <EconomyTab d={stats.d} />}
+          {tab === 'Demographics' && <DemographicsTab d={stats.d} />}
+        </div>
+      )}
+      {tab !== 'Overview' && stats?.kind === 'region' && (
+        <div className="wm-tabpanel">
+          {tab === 'Government' && <RegionGovernmentTab d={stats.d} />}
+          {tab === 'Economy' && <RegionEconomyTab d={stats.d} />}
+          {tab === 'Demographics' && <RegionDemographicsTab d={stats.d} />}
+        </div>
+      )}
+
+      {tab === 'Overview' && <>
       {error && <p className="wm-error">{error}</p>}
       {!data && !error && <p className="wm-status">Loading Wikipedia articles…</p>}
 
@@ -124,6 +190,8 @@ export default function CountryPanel({
           )}
         </>
       )}
+
+      </>}
 
       {source && (
         <p className="wm-source">

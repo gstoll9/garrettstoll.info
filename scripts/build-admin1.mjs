@@ -12,8 +12,10 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { createRequire } from 'node:module';
 import mapshaper from 'mapshaper';
 import { countrySlug, findContaining, loadCountries } from './worldmap-geo.mjs';
+const require = createRequire(import.meta.url);
 const OUT_DIR = path.resolve('public/worldmap/admin1');
 
 // Natural Earth's admin-1 for these countries is a lower level (French départements,
@@ -121,6 +123,9 @@ for (const file of fs.readdirSync(OUT_DIR)) {
   if (renamed !== file) fs.renameSync(path.join(OUT_DIR, file), path.join(OUT_DIR, renamed));
 }
 fs.rmSync(tmp, { recursive: true, force: true });
+
+// The map loads country shapes from the same file the subregions were assigned against
+fs.copyFileSync(require.resolve('world-atlas/countries-50m.json'), path.resolve('public/worldmap/countries-50m.json'));
 
 const files = fs.readdirSync(OUT_DIR);
 const bytes = files.reduce((s, f) => s + fs.statSync(path.join(OUT_DIR, f)).size, 0);

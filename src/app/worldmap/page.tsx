@@ -4,8 +4,11 @@ import { feature } from 'topojson-client';
 import type { Topology, GeometryCollection } from 'topojson-specification';
 import StandardLayout from '@/layouts/standardLayout';
 import WorldMap, { Country, Insets, Subregion, SubregionProps } from './components/WorldMap';
-import CountryPanel from './components/CountryPanel';
+import CountryPanel, { Tab } from './components/CountryPanel';
 import { countrySlug, wikiTitleFor } from './lib/countryNames';
+import { Capital, iso3ForSlug, loadCapitals } from './lib/db';
+import { Level, METRICS, NO_DATA, ViewData, buildScale, loadViewData } from './lib/choropleth';
+import ColorByControl from './components/ColorByControl';
 import './styles/worldmap.css';
 
 const PANEL_WIDTH = 420;
@@ -55,6 +58,7 @@ export default function WorldMapPage() {
   const [selectedDistrict, setSelectedDistrict] = useState<Subregion | null>(null);
   const [admin2, setAdmin2] = useState<Admin2Meta | null>(null);
   const [query, setQuery] = useState('');
+  const [tab, setTab] = useState<Tab>('Overview');
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -123,6 +127,57 @@ export default function WorldMapPage() {
   }), [panelOpen, isMobile]);
 
   const countryTitle = selected ? wikiTitleFor(selected.name) : '';
+
+  // ── Map colouring: the deepest level currently drawn is "the view" ──────────
+  const [metricId, setMetricId] = useState<string | null>(null);
+  const level: Level = districts.length ? 2 : subregions.length ? 1 : 0;
+  const [viewData, setViewData] = useState<ViewData | null>(null);
+  useEffect(() => {
+    setViewData(null);
+    let stale = false;
+    loadViewData(level, slug ?? undefined)
+      .then(d => { if (!stale) setViewData(d); })
+      .catch(err => console.error('Failed to load map colouring data', err));
+    return () => { stale = true; };
+  }, [level, slug]);
+  const metric = METRICS.find(m => m.id === metricId) ?? null;
+  const scale = useMemo(
+    () => (metric && viewData ? buildScale(metric, viewData.get(metric.id)!) : null),
+    [metric, viewData],
+  );
+  // Fill colour and tooltip text per shape of the current view
+  const choropleth = useMemo(() => {
+    if (!metric || !scale || !viewData) return null;
+    const data = viewData.get(metric.id)!;
+    const shapes: [string, string | null | undefined][] = level === 0
+      ? countries.map(c => [c.key, countrySlug(c.name)])
+      : (level === 1 ? subregions : districts).map(s => [s.key, level === 1 ? s.id : s.wikidata]);
+    const fills = new Map<string, string>();
+    const labels = new Map<string, string>();
+    for (const [key, dataKey] of shapes) {
+      const d = dataKey ? data.get(dataKey) : undefined;
+      fills.set(key, d ? scale.color(d) : NO_DATA);
+      labels.set(key, d ? scale.describe(d) : 'No data');
+    }
+    return { level, fills, labels };
+  }, [metric, scale, viewData, level, countries, subregions, districts]);
+
+  // Capital(s) of the most specific selection: district (US counties), subregion or country
+  const [capitals, setCapitals] = useState<Capital[]>([]);
+  useEffect(() => {
+    setCapitals([]);
+    if (!slug) return;
+    let stale = false;
+    (async () => {
+      const key = selectedDistrict ? selectedDistrict.wikidata
+        : selectedSub ? `${slug}/${selectedSub.id}`
+        : await iso3ForSlug(slug);
+      const list = key ? (await loadCapitals()).get(key) ?? [] : [];
+      if (!stale) setCapitals(list);
+    })().catch(err => console.error('Failed to load capitals', err));
+    return () => { stale = true; };
+  }, [slug, selectedSub, selectedDistrict]);
+  const capitalNames = capitals.length ? capitals.map(c => c.name).join(', ') : undefined;
   const districtSource = slug && districts.length ? admin2?.sources[slug] : undefined;
 
   let panel = null;
@@ -133,6 +188,12 @@ export default function WorldMapPage() {
         articleTitle={selectedDistrict.name}
         wikidata={selectedDistrict.wikidata}
         searchHint={`${selectedSub.name} ${countryTitle}`}
+        capital={capitalNames}
+        // Only US counties have region data; other districts show just the overview
+        mapSlug={selectedDistrict.wikidata ? slug! : undefined}
+        regionKey={selectedDistrict.wikidata ?? undefined}
+        tab={tab}
+        onTabChange={setTab}
         displayName={selectedDistrict.name}
         subtitle={selectedDistrict.type}
         crumbs={[
@@ -152,6 +213,11 @@ export default function WorldMapPage() {
         displayName={selectedSub.name}
         subtitle={selectedSub.type}
         crumbs={[{ name: countryTitle, onClick: () => selectSub(null) }]}
+        capital={capitalNames}
+        mapSlug={slug!}
+        regionKey={`${slug}/${selectedSub.id}`}
+        tab={tab}
+        onTabChange={setTab}
         subregions={districts}
         onSelectSubregion={setSelectedDistrict}
         source={districtSource}
@@ -164,6 +230,10 @@ export default function WorldMapPage() {
         key={selected.key}
         articleTitle={countryTitle}
         displayName={selected.name}
+        mapSlug={slug!}
+        capital={capitalNames}
+        tab={tab}
+        onTabChange={setTab}
         subregions={subregions}
         onSelectSubregion={selectSub}
         onClose={() => select(null)}
@@ -182,6 +252,8 @@ export default function WorldMapPage() {
         districts={districts}
         selectedDistrictKey={selectedDistrict?.key ?? null}
         onSelectDistrict={setSelectedDistrict}
+        capitals={capitals}
+        choropleth={choropleth}
         onLoad={setCountries}
         insets={insets}
       />
@@ -206,6 +278,15 @@ export default function WorldMapPage() {
       </div>
 
       {panel}
+
+      <ColorByControl
+        level={level}
+        data={viewData}
+        metricId={metricId}
+        onChange={setMetricId}
+        scale={scale}
+        style={isMobile ? undefined : { right: insets.right + 12 }}
+      />
 
       <div className="wm-credits" style={{ right: insets.right + 8, bottom: insets.bottom + 6 }}>
         Map data: <a href="https://www.naturalearthdata.com" target="_blank" rel="noreferrer">Natural Earth</a>,{' '}
