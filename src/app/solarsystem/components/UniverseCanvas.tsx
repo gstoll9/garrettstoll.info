@@ -63,11 +63,15 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
   const [showAtmosphere, setShowAtmosphere] = useState(true);
   const [showCrust, setShowCrust] = useState(true);
   const [hoveredLayer, setHoveredLayer] = useState<HoveredLayer>(null);
+  // A layer clicked in the cross-section panel stays selected (shown in the panel and
+  // highlighted in 3D) whenever nothing is being hovered.
+  const [selectedLayer, setSelectedLayer] = useState<HoveredLayer>(null);
   const orbitControlsRef = useRef<OrbitControlsImpl>(null);
 
   // A layer hovered on one planet shouldn't stay "hovered" once the focus target changes.
   useEffect(() => {
     setHoveredLayer(null);
+    setSelectedLayer(null);
   }, [focus]);
 
   const toggleBody = (name: string) => {
@@ -169,6 +173,8 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
             structure={focusedPlanet.structure}
             hoveredLayer={hoveredLayer}
             setHoveredLayer={setHoveredLayer}
+            selectedLayer={selectedLayer}
+            setSelectedLayer={setSelectedLayer}
           />
           {showAtmosphere && (
             <AtmosphereCrossSection atmosphere={focusedPlanet.structure.atmosphere} />
@@ -200,7 +206,9 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
         <TimeUpdater timeScale={timeScale} />
 
         {/* background */}
-        <StarMapBackground visible={showBackground} />
+        {/* The star map is the Milky Way's sky as seen from inside it — meaningless from
+            the Local Group vantage point outside the galaxy, so that view gets black space. */}
+        <StarMapBackground visible={showBackground && focus !== 'cosmic'} />
 
 
         <CameraController
@@ -235,7 +243,7 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
             hiddenBodies={hiddenBodies}
             showAtmosphere={showAtmosphere}
             showCrust={showCrust}
-            hoveredLayer={hoveredLayer}
+            hoveredLayer={hoveredLayer ?? selectedLayer}
             setHoveredLayer={setHoveredLayer}
           />
         )}

@@ -2,9 +2,11 @@ import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
-import { orbitalPosition, OrbitProps, simulationState } from '../utils'
+import { LOCAL_GROUP_VIEW_POSITION, LOCAL_GROUP_VIEW_TARGET, orbitalPosition, OrbitProps, simulationState } from '../utils'
 
 import { getPlanetSize } from '../data/planets'
+import { moonElements } from '../data/moonElements'
+import { PLANET_EQUATORIAL_RADIUS_KM } from '../data/moonAppearance'
 import type { PlanetProps } from './Planet'
 
 type CameraControllerProps = {
@@ -25,7 +27,10 @@ type CameraControllerProps = {
 export default function CameraController({ focus, planetData, orbitControlsRef, useSimplifiedDistance, useRealisticSizes = false }: CameraControllerProps) {
   const { camera } = useThree()
   const isFollowing = useRef(false)
-  const prevFocus = useRef(focus)
+  // null until the first effect run: the canvas content can mount late (it suspends while
+  // textures load), possibly already focused on a planet — starting at `focus` would then
+  // skip that planet's initial camera jump and leave the camera wherever it was.
+  const prevFocus = useRef<string | null>(null)
   const isJumpPending = useRef(false)
 
   useEffect(() => {
@@ -36,7 +41,7 @@ export default function CameraController({ focus, planetData, orbitControlsRef, 
         orbitControlsRef.current.target.set(0, 0, 0)
 
         // Return to wide view if we were following
-        if (prevFocus.current !== 'solarsystem' && prevFocus.current !== 'Sun') {
+        if (prevFocus.current !== null && prevFocus.current !== 'solarsystem' && prevFocus.current !== 'Sun') {
             camera.position.set(0, 10, 40)
         }
         orbitControlsRef.current.update()
@@ -54,9 +59,9 @@ export default function CameraController({ focus, planetData, orbitControlsRef, 
       isFollowing.current = false
       isJumpPending.current = false
       if (orbitControlsRef.current) {
-        orbitControlsRef.current.target.set(0, 0, 0)
+        orbitControlsRef.current.target.set(...LOCAL_GROUP_VIEW_TARGET)
         if (prevFocus.current !== 'cosmic') {
-          camera.position.set(0, 40, 130)
+          camera.position.set(...LOCAL_GROUP_VIEW_POSITION)
         }
         orbitControlsRef.current.update()
       }
@@ -99,16 +104,22 @@ export default function CameraController({ focus, planetData, orbitControlsRef, 
           planetSize = useRealisticSizes ? getPlanetSize({ size: planetData.size, realDiameter: planetData.realDiameter }, true) : planetData.size;
         }
         
-        let maxRadius = planetSize;
-        if (planetData.moons && planetData.moons.length > 0) {
-          const maxMoonDist = Math.max(...planetData.moons.map(m => m.distance));
-          maxRadius = planetSize + maxMoonDist;
+        // Moons are at true distance now (Earth's Moon is 60 Earth radii out), so framing
+        // them all would shrink the planet cutaway to a dot. Fit only the inner moons that sit
+        // within ~8 planet radii; the rest are a scroll-out away, with labels and orbit lines.
+        const FRAME_LIMIT_RADII = 8;
+        let fitRadius = planetSize;
+        for (const name of planetData.moons ?? []) {
+          const el = moonElements[name];
+          const planetKm = PLANET_EQUATORIAL_RADIUS_KM[planetData.name];
+          if (!el || !planetKm) continue;
+          const apoapsisRadii = el.semimajorAxisKm * (1 + el.eccentricity) / planetKm;
+          if (apoapsisRadii <= FRAME_LIMIT_RADII) fitRadius = Math.max(fitRadius, apoapsisRadii * planetSize);
         }
 
-        // We want the zoom distance to comfortably fit maxRadius
-        // Typical fov is 60. So tan(30deg) ~ 0.577. Dist = maxRadius / 0.577 ~ maxRadius * 1.7
-        // Add some padding to envelop everything.
-        const zoomDist = Math.max(maxRadius * 2.5, planetSize * 4);
+        // fov 60 => tan(30deg) ~ 0.577, so ~1.7x the radius fits vertically; 1.6 is enough
+        // since the (wider) horizontal extent carries the orbit.
+        const zoomDist = Math.max(fitRadius * 1.6, planetSize * 6);
 
         // Fixed camera direction looking into the top-half 1/8th slice chunk
         // A lower, more direct angle helps show off the cross-section layers without being too top-down

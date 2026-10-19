@@ -1,0 +1,69 @@
+// Hand-curated look of each moon, paired with the generated data/moonElements.ts (orbits +
+// mean radii from JPL).
+//
+//   triaxialRadiiKm  Best-fit ellipsoid (a ≥ b ≥ c; a points at the planet, c along the spin
+//                    axis) from the IAU WGCCRE 2015 report (Archinal et al. 2018), given only
+//                    for the visibly non-spherical moons; others are drawn as spheres at JPL's
+//                    mean radius.
+//   geometricAlbedo  Wikipedia infobox values. Drives how bright the surface is drawn.
+//   color            Approximate true-colour tint (NOT measured data) — Io's sulphur yellow,
+//                    Titan's orange haze, Callisto's dark grey, etc.
+//   leadingColor     Iapetus only: its leading hemisphere (Cassini Regio) is coal-dark
+//                    (albedo ~0.03-0.05) while the trailing side is bright (~0.5-0.6).
+//   tidallyLocked    Same face always toward the planet — true of every moon here except
+//                    Hyperion (chaotic tumbling, Cassini; ~13 days is only an average) and
+//                    Nereid (11.6 h, Kiss et al. 2016), which just spin at those periods.
+//
+// Planet equatorial radii (IAU 2015) set the km → scene scale, so every moon's size and
+// distance are true to its own planet's scale.
+
+export type MoonAppearance = {
+  geometricAlbedo: number;
+  color: string;
+  mottle: number; // 0-1 surface variation (illustrative)
+  triaxialRadiiKm?: [number, number, number];
+  leadingColor?: string;
+  tidallyLocked: boolean;
+  rotationPeriodHours?: number; // only for non-synchronous rotators
+};
+
+export const PLANET_EQUATORIAL_RADIUS_KM: Record<string, number> = {
+  Earth: 6378.1366,
+  Mars: 3396.19,
+  Jupiter: 71492,
+  Saturn: 60268,
+  Uranus: 25559,
+  Neptune: 24764,
+};
+
+export const moonAppearance: Record<string, MoonAppearance> = {
+  Moon: { geometricAlbedo: 0.12, color: '#b9b4ab', mottle: 0.35, tidallyLocked: true },
+
+  Phobos: { geometricAlbedo: 0.071, color: '#8a7d70', mottle: 0.3, triaxialRadiiKm: [13.0, 11.4, 9.1], tidallyLocked: true },
+  Deimos: { geometricAlbedo: 0.068, color: '#9a8b7a', mottle: 0.2, triaxialRadiiKm: [7.8, 6.0, 5.1], tidallyLocked: true },
+
+  Io: { geometricAlbedo: 0.63, color: '#e8d36a', mottle: 0.45, tidallyLocked: true },
+  Europa: { geometricAlbedo: 0.67, color: '#e2d6c2', mottle: 0.25, tidallyLocked: true },
+  Ganymede: { geometricAlbedo: 0.43, color: '#a59683', mottle: 0.4, tidallyLocked: true },
+  Callisto: { geometricAlbedo: 0.22, color: '#7a6d5e', mottle: 0.35, tidallyLocked: true },
+  Amalthea: { geometricAlbedo: 0.09, color: '#a3553c', mottle: 0.25, triaxialRadiiKm: [125, 73, 64], tidallyLocked: true },
+
+  Mimas: { geometricAlbedo: 0.962, color: '#d8d6d2', mottle: 0.2, triaxialRadiiKm: [207.8, 196.7, 190.6], tidallyLocked: true },
+  Enceladus: { geometricAlbedo: 1.375, color: '#f6f8fb', mottle: 0.1, tidallyLocked: true },
+  Tethys: { geometricAlbedo: 1.229, color: '#ecebe8', mottle: 0.15, tidallyLocked: true },
+  Dione: { geometricAlbedo: 0.998, color: '#dcdad5', mottle: 0.2, tidallyLocked: true },
+  Rhea: { geometricAlbedo: 0.949, color: '#d6d2cb', mottle: 0.2, tidallyLocked: true },
+  Titan: { geometricAlbedo: 0.22, color: '#e0a64b', mottle: 0.05, tidallyLocked: true },
+  Hyperion: { geometricAlbedo: 0.3, color: '#b9a88f', mottle: 0.35, triaxialRadiiKm: [180.1, 133.0, 102.7], tidallyLocked: false, rotationPeriodHours: 13 * 24 },
+  Iapetus: { geometricAlbedo: 0.5, color: '#ddd8cc', leadingColor: '#2e241b', mottle: 0.15, tidallyLocked: true },
+
+  Miranda: { geometricAlbedo: 0.32, color: '#bdbab4', mottle: 0.35, tidallyLocked: true },
+  Ariel: { geometricAlbedo: 0.53, color: '#cfcbc4', mottle: 0.25, tidallyLocked: true },
+  Umbriel: { geometricAlbedo: 0.26, color: '#8e8a84', mottle: 0.2, tidallyLocked: true },
+  Titania: { geometricAlbedo: 0.35, color: '#c2b8ad', mottle: 0.25, tidallyLocked: true },
+  Oberon: { geometricAlbedo: 0.31, color: '#b3a597', mottle: 0.3, tidallyLocked: true },
+
+  Proteus: { geometricAlbedo: 0.096, color: '#8b857e', mottle: 0.3, triaxialRadiiKm: [218, 208, 201], tidallyLocked: true },
+  Triton: { geometricAlbedo: 0.76, color: '#e3d3cf', mottle: 0.25, tidallyLocked: true },
+  Nereid: { geometricAlbedo: 0.155, color: '#9d9890', mottle: 0.2, tidallyLocked: false, rotationPeriodHours: 11.594 },
+};

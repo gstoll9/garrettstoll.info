@@ -2,9 +2,9 @@ import { useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useRef, useState } from 'react'
 import { Edges } from '@react-three/drei'
-import { GeoMoon, JupiterMoons, Rotation_EQJ_ECL, RotateVector, Vector, StateVector } from 'astronomy-engine'
 import Label from './Label'
-import { orbitalPosition, getBodyAxis, moonOrbitalPosition, MoonOrbitProps, BodyAxis } from '../utils'
+import { orbitalPosition, getBodyAxis, BodyAxis } from '../utils'
+import Moon from './Moon'
 import { getPlanetSize } from '../data/planets'
 import { simulationState } from '../utils'
 import { PlanetStructure, LayerFacts, LayerKey } from '../data/planetStructure'
@@ -32,14 +32,7 @@ export type PlanetProps = {
     meanAnomaly: number
     orbitalPeriod: number
   }
-  moons?: {
-    name: string
-    size: number
-    distance: number // display-scale target distance; used for the exact-ephemeris moons' scale-fit (Earth's Moon, Jupiter's Galilean four)
-    orbitSpeed: number // legacy circular-orbit fallback speed; only used when neither exact ephemeris nor orbitData is available
-    color: string
-    orbitData?: MoonOrbitProps // real Kepler elements (see utils.tsx) — used instead of the circular fallback when present
-  }[]
+  moons?: string[] // names keyed into data/moonElements.ts + data/moonAppearance.ts
   orbitMode?: string
   onClick?: (name: string) => void
   useSimplifiedDistance?: boolean
@@ -50,8 +43,6 @@ export type PlanetProps = {
   hoveredLayer?: HoveredLayer // lifted state so a DOM sibling (LayerCrossSection) can share it; falls back to local state if omitted
   setHoveredLayer?: (layer: HoveredLayer) => void
 }
-
-export type MoonData = NonNullable<PlanetProps['moons']>[number];
 
 // --- Tooltip formatting helpers (exported for reuse by LayerCrossSection.tsx) -----------
 
@@ -290,7 +281,7 @@ export default function Planet({
   const hoveredLayer = hoveredLayerProp !== undefined ? hoveredLayerProp : fallbackHoveredLayer;
   const setHoveredLayer = setHoveredLayerProp ?? setFallbackHoveredLayer;
   // Real axial tilt/spin for this body (see getBodyAxis in utils.tsx); shared with
-  // Moon children below so their orbital planes can be tilted to match, and with Rings.
+  // Rings so they lie in the real equatorial plane.
   const axisRef = useRef<BodyAxis | null>(null)
 
   const textureUrl = useLoader(
@@ -532,83 +523,11 @@ export default function Planet({
 
       {/* Moons */}
       {isFocused && moons && moons.map(moon => (
-        <Moon key={moon.name} moon={moon} planetSize={planetSize} planetName={name} orbitMode={orbitMode} axisRef={axisRef} />
+        <Moon key={moon} name={moon} planetName={name} planetSize={planetSize} />
       ))}
 
       {/* Label */}
       <Label text={name} position={[0, planetSize + (isFocused ? 0.5 : 1), 0]} fontSize={isFocused ? 0.3 : 1} />
     </group>
-  )
-}
-
-function Moon({ moon, planetSize, planetName, orbitMode, axisRef }: { moon: MoonData, planetSize: number, planetName: string, orbitMode: string, axisRef: React.RefObject<BodyAxis | null> }) {
-  const ref = useRef<THREE.Mesh>(null!)
-
-  useFrame(() => {
-    if (ref.current) {
-        if (orbitMode === 'RealLive') {
-           try {
-               const now = new Date(simulationState.dateMs ?? Date.now());
-
-               let vecEqj: Vector | null = null;
-
-               if (planetName === 'Earth' && moon.name === 'Moon') {
-                   vecEqj = GeoMoon(now);
-               } else if (planetName === 'Jupiter') {
-                   const jm = JupiterMoons(now);
-                   const galileanMoons: Record<string, StateVector> = { io: jm.io, europa: jm.europa, ganymede: jm.ganymede, callisto: jm.callisto };
-                   const sv = galileanMoons[moon.name.toLowerCase()];
-                   vecEqj = sv ? new Vector(sv.x, sv.y, sv.z, sv.t) : null;
-               }
-
-               if (vecEqj) {
-                   const rotMatrix = Rotation_EQJ_ECL();
-                   const vecEcl = RotateVector(rotMatrix, vecEqj);
-
-                   const X = vecEcl.x;
-                   const Y = vecEcl.z;
-                   const Z = -vecEcl.y;
-
-                   const currentDist = Math.sqrt(X * X + Y * Y + Z * Z);
-                   if (currentDist > 0) {
-                       // Normalize the true astronomical positioning to our visual component scale
-                       const scale = (planetSize + moon.distance) / currentDist;
-                       ref.current.position.set(X * scale, Y * scale, Z * scale);
-                       return;
-                   }
-               }
-           } catch(e) {
-               console.error(e);
-           }
-
-           if (moon.orbitData) {
-               // Real Kepler elements, tilted into the parent planet's real equatorial plane
-               const [x, y, z] = moonOrbitalPosition(
-                   simulationState.elapsed,
-                   moon.orbitData,
-                   planetSize,
-                   axisRef.current?.northThree ?? null
-               );
-               ref.current.position.set(x, y, z);
-               return;
-           }
-        }
-
-        // Simple fallback for moons without real orbital elements
-        const angle = simulationState.elapsed * moon.orbitSpeed * 0.5
-        ref.current.position.set(
-            Math.cos(angle) * (planetSize + moon.distance),
-            0,
-            Math.sin(angle) * (planetSize + moon.distance)
-        )
-    }
-  })
-
-  return (
-    <mesh ref={ref}>
-      <sphereGeometry args={[moon.size, 16, 16]} />
-      <meshStandardMaterial color={moon.color} />
-      <Label text={moon.name} position={[0, moon.size + 0.5, 0]} fontSize={0.2} />
-    </mesh>
   )
 }

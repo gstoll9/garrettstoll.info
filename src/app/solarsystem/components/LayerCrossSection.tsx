@@ -7,6 +7,8 @@ type LayerCrossSectionProps = {
   structure?: PlanetStructure;
   hoveredLayer: HoveredLayer;
   setHoveredLayer: (layer: HoveredLayer) => void;
+  selectedLayer: HoveredLayer; // clicked/pinned layer, shown whenever nothing is hovered
+  setSelectedLayer: (layer: HoveredLayer) => void;
 };
 
 // Every segment gets at least this fraction of the bar's width so thin real layers (a
@@ -25,14 +27,18 @@ function computeSegmentWidths(radiusFractions: number[]): number[] {
   return thicknesses.map((t) => MIN_SEGMENT_FRACTION + (total > 0 ? (t / total) * remaining : remaining / n));
 }
 
-export default function LayerCrossSection({ structure, hoveredLayer, setHoveredLayer }: LayerCrossSectionProps) {
+export default function LayerCrossSection({ structure, hoveredLayer, setHoveredLayer, selectedLayer, setSelectedLayer }: LayerCrossSectionProps) {
   const [isExpanded, setIsExpanded] = useState(true);
 
   if (!structure) return null;
 
   const segments = getLayerSegments(structure);
   const widths = computeSegmentWidths(segments.map((s) => s.radiusFraction));
-  const activeContent = hoveredLayer && hoveredLayer !== 'total_crust' ? getTooltipContent(structure, hoveredLayer) : null;
+  const shownLayer = hoveredLayer && hoveredLayer !== 'total_crust' ? hoveredLayer : selectedLayer;
+  const activeContent = shownLayer && shownLayer !== 'total_crust' ? getTooltipContent(structure, shownLayer) : null;
+  const toggleSelected = (key: HoveredLayer) => setSelectedLayer(selectedLayer === key ? null : key);
+  const stateClass = (key: HoveredLayer) =>
+    `${hoveredLayer === key ? 'active' : ''} ${selectedLayer === key ? 'selected' : ''}`;
 
   return (
     <div className={`orbit-controls-menu ${isExpanded ? 'expanded' : 'collapsed'}`}>
@@ -52,9 +58,10 @@ export default function LayerCrossSection({ structure, hoveredLayer, setHoveredL
             {segments.map((seg, i) => (
               <div
                 key={seg.key}
-                className={`layer-bar-segment ${hoveredLayer === seg.key ? 'active' : ''}`}
+                className={`layer-bar-segment ${stateClass(seg.key)}`}
                 style={{ width: `${widths[i] * 100}%`, background: seg.facts.color || '#888' }}
                 onMouseEnter={() => setHoveredLayer(seg.key)}
+                onClick={() => toggleSelected(seg.key)}
               />
             ))}
           </div>
@@ -64,8 +71,10 @@ export default function LayerCrossSection({ structure, hoveredLayer, setHoveredL
               <button
                 key={seg.key}
                 type="button"
-                className={`layer-legend-item ${hoveredLayer === seg.key ? 'active' : ''}`}
+                className={`layer-legend-item ${stateClass(seg.key)}${seg.label.length > 16 ? ' wide' : ''}`}
+                aria-pressed={selectedLayer === seg.key}
                 onMouseEnter={() => setHoveredLayer(seg.key)}
+                onClick={() => toggleSelected(seg.key)}
                 onMouseLeave={() => setHoveredLayer(null)}
                 onFocus={() => setHoveredLayer(seg.key)}
                 onBlur={() => setHoveredLayer(null)}
@@ -86,7 +95,7 @@ export default function LayerCrossSection({ structure, hoveredLayer, setHoveredL
               </>
             ) : (
               <div className="layer-detail-placeholder">
-                Hover a layer above (or in the 3D view) to see its data.
+                Hover or click a layer above (or hover one in the 3D view) to see its data.
               </div>
             )}
           </div>

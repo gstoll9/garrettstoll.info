@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../styles/orbitControls.css';
 import { PlanetStructure, AtmosphereLayer } from '../data/planetStructure';
 import { Row, formatTempK } from './Planet';
@@ -10,6 +10,8 @@ type AtmosphereCrossSectionProps = {
 // Same idea as LayerCrossSection's MIN_SEGMENT_FRACTION: every layer gets at least this
 // much of the bar so thin real layers stay visible and hoverable — not to true scale.
 const MIN_SEGMENT_FRACTION = 0.1;
+// Must match .atmo-bar's CSS height; segment labels only render where they fit.
+const ATMO_BAR_PX = 90;
 
 function layerThicknesses(layers: AtmosphereLayer[]): number[] {
   const known = layers.map((l) => (l.altitudeKm.max !== undefined ? l.altitudeKm.max - l.altitudeKm.min : null));
@@ -39,12 +41,18 @@ function formatAltitude({ min, max }: { min: number; max?: number }): string {
 export default function AtmosphereCrossSection({ atmosphere }: AtmosphereCrossSectionProps) {
   const [isExpanded, setIsExpanded] = useState(true);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  // Clicked layer stays shown whenever nothing is hovered; cleared when the planet changes.
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  useEffect(() => setSelectedIndex(null), [atmosphere]);
 
   if (!atmosphere?.layers?.length) return null;
 
   const layers = atmosphere.layers;
   const heights = computeHeights(layerThicknesses(layers));
-  const active = hoveredIndex !== null ? layers[hoveredIndex] : null;
+  const shownIndex = hoveredIndex ?? selectedIndex;
+  const active = shownIndex !== null ? layers[shownIndex] : null;
+  const toggleSelected = (i: number) => setSelectedIndex(selectedIndex === i ? null : i);
+  const stateClass = (i: number) => `${hoveredIndex === i ? 'active' : ''} ${selectedIndex === i ? 'selected' : ''}`;
 
   return (
     <div className={`orbit-controls-menu ${isExpanded ? 'expanded' : 'collapsed'}`}>
@@ -66,22 +74,25 @@ export default function AtmosphereCrossSection({ atmosphere }: AtmosphereCrossSe
             {layers.map((layer, i) => (
               <div
                 key={layer.name}
-                className={`atmo-bar-segment ${hoveredIndex === i ? 'active' : ''}`}
+                className={`atmo-bar-segment ${stateClass(i)}`}
                 style={{ height: `${heights[i] * 100}%`, background: layer.color || '#888' }}
                 onMouseEnter={() => setHoveredIndex(i)}
+                onClick={() => toggleSelected(i)}
               >
-                {heights[i] > 0.16 && <span className="atmo-bar-label">{layer.name}</span>}
+                {heights[i] * ATMO_BAR_PX >= 18 && <span className="atmo-bar-label">{layer.name}</span>}
               </div>
             ))}
           </div>
 
-          <div className="layer-legend">
+          <div className="layer-legend atmo-legend">
             {layers.map((layer, i) => (
               <button
                 key={layer.name}
                 type="button"
-                className={`layer-legend-item ${hoveredIndex === i ? 'active' : ''}`}
+                className={`layer-legend-item ${stateClass(i)}${layer.name.length > 16 ? ' wide' : ''}`}
+                aria-pressed={selectedIndex === i}
                 onMouseEnter={() => setHoveredIndex(i)}
+                onClick={() => toggleSelected(i)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 onFocus={() => setHoveredIndex(i)}
                 onBlur={() => setHoveredIndex(null)}
@@ -92,7 +103,7 @@ export default function AtmosphereCrossSection({ atmosphere }: AtmosphereCrossSe
             ))}
           </div>
 
-          <div className="layer-detail">
+          <div className="layer-detail atmo-detail">
             {active ? (
               <>
                 <div className="layer-detail-title" style={{ color: active.color || '#fff' }}>
@@ -105,7 +116,7 @@ export default function AtmosphereCrossSection({ atmosphere }: AtmosphereCrossSe
                 </div>
               </>
             ) : (
-              <div className="layer-detail-placeholder">Hover a layer above to see its data.</div>
+              <div className="layer-detail-placeholder">Hover or click a layer above to see its data.</div>
             )}
           </div>
         </div>

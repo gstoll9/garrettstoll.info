@@ -157,8 +157,20 @@ const atmoFraction = (meanRadiusKm: number, scaleHeightKm: number) =>
 const altitudeFromPressureRatio = (scaleHeightKm: number, pressureRatio: number) =>
   Math.round(scaleHeightKm * Math.log(pressureRatio));
 
-// Shared per-layer-name colors so the same layer reads consistently across every planet's
-// AtmosphereCrossSection panel (see components/AtmosphereCrossSection.tsx).
+// Shared per-layer colors so the same layer reads identically on every planet — in the 3D
+// cutaway's cut faces and in both 2D cross-section panels. Warm (hot, dense) at the centre,
+// cooling outward. Gas giants map onto the same slots (rocky/icy core, metallic-hydrogen
+// "mantle", visible cloud deck as "crust"), so slot colours stay consistent there too.
+export const LAYER_COLORS = {
+  innerCore: '#fff0b3',
+  core: '#f5b041',
+  lowerMantle: '#b5361c',
+  mantle: '#e2672f',
+  crust: '#8d6e63',
+  atmosphere: '#7ec8f0',
+} as const;
+
+// Same idea for the vertical atmosphere layers (AtmosphereCrossSection.tsx).
 const ATMO_LAYER_COLORS = {
   troposphere: '#ffcc80',
   stratosphere: '#81d4fa',
@@ -171,7 +183,7 @@ export const planetStructures: Record<string, PlanetStructure> = {
   Mercury: {
     core: {
       radiusFraction: 2020 / 2439.7, // 0.828 — "core radius estimated 2,020±30 km" (moment of inertia factor 0.346±0.014)
-      color: '#3a3a3a',
+      color: LAYER_COLORS.core,
       material: 'Iron-nickel (with silicon, sulfur, carbon)',
       // Not split into inner/outer sub-layers — the source describes real stratification
       // (a solid, metallic outer layer atop a liquid layer atop a solid inner core, per
@@ -181,11 +193,11 @@ export const planetStructures: Record<string, PlanetStructure> = {
     },
     mantle: {
       radiusFraction: (2439.7 - 35) / 2439.7, // 0.986 — 420 km combined mantle+crust, crust ~35 km of that
-      color: '#7a6a54',
+      color: LAYER_COLORS.mantle,
       material: 'Silicate mantle',
     },
     crust: {
-      color: '#8c8377',
+      color: LAYER_COLORS.crust,
       material: 'Silicate crust, ~35 km thick (Mariner 10/MESSENGER estimate; Airy isostacy model suggests 26±11 km)',
       note: 'No global atmosphere — only a trace exosphere (≲0.5 nPa) of O, Na, Mg, H, K, Ca, He + traces',
     },
@@ -205,22 +217,22 @@ export const planetStructures: Record<string, PlanetStructure> = {
   Venus: {
     core: {
       radiusFraction: 3500 / 6051.8, // 0.578 — newer (2006-2020) axial-precession estimate
-      color: '#d9a441',
+      color: LAYER_COLORS.core,
       material: 'Likely iron-nickel, probably at least partially liquid',
       note: 'Older seismic/moment-of-inertia models estimated 2,900-3,450 km instead',
     },
     mantle: {
       radiusFraction: (6051.8 - 40) / 6051.8, // 0.993 — crust ~40 km average
-      color: '#c56a2e',
+      color: LAYER_COLORS.mantle,
       material: 'Silicate mantle',
     },
     crust: {
-      color: '#8a6a4a',
+      color: LAYER_COLORS.crust,
       material: 'Basaltic silicate crust, ~40 km average thickness (up to 65 km); no plate tectonics',
     },
     atmosphere: {
       radiusFraction: atmoFraction(6051.8, 15.9), // ~1.016; scale height ~15.9 km (standard reference value, not in infobox)
-      color: '#e8d09a',
+      color: LAYER_COLORS.atmosphere,
       material: 'Thick CO2 atmosphere with sulfuric acid clouds',
       composition: [
         { gas: 'Carbon dioxide', percent: 96.5 },
@@ -276,32 +288,32 @@ export const planetStructures: Record<string, PlanetStructure> = {
   Earth: {
     core: {
       radiusFraction: (6371 - 2890) / 6371, // 0.546 — outer-core/mantle boundary at 2,890 km depth
-      color: '#f4c430',
+      color: LAYER_COLORS.core,
       material: 'Liquid iron-nickel outer core',
       innerCore: {
         radiusFraction: 1220 / 6371, // 0.1915 — "primarily a solid ball with a radius of about 1,220 km" (Internal_structure_of_Earth)
-        color: '#fff2b0',
+        color: LAYER_COLORS.innerCore,
         material: 'Solid iron-nickel inner core',
         tempK: { min: 5400, max: 6230 }, // Internal_structure_of_Earth: "5,400-6,230 K for Earth's solid inner core"
       },
     },
     mantle: {
       radiusFraction: (6371 - 35) / 6371, // 0.995 — crust averages ~35 km
-      color: '#ff5722',
+      color: LAYER_COLORS.mantle,
       material: 'Upper mantle (peridotite)',
       lowerMantle: {
         radiusFraction: (6371 - 660) / 6371, // 0.8964 — the well-known ~660 km-depth transition zone separating upper/lower mantle
-        color: '#c73e10',
+        color: LAYER_COLORS.lowerMantle,
         material: 'Lower mantle (denser silicate, bridgmanite/ferropericlase-dominated), transitioning to the D″ layer near the core boundary',
       },
     },
     crust: {
-      color: '#6b5842',
+      color: LAYER_COLORS.crust,
       material: 'Silicate crust (oceanic + continental), ~35 km average thickness',
     },
     atmosphere: {
       radiusFraction: atmoFraction(6371, 8.5), // ~1.008; scale height ~8.5 km (standard reference value)
-      color: '#a6e1ff',
+      color: LAYER_COLORS.atmosphere,
       material: 'Nitrogen-oxygen atmosphere',
       composition: [
         { gas: 'Nitrogen', percent: 78.08 },
@@ -365,34 +377,34 @@ export const planetStructures: Record<string, PlanetStructure> = {
   Mars: {
     core: {
       radiusFraction: 1662.5 / 3389.5, // 0.49 — midpoint of the "approximately 1,650-1,675 km" estimate
-      color: '#8a6f5c',
+      color: LAYER_COLORS.core,
       material: 'Liquid iron-nickel outer core, enriched in sulfur, oxygen, carbon, hydrogen',
       tempK: { min: 2000, max: 2400 },
       innerCore: {
         radiusFraction: 613 / 3389.5, // 0.1808 — see note; a 2025 study's point estimate
-        color: '#c9a688',
+        color: LAYER_COLORS.innerCore,
         material: 'Solid inner core (tentative)',
         note: 'Actively disputed: a 2023 InSight-seismic-data study found no evidence of a solid inner core, while a 2025 study using the same dataset reported one 613±67 km in radius',
       },
     },
     mantle: {
       radiusFraction: (3389.5 - 49) / 3389.5, // 0.986 — crust 42-56 km average, midpoint 49 km
-      color: '#b5563a',
+      color: LAYER_COLORS.mantle,
       material: 'Upper mantle; rigid lithosphere down to ~250 km depth, more ductile below',
       lowerMantle: {
         radiusFraction: (1662.5 + 165) / 3389.5, // 0.5391 — core boundary + ~165 km (midpoint of the "150-180 km thick" basal layer)
-        color: '#8a4a38',
+        color: LAYER_COLORS.lowerMantle,
         material: 'Basal liquid (partially molten) silicate layer at the base of the mantle',
         note: "Unlike Earth, the wider mantle above this basal layer doesn't have a distinct lower-mantle transition — below ~1,050 km depth it becomes mineralogically similar to Earth's transition zone instead",
       },
     },
     crust: {
-      color: '#c1440e',
+      color: LAYER_COLORS.crust,
       material: 'Basaltic/silicate crust, 42-56 km average (6 km at Isidis Planitia to 117 km at Tharsis)',
     },
     atmosphere: {
       radiusFraction: atmoFraction(3389.5, 11.1), // ~1.02; scale height ~11.1 km (standard reference value)
-      color: '#e8b89a',
+      color: LAYER_COLORS.atmosphere,
       material: 'Thin carbon dioxide atmosphere',
       composition: [
         { gas: 'Carbon dioxide', percent: 95.97 },
@@ -446,23 +458,23 @@ export const planetStructures: Record<string, PlanetStructure> = {
   Jupiter: {
     core: {
       radiusFraction: 0.40, // midpoint of Juno mission's "diffuse core extending 30-50% of the radius"
-      color: '#c9a876',
+      color: LAYER_COLORS.core,
       material: 'Diffuse mix of heavy elements blending into the surrounding metallic hydrogen — no sharp boundary',
       note: 'Juno data: 7-25 Earth masses of heavy elements; older pre-Juno models assumed a small, dense, compact core instead',
     },
     mantle: {
       radiusFraction: 0.80, // "extending outward to about 80% of the radius"
-      color: '#e8935a',
+      color: LAYER_COLORS.mantle,
       material: 'Liquid metallic hydrogen (with helium)',
     },
     crust: {
       displayName: 'Visible Cloud Deck (1-bar level)',
-      color: '#d8ab6f',
+      color: LAYER_COLORS.crust,
       material: 'Molecular hydrogen/helium gas, transitioning to liquid with depth',
     },
     atmosphere: {
       radiusFraction: atmoFraction(69886, 27), // ~1.002; scale_height 27 km, direct from infobox
-      color: '#f5e3c0',
+      color: LAYER_COLORS.atmosphere,
       material: 'Hydrogen-helium atmosphere',
       composition: [
         { gas: 'Hydrogen', percent: 89 },
@@ -519,23 +531,23 @@ export const planetStructures: Record<string, PlanetStructure> = {
   Saturn: {
     core: {
       radiusFraction: 0.60, // ring-seismology estimate, ~17 Earth masses
-      color: '#c9b896',
+      color: LAYER_COLORS.core,
       material: 'Rocky/icy, denser and more centrally concentrated than Jupiter’s',
       note: 'Older (2004) gravity-based estimate: 9-22 Earth masses, ~20,000 km diameter (~17% of radius)',
     },
     mantle: {
       radiusFraction: (58232 - 1000) / 58232, // 0.983 — outermost gas layer spans ~1,000 km
-      color: '#e0b878',
+      color: LAYER_COLORS.mantle,
       material: 'Liquid metallic hydrogen, transitioning to liquid molecular hydrogen/helium',
     },
     crust: {
       displayName: 'Visible Cloud Deck (1-bar level)',
-      color: '#e8d4a0',
+      color: LAYER_COLORS.crust,
       material: 'Hydrogen/helium gas layer transitioning to the visible cloud deck',
     },
     atmosphere: {
       radiusFraction: atmoFraction(58232, 59.5), // ~1.006; scale_height 59.5 km, direct from infobox
-      color: '#f2e8c8',
+      color: LAYER_COLORS.atmosphere,
       material: 'Hydrogen-helium atmosphere',
       composition: [
         { gas: 'Hydrogen', percent: 96.3 },
@@ -560,24 +572,24 @@ export const planetStructures: Record<string, PlanetStructure> = {
   Uranus: {
     core: {
       radiusFraction: 0.20, // "radius less than 20% of the planet"
-      color: '#8f7a63',
+      color: LAYER_COLORS.core,
       material: 'Rocky silicate/iron-nickel',
       densityGCm3: 9,
       tempK: 5000,
     },
     mantle: {
       radiusFraction: 0.80, // 1 - "upper atmosphere ... extending for the last 20% of Uranus's radius"
-      color: '#2b96cc',
+      color: LAYER_COLORS.mantle,
       material: "Hot, dense fluid of water, ammonia, and methane (a superionic/ionic “water-ammonia ocean,” not ice)",
     },
     crust: {
       displayName: 'Visible Cloud Deck (1-bar level)',
-      color: '#6dd3e0',
+      color: LAYER_COLORS.crust,
       material: 'Hydrogen/helium/methane gas envelope — methane absorption gives Uranus its pale blue-green color',
     },
     atmosphere: {
       radiusFraction: atmoFraction(25362, 27.7), // ~1.007; scale_height 27.7 km, direct from infobox
-      color: '#a8f0f5',
+      color: LAYER_COLORS.atmosphere,
       material: 'Hydrogen-helium atmosphere with methane',
       composition: [
         { gas: 'Hydrogen', percent: 83 },
@@ -626,24 +638,24 @@ export const planetStructures: Record<string, PlanetStructure> = {
   Neptune: {
     core: {
       radiusFraction: 0.20, // ⚠ no explicit radius figure found in Neptune.html's Internal_structure prose (only mass, ~1.2 Earth masses,
-      color: '#8f7a63',      // is given) — this follows the same ~20% estimate used for Uranus, which the article explicitly says
+      color: LAYER_COLORS.core,      // is given) — this follows the same ~20% estimate used for Uranus, which the article explicitly says
       material: 'Iron-nickel-silicate', // Neptune's internal structure "resembles." Treat as an estimate, not a directly-cited figure.
       tempK: 5400,
       note: 'Core radius not directly cited in source; estimated by analogy to Uranus (mass ~1.2 Earth masses is cited directly)',
     },
     mantle: {
       radiusFraction: 0.85, // 1 - midpoint of "atmosphere ... extends perhaps 10 to 20% of the way towards the core"
-      color: '#2b6cc4',
+      color: LAYER_COLORS.mantle,
       material: 'Hot, dense fluid of water, ammonia, and methane (a "water-ammonia ocean"); methane may decompose into diamond rain near 7,000 km depth',
     },
     crust: {
       displayName: 'Visible Cloud Deck (1-bar level)',
-      color: '#3d5fd1',
+      color: LAYER_COLORS.crust,
       material: 'Hydrogen/helium/methane gas envelope',
     },
     atmosphere: {
       radiusFraction: atmoFraction(24622, 19.7), // ~1.005; scale_height 19.7 km, direct from infobox
-      color: '#6a8fff',
+      color: LAYER_COLORS.atmosphere,
       material: 'Hydrogen-helium atmosphere with methane',
       composition: [
         { gas: 'Hydrogen', percent: 80 },
