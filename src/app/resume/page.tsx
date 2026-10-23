@@ -71,7 +71,7 @@ const WORK: { group: string; items: WorkItem[] }[] = [
       {
         href: "/brain",
         title: "Human Brain",
-        blurb: "A procedural 3D brain you can slice into cross-sections and explore region by region.",
+        blurb: "A real anatomical 3D brain you can slice into cross-sections and explore region by region.",
         icon: "neuron",
         hue: 340,
       },

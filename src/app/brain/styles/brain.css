@@ -184,3 +184,106 @@
     min-height: 0;
   }
 }
+
+/* ── Sidebar: region info, legend, credit ────────────────────────────────── */
+.brainPage .brainLoading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  color: #aaa;
+}
+
+.brainPage .brainTitle {
+  margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #444;
+}
+
+.brainPage .brainInfo {
+  min-height: 11rem;
+}
+
+.brainPage .brainInfo h3 {
+  margin: 0.35rem 0 0.5rem;
+}
+
+.brainPage .brainInfo p,
+.brainPage .brainHint {
+  margin: 0;
+  color: #bbb;
+  line-height: 1.5;
+}
+
+.brainPage .brainInfoGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #999;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.brainPage .brainSwatch {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.brainPage .brainLegendHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #333;
+}
+
+.brainPage .brainLegendHeader h3 {
+  margin: 0;
+}
+
+.brainPage .brainToggle {
+  padding: 0.3rem 0.7rem;
+  border: 1px solid #555;
+  border-radius: 999px;
+  background: transparent;
+  color: #ddd;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.brainPage .brainToggle:hover {
+  border-color: #999;
+}
+
+.brainPage .brainLegend {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+}
+
+.brainPage .brainLegend label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.2rem 0;
+  color: #ccc;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.brainPage .brainCredit {
+  margin: 1.25rem 0 0;
+  color: #777;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.brainPage .brainCredit a {
+  color: #999;
+}

@@ -23,6 +23,20 @@
       "env": {
         "NEXT_DIST_DIR": ".next-isolated"
       }
+    },
+    {
+      "name": "brain-isolated",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "next",
+        "dev",
+        "-p",
+        "3008"
+      ],
+      "port": 3008,
+      "env": {
+        "NEXT_DIST_DIR": ".next-brain"
+      }
     }
   ]
 }
