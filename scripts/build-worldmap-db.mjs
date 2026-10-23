@@ -4,8 +4,9 @@
 //   Wikidata (CC0)        - countries, government structure, office holders, legislatures
 //   Wikipedia (CC BY-SA)  - current party composition of each legislative chamber (infobox)
 //   World Bank API (CC BY 4.0) - economic, demographic and governance indicator time series
+//   Atlas of Economic Complexity (Growth Lab, Harvard) - each country's trade by product
 //
-// Usage: node scripts/build-worldmap-db.mjs [wikidata|capitals|regions|worldbank|latest]   (default: all)
+// Usage: node scripts/build-worldmap-db.mjs [wikidata|capitals|regions|worldbank|latest|trade|partners]   (default: all)
 // (the subregion steps read the admin-1/admin-2 map files, so run build-admin1/2 first)
 //
 // Wikidata is live data, so re-running picks up new office holders and election results.
@@ -470,6 +471,188 @@ function buildLatest() {
   console.log('Latest values:', writeCsv(`${DB}/indicator_latest.csv`, ['iso3', 'code', 'year', 'value'], rows), 'rows');
 }
 
+// ── Trade by product (Atlas of Economic Complexity) ──────────────────────────
+// Each country's exports and imports by product from the Growth Lab at Harvard's Atlas of
+// Economic Complexity GraphQL API (HS 1992, 4-digit, plus services). The Atlas reconciles
+// what countries report with their partners' mirror data, so it covers countries that
+// report poorly to UN Comtrade. One request per country; responses are cached so a re-run
+// only fetches what's missing. Sectors follow the World Bank's split (agriculture = crops,
+// livestock, forestry, fishing): HS chapters 01–24 plus raw farm and forest commodities
+// (AGRI_RAW) are agriculture, services are services, all other goods are industry. The
+// Atlas's own sections differ (it files raw cotton under textiles and luggage under
+// agriculture), so they're kept only as `section`.
+// Writes trade_products.csv, trade_totals.csv and trade_values/<iso3>.csv (the top
+// TRADE_TOP products per country, flow and sector).
+const ATLAS = 'https://atlas.hks.harvard.edu/api/graphql';
+const TRADE_TOP = 20;
+const TRADE_CACHE = path.resolve('node_modules/.cache/worldmap-atlas');
+
+async function atlas(query, cacheKey) {
+  const file = cacheKey && path.join(TRADE_CACHE, `${cacheKey}.json`);
+  if (file && fs.existsSync(file)) return JSON.parse(fs.readFileSync(file, 'utf8'));
+  for (let attempt = 0; attempt < 6; attempt++) {
+    try {
+      const res = await fetch(ATLAS, {
+        method: 'POST',
+        headers: { 'User-Agent': UA, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query }),
+      });
+      const json = await res.json();
+      if (res.ok && json.data && !json.errors) {
+        if (file) {
+          fs.mkdirSync(TRADE_CACHE, { recursive: true });
+          fs.writeFileSync(file, JSON.stringify(json.data));
+        }
+        return json.data;
+      }
+    } catch { /* retry */ }
+    await new Promise(r => setTimeout(r, 2000 * (attempt + 1)));
+  }
+  throw new Error(`Atlas query failed: ${query.slice(0, 100)}`);
+}
+
+// Raw (primary) goods: unprocessed farm, fish, forest and mineral products. HS chapters
+// 01–14 (animals, meat, fish, dairy, plants, cereals, oilseeds) except processed dairy and
+// milling products; cocoa beans, raw tobacco; stone, salt and other minerals except cement;
+// ores; coal, crude oil, natural gas; raw rubber, hides, logs, fibres; rough diamonds.
+// Everything else is produced (processed or manufactured).
+const PRIMARY_EXTRA = /^(1801|2401|25(?!23)\d\d|26\d\d|2701|2702|2709|2711|4001|410[1-3]|440[1-3]|500[1-3]|510[1-3]|520[1-3]|530[1-5]|7102)$/;
+function stageOf(code) {
+  if (!/^\d{4}$/.test(code)) return 'produced';
+  if (+code.slice(0, 2) <= 14) return /^(040[2-6]|110[1-9])$/.test(code) ? 'produced' : 'raw';
+  return PRIMARY_EXTRA.test(code) ? 'raw' : 'produced';
+}
+
+async function buildTrade() {
+  const countries = readCsv(`${DB}/countries.csv`).filter(c => c.iso_numeric);
+  const { productHs92 } = await atlas('{ productHs92(productLevel: 4) { productId code nameShortEn productType topParent { nameShortEn } } }');
+  // Raw natural rubber, raw hides, logs/fuelwood, raw silk, wool, cotton and other plant fibres
+  const AGRI_RAW = /^(4001|410[1-3]|440[1-3]|500[1-3]|510[1-3]|520[1-3]|530[1-5])$/;
+  const sectorOf = p => (p.productType === 'service' ? 'services'
+    : +p.code.slice(0, 2) <= 24 || AGRI_RAW.test(p.code) ? 'agriculture' : 'industry');
+  // Catch-all codes ("commodities not specified", "unspecified" services) count toward
+  // totals but aren't listed as products
+  const unlisted = p => /not specified|unspecified/i.test(p.nameShortEn);
+  const products = new Map(productHs92.map(p => [p.productId, {
+    code: p.code, name: p.nameShortEn, section: p.topParent?.nameShortEn ?? '', sector: sectorOf(p), listed: !unlisted(p),
+    stage: p.productType === 'service' ? '' : stageOf(p.code),
+  }]));
+  writeCsv(`${DB}/trade_products.csv`, ['code', 'name', 'section', 'sector', 'stage'],
+    [...products.values()].sort((a, b) => a.code.localeCompare(b.code)));
+
+  const { dataAvailability } = await atlas('{ dataAvailability { productClassification yearMax } }');
+  const latestYear = dataAvailability.find(d => d.productClassification === 'HS92').yearMax;
+
+  const dir = `${DB}/trade_values`;
+  fs.rmSync(dir, { recursive: true, force: true });
+  fs.mkdirSync(dir, { recursive: true });
+  const totals = [];
+  const queue = [...countries];
+  let done = 0;
+  await Promise.all(Array.from({ length: 2 }, async () => {
+    for (let c = queue.shift(); c; c = queue.shift()) {
+      const id = +c.iso_numeric;
+      let rows = [];
+      let year = latestYear;
+      for (; year >= latestYear - 2 && !rows.length; year--) {
+        const data = await atlas(`{ countryProductYear(countryId: ${id}, productLevel: 4, yearMin: ${year}, yearMax: ${year}) { productId exportValue importValue } }`,
+          `cpy-${id}-${year}`).catch(() => ({ countryProductYear: [] }));
+        rows = data.countryProductYear ?? [];
+      }
+      year++;
+      if (!rows.length) continue;
+      const out = [];
+      for (const [flow, field] of [['X', 'exportValue'], ['M', 'importValue']]) {
+        const bySector = { agriculture: [], industry: [], services: [] };
+        for (const r of rows) {
+          const p = products.get(r.productId);
+          if (p && r[field] > 0) bySector[p.sector].push({ code: p.code, value: r[field], listed: p.listed });
+        }
+        for (const [sector, list] of Object.entries(bySector)) {
+          list.sort((a, b) => b.value - a.value);
+          totals.push({ iso3: c.iso3, flow, year, sector, value: Math.round(list.reduce((s, x) => s + x.value, 0)) });
+          for (const it of list.filter(x => x.listed).slice(0, TRADE_TOP)) out.push({ flow, code: it.code, year, value: Math.round(it.value) });
+        }
+      }
+      writeCsv(`${dir}/${c.iso3}.csv`, ['flow', 'code', 'year', 'value'], out);
+      if (++done % 25 === 0) console.log(`  trade: ${done} countries`);
+    }
+  }));
+  totals.sort((a, b) => a.iso3.localeCompare(b.iso3) || a.flow.localeCompare(b.flow) || a.sector.localeCompare(b.sector));
+  console.log('Trade:', writeCsv(`${DB}/trade_totals.csv`, ['iso3', 'flow', 'year', 'sector', 'value'], totals), 'total rows,',
+    fs.readdirSync(dir).length, 'countries with product data');
+}
+
+// ── Trade partners (Atlas bilateral data) ────────────────────────────────────
+// Each country's top PARTNERS_TOP partners per flow, with goods split into raw and produced
+// (stageOf). Partner totals come from one request per country; the raw/produced split needs
+// one request per country pair, so it's fetched only for those top partners. Only the
+// per-pair sums are cached (the full product lists are large).
+const PARTNERS_TOP = 15;
+
+async function buildPartners() {
+  const countries = readCsv(`${DB}/countries.csv`).filter(c => c.iso_numeric);
+  const isoByNum = new Map(countries.map(c => [+c.iso_numeric, c.iso3]));
+  const { productHs92 } = await atlas('{ productHs92(productLevel: 4) { productId code productType } }');
+  const stageById = new Map(productHs92.filter(p => p.productType !== 'service').map(p => [+p.productId.split('-').pop(), stageOf(p.code)]));
+  const { dataAvailability } = await atlas('{ dataAvailability { productClassification yearMax } }');
+  const year = dataAvailability.find(d => d.productClassification === 'HS92').yearMax;
+
+  const dir = `${DB}/trade_partners`;
+  fs.rmSync(dir, { recursive: true, force: true });
+  fs.mkdirSync(dir, { recursive: true });
+  const queue = [...countries];
+  let done = 0, pairs = 0;
+  await Promise.all(Array.from({ length: 3 }, async () => {
+    for (let c = queue.shift(); c; c = queue.shift()) {
+      const id = +c.iso_numeric;
+      const { countryCountryYear: partners = [] } = await atlas(
+        `{ countryCountryYear(countryId: ${id}, yearMin: ${year}, yearMax: ${year}) { partnerCountryId exportValue importValue } }`,
+        `ccy-${id}-${year}`).catch(() => ({}));
+      const withIso = partners
+        .map(p => ({ ...p, iso3: isoByNum.get(+p.partnerCountryId.split('-').pop()) }))
+        .filter(p => p.iso3 && p.iso3 !== c.iso3);
+      const top = flow => [...withIso].sort((a, b) => b[flow] - a[flow]).filter(p => p[flow] > 0).slice(0, PARTNERS_TOP);
+      const topX = top('exportValue'), topM = top('importValue');
+      const rows = [];
+      const split = new Map();
+      for (const p of new Set([...topX, ...topM])) {
+        const pid = +p.partnerCountryId.split('-').pop();
+        const key = `ccpy-split-${id}-${pid}-${year}`;
+        const file = path.join(TRADE_CACHE, `${key}.json`);
+        let sums;
+        if (fs.existsSync(file)) sums = JSON.parse(fs.readFileSync(file, 'utf8'));
+        else {
+          const data = await atlas(`{ countryCountryProductYear(countryId: ${id}, partnerCountryId: ${pid}, yearMin: ${year}, yearMax: ${year}, productLevel: 4) { productId exportValue importValue } }`)
+            .catch(() => null);
+          if (!data) continue;
+          sums = { X: { raw: 0, produced: 0 }, M: { raw: 0, produced: 0 } };
+          for (const r of data.countryCountryProductYear ?? []) {
+            const stage = stageById.get(+String(r.productId).split('-').pop());
+            if (!stage) continue;
+            sums.X[stage] += r.exportValue || 0;
+            sums.M[stage] += r.importValue || 0;
+          }
+          fs.mkdirSync(TRADE_CACHE, { recursive: true });
+          fs.writeFileSync(file, JSON.stringify(sums));
+          pairs++;
+        }
+        split.set(p.iso3, sums);
+      }
+      for (const [flow, list] of [['X', topX], ['M', topM]]) {
+        for (const p of list) {
+          const s = split.get(p.iso3)?.[flow];
+          if (!s || s.raw + s.produced <= 0) continue;
+          rows.push({ flow, partner: p.iso3, year, raw: Math.round(s.raw), produced: Math.round(s.produced) });
+        }
+      }
+      if (rows.length) writeCsv(`${dir}/${c.iso3}.csv`, ['flow', 'partner', 'year', 'raw', 'produced'], rows);
+      if (++done % 25 === 0) console.log(`  partners: ${done}/${countries.length} countries (${pairs} pairs fetched)`);
+    }
+  }));
+  console.log('Partners:', fs.readdirSync(dir).length, 'countries with partner data');
+}
+
 // ── World Bank ───────────────────────────────────────────────────────────────
 // [code, name, topic, unit, source id]  (source 2 = WDI, 3 = Worldwide Governance Indicators)
 const INDICATORS = [
@@ -568,3 +751,5 @@ if (!only || only === 'wikidata' || only === 'capitals') await buildCapitals();
 if (!only || only === 'wikidata' || only === 'regions') await buildRegionStats();
 if (!only || only === 'worldbank') await buildWorldBank();
 if (!only || only === 'worldbank' || only === 'latest') buildLatest();
+if (!only || only === 'trade') await buildTrade();
+if (!only || only === 'trade' || only === 'partners') await buildPartners();

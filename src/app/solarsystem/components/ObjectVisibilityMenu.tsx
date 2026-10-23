@@ -3,21 +3,23 @@ import '../styles/orbitControls.css';
 import { planets } from '../data/planets';
 import { dwarfPlanets } from '../data/dwarfPlanets';
 import { asteroids } from '../data/asteroids';
-import { INNER_PLANETS, ASTEROID_BELT_BODIES, OUTER_PLANETS, REGION_COLORS } from '../data/regions';
+import { INNER_PLANETS, ASTEROID_BELT_BODIES, JUPITER_TROJAN_BODIES, TROJAN_SWARMS, OUTER_PLANETS, REGION_COLORS } from '../data/regions';
 
 const innerPlanetNames = planets.filter(p => INNER_PLANETS.has(p.name)).map(p => p.name);
 const outerPlanetNames = planets.filter(p => OUTER_PLANETS.has(p.name)).map(p => p.name);
 const beltDwarfNames = dwarfPlanets.filter(d => ASTEROID_BELT_BODIES.has(d.name)).map(d => d.name);
 const transNeptunianNames = dwarfPlanets.filter(d => !ASTEROID_BELT_BODIES.has(d.name)).map(d => d.name);
+const beltAsteroids = asteroids.filter(a => ASTEROID_BELT_BODIES.has(a.name));
+const namedTrojanNames = asteroids.filter(a => JUPITER_TROJAN_BODIES.has(a.name)).map(a => a.name);
 
 // Split the asteroid batch by real diameter (km) so the menu can offer a size-bucketed
 // breakdown rather than one long flat list; matches the >300km / 200-300km / 100-200km
 // batches they were downloaded and added in.
 const EARTH_DIAMETER_KM = 12742;
 const diameterKm = (a: { realDiameter: number }) => a.realDiameter * EARTH_DIAMETER_KM;
-const over300kmAsteroidNames = asteroids.filter(a => diameterKm(a) > 300).map(a => a.name);
-const between200and300kmAsteroidNames = asteroids.filter(a => diameterKm(a) > 200 && diameterKm(a) <= 300).map(a => a.name);
-const between100and200kmAsteroidNames = asteroids.filter(a => diameterKm(a) <= 200).map(a => a.name);
+const over300kmAsteroidNames = beltAsteroids.filter(a => diameterKm(a) > 300).map(a => a.name);
+const between200and300kmAsteroidNames = beltAsteroids.filter(a => diameterKm(a) > 200 && diameterKm(a) <= 300).map(a => a.name);
+const between100and200kmAsteroidNames = beltAsteroids.filter(a => diameterKm(a) <= 200).map(a => a.name);
 
 // Sun has no orbit region color of its own, so its header falls back to light grey.
 const SUN_HEADER_COLOR = 'rgba(232, 236, 245, 0.92)';
@@ -37,6 +39,12 @@ const REGION_GROUPS: Group[] = [
       { label: '200-300km', bodies: between200and300kmAsteroidNames },
       { label: '100-200km', bodies: between100and200kmAsteroidNames },
     ],
+  },
+  {
+    label: 'Trojans',
+    color: REGION_COLORS.trojans,
+    bodies: TROJAN_SWARMS,
+    subgroups: [{ label: 'Named', bodies: namedTrojanNames }],
   },
   { label: 'Outer Planets', bodies: outerPlanetNames, color: REGION_COLORS.outer },
   { label: 'Dwarf Planets', bodies: transNeptunianNames, color: REGION_COLORS.transNeptunian },

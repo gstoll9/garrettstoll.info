@@ -4,15 +4,17 @@ import { planets } from '../data/planets'
 import { dwarfPlanets } from '../data/dwarfPlanets'
 import { asteroids } from '../data/asteroids'
 import { AsteroidBelt } from './AsteroidBelt'
+import { JupiterTrojans, NeptuneTrojans } from './Trojans'
 import Sun from './Sun'
 import { PlanetProps, HoveredLayer } from './Planet'
-import { INNER_PLANETS, ASTEROID_BELT_BODIES, OUTER_PLANETS, REGION_COLORS } from '../data/regions'
+import { INNER_PLANETS, ASTEROID_BELT_BODIES, JUPITER_TROJAN_BODIES, OUTER_PLANETS, REGION_COLORS } from '../data/regions'
 
 type OrbitMode = 'Simple' | 'Elliptical' | 'RealLive';
 
 function orbitColorFor(name: string): string {
   if (INNER_PLANETS.has(name)) return REGION_COLORS.inner;
   if (ASTEROID_BELT_BODIES.has(name)) return REGION_COLORS.asteroidBelt;
+  if (JUPITER_TROJAN_BODIES.has(name)) return REGION_COLORS.trojans;
   if (OUTER_PLANETS.has(name)) return REGION_COLORS.outer;
   return REGION_COLORS.transNeptunian;
 }
@@ -41,6 +43,14 @@ export default function SolarSystem({ setFocus, focus, showOrbits, orbitMode, us
       {/* Asteroid Belt */}
       <group visible={(isSolarSystem || isSunFocused) && !hiddenBodies.has('Asteroid Belt')}>
         <AsteroidBelt useSimplifiedDistance={useSimplifiedDistance} />
+      </group>
+
+      {/* Trojan swarms at Jupiter's and Neptune's L4/L5 points */}
+      <group visible={(isSolarSystem || isSunFocused) && !hiddenBodies.has('Jupiter Trojans')}>
+        <JupiterTrojans useSimplifiedDistance={useSimplifiedDistance} />
+      </group>
+      <group visible={(isSolarSystem || isSunFocused) && !hiddenBodies.has('Neptune Trojans')}>
+        <NeptuneTrojans useSimplifiedDistance={useSimplifiedDistance} />
       </group>
 
       {/* Planets and orbits */}

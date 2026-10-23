@@ -18,8 +18,8 @@
 // reading was used here rather than the stale-looking JD.
 //
 // Hektor is a Jupiter Trojan (semimajor axis ~5.26 AU, near Jupiter's orbit, not the
-// main belt) — grouped here with the asteroid-belt bodies anyway for simplicity rather
-// than adding a one-off category.
+// main belt) — it lives in this list for its data shape, but data/regions.ts files it under
+// JUPITER_TROJAN_BODIES so the menu and orbit colouring group it with the Trojan swarms.
 
 const distanceFactor = 12; // 1 AU = 12 units, matching data/planets.tsx
 const dayInSeconds = 24 * 60 * 60;

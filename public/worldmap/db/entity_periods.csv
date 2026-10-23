@@ -1,0 +1,843 @@
+gwcode,valid_from,valid_to,name,wikipedia,wikidata,capital,capital_lat,capital_lon,area_km2
+2,1886-01-01,1959-01-02,United States,United States,Q30,Washington,38.895,-77.0367,7940050
+2,1959-01-03,1959-08-20,United States,United States,Q30,Washington,38.895,-77.0367,9446290
+2,1959-08-21,2019-12-31,United States,United States,Q30,Washington,38.895,-77.0367,9462980
+3,1886-01-01,1912-08-23,District of Alaska,District of Alaska,Q163801,Juneau,58.3043,-134.412,1506240
+3,1912-08-24,1959-01-02,Territory of Alaska,Territory of Alaska,Q1811372,Juneau,58.3043,-134.412,1506240
+4,1898-07-06,1959-08-20,Territory of Hawaii,Territory of Hawaii,Q547795,Honolulu,21.3075,-157.856,16686
+6,1886-01-01,1898-12-09,Captaincy General of Puerto Rico,Captaincy General of Puerto Rico,Q541745,San Juan,18.4655,-66.1057,9147
+6,1898-12-10,2019-12-31,Puerto Rico,Puerto Rico,Q1183,San Juan,18.4655,-66.1057,9147
+20,1886-01-01,1948-07-21,Canada,Canada,Q16,Ottawa,45.4208,-75.69,9553560
+20,1948-07-22,2019-12-31,Canada,Canada,Q16,Ottawa,45.4208,-75.69,9951980
+21,1886-01-01,1907-09-25,Newfoundland Colony,Newfoundland Colony,Q2984260,St. John's,47.585,-52.681,398416
+21,1907-09-26,1948-07-21,Dominion of Newfoundland,Dominion of Newfoundland,Q38610,St. John's,47.585,-52.681,398416
+31,1886-01-01,1973-07-09,The Bahamas,The Bahamas,Q778,Nassau,25.0774,-77.343,12049
+31,1973-07-10,2019-12-31,The Bahamas,The Bahamas,Q778,Nassau,25.0774,-77.343,12049
+40,1886-01-01,1898-12-09,Captaincy General of Cuba,Captaincy General of Cuba,Q2039931,Havana,23.1319,-82.3642,109098
+40,1898-12-10,1902-05-19,Military Government of Cuba,Military Government of Cuba,Q7891201,Havana,23.1319,-82.3642,109098
+40,1902-05-20,1958-12-31,Republic of Cuba,Republic of Cuba (1902–1959),Q14905932,Havana,23.1319,-82.3642,109098
+40,1959-01-01,2019-12-31,Cuba,Cuba,Q241,Havana,23.1319,-82.3642,109098
+41,1886-01-01,1915-07-04,Haiti,Haiti,Q790,Port-au-Prince,18.5392,-72.335,27137
+41,1915-07-05,1934-08-14,Haiti,Haiti,Q790,Port-au-Prince,18.5392,-72.335,27137
+41,1934-08-15,2019-12-31,Haiti,Haiti,Q790,Port-au-Prince,18.5392,-72.335,27137
+42,1886-01-01,2019-12-31,Dominican Republic,Dominican Republic,Q786,Santo Domingo,18.4667,-69.9,48314
+51,1886-01-01,1962-08-05,Colony of Jamaica,Colony of Jamaica,Q2526023,Kingston,18,-76.8,11028
+51,1962-08-06,2019-12-31,Jamaica,Jamaica,Q766,Kingston,18,-76.8,11028
+52,1886-01-01,1962-08-30,Trinidad and Tobago,Trinidad and Tobago,Q754,Port-of-Spain,10.65,-61.5167,4996
+52,1962-08-31,2019-12-31,Trinidad and Tobago,Trinidad and Tobago,Q754,Port-of-Spain,10.65,-61.5167,4996
+53,1886-01-01,1966-11-29,Barbados,Barbados,Q244,Bridgetown,13.1,-59.6167,442
+53,1966-11-30,2019-12-31,Barbados,Barbados,Q244,Bridgetown,13.1,-59.6167,442
+65,1886-01-01,2019-12-31,Guadeloupe,Guadeloupe,Q17012,Basse-Terre,15.9966,-61.72,1652
+66,1886-01-01,2019-12-31,Martinique,Martinique,Q17054,Fort-de-France,14.6161,-61.0588,1148
+70,1886-01-01,2019-12-31,Mexico,Mexico,Q96,Mexico City,19.4342,-99.1386,1956770
+80,1886-01-01,1970-08-02,British Honduras,British Honduras,Q1643555,Belize City,17.4987,-88.1884,22092
+80,1970-08-03,1981-09-20,British Honduras,British Honduras,Q1643555,Belmopan,17.25,-88.7667,22092
+80,1981-09-21,2019-12-31,Belize,Belize,Q242,Belmopan,17.25,-88.7667,22092
+90,1886-01-01,2019-12-31,Guatemala,Guatemala,Q774,Guatemala City,14.6211,-90.5269,109031
+91,1886-01-01,2019-12-31,Honduras,Honduras,Q783,Tegucigalpa,14.1,-87.2167,112227
+92,1886-01-01,2019-12-31,El Salvador,El Salvador,Q792,San Salvador,13.7086,-89.2031,20556
+93,1886-01-01,2019-12-31,Nicaragua,Nicaragua,Q811,Managua,12.1508,-86.2683,128097
+94,1886-01-01,2019-12-31,Costa Rica,Costa Rica,Q800,San Jose,9.93333,-84.0833,51055
+95,1903-11-03,2019-12-31,Panama,Panama,Q804,Panama City,8.96667,-79.5333,74108
+100,1886-01-01,1903-11-02,Colombia,Colombia,Q739,Bogota,4.6,-74.0833,1167420
+100,1903-11-03,1922-03-23,Colombia,Colombia,Q739,Bogota,4.6,-74.0833,1093310
+100,1922-03-24,2019-12-31,Colombia,Colombia,Q739,Bogota,4.6,-74.0833,1135130
+101,1886-01-01,2019-12-31,Venezuela,Venezuela,Q717,Caracas,10.5,-66.9167,910834
+110,1886-01-01,1966-05-25,British Guiana,British Guiana,Q918126,Georgetown,6.8,-58.1667,210584
+110,1966-05-26,2019-12-31,Guyana,Guyana,Q734,Georgetown,6.8,-58.1667,210584
+115,1886-01-01,1954-12-14,Surinam,Surinam (Dutch colony),Q7646305,Paramaribo,5.83333,-55.1667,144985
+115,1954-12-15,1975-11-24,Surinam,Surinam (Dutch colony),Q7646305,Paramaribo,5.83333,-55.1667,144985
+115,1975-11-25,2019-12-31,Suriname,Suriname,Q730,Paramaribo,5.83333,-55.1667,144985
+120,1886-01-01,1930-07-05,French Guiana,French Guiana,Q3769,Cayenne,4.93299,-52.33,83711
+120,1930-07-06,1946-03-18,French Guiana,French Guiana,Q3769,Cayenne,4.93299,-52.33,13068
+120,1946-03-19,2019-12-31,French Guiana,French Guiana,Q3769,Cayenne,4.93299,-52.33,83711
+130,1886-01-01,1942-01-28,Ecuador,Ecuador,Q736,Quito,-0.21667,-78.5,341770
+130,1942-01-29,2019-12-31,Ecuador,Ecuador,Q736,Quito,-0.21667,-78.5,255275
+135,1886-01-01,1909-07-08,Peru,Peru,Q419,Lima,-12.05,-77.05,1277670
+135,1909-07-09,1922-03-23,Peru,Peru,Q419,Lima,-12.05,-77.05,1246180
+135,1922-03-24,1942-01-28,Peru,Peru,Q419,Lima,-12.05,-77.05,1204360
+135,1942-01-29,2019-12-31,Peru,Peru,Q419,Lima,-12.05,-77.05,1290850
+140,1886-01-01,1889-11-14,Empire of Brazil,Empire of Brazil,Q217230,Rio de Janeiro,-22.9083,-43.1964,8311910
+140,1889-11-15,1903-11-16,First Brazilian Republic,First Brazilian Republic,Q2414171,Rio de Janeiro,-22.9083,-43.1964,8311910
+140,1903-11-17,1909-07-08,First Brazilian Republic,First Brazilian Republic,Q2414171,Rio de Janeiro,-22.9083,-43.1964,8437310
+140,1909-07-09,1930-11-02,First Brazilian Republic,First Brazilian Republic,Q2414171,Rio de Janeiro,-22.9083,-43.1964,8472110
+140,1930-11-03,1960-04-20,Brazil,Brazil,Q155,Rio de Janeiro,-22.9083,-43.1964,8472110
+140,1960-04-21,2019-12-31,Brazil,Brazil,Q155,Brasilia,-15.8,-47.9,8472110
+145,1886-01-01,1903-11-16,Bolivia,Bolivia,Q750,La Paz,-16.5,-68.15,1320610
+145,1903-11-17,1909-07-08,Bolivia,Bolivia,Q750,La Paz,-16.5,-68.15,1195210
+145,1909-07-09,1938-07-20,Bolivia,Bolivia,Q750,La Paz,-16.5,-68.15,1191910
+145,1938-07-21,2019-12-31,Bolivia,Bolivia,Q750,La Paz,-16.5,-68.15,1086610
+150,1886-01-01,1938-07-20,Paraguay,Paraguay,Q733,Asuncion,-25.2667,-57.6667,293507
+150,1938-07-21,2019-12-31,Paraguay,Paraguay,Q733,Asuncion,-25.2667,-57.6667,398806
+155,1886-01-01,1899-03-23,Chile,Chile,Q298,Santiago,-33.45,-70.6667,746277
+155,1899-03-24,1902-11-19,Chile,Chile,Q298,Santiago,-33.45,-70.6667,698984
+155,1902-11-20,2019-12-31,Chile,Chile,Q298,Santiago,-33.45,-70.6667,743665
+160,1886-01-01,1899-03-23,Argentina,Argentina,Q414,Buenos Aires,-34.5875,-58.6725,2778350
+160,1899-03-24,1902-11-19,Argentina,Argentina,Q414,Buenos Aires,-34.5875,-58.6725,2825640
+160,1902-11-20,2019-12-31,Argentina,Argentina,Q414,Buenos Aires,-34.5875,-58.6725,2780960
+165,1886-01-01,2019-12-31,Uruguay,Uruguay,Q77,Montevideo,-34.8581,-56.1708,177857
+200,1886-01-01,1921-12-05,United Kingdom of Great Britain and Ireland,United Kingdom of Great Britain and Ireland,Q174193,London,51.5,-0.116667,313670
+200,1921-12-06,1922-12-05,United Kingdom of Great Britain and Ireland,United Kingdom of Great Britain and Ireland,Q174193,London,51.5,-0.116667,244091
+200,1922-12-06,2019-12-31,United Kingdom,United Kingdom,Q145,London,51.5,-0.116667,244091
+205,1921-12-06,1937-12-28,Irish Free State,Irish Free State,Q31747,Dublin,53.3331,-6.24889,69579
+205,1937-12-29,2019-12-31,Republic of Ireland,Republic of Ireland,Q27,Dublin,53.3331,-6.24889,69579
+210,1886-01-01,2019-12-31,Netherlands,Netherlands,Q55,Amsterdam,52.35,4.91667,34938
+211,1886-01-01,2019-12-31,Belgium,Belgium,Q31,Brussels,50.8333,4.33333,30641
+212,1886-01-01,2019-12-31,Luxembourg,Luxembourg,Q32,Luxembourg,49.6117,6.13,2582
+220,1886-01-01,1919-06-27,French Third Republic,French Third Republic,Q70802,Paris,48.8667,2.33333,532308
+220,1919-06-28,1940-07-09,French Third Republic,French Third Republic,Q70802,Paris,48.8667,2.33333,548042
+220,1940-07-10,1944-08-24,Vichy France,Vichy France,Q69808,Paris,48.8667,2.33333,548042
+220,1944-08-25,1946-10-26,Provisional Government of the French Republic,Provisional Government of the French Republic,Q783684,Paris,48.8667,2.33333,548042
+220,1946-10-27,1958-10-03,French Fourth Republic,French Fourth Republic,Q69829,Paris,48.8667,2.33333,548042
+220,1958-10-04,2019-12-31,France,France,Q142,Paris,48.8667,2.33333,548042
+225,1886-01-01,2019-12-31,Switzerland,Switzerland,Q39,Bern,46.9167,7.46667,41497
+230,1886-01-01,1931-04-13,Restoration,Restoration (Spain),Q1044536,Madrid,40.4,-3.68333,506124
+230,1931-04-14,1939-03-31,Second Spanish Republic,Second Spanish Republic,Q178038,Madrid,40.4,-3.68333,506124
+230,1939-04-01,1975-11-19,Francoist Spain,Francoist Spain,Q13474305,Madrid,40.4,-3.68333,506124
+230,1975-11-20,2019-12-31,Spain,Spain,Q29,Madrid,40.4,-3.68333,506124
+235,1886-01-01,1910-10-04,Kingdom of Portugal,Kingdom of Portugal,Q45670,Lisbon,38.7167,-9.13333,91872
+235,1910-10-05,1926-05-27,First Portuguese Republic,First Portuguese Republic,Q167360,Lisbon,38.7167,-9.13333,91872
+235,1926-05-28,1933-04-10,Ditadura Nacional,Ditadura Nacional,Q2729197,Lisbon,38.7167,-9.13333,91872
+235,1933-04-11,1974-04-24,Estado Novo,Estado Novo (Portugal),Q824489,Lisbon,38.7167,-9.13333,91872
+235,1974-04-25,2019-12-31,Portugal,Portugal,Q45,Lisbon,38.7167,-9.13333,91872
+255,1886-01-01,1918-11-08,German Empire,German Empire,Q43287,Berlin,52.5167,13.4,540112
+255,1918-11-09,1919-06-27,Weimar Republic,Weimar Republic,Q41304,Berlin,52.5167,13.4,540112
+255,1919-06-28,1920-02-09,Weimar Republic,Weimar Republic,Q41304,Berlin,52.5167,13.4,474783
+255,1920-02-10,1933-03-22,Weimar Republic,Weimar Republic,Q41304,Berlin,52.5167,13.4,470833
+255,1933-03-23,1938-09-29,Nazi Germany,Nazi Germany,Q7318,Berlin,52.5167,13.4,470833
+255,1938-09-30,1945-05-07,Nazi Germany,Nazi Germany,Q7318,Berlin,52.5167,13.4,496652
+260,1945-05-08,1949-05-22,Allied-occupied Germany,Allied-occupied Germany,Q2415901,Bonn,50.7333,7.1,247663
+260,1949-05-23,1949-09-20,West Germany,West Germany,Q713750,Bonn,50.7333,7.1,247663
+260,1949-09-21,1990-10-02,West Germany,West Germany,Q713750,Bonn,50.7333,7.1,247663
+260,1990-10-03,2019-12-31,Germany,Germany,Q183,Berlin,52.5167,13.4,356917
+265,1945-05-08,1949-10-04,Soviet occupation zone in Germany,Soviet occupation zone in Germany,Q55300,East Berlin,52.5178,13.4027,109255
+265,1949-10-05,1949-10-06,Soviet occupation zone in Germany,Soviet occupation zone in Germany,Q55300,East Berlin,52.5178,13.4027,109255
+265,1949-10-07,1990-10-02,East Germany,East Germany,Q16957,East Berlin,52.5178,13.4027,109255
+290,1918-11-11,1919-06-27,Second Polish Republic,Second Polish Republic,Q207272,Warsaw,52.25,21,130204
+290,1919-06-28,1919-09-09,Second Polish Republic,Second Polish Republic,Q207272,Warsaw,52.25,21,177762
+290,1919-09-10,1920-10-06,Second Polish Republic,Second Polish Republic,Q207272,Warsaw,52.25,21,256573
+290,1920-10-07,1921-03-17,Second Polish Republic,Second Polish Republic,Q207272,Warsaw,52.25,21,284598
+290,1921-03-18,1945-05-07,Second Polish Republic,Second Polish Republic,Q207272,Warsaw,52.25,21,388378
+290,1945-05-08,1945-06-27,Second Polish Republic,Second Polish Republic,Q207272,Warsaw,52.25,21,311677
+290,1945-06-28,1989-12-30,Polish People's Republic,Polish People's Republic,Q211274,Warsaw,52.25,21,311677
+290,1989-12-31,2019-12-31,Poland,Poland,Q36,Warsaw,52.25,21,311677
+291,1919-06-28,1938-08-31,Free City of Danzig,Free City of Danzig,Q216173,Danzig,54.36,18.64,2038
+300,1886-01-01,1908-10-06,Austria-Hungary,Austria-Hungary,Q28513,Vienna,48.2,16.3667,624184
+300,1908-10-07,1918-11-02,Austria-Hungary,Austria-Hungary,Q28513,Vienna,48.2,16.3667,675719
+305,1918-11-03,1919-09-09,Republic of German-Austria,Republic of German-Austria,Q268970,Vienna,48.2,16.3667,211936
+305,1919-09-10,1934-04-30,First Austrian Republic,First Austrian Republic,Q518101,Vienna,48.2,16.3667,83949
+305,1934-05-01,1945-04-26,Federal State of Austria,Federal State of Austria,Q176495,Vienna,48.2,16.3667,83949
+305,1945-04-27,1955-07-26,Allied-occupied Austria,Allied-occupied Austria,Q596239,Vienna,48.2,16.3667,83949
+305,1955-07-27,2019-12-31,Austria,Austria,Q40,Vienna,48.2,16.3667,83949
+310,1918-11-03,1918-11-30,First Hungarian Republic,First Hungarian Republic,Q516160,Budapest,47.5,19.0833,323100
+310,1918-12-01,1919-09-09,First Hungarian Republic,First Hungarian Republic,Q516160,Budapest,47.5,19.0833,270454
+310,1919-09-10,1920-02-29,First Hungarian Republic,First Hungarian Republic,Q516160,Budapest,47.5,19.0833,257705
+310,1920-03-01,1920-06-03,Kingdom of Hungary,Kingdom of Hungary (1920–1946),Q600018,Budapest,47.5,19.0833,257705
+310,1920-06-04,1938-11-01,Kingdom of Hungary,Kingdom of Hungary (1920–1946),Q600018,Budapest,47.5,19.0833,92991
+310,1938-11-02,1946-01-31,Kingdom of Hungary,Kingdom of Hungary (1920–1946),Q600018,Budapest,47.5,19.0833,108785
+310,1946-02-01,1947-02-09,Second Hungarian Republic,Second Hungarian Republic,Q940741,Budapest,47.5,19.0833,108785
+310,1947-02-10,1949-08-19,Second Hungarian Republic,Second Hungarian Republic,Q940741,Budapest,47.5,19.0833,92991
+310,1949-08-20,1989-10-22,Hungarian People's Republic,Hungarian People's Republic,Q16410,Budapest,47.5,19.0833,92991
+310,1989-10-23,2019-12-31,Hungary,Hungary,Q28,Budapest,47.5,19.0833,92991
+315,1918-11-11,1938-09-29,First Czechoslovak Republic,First Czechoslovak Republic,Q140359,Prague,50.0833,14.4667,140397
+315,1938-09-30,1938-11-01,First Czechoslovak Republic,First Czechoslovak Republic,Q140359,Prague,50.0833,14.4667,116616
+315,1938-11-02,1945-05-07,First Czechoslovak Republic,First Czechoslovak Republic,Q140359,Prague,50.0833,14.4667,100821
+315,1945-05-08,1947-02-09,First Czechoslovak Republic,First Czechoslovak Republic,Q140359,Prague,50.0833,14.4667,111885
+315,1947-02-10,1948-02-24,First Czechoslovak Republic,First Czechoslovak Republic,Q140359,Prague,50.0833,14.4667,127680
+315,1948-02-25,1990-04-22,Czechoslovak Socialist Republic,Czechoslovak Socialist Republic,Q853348,Prague,50.0833,14.4667,127680
+315,1990-04-23,1992-12-31,Czech and Slovak Federative Republic,Czech and Slovak Federative Republic,Q1998866,Prague,50.0833,14.4667,127680
+316,1993-01-01,2019-12-31,Czech Republic,Czech Republic,Q213,Prague,50.0833,14.4667,78752
+317,1993-01-01,2019-12-31,Slovakia,Slovakia,Q214,Bratislava,48.15,17.1167,48927
+325,1886-01-01,1919-09-09,Kingdom of Italy,Kingdom of Italy,Q172579,Rome,41.9,12.4833,284653
+325,1919-09-10,1946-06-01,Kingdom of Italy,Kingdom of Italy,Q172579,Rome,41.9,12.4833,300051
+325,1946-06-02,2019-12-31,Italy,Italy,Q38,Rome,41.9,12.4833,300051
+338,1886-01-01,1964-09-20,Crown Colony of Malta,Crown Colony of Malta,Q6744657,Valletta,35.8997,14.5147,292
+338,1964-09-21,2019-12-31,Malta,Malta,Q233,Valletta,35.8997,14.5147,292
+339,1913-01-01,1914-03-06,Principality of Albania,Principality of Albania,Q187035,Vlore,40.4774,19.4982,28657
+339,1914-03-07,1920-02-10,Principality of Albania,Principality of Albania,Q187035,Durres,41.3205,19.455,28657
+339,1920-02-11,1928-08-31,Principality of Albania,Principality of Albania,Q187035,Tirane,41.3275,19.8189,28657
+339,1928-09-01,1946-01-10,Albanian Kingdom,Albanian Kingdom (1928–1939),Q1048340,Tirane,41.3275,19.8189,28657
+339,1946-01-11,1991-04-28,People's Socialist Republic of Albania,People's Socialist Republic of Albania,Q467864,Tirane,41.3275,19.8189,28657
+339,1991-04-29,2019-12-31,Albania,Albania,Q222,Tirane,41.3275,19.8189,28657
+340,1886-01-01,1913-08-09,Kingdom of Serbia,Kingdom of Serbia,Q241748,Belgrade,44.8186,20.4681,52534
+340,1913-08-10,1915-10-01,Kingdom of Serbia,Kingdom of Serbia,Q241748,Belgrade,44.8186,20.4681,90640
+340,1915-10-02,1918-11-30,Kingdom of Serbia,Kingdom of Serbia,Q241748,Belgrade,44.8186,20.4681,90640
+340,2006-06-06,2008-02-16,Serbia,Serbia,Q403,Belgrade,44.8186,20.4681,87921
+340,2008-02-17,2019-12-31,Serbia,Serbia,Q403,Belgrade,44.8186,20.4681,77184
+341,1886-01-01,1910-08-27,Principality of Montenegro,Principality of Montenegro,Q779011,Cetinje,42.3931,18.9116,9950
+341,1910-08-28,1913-08-09,Kingdom of Montenegro,Kingdom of Montenegro,Q386496,Cetinje,42.3931,18.9116,9950
+341,1913-08-10,1915-07-01,Kingdom of Montenegro,Kingdom of Montenegro,Q386496,Cetinje,42.3931,18.9116,15907
+341,1915-07-02,1918-11-30,Kingdom of Montenegro,Kingdom of Montenegro,Q386496,Cetinje,42.3931,18.9116,15907
+341,2006-06-12,2019-12-31,Montenegro,Montenegro,Q236,Podgorica,42.4411,19.2636,14010
+343,1991-11-20,2019-12-31,North Macedonia,North Macedonia,Q221,Skopje,41.9973,21.428,25461
+344,1992-04-27,2019-12-31,Croatia,Croatia,Q224,Zagreb,45.815,15.9819,55834
+345,1918-12-01,1919-09-09,Kingdom of Yugoslavia,Kingdom of Yugoslavia,Q191077,Belgrade,44.8186,20.4681,157994
+345,1919-09-10,1920-06-03,Kingdom of Yugoslavia,Kingdom of Yugoslavia,Q191077,Belgrade,44.8186,20.4681,191964
+345,1920-06-04,1945-11-28,Kingdom of Yugoslavia,Kingdom of Yugoslavia,Q191077,Belgrade,44.8186,20.4681,255186
+345,1945-11-29,1991-11-19,Socialist Federal Republic of Yugoslavia,Socialist Federal Republic of Yugoslavia,Q83286,Belgrade,44.8186,20.4681,255186
+345,1991-11-20,1992-04-26,Socialist Federal Republic of Yugoslavia,Socialist Federal Republic of Yugoslavia,Q83286,Belgrade,44.8186,20.4681,229725
+345,1992-04-27,2003-02-03,Serbia and Montenegro,Serbia and Montenegro,Q37024,Belgrade,44.8186,20.4681,101930
+345,2003-02-04,2006-06-02,Serbia and Montenegro,Serbia and Montenegro,Q37024,Belgrade,44.8186,20.4681,101930
+346,1992-04-27,2019-12-31,Bosnia and Herzegovina,Bosnia and Herzegovina,Q225,Sarajevo,43.85,18.3833,51535
+347,2008-02-20,2019-12-31,Kosovo,Kosovo,Q1246,Pristina,42.6667,21.1667,10737
+349,1992-04-27,2019-12-31,Slovenia,Slovenia,Q215,Ljubljana,46.0553,14.5144,20427
+350,1886-01-01,1913-08-09,Greece,Greece,Q41,Athens,37.9833,23.7333,63754
+350,1913-08-10,1919-11-26,Greece,Greece,Q41,Athens,37.9833,23.7333,121697
+350,1919-11-27,2019-12-31,Greece,Greece,Q41,Athens,37.9833,23.7333,129913
+352,1914-11-05,1960-08-15,British Cyprus,British Cyprus,Q15240466,Nicosia,35.1667,33.3667,9128
+352,1960-08-16,2019-12-31,Cyprus,Cyprus,Q229,Nicosia,35.1667,33.3667,9128
+355,1886-01-01,1908-10-04,Principality of Bulgaria,Principality of Bulgaria,Q815731,Sofia,42.6833,23.3167,93162
+355,1908-10-05,1913-08-09,Bulgarian Tsardom,Bulgarian Tsardom,Q1168578,Sofia,42.6833,23.3167,93162
+355,1913-08-10,1918-05-06,Bulgarian Tsardom,Bulgarian Tsardom,Q1168578,Sofia,42.6833,23.3167,111549
+355,1918-05-07,1919-11-26,Bulgarian Tsardom,Bulgarian Tsardom,Q1168578,Sofia,42.6833,23.3167,119236
+355,1919-11-27,1940-09-06,Bulgarian Tsardom,Bulgarian Tsardom,Q1168578,Sofia,42.6833,23.3167,103333
+355,1940-09-07,1946-09-14,Bulgarian Tsardom,Bulgarian Tsardom,Q1168578,Sofia,42.6833,23.3167,111020
+355,1946-09-15,1990-11-14,People's Republic of Bulgaria,People's Republic of Bulgaria,Q121932,Sofia,42.6833,23.3167,111020
+355,1990-11-15,2019-12-31,Bulgaria,Bulgaria,Q219,Sofia,42.6833,23.3167,111020
+359,1991-08-25,2019-12-31,Moldova,Moldova,Q217,Chisinau,47.0056,28.8575,33682
+360,1886-01-01,1913-08-09,Kingdom of Romania,Kingdom of Romania,Q203493,Bucharest,44.4333,26.1,128499
+360,1913-08-10,1916-12-05,Kingdom of Romania,Kingdom of Romania,Q203493,Bucharest,44.4333,26.1,136186
+360,1916-12-06,1918-05-06,Kingdom of Romania,Kingdom of Romania,Q203493,Iasi,47.1684,27.5749,136186
+360,1918-05-07,1918-10-31,Kingdom of Romania,Kingdom of Romania,Q203493,Iasi,47.1684,27.5749,128499
+360,1918-11-01,1919-09-09,Kingdom of Romania,Kingdom of Romania,Q203493,Bukarest,44.4333,26.1,128499
+360,1919-09-10,1919-11-26,Kingdom of Romania,Kingdom of Romania,Q203493,Bukarest,44.4333,26.1,141248
+360,1919-11-27,1920-06-03,Kingdom of Romania,Kingdom of Romania,Q203493,Bukarest,44.4333,26.1,148935
+360,1920-06-04,1920-10-27,Kingdom of Romania,Kingdom of Romania,Q203493,Bukarest,44.4333,26.1,251720
+360,1920-10-28,1940-06-27,Kingdom of Romania,Kingdom of Romania,Q203493,Bukarest,44.4333,26.1,296086
+360,1940-06-28,1940-09-06,Kingdom of Romania,Kingdom of Romania,Q203493,Bukarest,44.4333,26.1,245067
+360,1940-09-07,1947-12-29,Kingdom of Romania,Kingdom of Romania,Q203493,Bukarest,44.4333,26.1,237379
+360,1947-12-30,1989-12-21,Socialist Republic of Romania,Socialist Republic of Romania,Q842794,Bukarest,44.4333,26.1,237379
+360,1989-12-22,2019-12-31,Romania,Romania,Q218,Bukarest,44.4333,26.1,237379
+365,1886-01-01,1905-09-04,Russian Empire,Russian Empire,Q34266,Saint Petersburg (Petrograd),59.939,30.316,22016200
+365,1905-09-05,1914-04-16,Russian Empire,Russian Empire,Q34266,Saint Petersburg (Petrograd),59.939,30.316,21984100
+365,1914-04-17,1917-09-13,Russian Empire,Russian Empire,Q34266,Saint Petersburg (Petrograd),59.939,30.316,22149200
+365,1917-09-14,1917-11-06,Russian Republic,Russian Republic,Q139319,Saint Petersburg (Petrograd),59.939,30.316,22149200
+365,1917-11-07,1917-12-05,Russian Soviet Federative Socialist Republic,Russian Soviet Federative Socialist Republic,Q2184,Saint Petersburg (Petrograd),59.939,30.316,22149200
+365,1917-12-06,1918-02-15,Russian Soviet Federative Socialist Republic,Russian Soviet Federative Socialist Republic,Q2184,Saint Petersburg (Petrograd),59.939,30.316,21760400
+365,1918-02-16,1918-03-02,Russian Soviet Federative Socialist Republic,Russian Soviet Federative Socialist Republic,Q2184,Saint Petersburg (Petrograd),59.939,30.316,21676600
+365,1918-03-03,1918-03-10,Russian Soviet Federative Socialist Republic,Russian Soviet Federative Socialist Republic,Q2184,Saint Petersburg (Petrograd),59.939,30.316,21650600
+365,1918-03-11,1918-11-10,Russian Soviet Federative Socialist Republic,Russian Soviet Federative Socialist Republic,Q2184,Moscow,55.7522,37.6156,21650600
+365,1918-11-11,1920-02-01,Russian Soviet Federative Socialist Republic,Russian Soviet Federative Socialist Republic,Q2184,Moscow,55.7522,37.6156,21405100
+365,1920-02-02,1920-09-01,Russian Soviet Federative Socialist Republic,Russian Soviet Federative Socialist Republic,Q2184,Moscow,55.7522,37.6156,21506700
+365,1920-09-02,1920-10-27,Russian Soviet Federative Socialist Republic,Russian Soviet Federative Socialist Republic,Q2184,Moscow,55.7522,37.6156,21700800
+365,1920-10-28,1921-03-17,Russian Soviet Federative Socialist Republic,Russian Soviet Federative Socialist Republic,Q2184,Moscow,55.7522,37.6156,21656400
+365,1921-03-18,1922-12-29,Russian Soviet Federative Socialist Republic,Russian Soviet Federative Socialist Republic,Q2184,Moscow,55.7522,37.6156,21552700
+365,1922-12-30,1940-03-11,Soviet Union,Soviet Union,Q15180,Moscow,55.7522,37.6156,21552700
+365,1940-03-12,1940-06-01,Soviet Union,Soviet Union,Q15180,Moscow,55.7522,37.6156,21606300
+365,1940-06-02,1940-06-27,Soviet Union,Soviet Union,Q15180,Moscow,55.7522,37.6156,21777500
+365,1940-06-28,1945-05-07,Soviet Union,Soviet Union,Q15180,Moscow,55.7522,37.6156,21828500
+365,1945-05-08,1945-08-14,Soviet Union,Soviet Union,Q15180,Moscow,55.7522,37.6156,22033800
+365,1945-08-15,1991-08-24,Soviet Union,Soviet Union,Q15180,Moscow,55.7522,37.6156,22066000
+365,1991-08-25,1991-08-31,Soviet Union,Soviet Union,Q15180,Moscow,55.7522,37.6156,21824600
+365,1991-09-01,1991-09-05,Soviet Union,Soviet Union,Q15180,Moscow,55.7522,37.6156,21178300
+365,1991-09-06,1991-10-26,Soviet Union,Soviet Union,Q15180,Moscow,55.7522,37.6156,20790100
+365,1991-10-27,1991-11-30,Soviet Union,Soviet Union,Q15180,Moscow,55.7522,37.6156,20317900
+365,1991-12-01,1991-12-20,Soviet Union,Soviet Union,Q15180,Moscow,55.7522,37.6156,19721100
+365,1991-12-21,1991-12-25,Soviet Union,Soviet Union,Q15180,Moscow,55.7522,37.6156,16882600
+365,1991-12-26,2014-03-17,Russia,Russia,Q159,Moscow,55.7522,37.6156,16882600
+365,2014-03-18,2019-12-31,Russia,Russia,Q159,Moscow,55.7522,37.6156,16908400
+366,1918-11-11,1940-06-01,Estonia,Estonia,Q191,Tallinn,59.4339,24.7281,49295
+366,1991-09-06,2019-12-31,Estonia,Estonia,Q191,Tallinn,59.4339,24.7281,45911
+367,1918-11-18,1940-06-01,Latvia,Latvia,Q211,Riga,56.9667,24.1333,65966
+367,1991-09-06,2019-12-31,Latvia,Latvia,Q211,Riga,56.9667,24.1333,64644
+368,1918-02-16,1920-10-06,Lithuania,Lithuania,Q37,Vilnius,54.6833,25.3167,83882
+368,1920-10-07,1922-04-17,Lithuania,Lithuania,Q37,Vilnius,54.6833,25.3167,55858
+368,1922-04-18,1939-09-30,Lithuania,Lithuania,Q37,Kaunas,54.9504,23.88,55858
+368,1939-10-01,1940-06-01,Lithuania,Lithuania,Q37,Kaunas,54.9504,23.88,55858
+368,1991-09-06,2019-12-31,Lithuania,Lithuania,Q37,Vilnius,54.6833,25.3167,65024
+369,1991-12-26,2014-03-17,Ukraine,Ukraine,Q212,Kiev,50.4333,30.5167,597503
+369,2014-03-18,2019-12-31,Ukraine,Ukraine,Q212,Kiev,50.4333,30.5167,571667
+370,1991-08-25,2019-12-31,Belarus,Belarus,Q184,Minsk,53.9,27.5667,207712
+371,1991-12-26,2019-12-31,Armenia,Armenia,Q399,Yerevan,40.1811,44.5136,29664
+372,1991-09-06,2019-12-31,Georgia,Georgia (country),Q230,T'bilisi,41.725,44.7908,69957
+373,1991-12-26,2019-12-31,Azerbaijan,Azerbaijan,Q227,Baku,40.3953,49.8822,85951
+375,1917-12-06,1940-03-11,Finland,Finland,Q33,Helsinki,60.1756,24.9342,388757
+375,1940-03-12,2019-12-31,Finland,Finland,Q33,Helsinki,60.1756,24.9342,335248
+380,1886-01-01,1905-08-25,Sweden,Sweden,Q34,Stockholm,59.3399,18.0745,766624
+380,1905-08-26,2019-12-31,Sweden,Sweden,Q34,Stockholm,59.3399,18.0745,445983
+385,1905-08-26,2019-12-31,Norway,Norway,Q20,Oslo,59.9139,10.7522,320641
+390,1886-01-01,1920-02-09,Denmark,Denmark,Q35,Copenhagen,55.677,12.567,38680
+390,1920-02-10,2019-12-31,Denmark,Denmark,Q35,Copenhagen,55.677,12.567,42630
+395,1886-01-01,1918-11-30,Iceland,Iceland,Q189,Reykjavik,64.15,-21.95,102889
+395,1918-12-01,1942-04-21,Kingdom of Iceland,Kingdom of Iceland,Q62567,Reykjavik,64.15,-21.95,102889
+395,1942-04-22,1944-06-16,Kingdom of Iceland,Kingdom of Iceland,Q62567,Reykjavik,64.15,-21.95,102889
+395,1944-06-17,2019-12-31,Iceland,Iceland,Q189,Reykjavik,64.15,-21.95,102889
+402,1886-01-01,1975-07-04,Portuguese Cape Verde,Portuguese Cape Verde,Q3023340,Praia,14.9167,-23.5167,3997
+402,1975-07-05,2019-12-31,Cape Verde,Cape Verde,Q1011,Praia,14.9167,-23.5167,3997
+404,1886-01-01,1886-05-11,Portuguese Guinea,Portuguese Guinea,Q2002279,Bolama,11.5829,-15.4828,33242
+404,1886-05-12,1942-06-30,Portuguese Guinea,Portuguese Guinea,Q2002279,Bolama,11.5829,-15.4828,33242
+404,1942-07-01,1973-09-23,Portuguese Guinea,Portuguese Guinea,Q2002279,Bissau,11.8588,-15.58,33242
+404,1973-09-24,1974-09-09,Guinea-Bissau,Guinea-Bissau,Q1007,Bissau,11.8588,-15.58,33242
+404,1974-09-10,2019-12-31,Guinea-Bissau,Guinea-Bissau,Q1007,Bissau,11.8588,-15.58,33242
+411,1886-01-01,1900-06-26,Spanish Guinea,Spanish Guinea,Q1232509,Malabo,3.75041,8.7371,26921
+411,1900-06-27,1968-10-11,Spanish Guinea,Spanish Guinea,Q1232509,Malabo,3.75041,8.7371,26921
+411,1968-10-12,2019-12-31,Equatorial Guinea,Equatorial Guinea,Q983,Malabo,3.75041,8.7371,26921
+420,1889-08-10,1965-02-17,Gambia Colony and Protectorate,Gambia Colony and Protectorate,Q3557236,Banjul,13.4539,-16.5917,10722
+420,1965-02-18,2019-12-31,The Gambia,The Gambia,Q1005,Banjul,13.4539,-16.5917,10722
+430,1895-06-16,1898-06-13,French West Africa,French West Africa,Q210682,Saint-Louis,16.02,-16.51,5621750
+430,1898-06-14,1902-12-24,French West Africa,French West Africa,Q210682,Saint-Louis,16.02,-16.51,5585920
+430,1902-12-25,1904-04-07,French West Africa,French West Africa,Q210682,Saint-Louis,16.02,-16.51,3799640
+432,1905-01-01,1913-04-22,Upper Senegal and Niger,Upper Senegal and Niger,Q1271523,Bamako,12.6177,-7.97491,1736750
+432,1913-04-23,1919-02-28,Upper Senegal and Niger,Upper Senegal and Niger,Q1271523,Bamako,12.6177,-7.97491,1736750
+432,1919-03-01,1920-12-03,Upper Senegal and Niger,Upper Senegal and Niger,Q1271523,Bamako,12.6177,-7.97491,1464420
+432,1920-12-04,1932-09-04,French Sudan,French Sudan,Q508014,Bamako,12.6177,-7.97491,1464420
+432,1932-09-05,1944-07-04,French Sudan,French Sudan,Q508014,Bamako,12.6177,-7.97491,1513090
+432,1944-07-05,1947-01-03,French Sudan,French Sudan,Q508014,Bamako,12.6177,-7.97491,1300970
+432,1947-01-04,1959-04-03,French Sudan,French Sudan,Q508014,Bamako,12.6177,-7.97491,1252300
+432,1959-04-04,1960-06-19,French Sudan,French Sudan,Q508014,Bamako,12.6177,-7.97491,1448300
+432,1960-06-20,1960-09-21,French Sudan,French Sudan,Q508014,Bamako,12.6177,-7.97491,1252300
+432,1960-09-22,2019-12-31,Mali,Mali,Q912,Bamako,12.6177,-7.97491,1252300
+433,1886-01-01,1959-04-03,History of Senegal,History of Senegal,Q1151513,Dakar,14.7089,-17.4553,195997
+433,1960-06-21,1960-08-19,History of Senegal,History of Senegal,Q1151513,Dakar,14.7089,-17.4553,195997
+433,1960-08-20,2019-12-31,Senegal,Senegal,Q1041,Dakar,14.7089,-17.4553,195997
+434,1895-01-01,1897-07-22,French Dahomey,French Dahomey,Q797505,Porto-Novo,6.48333,2.61667,36224
+434,1897-07-23,1898-06-13,French Dahomey,French Dahomey,Q797505,Porto-Novo,6.48333,2.61667,36224
+434,1898-06-14,1960-07-31,French Dahomey,French Dahomey,Q797505,Porto-Novo,6.48333,2.61667,116189
+434,1960-08-01,1975-11-29,Republic of Dahomey,Republic of Dahomey,Q798431,Porto-Novo,6.48333,2.61667,116189
+434,1975-11-30,1990-02-28,People's Republic of Benin,People's Republic of Benin,Q862701,Porto-Novo,6.48333,2.61667,116189
+434,1990-03-01,2019-12-31,Benin,Benin,Q962,Porto-Novo,6.48333,2.61667,116189
+435,1904-04-08,1904-10-02,Colonial Mauritania,Colonial Mauritania,Q5148343,Nouakchott,18.1194,-16.0274,947721
+435,1904-10-03,1912-11-26,Colonial Mauritania,Colonial Mauritania,Q5148343,Nouakchott,18.1194,-16.0274,919032
+435,1912-11-27,1913-04-22,Colonial Mauritania,Colonial Mauritania,Q5148343,Nouakchott,18.1194,-16.0274,826376
+435,1913-04-23,1920-01-11,Colonial Mauritania,Colonial Mauritania,Q5148343,Nouakchott,18.1194,-16.0274,826376
+435,1920-01-12,1944-07-04,Colonial Mauritania,Colonial Mauritania,Q5148343,Nouakchott,18.1194,-16.0274,826376
+435,1944-07-05,1960-11-27,Colonial Mauritania,Colonial Mauritania,Q5148343,Nouakchott,18.1194,-16.0274,1038490
+435,1960-11-28,1975-11-13,Mauritania,Mauritania,Q1025,Nouakchott,18.1194,-16.0274,1038490
+435,1975-11-14,1979-08-04,Mauritania,Mauritania,Q1025,Nouakchott,18.1194,-16.0274,1136290
+435,1979-08-05,2019-12-31,Mauritania,Mauritania,Q1025,Nouakchott,18.1194,-16.0274,1038490
+436,1905-01-01,1926-12-27,Colony of Niger,Colony of Niger,Q5148520,Zinder,13.8,8.98332,1182030
+436,1926-12-28,1932-09-04,Colony of Niger,Colony of Niger,Q5148520,Niamey,13.5167,2.11667,1182030
+436,1932-09-05,1947-01-03,Colony of Niger,Colony of Niger,Q5148520,Niamey,13.5167,2.11667,1259570
+436,1947-01-04,1960-08-02,Colony of Niger,Colony of Niger,Q5148520,Niamey,13.5167,2.11667,1182030
+436,1960-08-03,2019-12-31,Niger,Niger,Q1032,Niamey,13.5167,2.11667,1182030
+437,1889-01-10,1893-03-09,History of Ivory Coast,History of Ivory Coast,Q947365,Grand Bassam,5.20039,-3.74999,321308
+437,1893-03-10,1900-11-14,History of Ivory Coast,History of Ivory Coast,Q947365,Grand Bassam,5.20039,-3.74999,321308
+437,1900-11-15,1902-03-19,History of Ivory Coast,History of Ivory Coast,Q947365,Bingerville,5.35,-3.9,321308
+437,1902-03-20,1932-09-04,History of Ivory Coast,History of Ivory Coast,Q947365,Bingerville,5.35,-3.9,321308
+437,1932-09-05,1933-08-09,History of Ivory Coast,History of Ivory Coast,Q947365,Bingerville,5.35,-3.9,467431
+437,1933-08-10,1947-01-03,History of Ivory Coast,History of Ivory Coast,Q947365,Abidjan,5.32,-4.04005,467431
+437,1947-01-04,1960-08-06,History of Ivory Coast,History of Ivory Coast,Q947365,Abidjan,5.32,-4.04005,321308
+437,1960-08-07,1983-03-20,Ivory Coast,Ivory Coast,Q1008,Abidjan,5.32,-4.04005,321308
+437,1983-03-21,2019-12-31,Ivory Coast,Ivory Coast,Q1008,Yamoussoukro,6.81667,-5.28333,321308
+438,1894-01-01,1958-10-01,French Guinea,French Guinea,Q797433,Conakry,9.55133,-13.6619,245068
+438,1958-10-02,2019-12-31,Guinea,Guinea,Q1006,Conakry,9.55133,-13.6619,245068
+439,1919-03-01,1932-09-04,French Upper Volta,French Upper Volta,Q797440,Ouagadougou,12.3703,-1.52472,272339
+439,1947-01-04,1960-08-04,French Upper Volta,French Upper Volta,Q797440,Ouagadougou,12.3703,-1.52472,272339
+439,1960-08-05,1984-08-03,Republic of Upper Volta,Republic of Upper Volta,Q797422,Ouagadougou,12.3703,-1.52472,272339
+439,1984-08-04,2019-12-31,Burkina Faso,Burkina Faso,Q965,Ouagadougou,12.3703,-1.52472,272339
+450,1886-01-01,1892-12-07,Liberia,Liberia,Q1014,Monrovia,6.31056,-10.8047,96000
+450,1892-12-08,2019-12-31,Liberia,Liberia,Q1014,Monrovia,6.31056,-10.8047,96000
+451,1886-01-01,1889-08-09,Sierra Leone Colony and Protectorate,Sierra Leone Colony and Protectorate,Q30059027,Freetown,8.49,-13.2342,83201
+451,1889-08-10,1895-08-23,Sierra Leone Colony and Protectorate,Sierra Leone Colony and Protectorate,Q30059027,Freetown,8.49,-13.2342,72479
+451,1895-08-24,1961-04-26,Sierra Leone Colony and Protectorate,Sierra Leone Colony and Protectorate,Q30059027,Freetown,8.49,-13.2342,72479
+451,1961-04-27,2019-12-31,Sierra Leone,Sierra Leone,Q1044,Freetown,8.49,-13.2342,72479
+452,1886-01-01,1888-11-30,Gold Coast,Gold Coast (British colony),Q503623,Accra,5.55,-0.216667,68325
+452,1888-12-01,1898-06-13,Gold Coast,Gold Coast (British colony),Q503623,Accra,5.55,-0.216667,127938
+452,1898-06-14,1956-03-05,Gold Coast,Gold Coast (British colony),Q503623,Accra,5.55,-0.216667,212417
+452,1956-03-06,1957-03-05,Gold Coast,Gold Coast (British colony),Q503623,Accra,5.55,-0.216667,239047
+452,1957-03-06,2019-12-31,Ghana,Ghana,Q117,Accra,5.55,-0.216667,239047
+460,1886-01-01,1886-12-31,Togoland,Togoland,Q161062,Baguida,6.16667,1.31667,6818
+460,1887-01-01,1888-11-30,Togoland,Togoland,Q161062,Sebe,6.2273,1.5814,6818
+460,1888-12-01,1896-12-31,Togoland,Togoland,Q161062,Sebe,6.2273,1.5814,53341
+460,1897-01-01,1897-07-08,Togoland,Togoland,Q161062,Lome,6.1725,1.23136,53341
+460,1897-07-09,1897-07-22,Togoland,Togoland,Q161062,Lome,6.1725,1.23136,83725
+460,1897-07-23,1914-08-30,Togoland,Togoland,Q161062,Lome,6.1725,1.23136,83725
+460,1914-08-31,1919-06-27,Togoland,Togoland,Q161062,Lome,6.1725,1.23136,83725
+460,1919-06-28,1922-07-19,Togoland,Togoland,Q161062,Lome,6.1725,1.23136,26630
+461,1922-07-20,1960-04-26,French Togoland,French Togoland,Q797214,Lome,6.1725,1.23136,57095
+461,1960-04-27,2019-12-31,Togo,Togo,Q945,Lome,6.1725,1.23136,57095
+462,1922-07-20,1955-12-31,British Togoland,British Togoland,Q797527,Ho,6.60041,0.469987,26630
+470,1886-01-01,1894-03-14,Kamerun,Kamerun,Q668294,Duala,4.06041,9.70999,510559
+470,1894-03-15,1900-12-31,Kamerun,Kamerun,Q668294,Duala,4.06041,9.70999,510559
+470,1901-01-01,1912-03-29,Kamerun,Kamerun,Q668294,Buea,4.155,9.231,510559
+470,1912-03-30,1916-03-03,Kamerun,Kamerun,Q668294,Buea,4.155,9.231,799999
+470,1916-03-04,1919-06-27,Kamerun,Kamerun,Q668294,Buea,4.155,9.231,799999
+471,1919-06-28,1922-07-19,French Cameroon,French Cameroon,Q1028848,Yaounde,3.86667,11.5167,423069
+471,1922-07-20,1959-12-31,French Cameroon,French Cameroon,Q1028848,Yaounde,3.86667,11.5167,423069
+471,1960-01-01,1961-09-30,Cameroon,Cameroon,Q1009,Yaounde,3.86667,11.5167,423069
+471,1961-10-01,2019-12-31,Cameroon,Cameroon,Q1009,Yaounde,3.86667,11.5167,464748
+472,1919-06-28,1922-07-19,British Cameroons,British Cameroons,Q1028835,Buea,4.155,9.231,87489
+472,1922-07-20,1961-09-30,British Cameroons,British Cameroons,Q1028835,Buea,4.155,9.231,87489
+475,1914-01-01,1960-09-30,Colonial Nigeria,Colonial Nigeria,Q2046345,Abuja,9.08333,7.53333,862504
+475,1960-10-01,1961-09-30,Nigeria,Nigeria,Q1033,Abuja,9.08333,7.53333,862504
+475,1961-10-01,2019-12-31,Nigeria,Nigeria,Q1033,Abuja,9.08333,7.53333,908496
+481,1886-01-01,1903-12-28,French Equatorial Africa,French Equatorial Africa,Q271894,Libreville,0.38333,9.45,260681
+481,1903-12-29,1906-02-10,French Equatorial Africa,French Equatorial Africa,Q271894,Libreville,0.38333,9.45,260681
+481,1906-02-11,1912-03-29,French Equatorial Africa,French Equatorial Africa,Q271894,Libreville,0.38333,9.45,260681
+481,1912-03-30,1919-06-27,French Equatorial Africa,French Equatorial Africa,Q271894,Libreville,0.38333,9.45,226633
+481,1919-06-28,1960-08-16,French Equatorial Africa,French Equatorial Africa,Q271894,Libreville,0.38333,9.45,260681
+481,1960-08-17,2019-12-31,Gabon,Gabon,Q1000,Libreville,0.38333,9.45,260681
+482,1906-02-11,1912-03-29,Ubangi-Shari,Ubangi-Shari,Q1421888,Bangui,4.36808,18.5829,618631
+482,1912-03-30,1919-06-27,Ubangi-Shari,Ubangi-Shari,Q1421888,Bangui,4.36808,18.5829,495616
+482,1919-06-28,1960-08-12,Ubangi-Shari,Ubangi-Shari,Q1421888,Bangui,4.36808,18.5829,618631
+482,1960-08-13,2019-12-31,Central African Republic,Central African Republic,Q929,Bangui,4.36808,18.5829,618631
+483,1900-09-05,1912-03-29,French Chad,French Chad,Q5501708,N'Djamena,11.7167,15.2167,1271910
+483,1912-03-30,1919-06-27,French Chad,French Chad,Q5501708,N'Djamena,11.7167,15.2167,1221000
+483,1919-06-28,1920-03-16,French Chad,French Chad,Q5501708,N'Djamena,11.7167,15.2167,1271910
+483,1920-03-17,1960-08-10,French Chad,French Chad,Q5501708,N'Djamena,11.7167,15.2167,1271910
+483,1960-08-11,2019-12-31,Chad,Chad,Q657,N'Djamena,11.7167,15.2167,1271910
+484,1886-01-01,1898-06-13,French Congo,French Congo,Q265319,Brazzaville,-4.25917,15.2847,344022
+484,1898-06-14,1900-09-04,French Congo,French Congo,Q265319,Brazzaville,-4.25917,15.2847,2234560
+484,1900-09-05,1906-02-10,French Congo,French Congo,Q265319,Brazzaville,-4.25917,15.2847,962653
+484,1906-02-11,1910-01-14,French Congo,French Congo,Q265319,Brazzaville,-4.25917,15.2847,344022
+484,1910-01-15,1912-03-29,French Congo,French Congo,Q265319,Brazzaville,-4.25917,15.2847,344022
+484,1912-03-30,1919-06-27,French Congo,French Congo,Q265319,Brazzaville,-4.25917,15.2847,262560
+484,1919-06-28,1960-08-14,French Congo,French Congo,Q265319,Brazzaville,-4.25917,15.2847,344022
+484,1960-08-15,2019-12-31,Republic of the Congo,Republic of the Congo,Q971,Brazzaville,-4.25917,15.2847,344022
+490,1886-01-01,1891-05-24,Congo Free State,Congo Free State,Q76048,Boma,-5.82999,13.05,2011840
+490,1891-05-25,1891-06-10,Congo Free State,Congo Free State,Q76048,Boma,-5.82999,13.05,2011840
+490,1891-06-11,1894-08-13,Congo Free State,Congo Free State,Q76048,Boma,-5.82999,13.05,2221500
+490,1894-08-14,1908-10-17,Congo Free State,Congo Free State,Q76048,Boma,-5.82999,13.05,2381000
+490,1908-10-18,1908-11-14,Congo Free State,Congo Free State,Q76048,Kinshasa (Léopoldville),-4.32972,15.315,2381000
+490,1908-11-15,1910-06-15,Belgian Congo,Belgian Congo,Q213510,Kinshasa (Léopoldville),-4.32972,15.315,2381000
+490,1910-06-16,1960-06-29,Belgian Congo,Belgian Congo,Q213510,Kinshasa (Léopoldville),-4.32972,15.315,2326640
+490,1960-06-30,1971-10-26,First Congolese Republic,First Congolese Republic,Q618399,Kinshasa (Léopoldville),-4.32972,15.315,2326640
+490,1971-10-27,1997-05-16,Zaire,Zaire,Q6500954,Kinshasa (Léopoldville),-4.32972,15.315,2326640
+490,1997-05-17,2019-12-31,Democratic Republic of the Congo,Democratic Republic of the Congo,Q974,Kinshasa (Léopoldville),-4.32972,15.315,2326640
+500,1894-06-08,1902-05-14,Protectorate of Uganda,Protectorate of Uganda,Q1097943,Kampala,0.31556,32.5656,381361
+500,1902-05-15,1910-06-15,Protectorate of Uganda,Protectorate of Uganda,Q1097943,Kampala,0.31556,32.5656,268931
+500,1910-06-16,1914-04-20,Protectorate of Uganda,Protectorate of Uganda,Q1097943,Kampala,0.31556,32.5656,282510
+500,1914-04-21,1926-09-26,Protectorate of Uganda,Protectorate of Uganda,Q1097943,Kampala,0.31556,32.5656,282510
+500,1926-09-27,1962-10-08,Protectorate of Uganda,Protectorate of Uganda,Q1097943,Kampala,0.31556,32.5656,242081
+500,1962-10-09,2019-12-31,Uganda,Uganda,Q1036,Kampala,0.31556,32.5656,242081
+501,1888-10-15,1891-03-23,Imperial British East Africa Company,Imperial British East Africa Company,Q926921,Mombasa,-4.03688,39.6996,469658
+501,1891-03-24,1894-06-07,Imperial British East Africa Company,Imperial British East Africa Company,Q926921,Mombasa,-4.03688,39.6996,1041480
+501,1894-06-08,1895-06-30,Imperial British East Africa Company,Imperial British East Africa Company,Q926921,Mombasa,-4.03688,39.6996,660123
+501,1895-07-01,1902-05-14,East Africa Protectorate,East Africa Protectorate,Q876185,Mombasa,-4.03688,39.6996,660123
+501,1902-05-15,1906-12-31,East Africa Protectorate,East Africa Protectorate,Q876185,Mombasa,-4.03688,39.6996,772553
+501,1907-01-01,1907-12-05,East Africa Protectorate,East Africa Protectorate,Q876185,Nairobi,-1.28333,36.8167,772553
+501,1907-12-06,1914-04-20,East Africa Protectorate,East Africa Protectorate,Q876185,Nairobi,-1.28333,36.8167,635870
+501,1914-04-21,1920-07-22,East Africa Protectorate,East Africa Protectorate,Q876185,Nairobi,-1.28333,36.8167,635870
+501,1920-07-23,1924-06-30,Kenya Colony,Kenya Colony,Q2538511,Nairobi,-1.28333,36.8167,635870
+501,1924-07-01,1926-09-26,Kenya Colony,Kenya Colony,Q2538511,Nairobi,-1.28333,36.8167,541465
+501,1926-09-27,1963-12-11,Kenya Colony,Kenya Colony,Q2538511,Nairobi,-1.28333,36.8167,581894
+501,1963-12-12,2019-12-31,Kenya,Kenya,Q114,Nairobi,-1.28333,36.8167,581894
+510,1891-01-01,1916-10-08,German East Africa,German East Africa,Q153963,Dodoma,-6.173,35.7419,991095
+510,1916-10-09,1919-06-27,German East Africa,German East Africa,Q153963,Dodoma,-6.173,35.7419,991095
+510,1919-06-28,1920-06-27,Tanganyika Territory,Tanganyika Territory,Q158725,Dodoma,-6.173,35.7419,991095
+510,1920-06-28,1922-07-19,Tanganyika Territory,Tanganyika Territory,Q158725,Dodoma,-6.173,35.7419,938769
+510,1922-07-20,1961-12-08,Tanganyika Territory,Tanganyika Territory,Q158725,Dodoma,-6.173,35.7419,938769
+510,1961-12-09,1964-04-25,Tanganyika,Tanganyika,Q397029,Dodoma,-6.173,35.7419,938769
+510,1964-04-26,2019-12-31,Tanzania,Tanzania,Q924,Dodoma,-6.173,35.7419,941360
+511,1890-07-01,1895-06-30,Sultanate of Zanzibar,Sultanate of Zanzibar,Q157904,Zanzibar City,-6.16698,39.1956,2591
+511,1895-07-01,1963-12-18,Sultanate of Zanzibar,Sultanate of Zanzibar,Q157904,Zanzibar City,-6.16698,39.1956,2591
+511,1963-12-19,1964-04-25,Sultanate of Zanzibar,Sultanate of Zanzibar,Q157904,Zanzibar City,-6.16698,39.1956,2591
+515,1920-06-28,1922-07-19,Ruanda-Urundi,Ruanda-Urundi,Q590743,Usumbura,-3.37609,29.36,52326
+515,1922-07-20,1962-06-30,Ruanda-Urundi,Ruanda-Urundi,Q590743,Usumbura,-3.37609,29.36,52326
+516,1962-07-01,2019-12-31,Burundi,Burundi,Q967,Bujumbura,-3.37611,29.36,27188
+517,1962-07-01,2019-12-31,Rwanda,Rwanda,Q1037,Kigali,-1.95361,30.0606,25138
+520,1960-07-01,2019-12-31,Somalia,Somalia,Q1045,Mogadishu,2.06667,45.3667,636245
+521,1886-01-01,1897-04-13,British Somaliland,British Somaliland,Q662653,Berbera,10.4355,45.0164,171496
+521,1897-04-14,1960-06-30,British Somaliland,British Somaliland,Q662653,Berbera,10.4355,45.0164,171496
+522,1886-01-01,1900-01-23,French Somaliland,French Somaliland,Q333126,Djibouti,11.5704,43.1506,21433
+522,1900-01-24,1967-07-04,French Somaliland,French Somaliland,Q333126,Djibouti,11.5704,43.1506,21433
+522,1967-07-05,1977-06-26,French Territory of the Afars and the Issas,French Territory of the Afars and the Issas,Q1450765,Djibouti,11.5704,43.1506,21433
+522,1977-06-27,2019-12-31,Djibouti,Djibouti,Q977,Djibouti,11.5704,43.1506,21433
+530,1886-01-01,1889-05-01,Ethiopian Empire,Ethiopian Empire,Q207521,Addis Ababa,9.01393,38.7751,280224
+530,1889-05-02,1897-05-13,Ethiopian Empire,Ethiopian Empire,Q207521,Addis Ababa,9.01393,38.7751,266083
+530,1897-05-14,1902-05-14,Ethiopian Empire,Ethiopian Empire,Q207521,Addis Ababa,9.01393,38.7751,939229
+530,1902-05-15,1907-12-05,Ethiopian Empire,Ethiopian Empire,Q207521,Addis Ababa,9.01393,38.7751,990850
+530,1907-12-06,1952-09-14,Ethiopian Empire,Ethiopian Empire,Q207521,Addis Ababa,9.01393,38.7751,1127560
+530,1952-09-15,1974-09-11,Ethiopian Empire,Ethiopian Empire,Q207521,Addis Ababa,9.01393,38.7751,1248450
+530,1974-09-12,1987-09-09,Derg,Derg,Q828005,Addis Ababa,9.01393,38.7751,1248450
+530,1987-09-10,1991-05-27,People's Democratic Republic of Ethiopia,People's Democratic Republic of Ethiopia,Q940821,Addis Ababa,9.01393,38.7751,1248450
+530,1991-05-28,1993-05-23,Ethiopia,Ethiopia,Q115,Addis Ababa,9.01393,38.7751,1248450
+530,1993-05-24,2019-12-31,Ethiopia,Ethiopia,Q115,Addis Ababa,9.01393,38.7751,1127560
+531,1886-01-01,1889-05-01,Italian Eritrea,Italian Eritrea,Q1232988,Assab,12.9837,42.6986,19030
+531,1889-05-02,1900-01-23,Italian Eritrea,Italian Eritrea,Q1232988,Asmara,15.3333,38.9333,120897
+531,1900-01-24,1941-03-31,Italian Eritrea,Italian Eritrea,Q1232988,Asmara,15.3333,38.9333,120897
+531,1941-04-01,1941-05-18,British Military Administration,British Military Administration (Eritrea),Q136498582,Asmara,15.3333,38.9333,120897
+531,1941-05-19,1952-09-14,British Military Administration,British Military Administration (Eritrea),Q136498582,Asmara,15.3333,38.9333,120897
+531,1993-05-24,2019-12-31,Eritrea,Eritrea,Q986,Asmara,15.3333,38.9333,120897
+540,1886-01-01,1890-08-19,Portuguese Angola,Portuguese Angola,Q2826232,Luanda,-8.83833,13.2344,409489
+540,1890-08-20,1891-06-10,Portuguese Angola,Portuguese Angola,Q2826232,Luanda,-8.83833,13.2344,1037120
+540,1891-06-11,1905-05-29,Portuguese Angola,Portuguese Angola,Q2826232,Luanda,-8.83833,13.2344,1344280
+540,1905-05-30,1975-11-10,Portuguese Angola,Portuguese Angola,Q2826232,Luanda,-8.83833,13.2344,1247360
+540,1975-11-11,2019-12-31,Angola,Angola,Q916,Luanda,-8.83833,13.2344,1247360
+541,1886-01-01,1891-06-10,Portuguese Mozambique,Portuguese Mozambique,Q889394,Maputo,-25.9653,32.5892,633863
+541,1891-06-11,1975-06-24,Portuguese Mozambique,Portuguese Mozambique,Q889394,Maputo,-25.9653,32.5892,786318
+541,1975-06-25,2019-12-31,Mozambique,Mozambique,Q1029,Maputo,-25.9653,32.5892,786318
+550,1953-08-01,1964-01-21,Federation of Rhodesia and Nyasaland,Federation of Rhodesia and Nyasaland,Q654342,Harare,-17.8178,31.0447,1260270
+551,1911-08-18,1953-07-31,Northern Rhodesia,Northern Rhodesia,Q953903,Lusaka,-15.4167,28.2833,751927
+551,1964-01-22,1964-10-23,Northern Rhodesia,Northern Rhodesia,Q953903,Lusaka,-15.4167,28.2833,751927
+551,1964-10-24,2019-12-31,Zambia,Zambia,Q953,Lusaka,-15.4167,28.2833,751927
+552,1889-01-01,1891-06-10,Company rule in Rhodesia,Company rule in Rhodesia,Q5155572,Harare,-17.8178,31.0447,389856
+552,1891-06-11,1900-01-28,Company rule in Rhodesia,Company rule in Rhodesia,Q5155572,Harare,-17.8178,31.0447,1044860
+552,1900-01-29,1923-09-30,Company rule in Rhodesia,Company rule in Rhodesia,Q5155572,Harare,-17.8178,31.0447,389856
+552,1923-10-01,1953-07-31,Southern Rhodesia,Southern Rhodesia,Q750583,Harare,-17.8178,31.0447,389856
+552,1964-01-22,1965-11-10,Southern Rhodesia,Southern Rhodesia,Q750583,Harare,-17.8178,31.0447,389856
+552,1965-11-11,1980-04-17,Rhodesia,Rhodesia,Q217169,Harare,-17.8178,31.0447,389856
+552,1980-04-18,2019-12-31,Zimbabwe,Zimbabwe,Q954,Harare,-17.8178,31.0447,389856
+553,1891-06-10,1907-07-05,British Central Africa Protectorate,British Central Africa Protectorate,Q2642989,Lilongwe,-13.9833,33.7833,118483
+553,1907-07-06,1953-07-31,Nyasaland,Nyasaland,Q1649306,Lilongwe,-13.9833,33.7833,118483
+553,1964-01-22,1964-07-05,Nyasaland,Nyasaland,Q1649306,Lilongwe,-13.9833,33.7833,118483
+553,1964-07-06,2019-12-31,Malawi,Malawi,Q1020,Lilongwe,-13.9833,33.7833,118483
+560,1910-05-31,1961-05-30,Union of South Africa,Union of South Africa,Q193619,Pretoria,-25.7069,28.2294,1220230
+560,1961-05-31,2019-12-31,South Africa,South Africa,Q258,Pretoria,-25.7069,28.2294,1220230
+561,1886-01-01,1895-11-15,Cape Colony,Cape Colony,Q370736,Cape Town,-33.92,18.435,600802
+561,1895-11-16,1910-05-29,Cape Colony,Cape Colony,Q370736,Cape Town,-33.92,18.435,716102
+562,1886-01-01,1895-04-22,Colony of Natal,Colony of Natal,Q1301901,Pietermatritzburg,-29.61,30.39,43596
+562,1895-04-23,1910-05-29,Colony of Natal,Colony of Natal,Q1301901,Pietermatritzburg,-29.61,30.39,72310
+563,1886-01-01,1902-05-30,South African Republic,South African Republic,Q550374,Pretoria,-25.7069,28.2294,301824
+563,1902-05-31,1910-05-29,Transvaal Colony,Transvaal Colony,Q1187978,Pretoria,-25.7069,28.2294,301824
+564,1886-01-01,1902-05-30,Orange Free State,Orange Free State,Q218023,Bloemfontein,-29.12,26.2299,129711
+564,1902-05-31,1910-05-29,Orange River Colony,Orange River Colony,Q1142179,Bloemfontein,-29.12,26.2299,129711
+565,1886-01-01,1886-12-29,German South West Africa,German South West Africa,Q153665,Windhoek,-22.57,17.0836,699703
+565,1886-12-30,1915-07-08,German South West Africa,German South West Africa,Q153665,Windhoek,-22.57,17.0836,824758
+565,1915-07-09,1915-08-15,South West Africa,South West Africa,Q953068,Windhoek,-22.57,17.0836,824758
+565,1915-08-16,1920-12-16,South West Africa,South West Africa,Q953068,Windhoek,-22.57,17.0836,824758
+565,1920-12-17,1966-10-26,South West Africa,South West Africa,Q953068,Windhoek,-22.57,17.0836,824758
+565,1966-10-27,1990-03-20,South West Africa,South West Africa,Q953068,Windhoek,-22.57,17.0836,824758
+565,1990-03-21,2019-12-31,Namibia,Namibia,Q1030,Windhoek,-22.57,17.0836,824758
+570,1886-01-01,1966-10-03,Basutoland,Basutoland,Q2340665,Maseru,-29.3167,27.4833,30516
+570,1966-10-04,2019-12-31,Lesotho,Lesotho,Q1013,Maseru,-29.3167,27.4833,30516
+571,1886-01-01,1890-06-30,Bechuanaland Protectorate,Bechuanaland Protectorate,Q747314,Gaborone,-24.6464,25.9119,308337
+571,1890-07-01,1895-11-15,Bechuanaland Protectorate,Bechuanaland Protectorate,Q747314,Gaborone,-24.6464,25.9119,576505
+571,1895-11-16,1966-09-29,Bechuanaland Protectorate,Bechuanaland Protectorate,Q747314,Gaborone,-24.6464,25.9119,578322
+571,1966-09-30,2019-12-31,Botswana,Botswana,Q963,Gaborone,-24.6464,25.9119,578322
+572,1895-02-21,1902-08-06,Eswatini,Eswatini,Q1050,Mbabane,-26.3167,31.1333,17111
+572,1902-08-07,1968-09-05,Eswatini,Eswatini,Q1050,Mbabane,-26.3167,31.1333,17111
+572,1968-09-06,2019-12-31,Eswatini,Eswatini,Q1050,Mbabane,-26.3167,31.1333,17111
+580,1886-01-01,1896-08-05,Imerina,Imerina,Q1071439,Antananarivo,-18.9167,47.5167,592864
+580,1896-08-06,1897-02-27,Imerina,Imerina,Q1071439,Antananarivo,-18.9167,47.5167,592864
+580,1897-02-28,1912-07-24,French Madagascar,French Madagascar,Q5501842,Antananarivo,-18.9167,47.5167,592864
+580,1912-07-25,1946-10-26,French Madagascar,French Madagascar,Q5501842,Antananarivo,-18.9167,47.5167,594566
+580,1946-10-27,1960-06-25,French Madagascar,French Madagascar,Q5501842,Antananarivo,-18.9167,47.5167,592864
+580,1960-06-26,2019-12-31,Madagascar,Madagascar,Q1019,Antananarivo,-18.9167,47.5167,592864
+581,1946-10-27,1975-07-05,Comoros,Comoros,Q970,Moroni,-11.7042,43.2403,1701
+581,1975-07-06,2019-12-31,Comoros,Comoros,Q970,Moroni,-11.7042,43.2403,1701
+585,1886-01-01,2019-12-31,Réunion,Réunion,Q17070,Saint-Denis,-20.8907,55.4551,2642
+590,1886-01-01,1968-03-11,British Mauritius,British Mauritius,Q12053604,Port Louis,-20.1619,57.4989,2133
+590,1968-03-12,2019-12-31,Mauritius,Mauritius,Q1027,Port Louis,-20.1619,57.4989,2133
+600,1886-01-01,1902-12-24,Morocco,Morocco,Q1028,Rabat,34.02,-6.83,374439
+600,1902-12-25,1904-01-01,Morocco,Morocco,Q1028,Rabat,34.02,-6.83,374439
+600,1904-01-02,1904-10-02,Morocco,Morocco,Q1028,Rabat,34.02,-6.83,374439
+600,1904-10-03,1912-03-29,Morocco,Morocco,Q1028,Rabat,34.02,-6.83,350332
+600,1912-03-30,1912-11-26,French protectorate in Morocco,French protectorate in Morocco,Q907234,Rabat,34.02,-6.83,350332
+600,1912-11-27,1956-03-01,French protectorate in Morocco,French protectorate in Morocco,Q907234,Rabat,34.02,-6.83,350332
+600,1956-03-02,1956-04-06,Morocco,Morocco,Q1028,Rabat,34.02,-6.83,350332
+600,1956-04-07,1958-04-09,Morocco,Morocco,Q1028,Rabat,34.02,-6.83,374439
+600,1958-04-10,1975-11-13,Morocco,Morocco,Q1028,Rabat,34.02,-6.83,403128
+600,1975-11-14,1979-08-04,Morocco,Morocco,Q1028,Rabat,34.02,-6.83,574397
+600,1979-08-05,2019-12-31,Morocco,Morocco,Q1028,Rabat,34.02,-6.83,672200
+602,1912-11-27,1956-04-06,Spanish protectorate in Morocco,Spanish protectorate in Morocco,Q457242,Tetuan,35.5667,-5.36667,52796
+609,1958-10-10,1975-11-13,Spanish Sahara,Spanish Sahara,Q689837,El Aaiun,27.15,-13.2,269072
+610,1886-01-01,1900-06-26,Spanish West Africa,Spanish West Africa,Q1191986,Villa Cisneros,23.7141,-15.9368,176416
+610,1900-06-27,1912-11-26,Spanish West Africa,Spanish West Africa,Q1191986,Villa Cisneros,23.7141,-15.9368,176416
+610,1912-11-27,1958-10-09,Spanish West Africa,Spanish West Africa,Q1191986,Villa Cisneros,23.7141,-15.9368,269072
+615,1886-01-01,1901-02-06,French Algeria,French Algeria,Q218272,Algiers,36.7631,3.05056,655481
+615,1901-02-07,1902-12-24,French Algeria,French Algeria,Q218272,Algiers,36.7631,3.05056,655481
+615,1902-12-25,1919-09-11,French Algeria,French Algeria,Q218272,Algiers,36.7631,3.05056,2441770
+615,1919-09-12,1962-07-04,French Algeria,French Algeria,Q218272,Algiers,36.7631,3.05056,2317490
+615,1962-07-05,2019-12-31,Algeria,Algeria,Q262,Algiers,36.7631,3.05056,2317490
+616,1886-01-01,1955-12-31,French protectorate of Tunisia,French protectorate of Tunisia,Q2017684,Tunis,36.8028,10.1797,155358
+616,1956-01-01,1956-03-19,French protectorate of Tunisia,French protectorate of Tunisia,Q2017684,Tunis,36.8028,10.1797,155358
+616,1956-03-20,2019-12-31,Tunisia,Tunisia,Q948,Tunis,36.8028,10.1797,155358
+620,1912-10-18,1919-09-11,Italian Libya,Italian Libya,Q284568,Tripoli,32.8925,13.18,881852
+620,1919-09-12,1925-12-05,Italian Libya,Italian Libya,Q284568,Tripoli,32.8925,13.18,1006130
+620,1925-12-06,1934-07-19,Italian Libya,Italian Libya,Q284568,Tripoli,32.8925,13.18,1524960
+620,1934-07-20,1943-05-12,Italian Libya,Italian Libya,Q284568,Tripoli,32.8925,13.18,1617540
+620,1943-05-13,1947-02-09,Italian Libya,Italian Libya,Q284568,Tripoli,32.8925,13.18,1617540
+620,1947-02-10,1949-11-20,Allied administration of Libya,Allied administration of Libya,Q2080099,Tripoli,32.8925,13.18,1617540
+620,1949-11-21,1951-12-23,Allied administration of Libya,Allied administration of Libya,Q2080099,Tripoli,32.8925,13.18,1617540
+620,1951-12-24,1969-08-31,Kingdom of Libya,Kingdom of Libya,Q31454,Tripoli,32.8925,13.18,1617540
+620,1969-09-01,1977-03-01,History of Libya under Muammar Gaddafi,History of Libya under Muammar Gaddafi,Q17435890,Tripoli,32.8925,13.18,1617540
+620,1977-03-02,2011-10-22,History of Libya under Muammar Gaddafi,History of Libya under Muammar Gaddafi,Q17435890,Tripoli,32.8925,13.18,1617540
+620,2011-10-23,2019-12-31,Libya,Libya,Q1016,Tripoli,32.8925,13.18,1617540
+625,1899-01-19,1902-05-14,Anglo-Egyptian Sudan,Anglo-Egyptian Sudan,Q541455,Khartoum,15.5881,32.5342,2590390
+625,1902-05-15,1910-06-15,Anglo-Egyptian Sudan,Anglo-Egyptian Sudan,Q541455,Khartoum,15.5881,32.5342,2538740
+625,1910-06-16,1914-04-20,Anglo-Egyptian Sudan,Anglo-Egyptian Sudan,Q541455,Khartoum,15.5881,32.5342,2579520
+625,1914-04-21,1934-07-19,Anglo-Egyptian Sudan,Anglo-Egyptian Sudan,Q541455,Khartoum,15.5881,32.5342,2579520
+625,1934-07-20,1955-12-31,Anglo-Egyptian Sudan,Anglo-Egyptian Sudan,Q541455,Khartoum,15.5881,32.5342,2486940
+625,1956-01-01,2011-07-08,Sudan,Sudan,Q1049,Khartoum,15.5881,32.5342,2486940
+625,2011-07-09,2019-12-31,Sudan,Sudan,Q1049,Khartoum,15.5881,32.5342,1859620
+626,2011-07-09,2019-12-31,South Sudan,South Sudan,Q958,Juba,4.85,31.6,627325
+630,1886-01-01,1925-12-14,Qajar Iran,Qajar Iran,Q63158027,Tehran,35.6719,51.4244,1621540
+630,1925-12-15,1979-03-31,Pahlavi Iran,Pahlavi Iran,Q107258515,Tehran,35.6719,51.4244,1621540
+630,1979-04-01,2019-12-31,Iran,Iran,Q794,Tehran,35.6719,51.4244,1621540
+640,1886-01-01,1912-10-17,Ottoman Empire,Ottoman Empire,Q12560,Istanbul,41.0151,28.9795,2823070
+640,1912-10-18,1912-12-31,Ottoman Empire,Ottoman Empire,Q12560,Istanbul,41.0151,28.9795,1941220
+640,1913-01-01,1913-05-29,Ottoman Empire,Ottoman Empire,Q12560,Istanbul,41.0151,28.9795,1912570
+640,1913-05-30,1914-11-02,Ottoman Empire,Ottoman Empire,Q12560,Istanbul,41.0151,28.9795,1784490
+640,1914-11-03,1918-03-02,Ottoman Empire,Ottoman Empire,Q12560,Istanbul,41.0151,28.9795,1705780
+640,1918-03-03,1918-10-29,Ottoman Empire,Ottoman Empire,Q12560,Istanbul,41.0151,28.9795,1731860
+640,1918-10-30,1920-04-25,Ottoman Empire,Ottoman Empire,Q12560,Istanbul,41.0151,28.9795,1657470
+640,1920-04-26,1923-10-13,Ottoman Empire,Ottoman Empire,Q12560,Istanbul,41.0151,28.9795,779964
+640,1923-10-14,1923-10-28,Ottoman Empire,Ottoman Empire,Q12560,Ankara,39.9272,32.8644,779964
+640,1923-10-29,2019-12-31,Turkey,Turkey,Q43,Ankara,39.9272,32.8644,779964
+645,1920-04-26,1920-12-23,Mandatory Iraq,Mandatory Iraq,Q146720,Baghdad,33.3386,44.3939,274750
+645,1920-12-24,1922-12-01,Mandatory Iraq,Mandatory Iraq,Q146720,Baghdad,33.3386,44.3939,436180
+645,1922-12-02,1932-09-22,Mandatory Iraq,Mandatory Iraq,Q146720,Baghdad,33.3386,44.3939,436180
+645,1932-09-23,1932-10-02,Mandatory Iraq,Mandatory Iraq,Q146720,Baghdad,33.3386,44.3939,436180
+645,1932-10-03,1958-07-13,Kingdom of Iraq,Kingdom of Iraq,Q149805,Baghdad,33.3386,44.3939,436180
+645,1958-07-14,1968-07-16,First Republic of Iraq,First Republic of Iraq,Q3041595,Baghdad,33.3386,44.3939,436180
+645,1968-07-17,2003-04-08,Ba'athist Iraq,Ba'athist Iraq,Q3108185,Baghdad,33.3386,44.3939,436180
+645,2003-04-09,2019-12-31,Iraq,Iraq,Q796,Baghdad,33.3386,44.3939,436180
+651,1886-01-01,1899-01-18,Khedivate of Egypt,Khedivate of Egypt,Q127861,Cairo,30.05,31.25,1167780
+651,1899-01-19,1914-12-17,Khedivate of Egypt,Khedivate of Egypt,Q127861,Cairo,30.05,31.25,1517210
+651,1914-12-18,1914-12-18,Khedivate of Egypt,Khedivate of Egypt,Q127861,Cairo,30.05,31.25,1517210
+651,1914-12-19,1922-02-27,Sultanate of Egypt,Sultanate of Egypt,Q370173,Cairo,30.05,31.25,1517210
+651,1922-02-28,1925-12-05,Kingdom of Egypt,Kingdom of Egypt,Q124943,Cairo,30.05,31.25,1517210
+651,1925-12-06,1953-06-17,Kingdom of Egypt,Kingdom of Egypt,Q124943,Cairo,30.05,31.25,998389
+651,1953-06-18,1958-02-21,Republic of Egypt,Republic of Egypt (1953–1958),Q3087763,Cairo,30.05,31.25,998389
+651,1958-02-22,1967-06-09,United Arab Republic,United Arab Republic,Q170468,Cairo,30.05,31.25,998389
+651,1967-06-10,1971-09-10,United Arab Republic,United Arab Republic,Q170468,Cairo,30.05,31.25,937821
+651,1971-09-11,1979-05-25,Egypt,Egypt,Q79,Cairo,30.05,31.25,937821
+651,1979-05-26,2019-12-31,Egypt,Egypt,Q79,Cairo,30.05,31.25,998389
+652,1920-04-26,1920-12-23,Mandate for Syria and the Lebanon,Mandate for Syria and the Lebanon,Q139708,Damascus,33.5,36.3,182444
+652,1920-12-24,1922-12-01,Mandate for Syria and the Lebanon,Mandate for Syria and the Lebanon,Q139708,Damascus,33.5,36.3,187993
+652,1922-12-02,1945-12-31,Mandate for Syria and the Lebanon,Mandate for Syria and the Lebanon,Q139708,Damascus,33.5,36.3,187993
+652,1946-01-01,1946-04-16,Mandate for Syria and the Lebanon,Mandate for Syria and the Lebanon,Q139708,Damascus,33.5,36.3,187993
+652,1946-04-17,1958-02-21,Syrian Republics,Syrian Republics,Q3456489,Damascus,33.5,36.3,187993
+652,1958-02-22,1961-09-27,United Arab Republic,United Arab Republic,Q170468,Damascus,33.5,36.3,187993
+652,1961-09-28,1963-03-07,Syrian Republics,Syrian Republics,Q3456489,Damascus,33.5,36.3,187993
+652,1963-03-08,1967-06-09,Ba'athist Syria,Ba'athist Syria,Q131404661,Damascus,33.5,36.3,187993
+652,1967-06-10,2019-12-31,Ba'athist Syria,Ba'athist Syria,Q131404661,Damascus,33.5,36.3,186881
+660,1920-04-26,1920-12-23,Greater Lebanon,Greater Lebanon,Q130842,Beirut,33.8719,35.5097,10209
+660,1920-12-24,1943-11-21,Greater Lebanon,Greater Lebanon,Q130842,Beirut,33.8719,35.5097,10209
+660,1943-11-22,1944-11-21,Lebanon,Lebanon,Q822,Beirut,33.8719,35.5097,10209
+660,1944-11-22,2019-12-31,Lebanon,Lebanon,Q822,Beirut,33.8719,35.5097,10209
+663,1920-04-26,1920-12-23,Emirate of Transjordan,Emirate of Transjordan,Q1121819,Amman,31.95,35.9333,45148
+663,1920-12-24,1923-09-28,Emirate of Transjordan,Emirate of Transjordan,Q1121819,Amman,31.95,35.9333,45148
+663,1923-09-29,1925-11-01,Emirate of Transjordan,Emirate of Transjordan,Q1121819,Amman,31.95,35.9333,89262
+663,1925-11-02,1946-05-24,Emirate of Transjordan,Emirate of Transjordan,Q1121819,Amman,31.95,35.9333,89262
+663,1946-05-25,2019-12-31,Jordan,Jordan,Q810,Amman,31.95,35.9333,89262
+665,1920-04-26,1920-12-23,Mandatory Palestine,Mandatory Palestine,Q193714,(East) Jerusalem,31.7784,35.2066,26964
+665,1920-12-24,1923-09-28,Mandatory Palestine,Mandatory Palestine,Q193714,(East) Jerusalem,31.7784,35.2066,26964
+665,1923-09-29,1948-05-13,Mandatory Palestine,Mandatory Palestine,Q193714,(East) Jerusalem,31.7784,35.2066,26964
+666,1948-05-14,1967-06-09,Israel,Israel,Q801,Jerusalem,31.7784,35.2066,20719
+666,1967-06-10,1979-05-25,Israel,Israel,Q801,Jerusalem,31.7784,35.2066,88643
+666,1979-05-26,2019-12-31,Israel,Israel,Q801,Jerusalem,31.7784,35.2066,28076
+670,1932-09-23,1934-12-31,Saudi Arabia,Saudi Arabia,Q851,Riyadh,24.6408,46.7728,1954450
+670,1935-01-01,2000-06-11,Saudi Arabia,Saudi Arabia,Q851,Riyadh,24.6408,46.7728,1954450
+670,2000-06-12,2019-12-31,Saudi Arabia,Saudi Arabia,Q851,Riyadh,24.6408,46.7728,1924610
+678,1918-10-30,1934-06-13,Kingdom of Yemen,Kingdom of Yemen,Q580188,Sana'a,15.2833,44.1833,136558
+678,1934-06-14,1962-09-25,Kingdom of Yemen,Kingdom of Yemen,Q580188,Sana'a,15.2833,44.1833,136558
+678,1962-09-26,1990-05-21,Yemen Arab Republic,Yemen Arab Republic,Q267584,Sana'a,15.2833,44.1833,136558
+678,1990-05-22,2000-06-11,Yemen,Yemen,Q805,Sana'a,15.2833,44.1833,423785
+678,2000-06-12,2019-12-31,Yemen,Yemen,Q805,Sana'a,15.2833,44.1833,453631
+680,1967-11-30,1990-05-21,South Yemen,South Yemen,Q199841,Aden,12.8,45.0333,287228
+681,1937-04-01,1962-04-03,Aden Colony,Aden Colony,Q49910,Aden,12.8,45.0333,46416
+690,1961-06-19,2019-12-31,Kuwait,Kuwait,Q817,Kuwait,29.3697,47.9783,16751
+692,1971-08-15,2019-12-31,Bahrain,Bahrain,Q398,Manama,26.2361,50.5831,629
+694,1916-11-03,1971-09-02,Qatar,Qatar,Q846,Doha,25.2867,51.5333,11089
+694,1971-09-03,2019-12-31,Qatar,Qatar,Q846,Doha,25.2867,51.5333,11089
+696,1892-03-08,1913-07-28,Trucial States,Trucial States,Q1852345,Abu Dhabi,24.4667,54.3667,70228
+696,1913-07-29,1971-12-01,Trucial States,Trucial States,Q1852345,Abu Dhabi,24.4667,54.3667,70228
+696,1971-12-02,2019-12-31,United Arab Emirates,United Arab Emirates,Q878,Abu Dhabi,24.4667,54.3667,70228
+698,1886-01-01,1970-08-08,Muscat and Oman,Muscat and Oman,Q157734,Masqat,23.6133,58.5933,308791
+698,1970-08-09,1990-02-22,Oman,Oman,Q842,Masqat,23.6133,58.5933,308791
+698,1990-02-23,2019-12-31,Oman,Oman,Q842,Masqat,23.6133,58.5933,308791
+700,1886-01-01,1888-12-30,Emirate of Afghanistan,Emirate of Afghanistan,Q1335260,Kabul,34.5167,69.1833,808993
+700,1888-12-31,1893-11-11,Emirate of Afghanistan,Emirate of Afghanistan,Q1335260,Kabul,34.5167,69.1833,808993
+700,1893-11-12,1919-04-30,Emirate of Afghanistan,Emirate of Afghanistan,Q1335260,Kabul,34.5167,69.1833,641908
+700,1919-05-01,1926-06-08,Emirate of Afghanistan,Emirate of Afghanistan,Q1335260,Kabul,34.5167,69.1833,641908
+700,1926-06-09,1973-07-16,Kingdom of Afghanistan,Kingdom of Afghanistan,Q1138904,Kabul,34.5167,69.1833,641908
+700,1973-07-17,1978-04-29,Republic of Afghanistan,Republic of Afghanistan (1973–1978),Q1415128,Kabul,34.5167,69.1833,641908
+700,1978-04-30,1992-04-27,Democratic Republic of Afghanistan,Democratic Republic of Afghanistan,Q476757,Kabul,34.5167,69.1833,641908
+700,1992-04-28,1996-09-26,Islamic State of Afghanistan,Islamic State of Afghanistan,Q1415585,Kabul,34.5167,69.1833,641908
+700,1996-09-27,2001-12-21,Islamic Emirate of Afghanistan,Islamic Emirate of Afghanistan (1996–2001),Q427941,Kabul,34.5167,69.1833,641908
+700,2001-12-22,2019-12-31,Islamic Republic of Afghanistan,Islamic Republic of Afghanistan,Q30747910,Kabul,34.5167,69.1833,641908
+701,1991-10-27,2019-12-31,Turkmenistan,Turkmenistan,Q874,Ashgabat,37.95,58.3833,471677
+702,1991-09-06,2019-12-31,Tajikistan,Tajikistan,Q863,Dushanbe,38.56,68.7739,142405
+703,1991-09-01,2019-12-31,Kyrgyzstan,Kyrgyzstan,Q813,Bishkek,42.8731,74.6003,199565
+704,1991-09-01,2019-12-31,Uzbekistan,Uzbekistan,Q265,Tashkent,41.3167,69.25,446675
+705,1991-12-26,1997-12-09,Kazakhstan,Kazakhstan,Q232,Almaty,43.325,76.915,2723030
+705,1997-12-10,2019-12-31,Kazakhstan,Kazakhstan,Q232,Astana,51.1811,71.4278,2723030
+710,1886-01-01,1895-04-16,Qing dynasty,Qing dynasty,Q8733,Beijing,39.9289,116.388,11146800
+710,1895-04-17,1898-12-31,Qing dynasty,Qing dynasty,Q8733,Beijing,39.9289,116.388,11110800
+710,1899-01-01,1911-12-31,Qing dynasty,Qing dynasty,Q8733,Beijing,39.9289,116.388,11110800
+710,1912-01-01,1912-12-31,Republic of China,Republic of China (1912–1949),Q13426199,Beijing,39.9289,116.388,11110800
+710,1913-01-01,1914-04-16,Republic of China,Republic of China (1912–1949),Q13426199,Beijing,39.9289,116.388,9224560
+710,1914-04-17,1921-03-12,Republic of China,Republic of China (1912–1949),Q13426199,Beijing,39.9289,116.388,9059500
+710,1921-03-13,1945-08-14,Republic of China,Republic of China (1912–1949),Q13426199,Beijing,39.9289,116.388,7496580
+710,1945-08-15,1947-08-14,Republic of China,Republic of China (1912–1949),Q13426199,Beijing,39.9289,116.388,7532570
+710,1947-08-15,1949-09-30,Republic of China,Republic of China (1912–1949),Q13426199,Beijing,39.9289,116.388,7593660
+710,1949-10-01,1949-12-07,China,China,Q148,Beijing,39.9289,116.388,7593660
+710,1949-12-08,1950-10-01,China,China,Q148,Beijing,39.9289,116.388,7557670
+710,1950-10-02,2019-12-31,China,China,Q148,Beijing,39.9289,116.388,9369270
+711,1913-01-01,1914-07-02,Tibet,Tibet (1912–1951),Q2444884,Lhasa,29.645,91.1,1886260
+711,1914-07-03,1950-10-01,Tibet,Tibet (1912–1951),Q2444884,Lhasa,29.645,91.1,1811590
+712,1921-03-13,1924-11-25,Bogd Khanate of Mongolia,Bogd Khanate of Mongolia,Q2475921,Ulan Bator,47.9167,106.917,1562920
+712,1924-11-26,1992-02-11,Mongolian People's Republic,Mongolian People's Republic,Q212056,Ulan Bator,47.9167,106.917,1562920
+712,1992-02-12,2019-12-31,Mongolia,Mongolia,Q711,Ulan Bator,47.9167,106.917,1562920
+713,1895-04-17,1945-08-14,Taiwan under Japanese rule,Taiwan under Japanese rule,Q137816,Taipei,25.0392,121.525,35990
+713,1949-12-08,2019-12-31,Taiwan,Taiwan,Q865,Taipei,25.0392,121.525,35990
+730,1886-01-01,1897-10-11,Joseon,Joseon,Q28179,Seoul,37.5664,127,219399
+730,1897-10-12,1910-08-22,Korean Empire,Korean Empire,Q28233,Seoul,37.5664,127,219399
+730,1910-08-23,1910-08-28,Korean Empire,Korean Empire,Q28233,Seoul,37.5664,127,219399
+730,1910-08-29,1945-08-14,Korea under Japanese rule,Korea under Japanese rule,Q503585,Seoul,37.5664,127,219399
+731,1945-08-15,1948-09-08,Soviet Civil Administration,Soviet Civil Administration,Q15242873,Pyongyang,39.0194,125.755,122204
+731,1948-09-09,2019-12-31,North Korea,North Korea,Q423,Pyongyang,39.0194,125.755,122204
+732,1945-08-15,1948-08-14,United States Army Military Government in Korea,United States Army Military Government in Korea,Q484104,Seoul,37.5664,127,97196
+732,1948-08-15,2019-12-31,South Korea,South Korea,Q884,Seoul,37.5664,127,97196
+740,1886-01-01,1945-09-01,Empire of Japan,Empire of Japan,Q188712,Tokyo,35.685,139.751,370951
+740,1945-09-02,1952-04-27,Occupation of Japan,Occupation of Japan,Q696251,Tokyo,35.685,139.751,370951
+740,1952-04-28,2019-12-31,Japan,Japan,Q17,Tokyo,35.685,139.751,370951
+750,1886-01-01,1893-11-11,British Raj,British Raj,Q129286,Calcutta,22.495,88.3247,4652720
+750,1893-11-12,1898-12-31,British Raj,British Raj,Q129286,Calcutta,22.495,88.3247,4819800
+750,1899-01-01,1914-07-02,British Raj,British Raj,Q129286,Calcutta,22.495,88.3247,4819800
+750,1914-07-03,1931-02-12,British Raj,British Raj,Q129286,Calcutta,22.495,88.3247,4894460
+750,1931-02-13,1937-03-31,British Raj,British Raj,Q129286,New Delhi (Delhi),28.6,77.2,4894460
+750,1937-04-01,1947-08-14,British Raj,British Raj,Q129286,New Delhi (Delhi),28.6,77.2,4227510
+750,1947-08-15,1949-01-04,Dominion of India,Dominion of India,Q1775277,New Delhi (Delhi),28.6,77.2,3046200
+750,1949-01-05,1950-01-25,Dominion of India,Dominion of India,Q1775277,New Delhi (Delhi),28.6,77.2,3152040
+750,1950-01-26,2019-12-31,India,India,Q668,New Delhi (Delhi),28.6,77.2,3152040
+760,1886-01-01,1947-08-14,Bhutan,Bhutan,Q917,Thimphu,27.4833,89.6,39840
+760,1947-08-15,1948-12-31,Bhutan,Bhutan,Q917,Thimphu,27.4833,89.6,39840
+760,1949-01-01,2019-12-31,Bhutan,Bhutan,Q917,Thimphu,27.4833,89.6,39840
+770,1947-08-15,1949-01-04,Dominion of Pakistan,Dominion of Pakistan,Q2006542,Karachi,24.87,66.99,932698
+770,1949-01-05,1956-03-22,Dominion of Pakistan,Dominion of Pakistan,Q2006542,Karachi,24.87,66.99,1014390
+770,1956-03-23,1959-09-30,Pakistan,Pakistan,Q843,Karachi,24.87,66.99,1014390
+770,1959-10-01,1967-08-13,Pakistan,Pakistan,Q843,Rawalpindi,33.6,73.04,1014390
+770,1967-08-14,1971-12-15,Pakistan,Pakistan,Q843,Islamabad,33.7,73.1667,1014390
+770,1971-12-16,2019-12-31,Pakistan,Pakistan,Q843,Islamabad,33.7,73.1667,876539
+771,1971-12-16,2019-12-31,Bangladesh,Bangladesh,Q902,Dhaka,23.723,90.4086,137848
+775,1937-04-01,1948-01-03,British rule in Burma,British rule in Burma,Q2376315,Rangoon,16.7833,96.1667,666947
+775,1948-01-04,2005-11-05,Myanmar,Myanmar,Q836,Rangoon,16.7833,96.1667,666947
+775,2005-11-06,2019-12-31,Myanmar,Myanmar,Q836,Naypyidaw,19.7666,96.1186,666947
+780,1886-01-01,1948-02-03,British Ceylon,British Ceylon,Q918153,Colombo,6.93194,79.8478,65983
+780,1948-02-04,1972-05-21,Dominion of Ceylon,Dominion of Ceylon,Q2670092,Colombo,6.93194,79.8478,65983
+780,1972-05-22,2019-12-31,Sri Lanka,Sri Lanka,Q854,Colombo,6.93194,79.8478,65983
+781,1887-12-16,1965-05-25,Maldives,Maldives,Q826,Male,4.16667,73.5,34
+781,1965-05-26,2019-12-31,Maldives,Maldives,Q826,Male,4.16667,73.5,34
+790,1886-01-01,2008-05-27,Kingdom of Nepal,Kingdom of Nepal,Q1078602,Kathmandu,27.7167,85.3167,147167
+790,2008-05-28,2019-12-31,Nepal,Nepal,Q837,Kathmandu,27.7167,85.3167,147167
+800,1886-01-01,1893-10-02,Rattanakosin Kingdom,Rattanakosin Kingdom (1782–1932),Q1155700,Bangkok,13.75,100.517,778579
+800,1893-10-03,1904-02-17,Rattanakosin Kingdom,Rattanakosin Kingdom (1782–1932),Q1155700,Bangkok,13.75,100.517,604305
+800,1904-02-18,1907-03-22,Rattanakosin Kingdom,Rattanakosin Kingdom (1782–1932),Q1155700,Bangkok,13.75,100.517,585590
+800,1907-03-23,1909-03-09,Rattanakosin Kingdom,Rattanakosin Kingdom (1782–1932),Q1155700,Bangkok,13.75,100.517,552813
+800,1909-03-10,1932-06-23,Rattanakosin Kingdom,Rattanakosin Kingdom (1782–1932),Q1155700,Bangkok,13.75,100.517,512205
+800,1932-06-24,2019-12-31,Thailand,Thailand,Q869,Bangkok,13.75,100.517,512205
+811,1886-01-01,1893-10-02,French protectorate of Cambodia,French protectorate of Cambodia,Q3173090,Phnom Penh,11.55,104.917,130258
+811,1893-10-03,1904-02-17,French protectorate of Cambodia,French protectorate of Cambodia,Q3173090,Phnom Penh,11.55,104.917,130258
+811,1904-02-18,1907-03-22,French protectorate of Cambodia,French protectorate of Cambodia,Q3173090,Phnom Penh,11.55,104.917,148974
+811,1907-03-23,1953-11-08,French protectorate of Cambodia,French protectorate of Cambodia,Q3173090,Phnom Penh,11.55,104.917,181751
+811,1953-11-09,1970-10-08,Kingdom of Cambodia,Kingdom of Cambodia (1953–1970),Q2638486,Phnom Penh,11.55,104.917,181751
+811,1970-10-09,1975-04-16,Khmer Republic,Khmer Republic,Q1054184,Phnom Penh,11.55,104.917,181751
+811,1975-04-17,1979-01-06,Democratic Kampuchea,Democratic Kampuchea,Q330988,Phnom Penh,11.55,104.917,181751
+811,1979-01-07,1993-09-23,People's Republic of Kampuchea,People's Republic of Kampuchea,Q867778,Phnom Penh,11.55,104.917,181751
+811,1993-09-24,2019-12-31,Cambodia,Cambodia,Q424,Phnom Penh,11.55,104.917,181751
+812,1893-10-03,1896-01-14,French protectorate of Laos,French protectorate of Laos,Q1320058,Vientiane,17.9667,102.6,229905
+812,1896-01-15,1953-10-21,French protectorate of Laos,French protectorate of Laos,Q1320058,Vientiane,17.9667,102.6,229905
+812,1953-10-22,1954-04-30,Kingdom of Laos,Kingdom of Laos,Q870055,Vientiane,17.9667,102.6,229905
+812,1954-05-01,1975-12-01,Kingdom of Laos,Kingdom of Laos,Q870055,Vientiane,17.9667,102.6,229905
+812,1975-12-02,2019-12-31,Laos,Laos,Q819,Vientiane,17.9667,102.6,229905
+815,1886-01-01,1887-05-31,French Indochina,French Indochina,Q185682,Hue,16.47,107.58,379848
+815,1887-06-01,1893-01-01,French Indochina,French Indochina,Q185682,Hue,16.47,107.58,379848
+815,1893-01-02,1893-10-02,French Indochina,French Indochina,Q185682,Hue,16.47,107.58,379848
+815,1893-10-03,1949-06-13,French Indochina,French Indochina,Q185682,Hue,16.47,107.58,324217
+815,1949-06-14,1954-04-30,State of Vietnam,State of Vietnam,Q1193879,Hue,16.47,107.58,324217
+816,1954-05-01,1975-04-30,North Vietnam,North Vietnam,Q172640,Hanoi,21.0333,105.85,155654
+816,1975-05-01,1976-07-01,North Vietnam,North Vietnam,Q172640,Hanoi,21.0333,105.85,324217
+816,1976-07-02,2019-12-31,Vietnam,Vietnam,Q881,Hanoi,21.0333,105.85,324217
+817,1954-05-01,1975-04-30,South Vietnam,South Vietnam,Q180573,Saigon,10.75,106.667,168563
+820,1946-04-01,1948-01-31,Malayan Union,Malayan Union,Q976099,Kuala Lumpur,3.16667,101.7,131495
+820,1948-02-01,1957-08-30,Federation of Malaya,Federation of Malaya,Q1479726,Kuala Lumpur,3.16667,101.7,131495
+820,1957-08-31,1963-09-15,Federation of Malaya,Federation of Malaya,Q1479726,Kuala Lumpur,3.16667,101.7,131495
+820,1963-09-16,1965-08-08,Malaysia,Malaysia,Q833,Kuala Lumpur,3.16667,101.7,328936
+820,1965-08-09,2019-12-31,Malaysia,Malaysia,Q833,Kuala Lumpur,3.16667,101.7,328392
+821,1896-07-01,1909-03-09,Federated Malay States,Federated Malay States,Q1400154,Kuala Lumpur,3.16667,101.7,68720
+821,1909-03-10,1946-03-31,Federated Malay States,Federated Malay States,Q1400154,Kuala Lumpur,3.16667,101.7,71415
+822,1886-01-01,1909-03-09,Unfederated Malay States,Unfederated Malay States,Q1973084,Johor Bahru,1.4927,103.741,19112
+822,1909-03-10,1946-03-31,Unfederated Malay States,Unfederated Malay States,Q1973084,Johor Bahru,1.4927,103.741,57024
+823,1888-05-12,1889-06-19,North Borneo,North Borneo,Q1147441,Sandakan (Elopura),5.84296,118.108,72620
+823,1889-06-20,1946-07-14,North Borneo,North Borneo,Q1147441,Sandakan (Elopura),5.84296,118.108,72620
+823,1946-07-15,1963-09-15,North Borneo,North Borneo,Q1147441,Sandakan (Elopura),5.84296,118.108,72620
+824,1888-06-14,1889-06-19,Raj of Sarawak,Raj of Sarawak,Q1658411,Kuching,1.52997,110.33,124276
+824,1889-06-20,1946-06-30,Raj of Sarawak,Raj of Sarawak,Q1658411,Kuching,1.52997,110.33,124276
+824,1946-07-01,1963-09-15,Crown Colony of Sarawak,Crown Colony of Sarawak,Q5589708,Kuching,1.52997,110.33,124276
+827,1886-01-01,1946-03-31,Straits Settlements,Straits Settlements,Q376178,Singapore City,1.29027,103.852,3601
+830,1946-04-01,1962-12-31,Colony of Singapore,Colony of Singapore,Q4373718,Singapore City,1.29306,103.856,545
+830,1965-08-09,2019-12-31,Singapore,Singapore,Q334,Singapore City,1.29306,103.856,545
+835,1888-09-17,1983-12-31,Brunei,Brunei,Q921,Bandar Seri Begawan,4.88333,114.933,5729
+835,1984-01-01,2019-12-31,Brunei,Brunei,Q921,Bandar Seri Begawan,4.88333,114.933,5729
+840,1886-01-01,1898-12-09,Captaincy General of the Philippines,Captaincy General of the Philippines,Q2721139,Manila,14.6042,120.982,292049
+840,1898-12-10,1898-12-10,History of the Philippines,History of the Philippines (1898–1946),Q16056052,Manila,14.6042,120.982,292049
+840,1898-12-11,1935-11-14,History of the Philippines,History of the Philippines (1898–1946),Q16056052,Manila,14.6042,120.982,292049
+840,1935-11-15,1946-07-03,Commonwealth of the Philippines,Commonwealth of the Philippines,Q146328,Manila,14.6042,120.982,292049
+840,1946-07-04,1948-07-16,Philippines,Philippines,Q928,Manila,14.6042,120.982,292049
+840,1948-07-17,1976-05-28,Philippines,Philippines,Q928,Quezon City,14.6504,121.03,292049
+840,1976-05-29,2019-12-31,Philippines,Philippines,Q928,Manila,14.6042,120.982,292049
+850,1886-01-01,1889-06-19,Dutch East Indies,Dutch East Indies,Q188161,Jakarta,-6.17444,106.829,1877240
+850,1889-06-20,1945-08-16,Dutch East Indies,Dutch East Indies,Q188161,Jakarta,-6.17444,106.829,1877240
+850,1945-08-17,1949-12-26,Dutch East Indies,Dutch East Indies,Q188161,Jakarta,-6.17444,106.829,1877240
+850,1949-12-27,1949-12-28,Indonesia,Indonesia,Q252,Jakarta,-6.17444,106.829,1877240
+850,1949-12-29,1969-09-16,Indonesia,Indonesia,Q252,Jakarta,-6.17444,106.829,1466880
+850,1969-09-17,1976-07-16,Indonesia,Indonesia,Q252,Jakarta,-6.17444,106.829,1877240
+850,1976-07-17,2002-05-19,Indonesia,Indonesia,Q252,Jakarta,-6.17444,106.829,1892270
+850,2002-05-20,2019-12-31,Indonesia,Indonesia,Q252,Jakarta,-6.17444,106.829,1877240
+851,1949-12-29,1962-08-14,Dutch New Guinea,Dutch New Guinea,Q941881,Hollandia,-2.53299,140.7,410361
+851,1962-08-15,1963-04-30,Dutch New Guinea,Dutch New Guinea,Q941881,Hollandia,-2.53299,140.7,410361
+851,1963-05-01,1969-09-16,Dutch New Guinea,Dutch New Guinea,Q941881,Hollandia,-2.53299,140.7,410361
+860,1886-01-01,1976-07-16,Portuguese Timor,Portuguese Timor,Q142965,Dili,-8.55861,125.574,15024
+860,2002-05-20,2019-12-31,Timor-Leste,Timor-Leste,Q574,Dili,-8.55861,125.574,15024
+900,1901-01-01,1927-05-08,Australia,Australia,Q408,Melbourne,-37.82,144.975,7686690
+900,1927-05-09,2019-12-31,Australia,Australia,Q408,Canberra,-35.2833,149.217,7686690
+901,1886-01-01,1900-12-31,Colony of New South Wales,Colony of New South Wales,Q18348382,Sydney,-33.92,151.185,796177
+902,1886-01-01,1900-12-31,History of Western Australia,History of Western Australia,Q286845,Perth,-31.955,115.84,2521930
+903,1886-01-01,1900-12-31,Province of South Australia,Province of South Australia,Q113324452,Adelaide,-34.935,138.6,2313360
+904,1886-01-01,1900-12-31,Colony of Victoria,Colony of Victoria,Q56850459,Melbourne,-37.82,144.975,238068
+905,1886-01-01,1900-12-31,Colony of Queensland,Colony of Queensland,Q28401203,Brisbane,-27.455,153.035,1748620
+906,1886-01-01,1900-12-31,Colony of Tasmania,Colony of Tasmania,Q5148519,Hobart,-42.85,147.295,68138
+910,1949-07-01,1975-09-15,Territory of Papua and New Guinea,Territory of Papua and New Guinea,Q2301972,Port Moresby,-9.46472,147.193,461689
+910,1975-09-16,2019-12-31,Papua New Guinea,Papua New Guinea,Q691,Port Moresby,-9.46472,147.193,461689
+911,1886-01-01,1887-12-31,British New Guinea,British New Guinea,Q2645837,Port Moresby,-9.46471,147.193,223928
+911,1888-01-01,1905-11-15,British New Guinea,British New Guinea,Q2645837,Port Moresby,-9.46471,147.193,223928
+911,1905-11-16,1906-08-31,British New Guinea,British New Guinea,Q2645837,Port Moresby,-9.46471,147.193,223928
+911,1906-09-01,1920-12-16,Territory of Papua,Territory of Papua,Q530560,Port Moresby,-9.46471,147.193,223928
+911,1920-12-17,1949-06-30,Territory of Papua,Territory of Papua,Q530560,Port Moresby,-9.46471,147.193,223928
+912,1886-01-01,1890-12-31,German New Guinea,German New Guinea,Q165008,Finschhafen,-6.6,147.85,228300
+912,1891-01-01,1899-12-31,German New Guinea,German New Guinea,Q165008,Friedrich-Wilhelmshafen,-5.22481,145.785,228300
+912,1900-01-01,1909-12-31,German New Guinea,German New Guinea,Q165008,Kokopo,-4.35,152.274,228300
+912,1910-01-01,1914-09-16,German New Guinea,German New Guinea,Q165008,Rabaul (Simpsonhafen),-4.20549,152.143,228300
+912,1914-09-17,1914-11-10,Territory of New Guinea,Territory of New Guinea,Q1443945,Rabaul (Simpsonhafen),-4.20549,152.143,228300
+912,1914-11-11,1920-06-27,Territory of New Guinea,Territory of New Guinea,Q1443945,Rabaul (Simpsonhafen),-4.20549,152.143,228300
+912,1920-06-28,1949-06-30,Territory of New Guinea,Territory of New Guinea,Q1443945,Rabaul (Simpsonhafen),-4.20549,152.143,237756
+920,1886-01-01,1907-08-31,Colony of New Zealand,Colony of New Zealand,Q5148518,Wellington,-41.3,174.783,268491
+920,1907-09-01,1907-09-25,Colony of New Zealand,Colony of New Zealand,Q5148518,Wellington,-41.3,174.783,268491
+920,1907-09-26,1947-11-24,Dominion of New Zealand,Dominion of New Zealand,Q2594990,Wellington,-41.3,174.783,268491
+920,1947-11-25,2019-12-31,New Zealand,New Zealand,Q664,Wellington,-41.3,174.783,268491
+930,1886-01-01,2019-12-31,New Caledonia,New Caledonia,Q33788,Nouméa,-22.2758,166.458,23883
+940,1893-03-15,1899-11-13,British Solomon Islands,British Solomon Islands,Q13410267,Tulaghi,-9.08558,160.148,19641
+940,1899-11-14,1951-12-31,British Solomon Islands,British Solomon Islands,Q13410267,Tulaghi,-9.08558,160.148,26861
+940,1952-01-01,1978-07-06,British Solomon Islands,British Solomon Islands,Q13410267,Honiara,-9.43333,159.95,26861
+940,1978-07-07,2019-12-31,Solomon Islands,Solomon Islands,Q685,Honiara,-9.43333,159.95,26861
+950,1886-01-01,1970-10-09,Colony of Fiji,Colony of Fiji,Q5148320,Suva,-18.1341,178.43,18031
+950,1970-10-10,2019-12-31,Fiji,Fiji,Q712,Suva,-18.1341,178.43,18031
+960,1903-05-19,2019-12-31,French Polynesia,French Polynesia,Q30971,Pape'ete,-17.5373,-149.566,12559
+1201,1930-07-06,1946-03-18,Inini,Inini,Q1663537,Saint-Elie,4.8227,-53.2764,70643
+3461,1886-01-01,1908-10-06,Austro-Hungarian rule in Bosnia and Herzegovina,Austro-Hungarian rule in Bosnia and Herzegovina,Q609233,Sarajevo,43.85,18.383,41446
+3462,1886-01-01,1908-10-06,Austro-Hungarian rule in Bosnia and Herzegovina,Austro-Hungarian rule in Bosnia and Herzegovina,Q609233,Mostar,43.3333,17.8,10089
+4781,1886-01-01,1906-02-15,Lagos Colony,Lagos Colony,Q472146,Lagos,6.50722,3.38587,71585
+4782,1886-01-01,1898-12-31,Niger Coast Protectorate,Niger Coast Protectorate,Q2566427,Old Calabar (Calabar),4.95,8.31667,130337
+4783,1899-01-01,1906-02-15,Southern Nigeria Protectorate,Southern Nigeria Protectorate,Q2062030,Old Calabar (Calabar),4.95,8.31667,130337
+4783,1906-02-16,1913-12-31,Southern Nigeria Protectorate,Southern Nigeria Protectorate,Q2062030,Old Calabar (Calabar),4.95,8.31667,202104
+4784,1899-01-01,1902-12-31,Northern Nigeria Protectorate,Northern Nigeria Protectorate,Q585408,Lokoja,7.80039,6.73994,727266
+4784,1903-01-01,1904-04-07,Northern Nigeria Protectorate,Northern Nigeria Protectorate,Q585408,Zungeru,9.8,6.15,727266
+4784,1904-04-08,1913-12-31,Northern Nigeria Protectorate,Northern Nigeria Protectorate,Q585408,Zungeru,9.8,6.15,660582
+5200,1889-11-19,1897-03-19,Italian Somaliland,Italian Somaliland,Q319984,Mogadishu,2.04693,45.3182,370343
+5200,1897-03-20,1908-04-29,Italian Somaliland,Italian Somaliland,Q319984,Mogadishu,2.04693,45.3182,370343
+5200,1908-04-30,1924-06-30,Italian Somaliland,Italian Somaliland,Q319984,Mogadishu,2.04693,45.3667,370343
+5200,1924-07-01,1941-03-19,Italian Somaliland,Italian Somaliland,Q319984,Mogadishu,2.04693,45.3667,464748
+5200,1941-03-20,1950-03-31,Italian Somaliland,Italian Somaliland,Q319984,Mogadishu,2.04693,45.3667,464748
+5200,1950-04-01,1960-06-30,Italian Somaliland,Italian Somaliland,Q319984,Mogadishu,2.04693,45.3667,464748
+5518,1900-01-29,1911-08-17,North-Eastern Rhodesia,North-Eastern Rhodesia,Q2753015,Chipata (Fort Jameson),-13.65,32.6333,285474
+5519,1900-01-29,1905-05-29,Barotziland–North-Western Rhodesia,Barotziland–North-Western Rhodesia,Q20312596,Livingstone,-17.86,25.86,369534
+5519,1905-05-30,1911-08-17,Barotziland–North-Western Rhodesia,Barotziland–North-Western Rhodesia,Q20312596,Livingstone,-17.86,25.86,466453
+5612,1886-01-01,1890-06-29,British Bechuanaland,British Bechuanaland,Q4530733,Vryburg,-26.96,24.73,117117
+5612,1890-06-30,1895-11-15,British Bechuanaland,British Bechuanaland,Q4530733,Vryburg,-26.96,24.73,117117
+6021,1956-04-07,1958-04-09,Cape Juby,Cape Juby,Q1538846,Tarfaya,27.9389,-12.9222,28689
+6511,1948-05-14,1967-06-09,United Arab Republic occupation of the Gaza Strip,United Arab Republic occupation of the Gaza Strip,Q7075778,Gaza,31.5017,34.4668,373
+6631,1948-05-14,1967-06-09,Jordanian annexation of the West Bank,Jordanian annexation of the West Bank,Q2893000,East Jerusalem,31.7834,35.2339,5871
+6801,1962-04-04,1967-11-29,Federation of South Arabia,Federation of South Arabia,Q834486,Aden,12.8,45.0333,287228
+6812,1937-04-01,1962-04-03,Aden Protectorate,Aden Protectorate,Q1865132,Mukalla,14.5412,49.1259,240812
+7020,1886-01-01,1920-09-01,Emirate of Bukhara,Emirate of Bukhara,Q746558,Bukhara,39.78,64.43,194115
+7030,1886-01-01,1920-02-01,Khanate of Khiva,Khanate of Khiva,Q491106,Khiva,41.3911,60.3557,101600
+7351,1905-09-05,1945-08-14,Karafuto Prefecture,Karafuto Prefecture,Q696736,Toyohara,46.965,142.74,32106
+7506,1947-08-15,1949-01-04,Jammu and Kashmir,Jammu and Kashmir (princely state),Q2571484,Srinagar,34.0837,74.7973,105844
+7708,1947-08-15,1949-01-04,Azad Kashmir,Azad Kashmir,Q200130,Gilgit,35.8819,74.4643,81689
+8201,1886-01-01,1896-06-30,Perak,Perak,Q188953,Taiping,4.86496,100.72,18100
+8202,1886-01-01,1896-06-30,Selangor,Selangor,Q189710,Kuala Lumpur,3.16667,101.7,6856
+8203,1888-01-01,1896-06-30,Pahang,Pahang,Q191346,Pekan,3.4921,103.39,36294
+9401,1886-01-01,1899-11-13,German New Guinea,German New Guinea,Q165008,Kieta,-6.22972,155.624,16676

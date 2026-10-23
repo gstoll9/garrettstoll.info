@@ -884,3 +884,340 @@
   text-align: left;
   cursor: pointer;
 }
+
+/* ── Time slider ─────────────────────────────────────────────────────── */
+/* Land the historical source has no territory for (and coastline slivers between the
+   two datasets): darker than countries, so gaps read as gaps */
+.wm-land-nodata {
+  fill: #1c2840;
+  stroke: none;
+}
+
+.wm-time {
+  position: absolute;
+  left: 12px;
+  z-index: 20;
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 8px 14px 4px;
+  background: rgba(13, 20, 36, 0.94);
+  border: 1px solid #24324f;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  color: var(--wm-ink-2);
+  font-size: 0.8rem;
+  transition: right 0.25s, bottom 0.25s;
+}
+
+.wm-time-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wm-time-head button {
+  padding: 0;
+  background: none;
+  border: 0;
+  color: #e6e9ef;
+  cursor: pointer;
+}
+
+.wm-time-head button:disabled {
+  color: #3a4866;
+  cursor: default;
+}
+
+.wm-time-play {
+  width: 26px;
+  height: 26px;
+  border-radius: 50% !important;
+  background: #22314f !important;
+  font-size: 0.7rem;
+}
+
+.wm-time-play:hover {
+  background: #2d3f63 !important;
+}
+
+.wm-time-step {
+  width: 18px;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.wm-time-year {
+  min-width: 3.4em;
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.wm-time-caption {
+  margin-left: auto;
+  color: var(--wm-ink-3);
+  font-size: 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Ticks and axis are inset by half the thumb width so they line up with the thumb */
+.wm-time-track {
+  position: relative;
+  padding-top: 12px;
+}
+
+.wm-time-ticks {
+  position: absolute;
+  top: 2px;
+  left: 7px;
+  width: calc(100% - 14px);
+  height: 12px;
+}
+
+.wm-time-ticks rect {
+  fill: #56658a;
+}
+
+.wm-time-track input[type='range'] {
+  display: block;
+  width: 100%;
+  margin: 0;
+  accent-color: #e0a43a;
+  cursor: pointer;
+}
+
+.wm-time-axis {
+  position: relative;
+  height: 14px;
+  margin: 0 7px;
+}
+
+.wm-time-axis span {
+  position: absolute;
+  transform: translateX(-50%);
+  color: #5b6a86;
+  font-size: 0.65rem;
+}
+
+.wm-notice {
+  margin: 0 0 12px !important;
+  padding: 8px 10px;
+  background: #1b2742;
+  border-left: 3px solid #e0a43a;
+  border-radius: 3px;
+  font-size: 0.82rem;
+  color: var(--wm-ink-2);
+}
+
+.wm-footnote {
+  margin-top: 20px !important;
+  color: var(--wm-ink-3);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 640px) {
+  .wm-time-caption {
+    display: none;
+  }
+}
+
+/* ── Selectable charts and goods lists (Economy tab) ─────────────────── */
+.wm-legend-select button {
+  padding: 2px 6px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.wm-legend-select button:hover {
+  border-color: #2f3e5e;
+}
+
+.wm-legend-select button.wm-active {
+  background: #1b2742;
+  border-color: #3a4866;
+  color: #fff;
+}
+
+.wm-sharebar .wm-seg {
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.wm-sharebar .wm-seg.wm-dim {
+  opacity: 0.35;
+}
+
+.wm-detail {
+  margin-top: 8px;
+  padding: 2px 12px 10px;
+  background: #101a2e;
+  border-left: 2px solid #2f3e5e;
+  border-radius: 0 6px 6px 0;
+}
+
+.wm-ranked ol {
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wm-ranked li {
+  padding: 3px 0;
+}
+
+.wm-ranked-text {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.8rem;
+}
+
+.wm-ranked-label {
+  overflow: hidden;
+  color: #e6e9ef;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wm-ranked-value {
+  flex-shrink: 0;
+  color: var(--wm-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.wm-ranked-track {
+  height: 6px;
+  margin-top: 2px;
+  background: #18233a;
+  border-radius: 3px;
+}
+
+.wm-ranked-bar {
+  height: 100%;
+  border-radius: 3px;
+}
+
+/* ── Right-hand control stack (colour-by + trade flows) ──────────────── */
+.wm-right-controls {
+  position: absolute;
+  top: 16px;
+  right: 12px;
+  z-index: 25;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 250px;
+  transition: right 0.25s;
+}
+
+.wm-right-controls .wm-colorby {
+  position: static;
+  width: auto;
+}
+
+.wm-arcsctl {
+  padding: 10px 12px;
+  background: rgba(13, 20, 36, 0.94);
+  border: 1px solid #24324f;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  font-size: 0.8rem;
+  color: var(--wm-ink-2);
+}
+
+.wm-seg-buttons {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  background: #121c31;
+  border: 1px solid #2f3e5e;
+  border-radius: 5px;
+}
+
+.wm-seg-buttons button {
+  flex: 1;
+  padding: 4px 0;
+  background: none;
+  border: 0;
+  border-radius: 3px;
+  color: var(--wm-ink-3);
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.wm-seg-buttons button.wm-active {
+  background: #2a3a5c;
+  color: #fff;
+}
+
+/* ── Trade arcs ──────────────────────────────────────────────────────── */
+.wm-arcs {
+  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.7));
+}
+
+.wm-arc-ground {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.45);
+  stroke-width: 1.5;
+  stroke-dasharray: 2 4;
+  vector-effect: non-scaling-stroke;
+}
+
+.wm-arc-line {
+  fill: none;
+  stroke-linecap: round;
+  opacity: 0.85;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 10 6;
+  animation: wm-arc-flow 1.6s linear infinite;
+}
+
+.wm-arc-hit {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 10;
+  vector-effect: non-scaling-stroke;
+  cursor: default;
+}
+
+.wm-arc:hover .wm-arc-line {
+  opacity: 1;
+}
+
+.wm-arc-end {
+  fill: #fff;
+  stroke: #0b1220;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+@keyframes wm-arc-flow {
+  to { stroke-dashoffset: -32; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wm-arc-line {
+    animation: none;
+    stroke-dasharray: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .wm-right-controls {
+    top: 70px;
+    width: min(250px, calc(100% - 24px));
+  }
+}
+
+.wm-info {
+  color: #8fb4ff;
+  cursor: help;
+}

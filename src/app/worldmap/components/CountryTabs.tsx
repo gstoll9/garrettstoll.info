@@ -1,9 +1,11 @@
 'use client'
 // Government / Economy / Demographics tabs of the country panel, read from the CSV database
-import type { CountryData, LegislatureRow, OfficeRow, Point, RegionData, SeatRow } from '../lib/db';
+import { useEffect, useState } from 'react';
+import type { CountryData, LegislatureRow, OfficeRow, Point, RegionData, SeatRow, TradeData, TradeFlow, TradeSector } from '../lib/db';
+import { loadTradeData } from '../lib/db';
 import { wikiLink } from '../lib/db';
 import { compact, formatValue } from '../lib/format';
-import { Hemicycle, LineChart, SERIES, ScoreBars, ShareBar, StackedShare, StatGrid } from './charts';
+import { Hemicycle, LineChart, RankedBars, SERIES, ScoreBars, ShareBar, StackedShare, StatGrid } from './charts';
 
 const latestPoint = (pts?: Point[]) => (pts?.length ? pts[pts.length - 1] : undefined);
 
@@ -142,7 +144,56 @@ export function GovernmentTab({ d }: { d: CountryData }) {
 }
 
 // ── Economy ──────────────────────────────────────────────────────────────────
+type SectorLabel = 'Agriculture' | 'Industry' | 'Services';
+const SECTOR_KEY: Record<SectorLabel, TradeSector> = { Agriculture: 'agriculture', Industry: 'industry', Services: 'services' };
+const SECTOR_ADJ: Record<TradeSector, string> = { agriculture: 'agricultural', industry: 'industrial', services: 'service' };
+const SECTOR_SCOPE: Record<TradeSector, string> = {
+  agriculture: 'crops, livestock, fish and food (HS 01–24), plus raw fibres, hides, rubber and timber',
+  industry: 'minerals, fuels, chemicals, metals, machinery, vehicles and other manufactures',
+  services: 'travel, transport, ICT, financial and other business services',
+};
+const FLOW_NAME: Record<TradeFlow, string> = { X: 'exports', M: 'imports' };
+// Same colours as the sector share bar, so a sector's goods match its segment
+const SECTOR_COLOR: Record<SectorLabel, string> = { Agriculture: SERIES[0], Industry: SERIES[1], Services: SERIES[2] };
+const ATLAS_NOTE = 'Source: The Growth Lab at Harvard, Atlas of Economic Complexity';
+
+function useTrade(iso3: string) {
+  const [trade, setTrade] = useState<TradeData | null | undefined>(undefined);
+  useEffect(() => {
+    let stale = false;
+    setTrade(undefined);
+    loadTradeData(iso3)
+      .then(t => { if (!stale) setTrade(t); })
+      .catch(() => { if (!stale) setTrade(null); });
+    return () => { stale = true; };
+  }, [iso3]);
+  return trade;
+}
+
+// Top products of one flow within the given sectors, as shares of those sectors' total
+function TopGoods({ trade, flow, sectors, title, color, limit = 10 }: {
+  trade: TradeData; flow: TradeFlow; sectors: TradeSector[]; title: string; color: string; limit?: number;
+}) {
+  const tot = trade.totals[flow];
+  const items = trade.items[flow].filter(i => sectors.includes(i.sector)).slice(0, limit);
+  if (!tot || !items.length) return <p className="wm-status">No {sectors.map(s => SECTOR_ADJ[s]).join('/')} {FLOW_NAME[flow]} recorded.</p>;
+  const base = sectors.reduce((s, k) => s + tot[k], 0);
+  return (
+    <RankedBars
+      title={title}
+      note={`${tot.year} · % of $${compact(base)}`}
+      color={color}
+      rows={items.map(i => ({ label: i.name, value: `$${compact(i.value)}`, share: (i.value / base) * 100 }))}
+    />
+  );
+}
+
 export function EconomyTab({ d }: { d: CountryData }) {
+  const trade = useTrade(d.country.iso3);
+  const [sector, setSector] = useState<SectorLabel | null>(null);
+  const [flowLabel, setFlowLabel] = useState<string | null>(null);
+  const flow: TradeFlow | null = flowLabel === 'Exports' ? 'X' : flowLabel === 'Imports' ? 'M' : null;
+  const loadingTrade = trade === undefined ? <p className="wm-status">Loading trade data…</p> : null;
   const sectors = ['NV.AGR.TOTL.ZS', 'NV.IND.TOTL.ZS', 'NV.SRV.TOTL.ZS'];
   const sectorYear = Math.min(...sectors.map(c => latestPoint(d.series.get(c))?.year ?? 0));
   const sectorParts = sectorYear
@@ -167,9 +218,38 @@ export function EconomyTab({ d }: { d: CountryData }) {
       <LineChart title="GDP per capita" unit={unitOf(d, 'NY.GDP.PCAP.CD')} series={[seriesFor(d, 'NY.GDP.PCAP.CD')]} />
       <LineChart title="Real GDP growth" unit="% annual" zeroLine series={[seriesFor(d, 'NY.GDP.MKTP.KD.ZG')]} />
       <LineChart title="Inflation" unit="% annual, consumer prices" zeroLine series={[seriesFor(d, 'FP.CPI.TOTL.ZG')]} />
-      {sectorParts.length > 0 && <ShareBar title="Economy by sector" note={`value added, % of GDP, ${sectorYear}`} parts={sectorParts} />}
+      {sectorParts.length > 0 && (
+        <ShareBar title="Economy by sector" note={`value added, % of GDP, ${sectorYear}`} parts={sectorParts}
+          selected={sector} onSelect={l => setSector(l as SectorLabel | null)} hint="Click a sector to see its major goods." />
+      )}
+      {sector && (
+        <div className="wm-detail">
+          {loadingTrade ?? (trade ? <>
+            <TopGoods trade={trade} flow="X" sectors={[SECTOR_KEY[sector]]} color={SECTOR_COLOR[sector]}
+              title={`Major ${SECTOR_ADJ[SECTOR_KEY[sector]]} exports`} />
+            <TopGoods trade={trade} flow="M" sectors={[SECTOR_KEY[sector]]} color={SECTOR_COLOR[sector]} limit={5}
+              title={`Major ${SECTOR_ADJ[SECTOR_KEY[sector]]} imports`} />
+            <p className="wm-chart-note">
+              {ATLAS_NOTE}. {sector}: {SECTOR_SCOPE[SECTOR_KEY[sector]]}. Production by product isn&apos;t openly
+              available for every country, so a sector&apos;s goods are shown by what it trades.
+            </p>
+          </> : <p className="wm-status">No product-level trade data for this country.</p>)}
+        </div>
+      )}
       <LineChart title="Trade" unit="% of GDP"
-        series={[seriesFor(d, 'NE.EXP.GNFS.ZS', 0, 'Exports'), seriesFor(d, 'NE.IMP.GNFS.ZS', 1, 'Imports')]} />
+        series={[seriesFor(d, 'NE.EXP.GNFS.ZS', 0, 'Exports'), seriesFor(d, 'NE.IMP.GNFS.ZS', 1, 'Imports')]}
+        selected={flowLabel} onSelect={setFlowLabel} hint="Click Exports or Imports to see the main goods traded." />
+      {flow && (
+        <div className="wm-detail">
+          {loadingTrade ?? (trade ? <>
+            <TopGoods trade={trade} flow={flow} sectors={['agriculture', 'industry']} color={flow === 'X' ? SERIES[0] : SERIES[1]}
+              title={`Top goods ${FLOW_NAME[flow]}`} />
+            <TopGoods trade={trade} flow={flow} sectors={['services']} color={SECTOR_COLOR.Services} limit={6}
+              title={`Service ${FLOW_NAME[flow]}`} />
+            <p className="wm-chart-note">{ATLAS_NOTE}.</p>
+          </> : <p className="wm-status">No product-level trade data for this country.</p>)}
+        </div>
+      )}
       <LineChart title="Unemployment" unit="% of labor force" series={[seriesFor(d, 'SL.UEM.TOTL.ZS')]} />
       <WorldBankNote />
     </>

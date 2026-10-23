@@ -324,7 +324,7 @@ admin1,algeria/mostaganem,Q849524,Mostaganem,35.9333,0.0903
 admin1,algeria/oran,Q131818,Oran,35.6969,-0.6331
 admin1,algeria/ain-temouchent,Q770504,Aïn Témouchent,35.3044,-1.14
 admin1,algeria/setif,Q244004,Sétif,36.19,5.41
-admin1,algeria/bordj-bou-arreridj,Q544733,Algiers,36.0667,4.7667
+admin1,algeria/bordj-bou-arreridj,Q544733,Bordj Bou Arréridj,36.0667,4.7667
 admin1,algeria/bouira,Q722522,Bouïra,36.3783,3.8925
 admin1,algeria/blida,Q216990,Blida,36.4722,2.8333
 admin1,algeria/tissemsilt,Q770447,Tissemsilt,35.6072,1.8106
@@ -1395,8 +1395,8 @@ admin1,indonesia/west-papua,Q848672,Manokwari,-0.8667,134.0833
 admin1,indonesia/central-sulawesi,Q15826,Palu,-0.895,119.8594
 admin1,indonesia/north-maluku,Q65300020,Sofifi,0.7244,127.5806
 admin1,indonesia/riau-islands,Q10104,Tanjungpinang,0.9188,104.4554
-admin1,indonesia/riau,Q10104,Tanjungpinang,0.9188,104.4554
 admin1,indonesia/riau,Q7786,Pekanbaru,0.5333,101.45
+admin1,indonesia/riau,Q10104,Tanjungpinang,0.9188,104.4554
 admin1,indonesia/gorontalo,Q14525,Gorontalo,0.5422,123.0614
 admin1,indonesia/north-sulawesi,Q15847,Manado,1.4931,124.8413
 admin1,indonesia/west-sulawesi,Q1070920,Mamuju,-2.6786,118.8933
@@ -1407,12 +1407,12 @@ admin1,indonesia/bengkulu,Q8042,Bengkulu,-3.7956,102.2592
 admin1,indonesia/west-sumatra,Q7253,Padang,-0.9556,100.3606
 admin1,indonesia/north-sumatra,Q5972,Medan,3.5894,98.6739
 admin1,indonesia/aceh,Q5779,Banda Aceh,5.55,95.3175
+admin1,indonesia/central-kalimantan,Q14409,Palangka Raya,-2.21,113.92
 admin1,indonesia/central-kalimantan,Q14182,Banjarmasin,-3.3144,114.5923
 admin1,indonesia/central-kalimantan,Q12502026,Pahandut,-2.2147,113.9281
-admin1,indonesia/central-kalimantan,Q14409,Palangka Raya,-2.21,113.92
 admin1,indonesia/south-kalimantan,Q14181,Banjarbaru,-3.4389,114.8309
-admin1,indonesia/bali,Q1013537,Singaraja,-8.1167,115.0833
 admin1,indonesia/bali,Q11506,Denpasar,-8.6717,115.2339
+admin1,indonesia/bali,Q1013537,Singaraja,-8.1167,115.0833
 admin1,indonesia/bangka-belitung-islands,Q8179,Pangkal Pinang,-2.1,106.1
 admin1,iran/west-azerbaijan,Q179665,Urmia,37.5486,45.0675
 admin1,iran/east-azerbaijan,Q80053,Tabriz,38.0739,46.2961
@@ -1523,8 +1523,8 @@ admin1,italy/padua,Q617,Padua,45.4078,11.8733
 admin1,italy/rovigo,Q6572,Rovigo,45.0809,11.794
 admin1,italy/ferrara,Q13362,Ferrara,44.8392,11.6175
 admin1,italy/ravenna,Q13364,Ravenna,44.4161,12.2017
-admin1,italy/forli-cesena,Q13367,Forlì,44.2228,12.0414
 admin1,italy/forli-cesena,Q6662,Cesena,44.1333,12.2333
+admin1,italy/forli-cesena,Q13367,Forlì,44.2228,12.0414
 admin1,italy/ancona,Q3415,Ancona,43.6167,13.5167
 admin1,italy/macerata,Q13135,Macerata,43.3003,13.4533
 admin1,italy/fermo,Q13139,Fermo,43.1613,13.7184
@@ -3411,7 +3411,7 @@ admin1,ukraine/zhytomyr,Q156713,Zhytomyr,50.2544,28.6578
 admin1,ukraine/zakarpattia,Q156711,Uzhhorod,48.6239,22.295
 admin1,ukraine/chernivtsi,Q157725,Chernivtsi,48.2908,25.9344
 admin1,ukraine/ivano-frankivsk,Q156726,Ivano-Frankivsk,48.9228,24.7106
-admin1,ukraine/odessa,Q1874,Odesa,46.4775,30.7326
+admin1,ukraine/odessa,Q1874,Odesa,46.4842,30.7325
 admin1,ukraine/vinnytsia,Q157144,Vinnytsia,49.2372,28.4672
 admin1,ukraine/lviv,Q36036,Lviv,49.842,24.0316
 admin1,ukraine/sumy,Q156752,Sumy,50.9067,34.7992
@@ -3551,8 +3551,8 @@ admin1,vietnam/ak-nong,Q1822996,Gia Nghĩa,11.9833,107.7
 admin1,vietnam/ak-lak,Q33469,Buôn Ma Thuột,12.6667,108.05
 admin1,vietnam/gia-lai,Q36081,Quy Nhon,13.7696,109.2314
 admin1,vietnam/binh-phuoc,Q665981,Đồng Xoài,11.5211,106.8508
-admin1,vietnam/tay-ninh,Q134988445,Long An,10.5402,106.4147
 admin1,vietnam/tay-ninh,Q130391,Tây Ninh,11.3131,106.0963
+admin1,vietnam/tay-ninh,Q134988445,Long An,10.5402,106.4147
 admin1,vietnam/long-an,Q25897,Tân An,10.5322,106.4042
 admin1,vietnam/ong-thap,Q10806542,Mỹ Tho,10.3565,106.3666
 admin1,vietnam/an-giang,Q33421,Long Xuyên,10.3686,105.4234
@@ -3647,8 +3647,8 @@ admin1,france/provence-alpes-cote-d-azur,Q23482,Marseille,43.2967,5.3764
 admin1,france/auvergne-rhone-alpes,Q456,Lyon,45.7675,4.835
 admin1,france/nouvelle-aquitaine,Q1479,Bordeaux,44.8378,-0.5794
 admin1,france/occitania,Q7880,Toulouse,43.6044,1.4433
-admin1,france/bourgogne-franche-comte,Q37776,Besançon,47.2422,6.0214
 admin1,france/bourgogne-franche-comte,Q7003,Dijon,47.3231,5.0419
+admin1,france/bourgogne-franche-comte,Q37776,Besançon,47.2422,6.0214
 admin1,france/pays-de-la-loire,Q12191,Nantes,47.2172,-1.5539
 admin1,france/brittany,Q647,Rennes,48.1142,-1.6808
 admin1,france/normandy,Q41185,Caen,49.1814,-0.3636

@@ -1,5 +1,6 @@
 import { Body, GeoMoon, HelioVector, JupiterMoons, Rotation_EQJ_ECL, RotateVector, RotationAxis, Vector } from 'astronomy-engine';
 import { moonElements, type MoonElements } from './data/moonElements';
+import type { Comet } from './data/comets';
 import { localGroupGalaxies, type LocalGroupGalaxy } from './data/localGroup';
 import { ANDROMEDA, DISK_OVERRIDES, MILKY_WAY, SPHEROID_OVERRIDES, type DiskSpec } from './data/localGroupHosts';
 
@@ -176,6 +177,75 @@ export function orbitalPosition(orbitMode: string, t: number, orbitData: OrbitPr
   
     return [X, Z, -Y] // Adjust for three.js Z-up camera
   }
+
+// ── Comets ──────────────────────────────────────────────────────────────────
+// Two-body heliocentric motion from perihelion elements (q, e, tp), valid for ellipses,
+// near-parabolic and hyperbolic orbits alike. Mirrors `position` in jpl/generateComets.py,
+// which checks it against JPL Horizons.
+
+const GAUSS_K = 0.01720209895; // sqrt(GM_sun), AU^1.5 / day
+const COMET_AU = 12; // scene units per AU, matching data/planets.tsx
+
+// In-plane position (perifocal x toward perihelion, y along motion) for a true anomaly
+function perifocalAt(c: Comet, nu: number): [number, number] {
+    const r = c.q * (1 + c.e) / (1 + c.e * Math.cos(nu));
+    return [r * Math.cos(nu), r * Math.sin(nu)];
+}
+
+function perifocalAtDate(c: Comet, dateMs: number): [number, number] {
+    const dt = dateMs / 86400000 + 2440587.5 - c.tpJd;
+    const e = c.e;
+    if (e < 1) {
+        const a = c.q / (1 - e);
+        let M = GAUSS_K * dt / Math.pow(a, 1.5);
+        M = ((M + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI;
+        let E = e < 0.8 ? M : Math.sign(M) * Math.PI;
+        for (let k = 0; k < 50; k++) {
+            const d = (E - e * Math.sin(E) - M) / (1 - e * Math.cos(E));
+            E -= d;
+            if (Math.abs(d) < 1e-12) break;
+        }
+        return [a * (Math.cos(E) - e), a * Math.sqrt(1 - e * e) * Math.sin(E)];
+    }
+    const a = c.q / (e - 1);
+    const M = GAUSS_K * dt / Math.pow(a, 1.5);
+    let H = Math.asinh(M / e);
+    for (let k = 0; k < 50; k++) {
+        const d = (e * Math.sinh(H) - H - M) / (e * Math.cosh(H) - 1);
+        H -= d;
+        if (Math.abs(d) < 1e-12) break;
+    }
+    return [a * (e - Math.cosh(H)), a * Math.sqrt(e * e - 1) * Math.sinh(H)];
+}
+
+// Perifocal -> ecliptic (AU) -> scene units, same Y-up mapping as orbitalPosition
+function cometToScene(c: Comet, [xo, yo]: [number, number]): [number, number, number] {
+    const d2r = Math.PI / 180;
+    const O = c.nodeDeg * d2r, i = c.inclinationDeg * d2r, w = c.argPerihelionDeg * d2r;
+    const cO = Math.cos(O), sO = Math.sin(O), ci = Math.cos(i), si = Math.sin(i), cw = Math.cos(w), sw = Math.sin(w);
+    const x = (cO * cw - sO * sw * ci) * xo + (-cO * sw - sO * cw * ci) * yo;
+    const y = (sO * cw + cO * sw * ci) * xo + (-sO * sw + cO * cw * ci) * yo;
+    const z = (sw * si) * xo + (cw * si) * yo;
+    return [x * COMET_AU, z * COMET_AU, -y * COMET_AU];
+}
+
+export function cometPosition(c: Comet, dateMs: number): [number, number, number] {
+    return cometToScene(c, perifocalAtDate(c, dateMs));
+}
+
+// Orbit path, sampled evenly in true anomaly (dense near perihelion, where it curves most).
+// Hyperbolic / very long orbits are clipped to `maxAU` from the Sun.
+export function cometOrbitPath(c: Comet, maxAU = 60, samples = 360): [number, number, number][] {
+    // largest true anomaly with r <= maxAU (and inside the asymptote for e >= 1)
+    const cosLimit = (c.q * (1 + c.e) / maxAU - 1) / c.e;
+    const nuMax = cosLimit <= -1 ? Math.PI : Math.acos(Math.max(-1, Math.min(1, cosLimit)));
+    const pts: [number, number, number][] = [];
+    for (let k = 0; k <= samples; k++) {
+        const nu = -nuMax + (2 * nuMax * k) / samples;
+        pts.push(cometToScene(c, perifocalAt(c, nu)));
+    }
+    return pts;
+}
 
 // ── Moons ───────────────────────────────────────────────────────────────────
 // Planet-centred moon positions in km, already in this scene's three.js frame (same

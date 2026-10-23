@@ -1137,16 +1137,6 @@ Q140753457,USA,Q506191,,Goochland County Board of Supervisors,,
 Q6411382,USA,Q108861,,King County Council,,King County Council
 Q5795768,ARG,argentina/entre-rios,Q41144060,Chamber of Deputies of Entre Ríos,34,
 Q4985544,ARG,argentina/buenos-aires,Q40316062,Buenos Aires Province Chamber of Deputies,92,Buenos Aires Province Chamber of Deputies
-Q3014316,MEX,,Q1484825,Chamber of Deputies,500,Chamber of Deputies (Mexico)
-Q2119518,CHL,,Q1968468,Chamber of Deputies,155,Chamber of Deputies of Chile
-Q1834804,BRA,,Q949699,Chamber of Deputies,513,Chamber of Deputies (Brazil)
-Q41143524,ARG,argentina/san-luis,Q41143529,Chamber of Deputies of San Luis,43,
-Q41142955,ARG,argentina/mendoza,Q41142964,Chamber of Deputies of Mendoza,48,
-Q41142185,ARG,argentina/catamarca,Q41142156,Chamber of Deputies of Catamarca,41,
-Q40323792,ARG,argentina/corrientes,Q40323800,Chamber of Deputies of Corrientes,30,
-Q40323582,ARG,argentina/salta,Q40323553,Chamber of Deputies of Salta,60,Chamber of Deputies of Salta
-Q20081431,BOL,,Q1968458,Chamber of Deputies of Bolivia,130,Chamber of Deputies (Bolivia)
-Q20022012,ARG,argentina/santa-fe,Q5972575,Chamber of Deputies of Santa Fe,50,Chamber of Deputies of Santa Fe
 Q841424,ITA,,Q1117578,Chamber of Deputies of Italy,400,Chamber of Deputies (Italy)
 Q775767,GNQ,,Q16878152,Chamber of People's Representatives,100,Chamber of Deputies (Equatorial Guinea)
 Q629133,ARG,,Q646190,Chamber of Deputies of Argentina,257,Argentine Chamber of Deputies
@@ -1157,6 +1147,16 @@ Q320290,PRY,,Q2511660,Chamber of Deputies,80,Chamber of Deputies of Paraguay
 Q320287,HTI,,Q742110,Chamber of Deputies,119,Chamber of Deputies (Haiti)
 Q320280,DOM,,Q595411,Chamber of Deputies,183,Chamber of Deputies of the Dominican Republic
 Q320265,CZE,,Q2347172,Chamber of Deputies of the Parliament of the Czech Republic,200,Chamber of Deputies of the Czech Republic
+Q3014316,MEX,,Q1484825,Chamber of Deputies,500,Chamber of Deputies (Mexico)
+Q2119518,CHL,,Q1968468,Chamber of Deputies,155,Chamber of Deputies of Chile
+Q1834804,BRA,,Q949699,Chamber of Deputies,513,Chamber of Deputies (Brazil)
+Q20081431,BOL,,Q1968458,Chamber of Deputies of Bolivia,130,Chamber of Deputies (Bolivia)
+Q20022012,ARG,argentina/santa-fe,Q5972575,Chamber of Deputies of Santa Fe,50,Chamber of Deputies of Santa Fe
+Q41143524,ARG,argentina/san-luis,Q41143529,Chamber of Deputies of San Luis,43,
+Q41142955,ARG,argentina/mendoza,Q41142964,Chamber of Deputies of Mendoza,48,
+Q41142185,ARG,argentina/catamarca,Q41142156,Chamber of Deputies of Catamarca,41,
+Q40323792,ARG,argentina/corrientes,Q40323800,Chamber of Deputies of Corrientes,30,
+Q40323582,ARG,argentina/salta,Q40323553,Chamber of Deputies of Salta,60,Chamber of Deputies of Salta
 Q5915308,NPL,,Q3896143,House of Representatives,275,House of Representatives (Nepal)
 Q5914707,SWZ,,Q7138942,House of Assembly of Eswatini,70,House of Assembly of Eswatini
 Q5914694,BMU,,Q7138929,House of Assembly of Bermuda,36,House of Assembly of Bermuda
@@ -1172,6 +1172,28 @@ Q1141206,MDG,,Q3919000,National Assembly,160,National Assembly (Madagascar)
 Q1138713,LSO,,Q4345419,National Assembly,120,National Assembly (Lesotho)
 Q1138354,GRD,,Q1253647,House of Representatives of Grenada,16,House of Representatives (Grenada)
 Q1133185,ETH,,Q257899,House of Peoples' Representatives,547,House of Peoples' Representatives
+Q871363,AUT,,Q4817650,National Council of Austria,183,National Council (Austria)
+Q827805,BLZ,,Q1965042,House of Representatives,31,House of Representatives (Belize)
+Q818704,OMN,,Q5176472,Consultative Assembly of Oman,90,Consultative Assembly (Oman)
+Q720003,BDI,,Q7138930,National Assembly,121,National Assembly (Burundi)
+Q715641,RUS,,Q457869,State Duma,450,State Duma
+Q678545,PHL,,Q1542985,House of Representatives of the Philippines,292,House of Representatives of the Philippines
+Q676078,CHE,,Q684719,National Council of Switzerland,200,National Council (Switzerland)
+Q665693,NGA,,Q2635070,House of Representatives of Nigeria,360,House of Representatives (Nigeria)
+Q659587,JPN,,Q202384,House of Representatives,475,House of Representatives (Japan)
+Q651981,IRL,,Q129821,Dáil Éireann,174,Dáil Éireann
+Q633590,DZA,,Q3142337,People's National Assembly,407,People's National Assembly
+Q570619,BRB,,Q2565909,House of Assembly of Barbados,30,House of Assembly of Barbados
+Q320304,JOR,,Q820697,House of Representatives of Jordan,150,House of Representatives (Jordan)
+Q320273,CAN,canada/nova-scotia,Q3246027,Nova Scotia House of Assembly,51,Nova Scotia House of Assembly
+Q320268,BIH,,Q2604031,House of Representatives of Bosnia and Herzegovina,42,House of Representatives of Bosnia and Herzegovina
+Q258843,CAN,canada/newfoundland-and-labrador,Q15150636,Newfoundland and Labrador House of Assembly,40,Newfoundland and Labrador House of Assembly
+Q240823,ZAF,,Q2185780,National Assembly of South Africa,400,National Assembly (South Africa)
+Q230003,IND,,Q695252,Lok Sabha,545,Lok Sabha
+Q193582,FRA,,Q632552,National Assembly,577,National Assembly (France)
+Q169652,PRI,,Q3625555,House of Representatives of Puerto Rico,51,House of Representatives of Puerto Rico
+Q169652,PRI,puerto-rico/puerto-rico,Q3625555,House of Representatives of Puerto Rico,51,House of Representatives of Puerto Rico
+Q98964,POL,,Q2102558,Sejm of the Republic of Poland,460,Sejm
 Q2948139,BHS,,Q1572486,House of Assembly,39,
 Q2867120,,australia/tasmania,Q3365524,Tasmanian House of Assembly,35,Tasmanian House of Assembly
 Q2670027,IDN,,Q818711,the House of Representatives of the Republic of Indonesia,580,House of Representatives (Indonesia)
@@ -1206,69 +1228,50 @@ Q7566117,,australia/south-australia,Q3054418,South Australian House of Assembly,
 Q7058704,MNP,,Q1565625,Northern Mariana Islands House of Representatives,20,Northern Mariana Islands House of Representatives
 Q7058704,MNP,n-mariana-is/northern-mariana-islands,Q1565625,Northern Mariana Islands House of Representatives,20,Northern Mariana Islands House of Representatives
 Q6518225,UZB,,Q1583318,Legislative Chamber of Uzbekistan,150,Legislative Chamber of Uzbekistan
-Q871363,AUT,,Q4817650,National Council of Austria,183,National Council (Austria)
-Q827805,BLZ,,Q1965042,House of Representatives,31,House of Representatives (Belize)
-Q818704,OMN,,Q5176472,Consultative Assembly of Oman,90,Consultative Assembly (Oman)
-Q720003,BDI,,Q7138930,National Assembly,121,National Assembly (Burundi)
-Q715641,RUS,,Q457869,State Duma,450,State Duma
-Q678545,PHL,,Q1542985,House of Representatives of the Philippines,292,House of Representatives of the Philippines
-Q676078,CHE,,Q684719,National Council of Switzerland,200,National Council (Switzerland)
-Q665693,NGA,,Q2635070,House of Representatives of Nigeria,360,House of Representatives (Nigeria)
-Q659587,JPN,,Q202384,House of Representatives,475,House of Representatives (Japan)
-Q651981,IRL,,Q129821,Dáil Éireann,174,Dáil Éireann
-Q633590,DZA,,Q3142337,People's National Assembly,407,People's National Assembly
-Q570619,BRB,,Q2565909,House of Assembly of Barbados,30,House of Assembly of Barbados
-Q320304,JOR,,Q820697,House of Representatives of Jordan,150,House of Representatives (Jordan)
-Q320273,CAN,canada/nova-scotia,Q3246027,Nova Scotia House of Assembly,51,Nova Scotia House of Assembly
-Q320268,BIH,,Q2604031,House of Representatives of Bosnia and Herzegovina,42,House of Representatives of Bosnia and Herzegovina
-Q258843,CAN,canada/newfoundland-and-labrador,Q15150636,Newfoundland and Labrador House of Assembly,40,Newfoundland and Labrador House of Assembly
-Q240823,ZAF,,Q2185780,National Assembly of South Africa,400,National Assembly (South Africa)
-Q230003,IND,,Q695252,Lok Sabha,545,Lok Sabha
-Q193582,FRA,,Q632552,National Assembly,577,National Assembly (France)
-Q169652,PRI,,Q3625555,House of Representatives of Puerto Rico,51,House of Representatives of Puerto Rico
-Q169652,PRI,puerto-rico/puerto-rico,Q3625555,House of Representatives of Puerto Rico,51,House of Representatives of Puerto Rico
-Q98964,POL,,Q2102558,Sejm of the Republic of Poland,460,Sejm
 Q1334620,BHR,,Q3242616,Consultative Council of Bahrain,40,Consultative Council (Bahrain)
 Q1207095,MYS,,Q2986392,Dewan Negara,70,Dewan Negara
 Q967407,ETH,,Q257899,House of Federation,112,House of Federation
 Q953810,SVN,,Q1288169,National Council of Slovenia,40,National Council (Slovenia)
+Q679687,IMN,,Q827704,Legislative Council of the Isle of Man,11,Legislative Council of the Isle of Man
+Q609037,CHE,,Q684719,Council of States of Switzerland,46,Council of States (Switzerland)
+Q557150,AUT,,Q4817650,Federal Council of Austria,60,Federal Council (Austria)
+Q548911,JPN,,Q202384,House of Councillors to the Emperor,248,Senate (Japan)
+Q244730,IND,,Q695252,Rajya Sabha,233,Rajya Sabha
+Q1492249,CAN,canada/quebec,Q15150880,National Assembly of Quebec,125,National Assembly of Quebec
+Q383590,CAN,,Q475689,House of Commons,343,House of Commons of Canada
+Q11005,GBR,,Q11010,House of Commons,650,House of Commons of the United Kingdom
+Q1809086,CAN,canada/ontario,Q6593026,Legislative Assembly of Ontario,124,Legislative Assembly of Ontario
+Q9390785,,australia/northern-territory,Q7138951,Northern Territory Legislative Assembly,25,Northern Territory Legislative Assembly
+Q1127591,IRL,,Q129821,Seanad Éireann,60,Seanad Éireann
+Q908022,CAN,canada/yukon,Q17108558,Yukon Legislative Assembly,19,Yukon Legislative Assembly
+Q783401,AUS,,Q382118,Australian House of Representatives,151,Australian House of Representatives
+Q783330,AUS,,Q382118,Australian Senate,76,Australian Senate
+Q320303,URY,,Q1501988,Chamber of Representatives,99,Chamber of Representatives of Uruguay
+Q66096,USA,,Q11268,United States Senate,100,United States Senate
+Q2867078,CAN,canada/northwest-territories,Q15302873,Legislative Assembly of the Northwest Territories,19,Legislative Assembly of the Northwest Territories
+Q1812866,CAN,canada/alberta,Q6560903,Legislative Assembly of Alberta,87,Legislative Assembly of Alberta
+Q1537375,CAN,canada/saskatchewan,Q6596422,Legislative Assembly of Saskatchewan,61,Legislative Assembly of Saskatchewan
+Q1418426,PHL,,Q1542985,Senate of the Philippines,24,Senate of the Philippines
+Q6518214,,australia/queensland,Q3365548,Legislative Assembly of Queensland,93,Legislative Assembly of Queensland
+Q11701,USA,,Q11268,United States House of Representatives,435,United States House of Representatives
+Q841180,CAN,,Q475689,Senate of Canada,105,Senate of Canada
+Q11007,GBR,,Q11010,House of Lords,808,House of Lords
+Q186473,RUS,,Q457869,Federation Council,200,Federation Council (Russia)
 Q3244676,,australia/new-south-wales,Q3365521,New South Wales Legislative Council,42,New South Wales Legislative Council
 Q2994121,,australia/tasmania,Q3365524,Tasmanian Legislative Council,15,Tasmanian Legislative Council
 Q2994118,,australia/western-australia,Q3365500,Western Australian Legislative Council,36,Western Australian Legislative Council
 Q2993867,SDN,,Q4902948,Council of States,32,Council of States of Sudan
 Q2948392,BOL,,Q1968458,Senate of Bolivia,36,Chamber of Senators (Bolivia)
-Q11005,GBR,,Q11010,House of Commons,650,House of Commons of the United Kingdom
-Q383590,CAN,,Q475689,House of Commons,343,House of Commons of Canada
-Q1809086,CAN,canada/ontario,Q6593026,Legislative Assembly of Ontario,124,Legislative Assembly of Ontario
-Q9390785,,australia/northern-territory,Q7138951,Northern Territory Legislative Assembly,25,Northern Territory Legislative Assembly
-Q1127591,IRL,,Q129821,Seanad Éireann,60,Seanad Éireann
-Q2867078,CAN,canada/northwest-territories,Q15302873,Legislative Assembly of the Northwest Territories,19,Legislative Assembly of the Northwest Territories
-Q1812866,CAN,canada/alberta,Q6560903,Legislative Assembly of Alberta,87,Legislative Assembly of Alberta
-Q1537375,CAN,canada/saskatchewan,Q6596422,Legislative Assembly of Saskatchewan,61,Legislative Assembly of Saskatchewan
-Q1492249,CAN,canada/quebec,Q15150880,National Assembly of Quebec,125,National Assembly of Quebec
-Q1418426,PHL,,Q1542985,Senate of the Philippines,24,Senate of the Philippines
-Q11701,USA,,Q11268,United States House of Representatives,435,United States House of Representatives
-Q6518214,,australia/queensland,Q3365548,Legislative Assembly of Queensland,93,Legislative Assembly of Queensland
-Q908022,CAN,canada/yukon,Q17108558,Yukon Legislative Assembly,19,Yukon Legislative Assembly
-Q783401,AUS,,Q382118,Australian House of Representatives,151,Australian House of Representatives
-Q783330,AUS,,Q382118,Australian Senate,76,Australian Senate
-Q548911,JPN,,Q202384,House of Councillors to the Emperor,248,Senate (Japan)
-Q320303,URY,,Q1501988,Chamber of Representatives,99,Chamber of Representatives of Uruguay
-Q66096,USA,,Q11268,United States Senate,100,United States Senate
-Q841180,CAN,,Q475689,Senate of Canada,105,Senate of Canada
-Q679687,IMN,,Q827704,Legislative Council of the Isle of Man,11,Legislative Council of the Isle of Man
-Q11007,GBR,,Q11010,House of Lords,808,House of Lords
 Q2718576,MAR,,Q3004884,House of Councillors of Morocco,120,House of Councillors (Morocco)
 Q2718547,BIH,,Q2604031,House of Peoples of Bosnia and Herzegovina,15,House of Peoples of Bosnia and Herzegovina
 Q2668484,BTN,,Q2080399,National Council of Bhutan,25,National Council (Bhutan)
-Q2119509,DZA,,Q3142337,Council of the Nation,144,Council of the Nation
+Q2119509,DZA,,Q3142337,Council of the Nation,174,Council of the Nation
 Q2119484,ZAF,,Q2185780,National Council of Provinces,90,National Council of Provinces
 Q2118693,IDN,,Q818711,Regional Representative Council,152,Regional Representative Council
 Q2117607,OMN,,Q5176472,state council of Oman,86,Council of State (Oman)
 Q1969272,NAM,,Q4167580,National Council of Namibia,42,National Council (Namibia)
 Q1512428,BLR,,Q1798607,Council of the Republic of Belarus,64,Council of the Republic (Belarus)
 Q1454821,SSD,,Q5018721,Council of States,100,Council of States (South Sudan)
-Q25683566,SOM,,Q176597,Upper House of Somalia,54,Senate of Somalia
 Q19921131,TJK,,Q2011165,National Assembly of Tajikistan,33,National Assembly of Tajikistan
 Q12239042,YEM,,Q34665845,Shura Council,111,Shura Council (Yemen)
 Q9302011,,australia/victoria,Q1848835,Victorian Legislative Council,40,Victorian Legislative Council
@@ -1276,13 +1279,9 @@ Q8349995,NPL,,Q3896143,National Assembly,59,National Assembly (Nepal)
 Q7566128,,australia/south-australia,Q3054418,South Australian Legislative Council,22,South Australian Legislative Council
 Q7058709,MNP,,Q1565625,Northern Mariana Islands Senate,10,Northern Mariana Islands Senate
 Q7058709,MNP,n-mariana-is/northern-mariana-islands,Q1565625,Northern Mariana Islands Senate,10,Northern Mariana Islands Senate
-Q609037,CHE,,Q684719,Council of States of Switzerland,46,Council of States (Switzerland)
-Q557150,AUT,,Q4817650,Federal Council of Austria,60,Federal Council (Austria)
-Q244730,IND,,Q695252,Rajya Sabha,233,Rajya Sabha
-Q186473,RUS,,Q457869,Federation Council,200,Federation Council (Russia)
+Q25683566,SOM,,Q176597,Upper House of Somalia,54,Senate of Somalia
 Q1137584,LBR,,Q4345418,House of Representatives,73,House of Representatives of Liberia
 Q1571756,COL,,Q1284236,Chamber of Representatives of Colombia,172,Chamber of Representatives of Colombia
-Q64744338,EGY,,Q2584535,Senate of Egypt,300,Senate (Egypt)
 Q6124883,ARG,argentina/buenos-aires,Q40316062,Senate of Buenos Aires Province,46,Buenos Aires Province Senate
 Q5795791,ARG,argentina/entre-rios,Q41144060,Senate of Entre Ríos,17,
 Q4744880,ASM,,Q1267503,American Samoa Senate,18,American Samoa Senate
@@ -1306,6 +1305,16 @@ Q1149788,URY,,Q1501988,Chamber of senators,30,Senate of Uruguay
 Q1142439,LBR,,Q4345418,Senate of Liberia,30,Senate of Liberia
 Q969494,PLW,,Q1384462,Senate of Palau,9,Senate of Palau
 Q927191,LSO,,Q4345419,Senate of Lesotho,33,Senate of Lesotho
+Q64744338,EGY,,Q2584535,Senate of Egypt,300,Senate (Egypt)
+Q855343,ESP,,Q219692,Senate of Spain,266,Senate of Spain
+Q827490,BLZ,,Q1965042,Senate of Belize,13,Senate (Belize)
+Q659211,ZWE,,Q2083905,Senate of Zimbabwe,40,Senate of Zimbabwe
+Q633872,ITA,,Q1117578,Senate of the Republic,205,Senate of the Republic (Italy)
+Q586461,BRB,,Q2565909,Senate of Barbados,21,Senate of Barbados
+Q389423,CZE,,Q2347172,Senate of the Czech Republic,81,Senate of the Czech Republic
+Q264113,MEX,,Q1484825,Senate of the Republic,128,Senate of the Republic (Mexico)
+Q215987,FRA,,Q632552,Senate,348,Senate (France)
+Q98975,POL,,Q2102558,Senate of Poland,100,Senate of Poland
 Q3055339,KHM,,Q1320418,Senate of Cambodia,61,Senate (Cambodia)
 Q2993611,NGA,,Q2635070,Senate of Nigeria,109,Senate of Nigeria
 Q2571392,PAK,,Q2665089,Senate of Pakistan,104,Senate of Pakistan
@@ -1319,6 +1328,10 @@ Q2117771,SWZ,,Q7138942,Senate of Eswatini,30,Senate of Eswatini
 Q2117711,UZB,,Q1583318,Senate of Uzbekistan,100,Senate of Uzbekistan
 Q1563075,LCA,,Q1563736,Senate of Saint Lucia,11,Senate of Saint Lucia
 Q1466018,ROU,,Q1813360,Senate,155,Senate of Romania
+Q16934005,BMU,,Q7138929,Senate of Bermuda,11,Senate of Bermuda
+Q16554674,ARG,argentina/santa-fe,Q5972575,Senate of Santa Fe,19,Senate of Santa Fe
+Q14759322,GNQ,,Q16878152,Senate of Equatorial Guinea,70,Senate (Equatorial Guinea)
+Q6978858,KEN,,Q14468380,Senate of Kenya,67,Senate of Kenya
 Q41143516,ARG,argentina/san-luis,Q41143529,Senate of San Luis,9,
 Q41142948,ARG,argentina/mendoza,Q41142964,Senate of Mendoza,38,
 Q41142147,ARG,argentina/catamarca,Q41142156,Senate of Catamarca,16,
@@ -1326,19 +1339,6 @@ Q40323796,ARG,argentina/corrientes,Q40323800,Senate of Corrientes,15,
 Q40323546,ARG,argentina/salta,Q40323553,Senate of Salta,23,Senate of Salta
 Q27897650,JAM,,Q122635,Senate of Jamaica,21,
 Q27881014,CIV,,Q27881072,Senate,99,Senate of Ivory Coast
-Q16934005,BMU,,Q7138929,Senate of Bermuda,11,Senate of Bermuda
-Q16554674,ARG,argentina/santa-fe,Q5972575,Senate of Santa Fe,19,Senate of Santa Fe
-Q14759322,GNQ,,Q16878152,Senate of Equatorial Guinea,70,Senate (Equatorial Guinea)
-Q6978858,KEN,,Q14468380,Senate of Kenya,67,Senate of Kenya
-Q855343,ESP,,Q219692,Senate of Spain,266,Senate of Spain
-Q827490,BLZ,,Q1965042,Senate of Belize,13,Senate (Belize)
-Q659211,ZWE,,Q2083905,Senate of Zimbabwe,40,Senate of Zimbabwe
-Q633872,ITA,,Q1117578,Senate of the Republic,205,Senate of the Republic (Italy)
-Q586461,BRB,,Q2565909,Senate of Barbados,21,Senate of Barbados
-Q389423,CZE,,Q2347172,Senate of the Czech Republic,81,Senate of the Czech Republic
-Q264113,MEX,,Q1484825,Senate of the Republic,128,Senate of the Republic (Mexico)
-Q215987,FRA,,Q632552,Senate,348,Senate (France)
-Q98975,POL,,Q2102558,Senate of Poland,100,Senate of Poland
 Q2867082,CAN,canada/nunavut,Q15212694,Legislative Assembly of Nunavut,22,Legislative Assembly of Nunavut
 Q458185,ITA,italy/trentino-south-tyrol,Q3687389,Landtag of South Tyrol,35,Landtag of South Tyrol
 Q17152221,IND,india/telangana,Q17107628,Telangana Legislative Council,40,Telangana Legislative Council
@@ -1353,6 +1353,13 @@ Q6733343,IND,india/maharashtra,Q52188366,Maharashtra Legislative Assembly,289,Ma
 Q6372858,IND,india/karnataka,Q6372863,Karnataka Legislative Assembly,225,Karnataka Legislative Assembly
 Q4907056,IND,india/bihar,Q4907068,Bihar Legislative Assembly,243,Bihar Legislative Assembly
 Q3687325,ITA,italy/trentino-south-tyrol,Q3687389,Provincial Council of Trentino,35,
+Q6984747,USA,united-states-of-america/nebraska,Q996610,Nebraska House of Representatives,,Nebraska House of Representatives
+Q2145221,USA,united-states-of-america/oregon,Q7101257,Oregon House of Representatives,60,Oregon House of Representatives
+Q2145213,USA,united-states-of-america/tennessee,Q7700086,Tennessee House of Representatives,99,Tennessee House of Representatives
+Q1802872,USA,united-states-of-america/washington,Q7972258,Washington House of Representatives,98,Washington House of Representatives
+Q1734753,USA,united-states-of-america/rhode-island,Q7320919,Rhode Island House of Representatives,75,Rhode Island House of Representatives
+Q1494716,USA,united-states-of-america/kentucky,Q6392265,Kentucky House of Representatives,100,Kentucky House of Representatives
+Q1494590,USA,united-states-of-america/michigan,Q3270273,Michigan House of Representatives,110,Michigan House of Representatives
 Q1494581,USA,united-states-of-america/louisiana,Q6689290,Louisiana House of Representatives,105,Louisiana House of Representatives
 Q1494564,USA,united-states-of-america/georgia,Q3103766,Georgia House of Representatives,180,Georgia House of Representatives
 Q1494548,USA,united-states-of-america/colorado,Q5148810,Colorado House of Representatives,65,Colorado House of Representatives
@@ -1371,36 +1378,7 @@ Q827550,USA,united-states-of-america/texas,Q2653964,Texas House of Representativ
 Q720324,USA,united-states-of-america/alaska,Q719894,Alaska House of Representatives,40,Alaska House of Representatives
 Q521389,USA,united-states-of-america/north-carolina,Q10566263,North Carolina House of Representatives,120,North Carolina House of Representatives
 Q277228,USA,united-states-of-america/ohio,Q7080820,Ohio House of Representatives,99,Ohio House of Representatives
-Q2145221,USA,united-states-of-america/oregon,Q7101257,Oregon House of Representatives,60,Oregon House of Representatives
-Q2145213,USA,united-states-of-america/tennessee,Q7700086,Tennessee House of Representatives,99,Tennessee House of Representatives
-Q1802872,USA,united-states-of-america/washington,Q7972258,Washington House of Representatives,98,Washington House of Representatives
-Q1734753,USA,united-states-of-america/rhode-island,Q7320919,Rhode Island House of Representatives,75,Rhode Island House of Representatives
-Q1494716,USA,united-states-of-america/kentucky,Q6392265,Kentucky House of Representatives,100,Kentucky House of Representatives
-Q1494590,USA,united-states-of-america/michigan,Q3270273,Michigan House of Representatives,110,Michigan House of Representatives
-Q6984747,USA,united-states-of-america/nebraska,Q996610,Nebraska House of Representatives,,Nebraska House of Representatives
 Q177147,USA,united-states-of-america/arkansas,Q2747168,Arkansas Senate,35,Arkansas Senate
-Q1494573,USA,united-states-of-america/alabama,Q3270265,Alabama Senate,35,Alabama Senate
-Q1494569,USA,united-states-of-america/georgia,Q3103766,Georgia State Senate,56,Georgia State Senate
-Q1494554,USA,united-states-of-america/connecticut,Q5161534,Connecticut Senate,36,Connecticut State Senate
-Q1494541,USA,united-states-of-america/louisiana,Q6689290,Louisiana State Senate,39,Louisiana State Senate
-Q1494534,USA,united-states-of-america/nevada,Q3555619,Nevada Senate,21,Nevada Senate
-Q1494453,USA,united-states-of-america/colorado,Q5148810,Colorado Senate,35,Colorado Senate
-Q1480298,USA,united-states-of-america/new-jersey,Q2867079,New Jersey Senate,40,New Jersey Senate
-Q1424259,USA,united-states-of-america/rhode-island,Q7320919,Rhode Island Senate,38,Rhode Island Senate
-Q1412814,USA,united-states-of-america/wisconsin,Q3270274,Wisconsin State Senate,33,Wisconsin State Senate
-Q1408760,USA,united-states-of-america/indiana,Q3634937,Indiana Senate,50,Indiana Senate
-Q1392427,USA,united-states-of-america/hawaii,Q5684411,Hawaii Senate,25,Hawaii Senate
-Q951681,USA,united-states-of-america/missouri,Q6879566,Missouri Senate,34,Missouri Senate
-Q917311,USA,united-states-of-america/minnesota,Q1117432,Minnesota Senate,67,Minnesota Senate
-Q910898,USA,united-states-of-america/oklahoma,Q583952,Oklahoma Senate,48,Oklahoma Senate
-Q909666,USA,united-states-of-america/wyoming,Q3270276,Wyoming Senate,31,Wyoming Senate
-Q909050,USA,united-states-of-america/maine,Q2749841,Maine Senate,35,Maine Senate
-Q909035,USA,united-states-of-america/delaware,Q5253303,Delaware State Senate,21,Delaware Senate
-Q598101,USA,united-states-of-america/utah,Q2384499,Utah State Senate,29,Utah State Senate
-Q515426,USA,united-states-of-america/texas,Q2653964,Texas Senate,31,Texas Senate
-Q429756,USA,united-states-of-america/south-dakota,Q2304409,South Dakota Senate,35,South Dakota Senate
-Q250949,USA,united-states-of-america/arizona,Q2747172,Arizona Senate,30,Arizona Senate
-Q123199,USA,united-states-of-america/florida,Q3556484,Florida Senate,40,Florida Senate
 Q2269889,USA,united-states-of-america/washington,Q7972258,Washington State Senate,49,Washington State Senate
 Q2269878,USA,united-states-of-america/west-virginia,Q7986861,West Virginia Senate,34,West Virginia Senate
 Q2269875,USA,united-states-of-america/south-carolina,Q980284,South Carolina Senate,46,South Carolina Senate
@@ -1425,8 +1403,40 @@ Q1494790,USA,united-states-of-america/iowa,Q6064424,Iowa Senate,50,Iowa Senate
 Q1494665,USA,united-states-of-america/massachusetts,Q1453540,Massachusetts Senate,40,Massachusetts Senate
 Q1494656,USA,united-states-of-america/maryland,Q10566065,Maryland Senate,47,Maryland Senate
 Q1494600,USA,united-states-of-america/michigan,Q3270273,Michigan Senate,38,Michigan Senate
-Q144574,USA,united-states-of-america/alaska,Q719894,Alaska Senate,20,Alaska State Senate
+Q1494573,USA,united-states-of-america/alabama,Q3270265,Alabama Senate,35,Alabama Senate
+Q1494569,USA,united-states-of-america/georgia,Q3103766,Georgia State Senate,56,Georgia State Senate
+Q1494554,USA,united-states-of-america/connecticut,Q5161534,Connecticut Senate,36,Connecticut State Senate
+Q1494541,USA,united-states-of-america/louisiana,Q6689290,Louisiana State Senate,39,Louisiana State Senate
+Q1494534,USA,united-states-of-america/nevada,Q3555619,Nevada Senate,21,Nevada Senate
+Q1494453,USA,united-states-of-america/colorado,Q5148810,Colorado Senate,35,Colorado Senate
+Q1480298,USA,united-states-of-america/new-jersey,Q2867079,New Jersey Senate,40,New Jersey Senate
+Q1424259,USA,united-states-of-america/rhode-island,Q7320919,Rhode Island Senate,38,Rhode Island Senate
+Q1412814,USA,united-states-of-america/wisconsin,Q3270274,Wisconsin State Senate,33,Wisconsin State Senate
+Q1408760,USA,united-states-of-america/indiana,Q3634937,Indiana Senate,50,Indiana Senate
+Q1392427,USA,united-states-of-america/hawaii,Q5684411,Hawaii Senate,25,Hawaii Senate
+Q951681,USA,united-states-of-america/missouri,Q6879566,Missouri Senate,34,Missouri Senate
+Q917311,USA,united-states-of-america/minnesota,Q1117432,Minnesota Senate,67,Minnesota Senate
+Q910898,USA,united-states-of-america/oklahoma,Q583952,Oklahoma Senate,48,Oklahoma Senate
+Q909666,USA,united-states-of-america/wyoming,Q3270276,Wyoming Senate,31,Wyoming Senate
+Q909050,USA,united-states-of-america/maine,Q2749841,Maine Senate,35,Maine Senate
+Q909035,USA,united-states-of-america/delaware,Q5253303,Delaware State Senate,21,Delaware Senate
+Q598101,USA,united-states-of-america/utah,Q2384499,Utah State Senate,29,Utah State Senate
+Q515426,USA,united-states-of-america/texas,Q2653964,Texas Senate,31,Texas Senate
+Q429756,USA,united-states-of-america/south-dakota,Q2304409,South Dakota Senate,35,South Dakota Senate
+Q250949,USA,united-states-of-america/arizona,Q2747172,Arizona Senate,30,Arizona Senate
+Q123199,USA,united-states-of-america/florida,Q3556484,Florida Senate,40,Florida Senate
 Q1525949,USA,united-states-of-america/new-hampshire,Q7008154,New Hampshire Senate,24,New Hampshire Senate
+Q144574,USA,united-states-of-america/alaska,Q719894,Alaska Senate,20,Alaska State Senate
+Q2145228,USA,united-states-of-america/wyoming,Q3270276,Wyoming House of Representatives,60,Wyoming House of Representatives
+Q2145217,USA,united-states-of-america/pennsylvania,Q2867077,Pennsylvania House of Representatives,203,Pennsylvania House of Representatives
+Q1746909,USA,united-states-of-america/new-mexico,Q7010195,New Mexico House of Representatives,70,New Mexico House of Representatives
+Q1536328,USA,united-states-of-america/north-dakota,Q7055026,North Dakota House of Representatives,94,North Dakota House of Representatives
+Q1525939,USA,united-states-of-america/new-hampshire,Q7008154,New Hampshire House of Representatives,400,New Hampshire House of Representatives
+Q1525933,USA,united-states-of-america/mississippi,Q6879217,Mississippi House of Representatives,122,Mississippi House of Representatives
+Q1525922,USA,united-states-of-america/missouri,Q6879566,Missouri House of Representatives,163,Missouri House of Representatives
+Q1525545,USA,united-states-of-america/kansas,Q3270271,Kansas House of Representatives,125,Kansas House of Representatives
+Q1494870,USA,united-states-of-america/idaho,Q4256974,Idaho House of Representatives,70,Idaho House of Representatives
+Q1494785,USA,united-states-of-america/iowa,Q6064424,Iowa House of Representatives,100,Iowa House of Representatives
 Q1494527,USA,united-states-of-america/nevada,Q3555619,Nevada State Assembly,42,Nevada State Assembly
 Q1494460,USA,united-states-of-america/massachusetts,Q1453540,Massachusetts House of Representatives,160,Massachusetts House of Representatives
 Q1470702,USA,united-states-of-america/new-york,Q3270268,New York State Assembly,150,New York State Assembly
@@ -1442,13 +1452,3 @@ Q473124,USA,united-states-of-america/delaware,Q5253303,Delaware House of Represe
 Q320278,USA,united-states-of-america/west-virginia,Q7986861,West Virginia House of Delegates,100,West Virginia House of Delegates
 Q320275,USA,united-states-of-america/virginia,Q530970,Virginia House of Delegates,100,Virginia House of Delegates
 Q165752,USA,united-states-of-america/maryland,Q10566065,Maryland House of Delegates,141,Maryland House of Delegates
-Q2145228,USA,united-states-of-america/wyoming,Q3270276,Wyoming House of Representatives,60,Wyoming House of Representatives
-Q2145217,USA,united-states-of-america/pennsylvania,Q2867077,Pennsylvania House of Representatives,203,Pennsylvania House of Representatives
-Q1746909,USA,united-states-of-america/new-mexico,Q7010195,New Mexico House of Representatives,70,New Mexico House of Representatives
-Q1536328,USA,united-states-of-america/north-dakota,Q7055026,North Dakota House of Representatives,94,North Dakota House of Representatives
-Q1525939,USA,united-states-of-america/new-hampshire,Q7008154,New Hampshire House of Representatives,400,New Hampshire House of Representatives
-Q1525933,USA,united-states-of-america/mississippi,Q6879217,Mississippi House of Representatives,122,Mississippi House of Representatives
-Q1525922,USA,united-states-of-america/missouri,Q6879566,Missouri House of Representatives,163,Missouri House of Representatives
-Q1525545,USA,united-states-of-america/kansas,Q3270271,Kansas House of Representatives,125,Kansas House of Representatives
-Q1494870,USA,united-states-of-america/idaho,Q4256974,Idaho House of Representatives,70,Idaho House of Representatives
-Q1494785,USA,united-states-of-america/iowa,Q6064424,Iowa House of Representatives,100,Iowa House of Representatives

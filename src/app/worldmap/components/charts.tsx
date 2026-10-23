@@ -13,22 +13,37 @@ export const SERIES = ['var(--wm-series-1)', 'var(--wm-series-2)', 'var(--wm-ser
 
 type Series = { key: string; label: string; color: string; points: Point[] };
 
-function Legend({ items }: { items: { label: string; color: string; value?: string }[] }) {
+// With onSelect, items are toggle buttons (click again to deselect)
+function Legend({ items, selected, onSelect }: {
+  items: { label: string; color: string; value?: string }[];
+  selected?: string | null;
+  onSelect?: (label: string | null) => void;
+}) {
   return (
-    <ul className="wm-legend">
-      {items.map(i => (
-        <li key={i.label}>
+    <ul className={`wm-legend${onSelect ? ' wm-legend-select' : ''}`}>
+      {items.map(i => {
+        const body = <>
           <span className="wm-swatch" style={{ background: i.color }} />
           {i.label}{i.value && <span className="wm-legend-value"> {i.value}</span>}
-        </li>
-      ))}
+        </>;
+        return (
+          <li key={i.label}>
+            {onSelect
+              ? <button aria-pressed={selected === i.label} className={selected === i.label ? 'wm-active' : ''}
+                  onClick={() => onSelect(selected === i.label ? null : i.label)}>{body}</button>
+              : body}
+          </li>
+        );
+      })}
     </ul>
   );
 }
 
 // ── Line chart (1–3 series, one unit) with crosshair tooltip ─────────────────
-export function LineChart({ title, unit, series, height = 140, zeroLine = false }: {
+export function LineChart({ title, unit, series, height = 140, zeroLine = false, selected, onSelect, hint }: {
   title: string; unit: string; series: Series[]; height?: number; zeroLine?: boolean;
+  // Optional: make the legend's series selectable (by label)
+  selected?: string | null; onSelect?: (label: string | null) => void; hint?: string;
 }) {
   const [hoverYear, setHoverYear] = useState<number | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -103,7 +118,9 @@ export function LineChart({ title, unit, series, height = 140, zeroLine = false 
           </div>
         )}
       </div>
-      {live.length > 1 && <Legend items={live.map((s, i) => ({ label: s.label, color: s.color, value: formatValue(last[i].value, unit) }))} />}
+      {live.length > 1 && <Legend items={live.map((s, i) => ({ label: s.label, color: s.color, value: formatValue(last[i].value, unit) }))}
+        selected={selected} onSelect={onSelect} />}
+      {hint && onSelect && !selected && <p className="wm-chart-note">{hint}</p>}
     </figure>
   );
 }
@@ -163,8 +180,10 @@ export function StackedShare({ title, series, height = 130 }: { title: string; s
 }
 
 // ── Single 100% bar of parts (e.g. GDP by sector, latest year) ──────────────
-export function ShareBar({ title, parts, note }: {
+export function ShareBar({ title, parts, note, selected, onSelect, hint }: {
   title: string; parts: { label: string; value: number; color: string }[]; note?: string;
+  // Optional: make segments selectable (by label)
+  selected?: string | null; onSelect?: (label: string | null) => void; hint?: string;
 }) {
   const total = d3.sum(parts, p => p.value);
   if (!total) return null;
@@ -178,13 +197,47 @@ export function ShareBar({ title, parts, note }: {
           acc += p.value;
           const w = (p.value / total) * W;
           return (
-            <rect key={p.label} x={x0 + 1} y={0} width={Math.max(0, w - 2)} height={20} rx={3} fill={p.color}>
+            <rect key={p.label} x={x0 + 1} y={0} width={Math.max(0, w - 2)} height={20} rx={3} fill={p.color}
+              className={onSelect ? `wm-seg${selected && selected !== p.label ? ' wm-dim' : ''}` : undefined}
+              onClick={onSelect ? () => onSelect(selected === p.label ? null : p.label) : undefined}>
               <title>{`${p.label}: ${p.value.toFixed(1)}%`}</title>
             </rect>
           );
         })}
       </svg>
-      <Legend items={parts.map(p => ({ label: p.label, color: p.color, value: `${p.value.toFixed(1)}%` }))} />
+      <Legend items={parts.map(p => ({ label: p.label, color: p.color, value: `${p.value.toFixed(1)}%` }))}
+        selected={selected} onSelect={onSelect} />
+      {hint && onSelect && !selected && <p className="wm-chart-note">{hint}</p>}
+    </figure>
+  );
+}
+
+// ── Ranked horizontal bars (e.g. top traded goods) ──────────────────────────
+export function RankedBars({ title, note, rows, color, footnote }: {
+  title: string; note?: string; color: string; footnote?: string;
+  rows: { label: string; value: string; share: number; link?: string }[];
+}) {
+  if (!rows.length) return null;
+  const max = Math.max(...rows.map(r => r.share));
+  return (
+    <figure className="wm-chart wm-ranked">
+      <figcaption>{title}{note && <span className="wm-unit"> · {note}</span>}</figcaption>
+      <ol>
+        {rows.map(r => (
+          <li key={r.label}>
+            <div className="wm-ranked-text">
+              <span className="wm-ranked-label" title={r.label}>
+                {r.link ? <a href={r.link} target="_blank" rel="noreferrer">{r.label}</a> : r.label}
+              </span>
+              <span className="wm-ranked-value">{r.value} · {r.share.toFixed(1)}%</span>
+            </div>
+            <div className="wm-ranked-track">
+              <div className="wm-ranked-bar" style={{ width: `${(r.share / max) * 100}%`, background: color }} />
+            </div>
+          </li>
+        ))}
+      </ol>
+      {footnote && <p className="wm-chart-note">{footnote}</p>}
     </figure>
   );
 }

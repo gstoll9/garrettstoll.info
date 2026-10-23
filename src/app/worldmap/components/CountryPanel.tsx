@@ -37,11 +37,17 @@ type Props = {
   // Selected tab; owned by the page so it carries over when switching countries
   tab?: Tab;
   onTabChange?: (t: Tab) => void;
+  // A note above the header (e.g. why the time slider changed the selection)
+  notice?: string;
+  // Historical countries: the dates the drawn borders are valid for
+  dates?: string;
+  // A note above the source line
+  footnote?: string;
   onClose: () => void;
 };
 
 export default function CountryPanel({
-  articleTitle, wikidata, searchHint, displayName, subtitle, crumbs, subregions, onSelectSubregion, source, mapSlug, regionKey, capital, tab: tabProp, onTabChange, onClose,
+  articleTitle, wikidata, searchHint, displayName, subtitle, crumbs, subregions, onSelectSubregion, source, mapSlug, regionKey, capital, tab: tabProp, onTabChange, notice, dates, footnote, onClose,
 }: Props) {
   // Country or subregion statistics; undefined while loading, null if there are none
   const [stats, setStats] = useState<
@@ -107,6 +113,8 @@ export default function CountryPanel({
         </div>
       )}
 
+      {notice && <p className="wm-notice">{notice}</p>}
+
       <div className="wm-panel-header">
         {data?.summary.thumbnail && <img src={data.summary.thumbnail} alt="" className="wm-thumb" />}
         <div>
@@ -114,6 +122,7 @@ export default function CountryPanel({
           {(data?.summary.description || subtitle) && (
             <p className="wm-desc">{data?.summary.description ?? subtitle}</p>
           )}
+          {dates && <p className="wm-desc">{dates}</p>}
           {capital && <p className="wm-capital"><span aria-hidden>★</span> Capital: {capital}</p>}
         </div>
       </div>
@@ -192,6 +201,8 @@ export default function CountryPanel({
       )}
 
       </>}
+
+      {footnote && <p className="wm-footnote">{footnote}</p>}
 
       {source && (
         <p className="wm-source">

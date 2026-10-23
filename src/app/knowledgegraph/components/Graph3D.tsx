@@ -1,7 +1,7 @@
 'use client'
-import { useRef, useMemo, useEffect } from 'react';
+import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Text } from '@react-three/drei';
+import { Billboard, OrbitControls, Text } from '@react-three/drei';
 import * as THREE from 'three';
 
 export type GraphNode = { id: string; x: number; y: number; z: number; vx: number; vy: number; vz: number };
@@ -88,6 +88,21 @@ function GraphRender({ nodes, links, filterText, hiddenNodes, hiddenRelations, r
     return filtered.filter(l => !hiddenNodes.has(l.source) && !hiddenNodes.has(l.target) && !hiddenRelations.has(l.relation));
   }, [links, filterText, hiddenNodes, hiddenRelations]);
 
+  // Parallel links between the same two nodes (e.g. one per license) would stack their
+  // labels at the midpoint, so spread them along the line instead
+  const labelOffsets = useMemo(() => {
+    const pairKey = (l: GraphLink) => [l.source, l.target].sort().join('\u0000');
+    const counts = new Map<string, number>();
+    visibleLinks.forEach(l => counts.set(pairKey(l), (counts.get(pairKey(l)) || 0) + 1));
+    const seen = new Map<string, number>();
+    return visibleLinks.map(l => {
+      const key = pairKey(l);
+      const k = seen.get(key) || 0;
+      seen.set(key, k + 1);
+      return (k + 1) / (counts.get(key)! + 1);
+    });
+  }, [visibleLinks]);
+
   // Keep arrays of typed geometry attributes to avoid remounting lines
   useFrame(() => {
     visibleNodes.forEach(node => {
@@ -110,7 +125,8 @@ function GraphRender({ nodes, links, filterText, hiddenNodes, hiddenRelations, r
 
         const textEl = textRefs.current[`${link.source}-${link.target}-${idx}`];
         if (s && t && textEl) {
-             textEl.position.set((s.x + t.x) / 2, (s.y + t.y) / 2, (s.z + t.z) / 2);
+             const f = labelOffsets[idx] ?? 0.5;
+             textEl.position.set(s.x + (t.x - s.x) * f, s.y + (t.y - s.y) * f, s.z + (t.z - s.z) * f);
         }
     });
   });
@@ -123,7 +139,9 @@ function GraphRender({ nodes, links, filterText, hiddenNodes, hiddenRelations, r
             <sphereGeometry args={[1, 16, 16]} />
             <meshStandardMaterial color="#4488ff" />
           </mesh>
-          <Text position={[0, 1.5, 0]} fontSize={1} color="white" outlineWidth={0.05} outlineColor="black">{node.id}</Text>
+          <Billboard position={[0, 1.5, 0]}>
+            <Text fontSize={1} color="white" outlineWidth={0.05} outlineColor="black">{node.id}</Text>
+          </Billboard>
         </group>
       ))}
       {visibleLinks.map((link, idx) => {
@@ -131,15 +149,17 @@ function GraphRender({ nodes, links, filterText, hiddenNodes, hiddenRelations, r
          const color = relationColors[link.relation] || "#ffffff";
          return (
             <group key={lineKey}>
-              <line ref={(el) => {lineRefs.current[lineKey] = el as any;}}>
+              <line ref={(el) => {lineRefs.current[lineKey] = el as unknown as THREE.Line;}}>
                 <bufferGeometry>
                   <bufferAttribute attach="attributes-position" args={[new Float32Array(6), 3]} />
                 </bufferGeometry>
                 <lineBasicMaterial color={color} opacity={0.5} transparent />
               </line>
-              <Text ref={(el) => {textRefs.current[lineKey] = el;}} fontSize={0.6} color={color} outlineWidth={0.05} outlineColor="black">
-                {link.relation}
-              </Text>
+              <Billboard ref={(el) => {textRefs.current[lineKey] = el;}}>
+                <Text fontSize={0.6} color={color} outlineWidth={0.05} outlineColor="black">
+                  {link.relation}
+                </Text>
+              </Billboard>
             </group>
          );
       })}

@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "data:status": "node scripts/update-data.mjs status",
+    "data:update": "node scripts/update-data.mjs run",
+    "data:done": "node scripts/update-data.mjs done",
+    "data:graph": "node scripts/update-data.mjs graph",
+    "data:check": "node scripts/update-data.mjs check"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

@@ -216,3 +216,75 @@ export function loadCapitals(): Promise<Map<string, Capital[]>> {
 export async function iso3ForSlug(mapSlug: string): Promise<string | null> {
   return (await loadTables()).countries.find(c => c.map_slug === mapSlug)?.iso3 ?? null;
 }
+
+// ── Trade by product (Atlas of Economic Complexity) ──────────────────────────
+export type TradeSector = 'agriculture' | 'industry' | 'services';
+export type TradeFlow = 'X' | 'M';
+export type TradeItem = { code: string; name: string; sector: TradeSector; value: number; year: number };
+export type TradeData = {
+  // Top products per flow (all sectors), largest first
+  items: Record<TradeFlow, TradeItem[]>;
+  // Totals per flow and sector, with the year they refer to
+  totals: Record<TradeFlow, ({ year: number } & Record<TradeSector, number>) | undefined>;
+};
+
+let tradeTablesPromise: Promise<{
+  products: Map<string, { name: string; sector: TradeSector }>;
+  totals: { iso3: string; flow: string; year: string; sector: string; value: string }[];
+}> | null = null;
+const tradeCache = new Map<string, Promise<TradeData | null>>();
+
+export function loadTradeData(iso3: string): Promise<TradeData | null> {
+  tradeTablesPromise ??= Promise.all([
+    table<{ code: string; name: string; sector: TradeSector }>('trade_products'),
+    table<{ iso3: string; flow: string; year: string; sector: string; value: string }>('trade_totals'),
+  ]).then(([products, totals]) => ({ products: new Map(products.map(p => [p.code, p])), totals }));
+  if (!tradeCache.has(iso3)) {
+    tradeCache.set(iso3, (async () => {
+      const [t, text] = await Promise.all([
+        tradeTablesPromise!,
+        fetch(`${BASE}/trade_values/${iso3}.csv`).then(r => (r.ok ? r.text() : '')),
+      ]);
+      if (!text) return null;
+      const items: TradeData['items'] = { X: [], M: [] };
+      for (const r of csvParse(text)) {
+        const p = t.products.get(r.code!);
+        if (!p) continue;
+        items[r.flow as TradeFlow]?.push({ code: r.code!, name: p.name, sector: p.sector, value: +r.value!, year: +r.year! });
+      }
+      for (const f of ['X', 'M'] as const) items[f].sort((a, b) => b.value - a.value);
+      const totals: TradeData['totals'] = { X: undefined, M: undefined };
+      for (const f of ['X', 'M'] as const) {
+        const rows = t.totals.filter(r => r.iso3 === iso3 && r.flow === f);
+        const v = (sector: string) => +(rows.find(r => r.sector === sector)?.value ?? 0);
+        if (rows.length) totals[f] = { year: +rows[0].year, agriculture: v('agriculture'), industry: v('industry'), services: v('services') };
+      }
+      return { items, totals };
+    })());
+    tradeCache.get(iso3)!.catch(() => tradeCache.delete(iso3));
+  }
+  return tradeCache.get(iso3)!;
+}
+
+// ── Trade partners (raw vs produced goods, for the map's trade arcs) ─────────
+export type TradePartner = { iso3: string; raw: number; produced: number; year: number };
+const partnerCache = new Map<string, Promise<Record<TradeFlow, TradePartner[]> | null>>();
+
+// A country's top partners per flow, largest first
+export function loadTradePartners(iso3: string): Promise<Record<TradeFlow, TradePartner[]> | null> {
+  if (!partnerCache.has(iso3)) {
+    partnerCache.set(iso3, fetch(`${BASE}/trade_partners/${iso3}.csv`)
+      .then(r => (r.ok ? r.text() : ''))
+      .then(text => {
+        if (!text) return null;
+        const out: Record<TradeFlow, TradePartner[]> = { X: [], M: [] };
+        for (const r of csvParse(text)) {
+          out[r.flow as TradeFlow]?.push({ iso3: r.partner!, raw: +r.raw!, produced: +r.produced!, year: +r.year! });
+        }
+        for (const f of ['X', 'M'] as const) out[f].sort((a, b) => b.raw + b.produced - (a.raw + a.produced));
+        return out;
+      }));
+    partnerCache.get(iso3)!.catch(() => partnerCache.delete(iso3));
+  }
+  return partnerCache.get(iso3)!;
+}

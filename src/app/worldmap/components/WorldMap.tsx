@@ -6,11 +6,15 @@ import type { Topology, GeometryCollection } from 'topojson-specification';
 import type { Feature, Geometry } from 'geojson';
 import { wikiTitleFor } from '../lib/countryNames';
 import type { Capital } from '../lib/db';
+import { TradeArcLayer, TradeArcs } from './TradeArcs';
+import { PeriodFeature, Period, periodsAt } from '../lib/history';
 
 export type Country = {
   key: string;
   name: string;
-  feature: Feature<Geometry, { name: string }>;
+  feature: Feature<Geometry, { name: string } | Period>;
+  // Set on a historical (time slider) country: the CShapes period drawn
+  period?: Period;
 };
 
 // Properties of a subregion (admin-1: states, provinces) or district (admin-2: counties, ...)
@@ -60,13 +64,19 @@ type Props = {
   capitals: Capital[];
   // Data colouring of one level's shapes: fill colour and tooltip value per shape key
   choropleth: { level: 0 | 1 | 2; fills: Map<string, string>; labels: Map<string, string> } | null;
+  // Trade flows from the selected country to its partners; the map zooms out to show them
+  arcs?: TradeArcs | null;
+  // Called with the countries drawn, whenever they change (load, or a new year)
   onLoad?: (countries: Country[]) => void;
   insets: Insets;
+  // Year shown, or null for the present-day map; historical years draw `history`
+  year: number | null;
+  history: PeriodFeature[] | null;
 };
 
 export default function WorldMap({
   selectedKey, onSelect, subregions, selectedSubKey, onSelectSubregion,
-  districts, selectedDistrictKey, onSelectDistrict, capitals, choropleth, onLoad, insets,
+  districts, selectedDistrictKey, onSelectDistrict, capitals, choropleth, arcs, onLoad, insets, year, history,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -78,7 +88,8 @@ export default function WorldMap({
   const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
 
   const [size, setSize] = useState({ width: 0, height: 0 });
-  const [countries, setCountries] = useState<Country[]>([]);
+  const [modern, setModern] = useState<Country[]>([]);
+  const [land, setLand] = useState<Feature<Geometry> | null>(null);
 
   // Country shapes: world-atlas's countries-50m.json, served from public/ (copied by
   // scripts/build-admin1.mjs) so it loads as a static file rather than a code chunk
@@ -86,16 +97,32 @@ export default function WorldMap({
     fetch('/worldmap/countries-50m.json').then(r => r.json()).then(json => {
       const topo = json as Topology<{ countries: GeometryCollection<{ name: string }> }>;
       const fc = feature(topo, topo.objects.countries);
-      const list = fc.features.map((f, i) => ({
+      setModern(fc.features.map((f, i) => ({
         key: f.id != null ? `${f.id}-${f.properties.name}` : `${f.properties.name}-${i}`,
         name: f.properties.name,
         feature: f as Country['feature'],
-      }));
-      setCountries(list);
-      onLoad?.(list);
+      })));
+      const landTopo = json as Topology<{ land: GeometryCollection }>;
+      setLand(feature(landTopo, landTopo.objects.land) as unknown as Feature<Geometry>);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // A historical country keeps its key across periods (the territory's Gleditsch–Ward
+  // code), so a selection follows it through border and regime changes
+  const countries = useMemo<Country[]>(() => {
+    if (year == null) return modern;
+    if (!history) return [];
+    return periodsAt(history, year).map(f => ({
+      key: `gw-${f.properties.g}`,
+      name: f.properties.n,
+      feature: f,
+      period: f.properties,
+    }));
+  }, [year, history, modern]);
+  useEffect(() => {
+    if (countries.length) onLoad?.(countries);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [countries]);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -120,6 +147,8 @@ export default function WorldMap({
     () => countries.map(c => ({ key: c.key, d: path(c.feature) ?? '' })),
     [countries, path],
   );
+  // Land under historical countries, showing where the source has no territory
+  const landPath = useMemo(() => (year != null && land ? path(land) ?? '' : ''), [year, land, path]);
   const subPaths = useMemo(
     () => subregions.map(s => ({ key: s.key, d: path(s.feature) ?? '' })),
     [subregions, path],
@@ -144,7 +173,7 @@ export default function WorldMap({
     }
     for (const c of countries) {
       if (c.key === selectedKey && subregions.length) continue;
-      const wiki = wikiTitleFor(c.name);
+      const wiki = c.period ? c.name : wikiTitleFor(c.name);
       add(c.key, wiki.length < c.name.length ? wiki : c.name, 0, c.feature, interiorPoint(largestPolygon(c.feature)));
     }
     // Deeper levels claim label space first, then bigger shapes
@@ -204,8 +233,11 @@ export default function WorldMap({
     const svg = svgRef.current;
     if (!svg) return;
     const zoom = d3.zoom<SVGSVGElement, unknown>()
-      .scaleExtent([1, 600])
+      // Below 1 only to fit the whole world beside the panel (trade arcs); the usual
+      // pan limits apply from 1 up
+      .scaleExtent([0.3, 600])
       .translateExtent([[0, 0], [size.width, size.height]])
+      .constrain((t, extent, te) => (t.k < 1 ? t : constrainToExtent(t, extent, te)))
       .on('zoom', e => {
         d3.select(gRef.current).attr('transform', e.transform.toString());
         transformRef.current = e.transform;
@@ -216,23 +248,35 @@ export default function WorldMap({
     return () => { d3.select(svg).on('.zoom', null); };
   }, [size.width, size.height]);
 
-  // Zoom to the most specific selection, else the whole world
+  // Zoom to the most specific selection, else the whole world. Not again when only the
+  // year changed: the view stays put while the time slider plays.
+  const lastZoomRef = useRef('');
   useEffect(() => {
     const svg = svgRef.current;
     const zoom = zoomRef.current;
     if (!svg || !zoom || !size.width) return;
+    const zoomKey = [selectedKey, selectedSubKey, selectedDistrictKey, size.width, size.height, insets.right, insets.bottom, arcs ? 'arcs' : ''].join('|');
+    const hasTarget = !selectedKey || countries.some(c => c.key === selectedKey);
+    if (zoomKey === lastZoomRef.current || !hasTarget) return;
+    lastZoomRef.current = zoomKey;
     const sel = d3.select(svg).transition().duration(750);
     const district = districts.find(d => d.key === selectedDistrictKey);
     const sub = subregions.find(s => s.key === selectedSubKey);
     const country = countries.find(c => c.key === selectedKey);
+    const availW = Math.max(size.width - insets.right, size.width * 0.4);
+    const availH = Math.max(size.height - insets.bottom, size.height * 0.3);
+    // Trade arcs span the world: fit all of it into the area beside the panel
+    if (arcs) {
+      const k = Math.min(1, availW / size.width, availH / size.height);
+      sel.call(zoom.transform, d3.zoomIdentity.translate((availW - size.width * k) / 2, (availH - size.height * k) / 2).scale(k));
+      return;
+    }
     const target = district?.feature ?? sub?.feature ?? country?.feature;
     if (!target) {
       sel.call(zoom.transform, d3.zoomIdentity);
       return;
     }
     const [[x0, y0], [x1, y1]] = path.bounds(largestPolygon(target));
-    const availW = Math.max(size.width - insets.right, size.width * 0.4);
-    const availH = Math.max(size.height - insets.bottom, size.height * 0.3);
     // Smaller units get a looser fit so their neighbours stay visible
     const fill = district ? 0.35 : sub ? 0.6 : 0.75;
     const k = Math.min(sub ? 400 : 20, fill / Math.max((x1 - x0) / availW, (y1 - y0) / availH));
@@ -243,7 +287,7 @@ export default function WorldMap({
         .scale(Math.max(1, k))
         .translate(-(x0 + x1) / 2, -(y0 + y1) / 2),
     );
-  }, [selectedKey, selectedSubKey, selectedDistrictKey, countries, subregions, districts, path, size.width, size.height, insets.right, insets.bottom]);
+  }, [selectedKey, selectedSubKey, selectedDistrictKey, countries, subregions, districts, path, size.width, size.height, insets.right, insets.bottom, arcs]);
 
   // Tooltip is updated imperatively so mouse moves don't re-render every path
   const moveTooltip = (e: React.MouseEvent, text: string) => {
@@ -274,6 +318,14 @@ export default function WorldMap({
         <g ref={gRef} className={choropleth ? `wm-choro wm-choro-${choropleth.level}` : undefined}>
           <path className="wm-sphere" d={sphere} />
           <path className="wm-graticule" d={graticule} />
+          {landPath && (
+            <path
+              className="wm-land-nodata"
+              d={landPath}
+              onMouseMove={e => moveTooltip(e, 'No territory recorded here in CShapes')}
+              onMouseLeave={hideTooltip}
+            />
+          )}
           {paths.map((p, i) => (
             <path
               key={p.key}
@@ -317,6 +369,7 @@ export default function WorldMap({
               />
             ))}
           </g>
+          {arcs && <TradeArcLayer arcs={arcs} projection={projection} onHover={moveTooltip} onLeave={hideTooltip} />}
         </g>
         <g className="wm-labels" ref={labelsRef}>
           {labels.map(l => (
@@ -341,6 +394,17 @@ export default function WorldMap({
       <div className="wm-tooltip" ref={tooltipRef} />
       {countries.length === 0 && <div className="wm-loading">Loading map…</div>}
     </div>
+  );
+}
+
+// d3-zoom's default constrain (keeps the viewport inside the translate extent), reproduced
+// because d3 doesn't export it and a custom constrain replaces it entirely
+function constrainToExtent(t: d3.ZoomTransform, extent: [[number, number], [number, number]], te: [[number, number], [number, number]]) {
+  const dx0 = t.invertX(extent[0][0]) - te[0][0], dx1 = t.invertX(extent[1][0]) - te[1][0];
+  const dy0 = t.invertY(extent[0][1]) - te[0][1], dy1 = t.invertY(extent[1][1]) - te[1][1];
+  return t.translate(
+    dx1 > dx0 ? (dx0 + dx1) / 2 : Math.min(0, dx0) || Math.max(0, dx1),
+    dy1 > dy0 ? (dy0 + dy1) / 2 : Math.min(0, dy0) || Math.max(0, dy1),
   );
 }
 

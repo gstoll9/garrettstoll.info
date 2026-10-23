@@ -22,6 +22,8 @@ type WorkItem = {
   blurb: string;
   icon: IconName;
   hue: number;
+  /** Served outside this Next app (e.g. the Expo games build), so needs a full page load */
+  external?: boolean;
 };
 
 const WORK: { group: string; items: WorkItem[] }[] = [
@@ -95,11 +97,12 @@ const WORK: { group: string; items: WorkItem[] }[] = [
     group: "Games",
     items: [
       {
-        href: "/minesweeper",
-        title: "Minesweeper",
-        blurb: "The classic, rebuilt — with a probability-based hint system for when you're stuck.",
+        href: "/games",
+        title: "Games",
+        blurb: "Klondike, Spider and Minesweeper — with exact mine odds and no-guess boards.",
         icon: "mine",
         hue: 8,
+        external: true,
       },
     ],
   },
@@ -496,19 +499,22 @@ function Resume() {
             <div key={g.group} className="work-group">
               <h3 className="work-group-title reveal">{g.group}</h3>
               <div className="work-grid">
-                {g.items.map((w, i) => (
-                  <Link
-                    key={w.href}
-                    href={w.href}
-                    className="work-card reveal"
-                    style={{ "--hue": w.hue, transitionDelay: `${i * 50}ms` } as React.CSSProperties}
-                  >
-                    <span className="work-icon"><WorkIcon name={w.icon} /></span>
-                    <span className="work-title">{w.title}</span>
-                    <span className="work-blurb">{w.blurb}</span>
-                    <span className="work-cta">Open <ArrowIcon /></span>
-                  </Link>
-                ))}
+                {g.items.map((w, i) => {
+                  const Card = w.external ? "a" : Link;
+                  return (
+                    <Card
+                      key={w.href}
+                      href={w.href}
+                      className="work-card reveal"
+                      style={{ "--hue": w.hue, transitionDelay: `${i * 50}ms` } as React.CSSProperties}
+                    >
+                      <span className="work-icon"><WorkIcon name={w.icon} /></span>
+                      <span className="work-title">{w.title}</span>
+                      <span className="work-blurb">{w.blurb}</span>
+                      <span className="work-cta">Open <ArrowIcon /></span>
+                    </Card>
+                  );
+                })}
               </div>
             </div>
           ))}

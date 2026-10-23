@@ -68,6 +68,7 @@ CAF,,head_of_state,Q15710848,President of the Central African Republic,Q57758,Fa
 CAF,,head_of_government,Q16773091,Prime Minister of the Central African Republic,Q88310768,Félix Moloua,,
 CAN,,head_of_state,Q14931511,monarch of Canada,Q43274,Charles III,,
 CAN,,head_of_government,Q839078,Prime Minister of Canada,Q192533,Mark Carney,Q138345,Liberal Party of Canada
+CCK,,head_of_state,Q14931512,monarch of Australia,Q43274,Charles III,,
 CHE,,head_of_state,Q11811941,Member of the Swiss Federal Council,Q30917,Swiss Federal Council,,
 CHE,,head_of_government,Q688230,President of the Swiss Confederation,Q30917,Swiss Federal Council,,
 CHL,,head_of_state,Q466956,President of Chile,Q5937916,José Antonio Kast,Q327591,independent politician
@@ -158,7 +159,7 @@ GNB,,head_of_government,Q30101458,Prime Minister of Guinea-Bissau,Q627337,Rui Du
 GNQ,,head_of_state,Q19058522,President of Equatorial Guinea,Q57385,Teodoro Obiang,Q1606430,United National Workers' Party
 GNQ,,head_of_government,Q2351213,Prime Minister of Equatorial Guinea,Q129263796,Manuel Osa Nsue Nsua,,
 GRC,,head_of_state,Q3409203,President of Greece,Q20995518,Konstantinos Tasoulas,Q223153,New Democracy
-GRC,,head_of_government,Q4377230,Prime Minister of Greece,Q552751,Kyriakos Mitsotakis,Q223153,New Democracy
+GRC,,head_of_government,Q4377230,Prime Minister of Greece,Q552751,9811205000,Q223153,New Democracy
 GRD,,head_of_state,Q26869646,monarch of Grenada,Q43274,Charles III,,
 GRD,,head_of_government,Q30100613,Prime Minister of Grenada,Q112679881,Dickon Mitchell,Q1254278,National Democratic Congress
 GRL,,head_of_state,,,Q1004037,Frederik X of Denmark,,
@@ -335,7 +336,7 @@ QAT,,head_of_state,Q25711499,Emir of the State of Qatar,Q1855372,Tamim bin Hamad
 QAT,,head_of_government,Q30100647,Prime Minister of Qatar,Q23020336,Mohammed bin Abdulrahman Al Thani,Q327591,independent politician
 REU,,head_of_government,Q23090507,President of the Regional Council,Q3142774,Huguette Bello,Q3326782,Pour La Réunion
 ROU,,head_of_state,Q839139,president of Romania,Q11163124,Nicușor Dan,Q327591,independent politician
-ROU,,head_of_government,Q15304810,Prime Minister of Romania,Q18538164,Ilie Bolojan,Q686228,National Liberal Party
+ROU,,head_of_government,Q15304810,Prime Minister of Romania,Q121140873,Luca Niculescu,Q327591,independent politician
 RUS,,head_of_state,Q218295,President of Russia,Q7747,Vladimir Putin,,
 RUS,,head_of_government,Q842386,Prime Minister of Russia,Q4298520,Mikhail Mishustin,,
 RWA,,head_of_state,Q12374379,President of Rwanda,Q1231345,Paul Kagame,Q690240,Rwandan Patriotic Front
@@ -399,7 +400,7 @@ TLS,,head_of_government,Q978708,Prime Minister of East Timor,Q11509,Xanana Gusm�
 TON,,head_of_state,Q42298576,Monarch of Tonga,Q208497,Tupou VI of Tonga,,
 TON,,head_of_government,Q915636,Prime Minister of Tonga,Q5437258,"Fatafehi Fakafānua, 8th Lord Fakafānua",Q327591,independent politician
 TTO,,head_of_state,Q2522739,President of Trinidad and Tobago,Q97400315,Christine Kangaloo,Q3326740,People's National Movement
-TTO,,head_of_government,Q30101326,Q30101326,Q57712,Kamla Persad-Bissessar,Q1024804,United National Congress
+TTO,,head_of_government,Q20530301,Prime Minister of Trinidad and Tobago,Q57712,Kamla Persad-Bissessar,Q1024804,United National Congress
 TUN,,head_of_state,Q14911897,President of Tunisia,Q16120878,Kais Saied,,
 TUN,,head_of_government,Q1064106,Prime Minister of Tunisia,Q108892374,Sarra Zaafrani,,
 TUR,,head_of_state,Q1922067,President of Turkey,Q39259,Recep Tayyip Erdoğan,Q19077,Justice and Development Party
@@ -432,7 +433,7 @@ VNM,,head_of_government,Q1043568,Prime Minister of Vietnam,Q10806940,Phạm Minh
 VUT,,head_of_state,Q878217,President of Vanuatu,Q113239716,Nikenike Vurobaravu,Q31373,Vanua'aku Pati
 VUT,,head_of_government,Q1029958,Prime Minister of Vanuatu,Q16190741,Bob Loughman,Q31373,Vanua'aku Pati
 WSM,,head_of_state,Q1258128,O le Ao o le Malo,Q32014514,Va'aletoa Sualauvi II,Q327591,independent politician
-WSM,,head_of_government,Q1277355,Prime Minister of Samoa,Q5446290,Fiamē Naomi Mataʻafa,Q104853338,Faʻatuatua i le Atua Samoa ua Tasi
+WSM,,head_of_government,Q1277355,Prime Minister of Samoa,Q5446290,Fiamē Naomi Mataʻafa,Q134703806,Samoa Uniting Party
 WSM,,head_of_government,Q1277355,Prime Minister of Samoa,Q57723,Tuilaʻepa Saʻilele Malielegaoi,Q1256720,Human Rights Protection Party
 XKS,,head_of_state,Q886947,President of Kosovo,Q13036897,Albulena Haxhiu,Q29534,Vetëvendosje!
 XKS,,head_of_government,Q116102,Prime Minister of Kosovo,Q441633,Albin Kurti,Q29534,Vetëvendosje!
@@ -510,11 +511,12 @@ AZE,azerbaijan/babek,head_of_government,,,Q31307157,Rasim Huseynov,,
 AZE,azerbaijan/zaqatala,head_of_government,,,Q16370641,Mubariz Ahmedzade,,
 AZE,azerbaijan/khachmaz,head_of_government,,,Q73017523,Elnur Rzayev,Q876402,New Azerbaijan Party
 AZE,azerbaijan/oghuz,head_of_government,,,Q127508266,Javid Abdul-Gadirov,,
-AZE,azerbaijan/samukh,head_of_government,,,Q16364376,Alı Qocayev,Q876402,New Azerbaijan Party
 AZE,azerbaijan/samukh,head_of_government,,,Q16367629,Firdovsi Aliyev,Q876402,New Azerbaijan Party
+AZE,azerbaijan/samukh,head_of_government,,,Q16364376,Alı Qocayev,Q876402,New Azerbaijan Party
 AZE,azerbaijan/imishli,head_of_government,,,Q16375678,Vilyam Hacıyev,Q876402,New Azerbaijan Party
 AZE,azerbaijan/bilasuvar,head_of_government,Q132050,governor,Q99616801,Faig Gurbatov,Q876402,New Azerbaijan Party
 AZE,azerbaijan/lerik,head_of_government,,,Q16373344,Rovshan Bagirov,,
+AZE,azerbaijan/jabrayil,head_of_government,,,Q114042563,Vahid Hajiyev,,
 AZE,azerbaijan/fuzuli,head_of_government,,,Q12835728,Aly Alyyev,,
 AZE,azerbaijan/beylagan,head_of_government,Q132050,governor,Q12836073,Asif Aghayev,Q876402,New Azerbaijan Party
 AZE,azerbaijan/astara,head_of_government,Q132050,governor,Q12844804,Qazanfar Agayev,,
@@ -585,7 +587,7 @@ BRA,brazil/parana,head_of_government,Q18176235,governor of Paraná,Q10357567,Rat
 BRA,brazil/santa-catarina,head_of_government,Q53739354,governor of Santa Catarina,Q57946067,Carlos Moisés da Silva,Q2366265,Social Liberal Party
 BRA,brazil/amazonas,head_of_government,Q53739362,governor of Amazonas,Q58047696,Wilson Lima,Q2626213,Social Christian Party
 BRA,brazil/rondonia,head_of_government,Q53739384,Governor of Rondônia,Q60345250,Marcos Rocha,Q2366265,Social Liberal Party
-BRA,brazil/mato-grosso,head_of_government,Q53739368,governor of Mato Grosso,Q7724122,Mauro Mendes,Q1185830,Democrats
+BRA,brazil/mato-grosso,head_of_government,Q53739368,governor of Mato Grosso,Q27835874,Otaviano Pivetta,Q1414708,Democratic Labour Party
 BRA,brazil/maranhao,head_of_government,Q53739358,governor of Maranhão,Q10283063,Flávio Dino,Q504000,Communist Party of Brazil
 BRA,brazil/piaui,head_of_government,Q53739375,governor of Piauí,Q7981381,Wellington Dias,Q657089,Workers' Party
 BRA,brazil/ceara,head_of_government,Q53739345,governor of Ceará,Q18246475,Elmano de Freitas,Q657089,Workers' Party
@@ -841,6 +843,7 @@ IND,india/haryana,head_of_state,,,Q4854461,Bandaru Dattatreya,Q10230,Bharatiya J
 IND,india/haryana,head_of_government,,,Q28408160,Nayab Singh Saini,Q10230,Bharatiya Janata Party
 IND,india/telangana,head_of_state,,,Q7499213,Shiv Pratap Shukla,Q10230,Bharatiya Janata Party
 IND,india/telangana,head_of_government,Q55018651,Chief Minister of Telangana,Q7317733,Revanth Reddy,Q10225,Indian National Congress
+,indian-ocean-ter/cocos,head_of_state,Q14931512,monarch of Australia,Q43274,Charles III,,
 IDN,indonesia/east-kalimantan,head_of_government,Q102251462,Governor of East Kalimantan,Q12486828,Isran Noor,Q13405290,Indonesian Justice and Unity Party
 IDN,indonesia/east-nusa-tenggara,head_of_government,Q98073406,Governor of East Nusa Tenggara,Q18421325,Viktor Laiskodat,Q4207219,NasDem Party
 IDN,indonesia/west-kalimantan,head_of_government,Q56152803,Governor of West Kalimantan,Q17411498,Sutarmidji,Q2669302,Partai Persatuan Pembangunan
@@ -1002,11 +1005,11 @@ KAZ,kazakhstan/east-kazakhstan,head_of_government,,,Q324950,Danial Ahmetov,Q1195
 KAZ,kazakhstan/almaty,head_of_government,,,Q20482338,Amandyq Batalov,Q79854,Communist Party of the Soviet Union
 KAZ,kazakhstan/jambyl,head_of_government,,,Q32362443,Karim Kokrekbayev,,
 KAZ,kazakhstan/jambyl,head_of_government,,,Q108391615,Erbol Qaraşökeev,,
-KAZ,kazakhstan/turkistan,head_of_government,Q115767641,Äkim of Turkistan Region,Q4465018,Zhanseit Tuymebayev,Q111077075,Amanat
+KAZ,kazakhstan/turkistan,head_of_government,Q115767641,Äkim of Turkistan Region,Q4465018,Zhanseit Tuymebayev,Q1195092,Nur Otan
 KAZ,kazakhstan/turkistan,head_of_government,Q115767641,Äkim of Turkistan Region,Q15081342,Darkhan Satybaldy,Q111077075,Amanat
 KAZ,kazakhstan/mangystau,head_of_government,Q113670332,Äkim of Mangystau,Q24352174,Serikbai Turymow,,
 KAZ,kazakhstan/mangystau,head_of_government,Q113670332,Äkim of Mangystau,Q16436597,Eraly Togjanov,,
-KAZ,kazakhstan/kyzylorda,head_of_government,Q115693303,Äkim of Kyzylorda Region,Q4054654,Gülşara Äbdıqalyqova,Q111077075,Amanat
+KAZ,kazakhstan/kyzylorda,head_of_government,Q115693303,Äkim of Kyzylorda Region,Q4054654,Gülşara Äbdıqalyqova,Q1195092,Nur Otan
 KAZ,kazakhstan/kyzylorda,head_of_government,Q115693303,Äkim of Kyzylorda Region,Q4250192,Qyrymbek Kösherbaev,Q1195092,Nur Otan
 KAZ,kazakhstan/aktobe,head_of_government,Q122809427,Akim of Aktobe Region,Q62713874,Ondasyn Urazalin,Q1195092,Nur Otan
 KAZ,kazakhstan/north-kazakhstan,head_of_government,,,Q23656579,Erik Sultanov,Q1195092,Nur Otan
@@ -1014,7 +1017,7 @@ KAZ,kazakhstan/kostanay,head_of_government,,,Q4308731,Arkhimed Mukhambetov,Q1195
 KAZ,kazakhstan/pavlodar,head_of_government,,,Q112996350,Asaiyn Baikhanov,,
 KAZ,kazakhstan/west-kazakhstan,head_of_government,Q115667780,Äkim of West Kazakhstan Region,Q4203815,Q4203815,Q1195092,Nur Otan
 KAZ,kazakhstan/west-kazakhstan,head_of_government,Q115667780,Äkim of West Kazakhstan Region,Q15070762,Altay Kölginov,,
-KAZ,kazakhstan/west-kazakhstan,head_of_government,Q115667780,Äkim of West Kazakhstan Region,Q70253496,Nariman Töreghalijew,Q1195092,Nur Otan
+KAZ,kazakhstan/west-kazakhstan,head_of_government,Q115667780,Äkim of West Kazakhstan Region,Q70253496,Nariman Töreghalijew,Q111077075,Amanat
 KAZ,kazakhstan/atyrau,head_of_government,,,Q12562169,Serik Şapkenov,Q111077075,Amanat
 KAZ,kazakhstan/baikonur,head_of_government,,,Q19861743,Q19861743,,
 KAZ,kazakhstan/akmola,head_of_government,,,Q12552910,Ermek Marjyqpaev,,
@@ -1216,7 +1219,7 @@ PER,peru/ucayali,head_of_government,,,Q17995692,Manuel Gambini Rupay,,
 PER,peru/puno,head_of_government,,,Q18719777,Juan Luque Mamani,,
 PER,peru/arequipa,head_of_government,,,Q116288299,Rohel Sánchez Sánchez,,
 PER,peru/ica,head_of_government,,,Q116036078,Rocky Hurtado,,
-PER,peru/ancash,head_of_government,,,Q18417474,Waldo Rios,,
+PER,peru/ancash,head_of_government,,,Q111424871,Koki Noriega,,
 PER,peru/la-libertad,head_of_government,,,Q57231115,Manuel Llempén,Q4732394,Alliance for Progress
 PER,peru/cusco-departament,head_of_government,,,Q115997919,Werner Salcedo Álvarez,,
 PER,peru/ayacucho,head_of_government,,,Q18719985,Wilfredo Oscorima,,
@@ -1323,7 +1326,7 @@ RUS,russia/kabardino-balkaria,head_of_government,Q140686,chairperson,Q84724346,Q
 RUS,russia/republic-of-north-ossetia-alania,head_of_government,Q30461,president,Q4290693,Sergei Menyailo,Q79854,Communist Party of the Soviet Union
 RUS,russia/republic-of-ingushetia,head_of_government,Q2030731,Head of the Republic of Ingushetia,Q64831217,Mahmud-Ali Kalimatov,Q79854,Communist Party of the Soviet Union
 RUS,russia/chechen-republic,head_of_government,Q4376767,Head of the Chechen Republic,Q217115,Ramzan Kadyrov,Q151469,United Russia
-RUS,russia/republic-of-dagestan,head_of_government,Q2344821,Head of the Respublic of Dagestan,Q16941911,Sergey Melikov,Q151469,United Russia
+RUS,russia/republic-of-dagestan,head_of_government,Q2344821,Head of the Respublic of Dagestan,Q16941911,Sergey Melikov,Q79854,Communist Party of the Soviet Union
 RUS,russia/murmansk,head_of_government,Q16056633,Governor of Murmansk Oblast,Q62167639,Andrey Chibis,Q151469,United Russia
 RUS,russia/karelia,head_of_government,Q4139082,Head of the Republic of Karelia,Q4346170,Arthur Parfenčikov,Q151469,United Russia
 RUS,russia/leningrad,head_of_government,,,Q4121061,Alexander Drozdenko,Q151469,United Russia
@@ -1524,7 +1527,7 @@ TJK,tajikistan/dushanbe,head_of_government,Q30185,mayor,Q24258837,Rustam Emomali
 THA,thailand/bueng-kan,head_of_government,,,Q15622319,Chalothon Phakote,,
 THA,thailand/bangkok,head_of_government,Q13020141,Governor of Bangkok,Q16307757,Chadchart Sittipunt,Q128605255,"People's Party (Thailand, 2024)"
 THA,thailand/phuket,head_of_government,,,Q60828698,Phakphong Thawiphat,,
-TTO,trinidad-and-tobago/port-of-spain,head_of_government,,,Q30101326,Q30101326,,
+TTO,trinidad-and-tobago/port-of-spain,head_of_government,,,Q20530301,Prime Minister of Trinidad and Tobago,,
 TUR,turkey/artvin,head_of_government,Q20949434,Governor of Artvin,Q6024607,Mustafa Yemlihalıoğlu,,
 TUR,turkey/istanbul,head_of_government,Q136312041,Governor of Istanbul Province,Q97230555,Davut Gül,,
 TUR,turkey/rize,head_of_government,Q136312070,Governor of Rize Province,Q6033868,Erdoğan Bektaş,,

@@ -1,0 +1,1249 @@
+code,name,section,sector,stage
+0101,Horses,Agriculture,agriculture,raw
+0102,Bovine,Agriculture,agriculture,raw
+0103,Swine,Agriculture,agriculture,raw
+0104,Sheep,Agriculture,agriculture,raw
+0105,Fowl,Agriculture,agriculture,raw
+0106,Other live animals,Agriculture,agriculture,raw
+0201,Beef,Agriculture,agriculture,raw
+0202,Beef (frozen),Agriculture,agriculture,raw
+0203,Pork,Agriculture,agriculture,raw
+0204,Lamb,Agriculture,agriculture,raw
+0205,Horse meat,Agriculture,agriculture,raw
+0206,Edible offal,Agriculture,agriculture,raw
+0207,Poultry,Agriculture,agriculture,raw
+0208,Other meat,Agriculture,agriculture,raw
+0209,Pig and poultry fat,Agriculture,agriculture,raw
+0210,Preserved meat,Agriculture,agriculture,raw
+0301,Live Fish,Agriculture,agriculture,raw
+0302,"Fish, excluding fillets",Agriculture,agriculture,raw
+0303,"Frozen fish, excluding fillets",Agriculture,agriculture,raw
+0304,Fish fillets,Agriculture,agriculture,raw
+0305,Preserved fish,Agriculture,agriculture,raw
+0306,Crustaceans,Agriculture,agriculture,raw
+0307,Molluscs,Agriculture,agriculture,raw
+0401,Milk,Agriculture,agriculture,raw
+0402,"Milk, concentrated",Agriculture,agriculture,produced
+0403,Fermented milk products,Agriculture,agriculture,produced
+0404,Whey,Agriculture,agriculture,produced
+0405,Butter,Agriculture,agriculture,produced
+0406,Cheese,Agriculture,agriculture,produced
+0407,"Eggs, in shell",Agriculture,agriculture,raw
+0408,Egg yolks,Agriculture,agriculture,raw
+0409,Honey,Agriculture,agriculture,raw
+0410,"Edible animal products, n.e.c.",Agriculture,agriculture,raw
+0501,"Human hair, unworked",Agriculture,agriculture,raw
+0502,Brushmaking hair,Agriculture,agriculture,raw
+0503,Horsehair,Agriculture,agriculture,raw
+0504,"Animal guts, except fish",Agriculture,agriculture,raw
+0505,Feathers and down,Agriculture,agriculture,raw
+0506,"Bones, simply prepared",Agriculture,agriculture,raw
+0507,Whalebone & horns,Agriculture,agriculture,raw
+0508,Coral and shells,Agriculture,agriculture,raw
+0509,Sponges of animal origin,Agriculture,agriculture,raw
+0510,Animal products used in pharmaceuticals,Agriculture,agriculture,raw
+0511,Animal products n.e.c.,Agriculture,agriculture,raw
+0601,Flower bulbs,Agriculture,agriculture,raw
+0602,Other live plants,Agriculture,agriculture,raw
+0603,Cut flowers,Agriculture,agriculture,raw
+0604,Other parts of plants,Agriculture,agriculture,raw
+0701,Potatoes,Agriculture,agriculture,raw
+0702,Tomatoes,Agriculture,agriculture,raw
+0703,"Onions, shallots, garlic",Agriculture,agriculture,raw
+0704,"Cabbages, cauliflowers, broccoli",Agriculture,agriculture,raw
+0705,Lettuce,Agriculture,agriculture,raw
+0706,Carrots & turnips,Agriculture,agriculture,raw
+0707,Cucumbers,Agriculture,agriculture,raw
+0708,Legumes,Agriculture,agriculture,raw
+0709,Other vegetables,Agriculture,agriculture,raw
+0710,Frozen vegetables,Agriculture,agriculture,raw
+0711,"Vegetables, provisionally preserved",Agriculture,agriculture,raw
+0712,"Vegetables, dried",Agriculture,agriculture,raw
+0713,"Legumes, dried",Agriculture,agriculture,raw
+0714,Tubers,Agriculture,agriculture,raw
+0801,Cashew nuts & coconuts,Agriculture,agriculture,raw
+0802,Other nuts,Agriculture,agriculture,raw
+0803,Bananas and plantains,Agriculture,agriculture,raw
+0804,"Avocados, pineapples, mangos, etc.",Agriculture,agriculture,raw
+0805,Citrus fruit,Agriculture,agriculture,raw
+0806,Grapes,Agriculture,agriculture,raw
+0807,Melons and papayas,Agriculture,agriculture,raw
+0808,Apples & pears,Agriculture,agriculture,raw
+0809,Peaches & cherries,Agriculture,agriculture,raw
+0810,Other fresh fruit,Agriculture,agriculture,raw
+0811,"Fruits and nuts, frozen",Agriculture,agriculture,raw
+0812,"Fruits and nuts, provisionally preserved",Agriculture,agriculture,raw
+0813,"Fruits, dried",Agriculture,agriculture,raw
+0814,Peel of citrus fruit or melons,Agriculture,agriculture,raw
+0901,Coffee,Agriculture,agriculture,raw
+0902,Tea,Agriculture,agriculture,raw
+0903,Mate,Agriculture,agriculture,raw
+0904,Pepper,Agriculture,agriculture,raw
+0905,Vanilla,Agriculture,agriculture,raw
+0906,Cinnamon,Agriculture,agriculture,raw
+0907,Cloves,Agriculture,agriculture,raw
+0908,Nutmeg,Agriculture,agriculture,raw
+0909,"Anise, fennel, etc.",Agriculture,agriculture,raw
+0910,Spices,Agriculture,agriculture,raw
+1001,Wheat and meslin,Agriculture,agriculture,raw
+1002,Rye,Agriculture,agriculture,raw
+1003,Barley,Agriculture,agriculture,raw
+1004,Oats,Agriculture,agriculture,raw
+1005,Corn,Agriculture,agriculture,raw
+1006,Rice,Agriculture,agriculture,raw
+1007,Grain sorghum,Agriculture,agriculture,raw
+1008,Other cereals,Agriculture,agriculture,raw
+1101,Wheat or meslin flour,Agriculture,agriculture,produced
+1102,Cereal flours,Agriculture,agriculture,produced
+1103,Cereal meals,Agriculture,agriculture,produced
+1104,Worked cereal grains,Agriculture,agriculture,produced
+1105,Potato flour,Agriculture,agriculture,produced
+1106,Flour of dried legumes,Agriculture,agriculture,produced
+1107,Malt,Agriculture,agriculture,produced
+1108,Starches,Agriculture,agriculture,produced
+1109,Wheat gluten,Agriculture,agriculture,produced
+1201,Soya beans,Agriculture,agriculture,raw
+1202,Peanuts,Agriculture,agriculture,raw
+1203,Copra,Agriculture,agriculture,raw
+1204,Linseed,Agriculture,agriculture,raw
+1205,Rape or colza seeds,Agriculture,agriculture,raw
+1206,Sunflower seeds,Agriculture,agriculture,raw
+1207,Other oil seeds,Agriculture,agriculture,raw
+1208,Flours of oil seeds,Agriculture,agriculture,raw
+1209,Seeds used for sowing,Agriculture,agriculture,raw
+1210,Hop cones,Agriculture,agriculture,raw
+1211,"Plants used in perfumery, pharmacy or insecticide",Agriculture,agriculture,raw
+1212,Seaweeds & edible vegetable products,Agriculture,agriculture,raw
+1213,Cereal straw and husks,Agriculture,agriculture,raw
+1214,Forage products,Agriculture,agriculture,raw
+1301,Lac,Agriculture,agriculture,raw
+1302,Vegetable saps and extracts,Agriculture,agriculture,raw
+1401,Vegetable materials used for plaiting,Agriculture,agriculture,raw
+1402,Vegetable materials used as stuffing,Agriculture,agriculture,raw
+1403,Vegetable materials used for brooms,Agriculture,agriculture,raw
+1404,Vegetable products n.e.c.,Agriculture,agriculture,raw
+1501,"Pig and poultry fat, rendered",Agriculture,agriculture,produced
+1502,"Bovine, sheep and goat fats",Agriculture,agriculture,produced
+1503,"Lard oil, tallow oil etc.",Agriculture,agriculture,produced
+1504,Fish oils,Agriculture,agriculture,produced
+1505,Wool grease,Agriculture,agriculture,produced
+1506,Other animal fats and oils,Agriculture,agriculture,produced
+1507,Soybean oil,Agriculture,agriculture,produced
+1508,Peanut oil,Agriculture,agriculture,produced
+1509,Olive oil,Agriculture,agriculture,produced
+1510,"Olive oil, blended",Agriculture,agriculture,produced
+1511,Palm oil,Agriculture,agriculture,produced
+1512,Sunflower seed oil,Agriculture,agriculture,produced
+1513,Coconut & palm kernel oil,Agriculture,agriculture,produced
+1514,"Rapeseed, colza or mustard oil,",Agriculture,agriculture,produced
+1515,Other vegetable fats and oils,Agriculture,agriculture,produced
+1516,"Vegetable fats, hydrogenated",Agriculture,agriculture,produced
+1517,Margarine,Agriculture,agriculture,produced
+1518,"Animal or vegetable fats and oils, processed",Agriculture,agriculture,produced
+1519,Stearic acid,Agriculture,agriculture,produced
+1520,Glycerol,Agriculture,agriculture,produced
+1521,Vegetable waxes and beeswax,Agriculture,agriculture,produced
+1522,Degras and wax residues,Agriculture,agriculture,produced
+1601,Sausages,Agriculture,agriculture,produced
+1602,Other prepared or preserved meat,Agriculture,agriculture,produced
+1603,Extracts and juices of meat or fish,Agriculture,agriculture,produced
+1604,Prepared or preserved fish,Agriculture,agriculture,produced
+1605,Prepared aquatic invertibrates,Agriculture,agriculture,produced
+1701,Sugarcane & sucrose,Agriculture,agriculture,produced
+1702,Other sugars,Agriculture,agriculture,produced
+1703,Molasses,Agriculture,agriculture,produced
+1704,Confectionery sugar,Agriculture,agriculture,produced
+1801,Cocoa beans,Agriculture,agriculture,raw
+1802,Cocoa residues,Agriculture,agriculture,produced
+1803,Cocoa paste,Agriculture,agriculture,produced
+1804,Cocoa butter,Agriculture,agriculture,produced
+1805,Cocoa powder,Agriculture,agriculture,produced
+1806,Chocolates,Agriculture,agriculture,produced
+1901,Malt extract,Agriculture,agriculture,produced
+1902,Pasta,Agriculture,agriculture,produced
+1903,Tapioca,Agriculture,agriculture,produced
+1904,Cereal foods,Agriculture,agriculture,produced
+1905,Bakery products,Agriculture,agriculture,produced
+2001,Pickled fruits and vegetables,Agriculture,agriculture,produced
+2002,"Tomatoes, prepared or preserved",Agriculture,agriculture,produced
+2003,"Mushrooms, prepared or preserved",Agriculture,agriculture,produced
+2004,"Other vegetables, frozen",Agriculture,agriculture,produced
+2005,"Other vegetables, prepared or preserved",Agriculture,agriculture,produced
+2006,"Vegetables, fruits and nuts, preserved by sugar",Agriculture,agriculture,produced
+2007,"Jams, jellies and marmalades",Agriculture,agriculture,produced
+2008,"Fruits and nuts, otherwise prepared",Agriculture,agriculture,produced
+2009,Fruit juices,Agriculture,agriculture,produced
+2101,Coffee extracts,Agriculture,agriculture,produced
+2102,Yeasts,Agriculture,agriculture,produced
+2103,Sauces and seasonings,Agriculture,agriculture,produced
+2104,Soups and broths,Agriculture,agriculture,produced
+2105,Ice cream,Agriculture,agriculture,produced
+2106,Food preparations n.e.c.,Agriculture,agriculture,produced
+2201,Waters,Agriculture,agriculture,produced
+2202,"Waters, flavored or sweetened",Agriculture,agriculture,produced
+2203,Beer,Agriculture,agriculture,produced
+2204,Wine,Agriculture,agriculture,produced
+2205,"Wine, flavored",Agriculture,agriculture,produced
+2206,Other fermented beverages,Agriculture,agriculture,produced
+2207,Ethyl alcohol > 80%,Agriculture,agriculture,produced
+2208,Spirits < 80% alcohol,Agriculture,agriculture,produced
+2209,Vinegars,Agriculture,agriculture,produced
+2301,"Flours of fish, for animal feed",Agriculture,agriculture,produced
+2302,Cereal residues,Agriculture,agriculture,produced
+2303,Starch residues,Agriculture,agriculture,produced
+2304,Solid soybean residues,Agriculture,agriculture,produced
+2305,Solid peanut residues,Agriculture,agriculture,produced
+2306,Solid vegetable oil and fat residues,Agriculture,agriculture,produced
+2307,Wine lees,Agriculture,agriculture,produced
+2308,Vegetable materials for animal feeding,Agriculture,agriculture,produced
+2309,Animal feed,Agriculture,agriculture,produced
+2401,Unmanufactured tobacco,Agriculture,agriculture,raw
+2402,Cigars and cigarettes,Agriculture,agriculture,produced
+2403,Other manufactured tobacco,Agriculture,agriculture,produced
+2501,Salt,Minerals,industry,raw
+2502,Unroasted iron pyrites,Minerals,industry,raw
+2503,"Sulphur, crude",Minerals,industry,raw
+2504,Natural graphite,Minerals,industry,raw
+2505,Natural sands,Minerals,industry,raw
+2506,Quartz,Minerals,industry,raw
+2507,Kaolin,Minerals,industry,raw
+2508,Clays,Minerals,industry,raw
+2509,Chalk,Minerals,industry,raw
+2510,Natural calcium phosphates,Minerals,industry,raw
+2511,Natural barium sulfate,Minerals,industry,raw
+2512,Siliceous fossil meals and earths,Minerals,industry,raw
+2513,Natural abrasives,Minerals,industry,raw
+2514,Slate,Minerals,industry,raw
+2515,Marble,Minerals,industry,raw
+2516,Granite,Minerals,industry,raw
+2517,Gravel,Minerals,industry,raw
+2518,Dolomite,Minerals,industry,raw
+2519,Natural magnesia,Minerals,industry,raw
+2520,Gypsum,Minerals,industry,raw
+2521,Limstone,Minerals,industry,raw
+2522,Quicklime,Minerals,industry,raw
+2523,Cements,Minerals,industry,produced
+2524,Asbestos,Minerals,industry,raw
+2525,Mica,Minerals,industry,raw
+2526,Natural steatite,Minerals,industry,raw
+2527,Natural cryolite,Minerals,industry,raw
+2528,Natural borates,Minerals,industry,raw
+2529,Feldspar,Minerals,industry,raw
+2530,Mineral substances n.e.c.,Minerals,industry,raw
+2601,Iron ores and concentrates,Minerals,industry,raw
+2602,Manganese > 47% by weight,Minerals,industry,raw
+2603,Copper ore,Minerals,industry,raw
+2604,Nickel ore,Minerals,industry,raw
+2605,Cobalt ore,Minerals,industry,raw
+2606,Aluminum ore,Minerals,industry,raw
+2607,Lead ore,Minerals,industry,raw
+2608,Zinc ore,Minerals,industry,raw
+2609,Tin ore,Minerals,industry,raw
+2610,Chromium ore,Minerals,industry,raw
+2611,Tungsten ore,Minerals,industry,raw
+2612,Uranium ore,Minerals,industry,raw
+2613,Molybdenum ore,Minerals,industry,raw
+2614,Titanium ore,Minerals,industry,raw
+2615,Zirconium ore,Minerals,industry,raw
+2616,Precious metal ores,Minerals,industry,raw
+2617,Other ores,Minerals,industry,raw
+2618,Granulated iron or steel slag,Minerals,industry,raw
+2619,Iron or steel slag,Minerals,industry,raw
+2620,"Slag, ash and residues containing metals",Minerals,industry,raw
+2621,Other slag and ash,Minerals,industry,raw
+2701,Coal,Minerals,industry,raw
+2702,Lignite,Minerals,industry,raw
+2703,Peat,Minerals,industry,produced
+2704,Coke,Minerals,industry,produced
+2705,Non-petroleum gases,Minerals,industry,produced
+2706,"Tar distilled from coal, lignite etc.",Minerals,industry,produced
+2707,Oils etc. from high temperature coal tar,Minerals,industry,produced
+2708,Pitch and pitch coke,Minerals,industry,produced
+2709,"Petroleum oils, crude",Minerals,industry,raw
+2710,"Petroleum oils, refined",Minerals,industry,produced
+2711,Petroleum gases,Minerals,industry,raw
+2712,Petroleum jelly,Minerals,industry,produced
+2713,Petroleum coke,Minerals,industry,produced
+2714,"Bitumen and asphalt, natural",Minerals,industry,produced
+2715,Bituminous mixtures,Minerals,industry,produced
+2716,Electrical energy,Minerals,industry,produced
+2801,Iodine,Chemicals,industry,produced
+2802,"Sulfur, sublimed or precipitated",Chemicals,industry,produced
+2803,Carbon,Chemicals,industry,produced
+2804,Silicon & rare gases,Chemicals,industry,produced
+2805,Rare-earth metals,Chemicals,industry,produced
+2806,Hydrochloric acid,Chemicals,industry,produced
+2807,"Sulfiric acid, oleum",Chemicals,industry,produced
+2808,Sulfonitric acids,Chemicals,industry,produced
+2809,Phosphoric acid etc.,Chemicals,industry,produced
+2810,Oxides of boron; boric acids,Chemicals,industry,produced
+2811,Other inorganic acids,Chemicals,industry,produced
+2812,Halides of nonmetals,Chemicals,industry,produced
+2813,Sulfides of nonmetals,Chemicals,industry,produced
+2814,Ammonia,Chemicals,industry,produced
+2815,Sodium hydroxide,Chemicals,industry,produced
+2816,Hydroxides or peroxides of magnesium,Chemicals,industry,produced
+2817,Zinc oxide or peroxide,Chemicals,industry,produced
+2818,Aluminum oxide,Chemicals,industry,produced
+2819,Chromium oxides and hydroxides,Chemicals,industry,produced
+2820,Manganese oxides,Chemicals,industry,produced
+2821,Iron oxides and hydroxides,Chemicals,industry,produced
+2822,Cobalt oxides and hydroxides,Chemicals,industry,produced
+2823,Titanium oxides,Chemicals,industry,produced
+2824,Lead oxides,Chemicals,industry,produced
+2825,"Metal base oxides, n.e.c.",Chemicals,industry,produced
+2826,Flourides,Chemicals,industry,produced
+2827,"Chlorides, bromides, iodides etc.",Chemicals,industry,produced
+2828,Hyopchlorites,Chemicals,industry,produced
+2829,Sodium chlorate,Chemicals,industry,produced
+2830,Sulfides; polysulfides,Chemicals,industry,produced
+2831,Dithionites and sulfoxylates,Chemicals,industry,produced
+2832,Sulfites,Chemicals,industry,produced
+2833,Sulfates,Chemicals,industry,produced
+2834,"Nitrites, nitrates",Chemicals,industry,produced
+2835,Phosphates,Chemicals,industry,produced
+2836,Carbonates,Chemicals,industry,produced
+2837,Cyanides,Chemicals,industry,produced
+2838,"Fulminates, cyanates and thiocyanates",Chemicals,industry,produced
+2839,Silicates,Chemicals,industry,produced
+2840,Borates,Chemicals,industry,produced
+2841,Salts of oxometallic acids,Chemicals,industry,produced
+2842,Other salts of acids,Chemicals,industry,produced
+2843,Compounds of precious metals,Chemicals,industry,produced
+2844,Uranium,Chemicals,industry,produced
+2845,Non-radioactive isotopes,Chemicals,industry,produced
+2846,Compounds of rare-earth metals,Chemicals,industry,produced
+2847,Hydrogen peroxide,Chemicals,industry,produced
+2848,Phosphides,Chemicals,industry,produced
+2849,Carbides,Chemicals,industry,produced
+2850,"Hydrides, nitrides, azides, silicides and borides",Chemicals,industry,produced
+2851,"Inorganic compounds, liquid or compressed air",Chemicals,industry,produced
+2901,Acyclic hydrocarbons,Chemicals,industry,produced
+2902,Cyclic hydrocarbons,Chemicals,industry,produced
+2903,Halogenated derivatives of hydrocarbons,Chemicals,industry,produced
+2904,"Sulfonated, nitrated derivatives of hydrocarbons",Chemicals,industry,produced
+2905,Acyclic alcohols,Chemicals,industry,produced
+2906,Cyclic alcohols,Chemicals,industry,produced
+2907,"Phenols, phenol-alcohols",Chemicals,industry,produced
+2908,Derivatives of phenols,Chemicals,industry,produced
+2909,Ethers,Chemicals,industry,produced
+2910,Epoxides,Chemicals,industry,produced
+2911,Acetals and hemiacetals,Chemicals,industry,produced
+2912,Aldehydes,Chemicals,industry,produced
+2913,Derivatives of aldehydes,Chemicals,industry,produced
+2914,Ketones and quinones,Chemicals,industry,produced
+2915,Saturated acyclic monocarboxylic acids,Chemicals,industry,produced
+2916,Unsaturated acyclic monocarboxylic acids,Chemicals,industry,produced
+2917,Polycarboxylic acids,Chemicals,industry,produced
+2918,Carboxylic acids with additional oxygen function,Chemicals,industry,produced
+2919,Phosporic esters,Chemicals,industry,produced
+2920,Esters of other inorganic acids of nonmetals,Chemicals,industry,produced
+2921,Amine-function compounds,Chemicals,industry,produced
+2922,Oxygen-function amino-compounds,Chemicals,industry,produced
+2923,Quaternary ammonium salts and hydroxides,Chemicals,industry,produced
+2924,Carboxyamide-function compounds,Chemicals,industry,produced
+2925,Carboxyimide-function compounds,Chemicals,industry,produced
+2926,Nitrile-function compounds,Chemicals,industry,produced
+2927,"Diazo-, azo-, or azoxy-compounds",Chemicals,industry,produced
+2928,Organix derivatives of hydrazine,Chemicals,industry,produced
+2929,Isocyanates,Chemicals,industry,produced
+2930,Organo-sulfur compounds,Chemicals,industry,produced
+2931,Other organo-inorganic compounds,Chemicals,industry,produced
+2932,Heterocyclic compounds with oxygen hetero-atom(s) only,Chemicals,industry,produced
+2933,Heterocyclic compounds with nitrogen hetero-atom(s) only,Chemicals,industry,produced
+2934,Nucleic acids and their salts,Chemicals,industry,produced
+2935,Sulfonamides,Chemicals,industry,produced
+2936,Vitamins,Chemicals,industry,produced
+2937,Hormones,Chemicals,industry,produced
+2938,Glycosides,Chemicals,industry,produced
+2939,Vegetable alkaloids,Chemicals,industry,produced
+2940,"Other sugars, chemically pure",Chemicals,industry,produced
+2941,Antibiotics,Chemicals,industry,produced
+2942,Other organic compounds,Chemicals,industry,produced
+3001,Heparin for therapeutic use,Chemicals,industry,produced
+3002,Serums and vaccines,Chemicals,industry,produced
+3003,"Medicaments, not packaged",Chemicals,industry,produced
+3004,"Medicaments, packaged",Chemicals,industry,produced
+3005,"Wadding, gauze and bandages",Chemicals,industry,produced
+3006,Pharmaceutical goods,Chemicals,industry,produced
+3101,Animal or vegetable fertilizers,Chemicals,industry,produced
+3102,Nitrogenous fertilizers,Chemicals,industry,produced
+3103,Phosphatic fertilizers,Chemicals,industry,produced
+3104,Potassic fertilizers,Chemicals,industry,produced
+3105,Mixed fertilizers,Chemicals,industry,produced
+3201,Vegetable tanning extracts,Chemicals,industry,produced
+3202,Synthetic tanning substances,Chemicals,industry,produced
+3203,Coloring matter of animal or vegetable origin,Chemicals,industry,produced
+3204,Synthetic organic coloring matter,Chemicals,industry,produced
+3205,Color lakes,Chemicals,industry,produced
+3206,Other coloring matter,Chemicals,industry,produced
+3207,Prepared pigments,Chemicals,industry,produced
+3208,"Paints and varnishes, nonaqueous",Chemicals,industry,produced
+3209,"Paints and varnishes, aqueous",Chemicals,industry,produced
+3210,Other paints and varnishes,Chemicals,industry,produced
+3211,Prepared driers,Chemicals,industry,produced
+3212,"Pigments, nonaqueous",Chemicals,industry,produced
+3213,Artists' colors,Chemicals,industry,produced
+3214,Glaziers' putty,Chemicals,industry,produced
+3215,Ink,Chemicals,industry,produced
+3301,Essential oils,Chemicals,industry,produced
+3302,Mixtures of odoriferous substances,Chemicals,industry,produced
+3303,Perfumes,Chemicals,industry,produced
+3304,Make-up preparations,Chemicals,industry,produced
+3305,Hair products,Chemicals,industry,produced
+3306,Dental hygiene products,Chemicals,industry,produced
+3307,Toiletries,Chemicals,industry,produced
+3401,Soap,Chemicals,industry,produced
+3402,Cleaning products,Chemicals,industry,produced
+3403,Lubricants,Chemicals,industry,produced
+3404,Artificial and prepared waxes,Chemicals,industry,produced
+3405,Polishes and creams,Chemicals,industry,produced
+3406,Candles,Chemicals,industry,produced
+3407,Modeling pastes,Chemicals,industry,produced
+3501,Casein,Chemicals,industry,produced
+3502,Albumins,Chemicals,industry,produced
+3503,Gelatin,Chemicals,industry,produced
+3504,Peptones,Chemicals,industry,produced
+3505,Dextrins and other modified starches,Chemicals,industry,produced
+3506,Glues and adhesives,Chemicals,industry,produced
+3507,Enzymes,Chemicals,industry,produced
+3601,Propellant powders,Chemicals,industry,produced
+3602,"Prepared explosives, except gunpowder",Chemicals,industry,produced
+3603,Detonators,Chemicals,industry,produced
+3604,Fireworks,Chemicals,industry,produced
+3605,Matches,Chemicals,industry,produced
+3606,Ferrocerium and other pyrophoric alloys,Chemicals,industry,produced
+3701,Photographic plates,Chemicals,industry,produced
+3702,Photographic film in rolls,Chemicals,industry,produced
+3703,Photographic paper,Chemicals,industry,produced
+3704,"Photographic film, not developed",Chemicals,industry,produced
+3705,"Photographic film, developed",Chemicals,industry,produced
+3706,Motion-picture film,Chemicals,industry,produced
+3707,Chemical preparations for photographic uses,Chemicals,industry,produced
+3801,Artificial graphite,Chemicals,industry,produced
+3802,Activated carbon,Chemicals,industry,produced
+3803,Tall oil,Chemicals,industry,produced
+3804,Residual lyes,Chemicals,industry,produced
+3805,Turpentines,Chemicals,industry,produced
+3806,Rosin and resin acids,Chemicals,industry,produced
+3807,Wood tar and oils,Chemicals,industry,produced
+3808,"Insecticides, rodenticides, fungicides, etc.",Chemicals,industry,produced
+3809,Finishing agents,Chemicals,industry,produced
+3810,Pickling preparations for metal surfaces,Chemicals,industry,produced
+3811,Anti-knock,Chemicals,industry,produced
+3812,Stabilizers for rubber or plastic,Chemicals,industry,produced
+3813,Preparations for fire extinguishers,Chemicals,industry,produced
+3814,Organic composite solvents and thinners,Chemicals,industry,produced
+3815,Catalytic preparations,Chemicals,industry,produced
+3816,Refractory cements,Chemicals,industry,produced
+3817,Mixed alkylbenzenes,Chemicals,industry,produced
+3818,Chemical elements for electronics,Chemicals,industry,produced
+3819,Hydraulic fluids,Chemicals,industry,produced
+3820,Antifreezing preparation,Chemicals,industry,produced
+3821,Prepared culture media for micro-organisms,Chemicals,industry,produced
+3822,Diagnostic or laboratory reagents,Chemicals,industry,produced
+3823,Industrial monocarboxylic fatty acids,Chemicals,industry,produced
+3901,Polymers of ethylene,Chemicals,industry,produced
+3902,Polymers of propylene,Chemicals,industry,produced
+3903,Polymers of styrene,Chemicals,industry,produced
+3904,Polymers of vinyl chloride,Chemicals,industry,produced
+3905,Polymers of vinyl acetate,Chemicals,industry,produced
+3906,Acrylic polymers,Chemicals,industry,produced
+3907,Polyacetals,Chemicals,industry,produced
+3908,Polyamides,Chemicals,industry,produced
+3909,Amino-resins,Chemicals,industry,produced
+3910,Silicones in primary forms,Chemicals,industry,produced
+3911,Petroleum resins,Chemicals,industry,produced
+3912,Cellulose n.e.c.,Chemicals,industry,produced
+3913,Natural polymers,Chemicals,industry,produced
+3914,Ion-exchangers based on polymers,Chemicals,industry,produced
+3915,Plastic waste,Chemicals,industry,produced
+3916,Monofilament,Chemicals,industry,produced
+3917,Plastic tubes and fittings,Chemicals,industry,produced
+3918,Plastic floor coverings,Chemicals,industry,produced
+3919,Self-adhesive plastic sheets,Chemicals,industry,produced
+3920,"Other plates of plastics, noncellular and not reinforced",Chemicals,industry,produced
+3921,"Other plastic plates, sheets etc.",Chemicals,industry,produced
+3922,"Baths, sinks etc.",Chemicals,industry,produced
+3923,Packing lids,Chemicals,industry,produced
+3924,Plastic household articles,Chemicals,industry,produced
+3925,Plastic builders' ware,Chemicals,industry,produced
+3926,Other articles of plastic,Chemicals,industry,produced
+4001,Natural rubber,Chemicals,agriculture,raw
+4002,Synthetic rubber,Chemicals,industry,produced
+4003,Reclaimed rubber,Chemicals,industry,produced
+4004,Scrap of rubber,Chemicals,industry,produced
+4005,Compounded rubber,Chemicals,industry,produced
+4006,Unvulcanized rubber rods,Chemicals,industry,produced
+4007,Vulcanized rubber thread and cord,Chemicals,industry,produced
+4008,Vulcanized rubber plates,Chemicals,industry,produced
+4009,Vulcanized rubber tubes,Chemicals,industry,produced
+4010,Conveyor belts of vulcanized rubber,Chemicals,industry,produced
+4011,New pneumatic tires of rubber,Chemicals,industry,produced
+4012,Used pneumatic tires of rubber,Chemicals,industry,produced
+4013,Rubber inner tubes,Chemicals,industry,produced
+4014,Rubber hygenic or pharmeceutical items,Chemicals,industry,produced
+4015,Vulcanized rubber articles of apparel,Chemicals,industry,produced
+4016,Other articles of vulcanized rubber,Chemicals,industry,produced
+4017,Hard rubber,Chemicals,industry,produced
+4101,Raw hides of bovines or equines,Agriculture,agriculture,raw
+4102,Raw skins of sheep or lambs,Agriculture,agriculture,raw
+4103,Other raw hides and skins,Agriculture,agriculture,raw
+4104,Tanned hides of bovines or equines,Agriculture,industry,produced
+4105,Tanned sheepskins,Agriculture,industry,produced
+4106,Tanned skins of other animals,Agriculture,industry,produced
+4107,Bovine leather further prepared,Agriculture,industry,produced
+4108,Chamois leather,Agriculture,industry,produced
+4109,Patent leather,Agriculture,industry,produced
+4110,Waste of leather,Agriculture,industry,produced
+4111,Composition leather,Agriculture,industry,produced
+4201,Saddlery and harnesses,Agriculture,industry,produced
+4202,Trunks or cases,Agriculture,industry,produced
+4203,Leather apparel,Agriculture,industry,produced
+4204,Articles of leather for technical uses,Agriculture,industry,produced
+4205,Other articles of leather,Agriculture,industry,produced
+4206,Articles of gut,Agriculture,industry,produced
+4301,Other raw furskins,Agriculture,industry,produced
+4302,Other tanned furskins,Agriculture,industry,produced
+4303,Furskin apparel,Agriculture,industry,produced
+4304,Artificial fur,Agriculture,industry,produced
+4401,Fuel wood,Agriculture,agriculture,raw
+4402,Wood charcoal,Agriculture,agriculture,raw
+4403,Wood in the rough,Agriculture,agriculture,raw
+4404,Strips and other pieces of wood,Agriculture,industry,produced
+4405,Wood wool or flour,Agriculture,industry,produced
+4406,Wooden railway ties,Agriculture,industry,produced
+4407,Wood sawn lengthwise,Agriculture,industry,produced
+4408,Sheets for veneering for plywood,Agriculture,industry,produced
+4409,Wood shaped along its edges,Agriculture,industry,produced
+4410,Particle board and similar board,Agriculture,industry,produced
+4411,Fiberboard of wood,Agriculture,industry,produced
+4412,Plywood,Agriculture,industry,produced
+4413,Densified wood,Agriculture,industry,produced
+4414,Wooden frames,Agriculture,industry,produced
+4415,Packing boxes,Agriculture,industry,produced
+4416,"Casks, barrels, etc. of wood",Agriculture,industry,produced
+4417,Wooden tools,Agriculture,industry,produced
+4418,Wood carpentry for construction,Agriculture,industry,produced
+4419,Wooden kitchenware,Agriculture,industry,produced
+4420,"Wood marquetry, ornaments, etc.",Agriculture,industry,produced
+4421,Other articles of wood,Agriculture,industry,produced
+4501,"Natural cork, raw",Agriculture,industry,produced
+4502,"Natural cork, debacked",Agriculture,industry,produced
+4503,Articles of natural cork,Agriculture,industry,produced
+4504,Agglomerated cork,Agriculture,industry,produced
+4601,Products of plaiting materials,Agriculture,industry,produced
+4602,Basketwork,Agriculture,industry,produced
+4701,Mechanical woodpulp,Agriculture,industry,produced
+4702,"Chemical woodpulp, dissolving grade",Agriculture,industry,produced
+4703,"Chemical woodpulp, soda or sulfate",Agriculture,industry,produced
+4704,"Chemical woodpulp, sulfite",Agriculture,industry,produced
+4705,Semichemical woodpulp,Agriculture,industry,produced
+4706,Pulps of recovered paper fibers,Agriculture,industry,produced
+4707,Paper waste,Agriculture,industry,produced
+4801,Newsprint,Agriculture,industry,produced
+4802,Paper used for graphic purposes,Agriculture,industry,produced
+4803,Tissue,Agriculture,industry,produced
+4804,Uncoated kraft paper and paperboard,Agriculture,industry,produced
+4805,Other uncoated paper and paperboard,Agriculture,industry,produced
+4806,Transparent paper,Agriculture,industry,produced
+4807,Uncoated composite paper,Agriculture,industry,produced
+4808,Corrugated paper and paperboard,Agriculture,industry,produced
+4809,Carbon paper,Agriculture,industry,produced
+4810,"Paper and paperboard, coated with kaolin",Agriculture,industry,produced
+4811,"Cellulose wadding, coated",Agriculture,industry,produced
+4812,Filter blocks of paper pulp,Agriculture,industry,produced
+4813,Cigarette paper,Agriculture,industry,produced
+4814,Wallpaper,Agriculture,industry,produced
+4815,Floor coverings of paper,Agriculture,industry,produced
+4816,Other carbon paper,Agriculture,industry,produced
+4817,Letterstock,Agriculture,industry,produced
+4818,Toilet paper,Agriculture,industry,produced
+4819,Cardboard packing containers,Agriculture,industry,produced
+4820,Notebooks,Agriculture,industry,produced
+4821,Paper labels,Agriculture,industry,produced
+4822,"Bobbins, spools, cops of paper",Agriculture,industry,produced
+4823,Other paper cut to size,Agriculture,industry,produced
+4901,"Books, brochures etc.",Agriculture,industry,produced
+4902,"Newspapers, journals and periodicals",Agriculture,industry,produced
+4903,Children's books,Agriculture,industry,produced
+4904,"Music, printed or in manuscript",Agriculture,industry,produced
+4905,Maps,Agriculture,industry,produced
+4906,"Architectural, engineering, etc. drawings",Agriculture,industry,produced
+4907,Unused stamps,Agriculture,industry,produced
+4908,Transfers (decalcomanias),Agriculture,industry,produced
+4909,Printed or illustrated postcards,Agriculture,industry,produced
+4910,Calendars,Agriculture,industry,produced
+4911,Other printed matter,Agriculture,industry,produced
+5001,Silkworm cocoons,Textiles,agriculture,raw
+5002,Raw silk,Textiles,agriculture,raw
+5003,Silk waste,Textiles,agriculture,raw
+5004,Silk yarn,Textiles,industry,produced
+5005,Yarn from silk waste,Textiles,industry,produced
+5006,"Silk yarn, for retail sale",Textiles,industry,produced
+5007,Woven silk fabrics,Textiles,industry,produced
+5101,Wool,Textiles,agriculture,raw
+5102,Animal hair,Textiles,agriculture,raw
+5103,Wool or animal hair waste,Textiles,agriculture,raw
+5104,Garnetted stock of wool or animal hair,Textiles,industry,produced
+5105,"Wool, combed",Textiles,industry,produced
+5106,"Yarn of carded wool, not for retail sale",Textiles,industry,produced
+5107,"Yarn of combed wool, not for retail sale",Textiles,industry,produced
+5108,"Yarn of animal hair, not for retail sale",Textiles,industry,produced
+5109,"Yarn of wool or animal hair, for retail sale",Textiles,industry,produced
+5110,Yarn of coarse animal hair or of horsehair,Textiles,industry,produced
+5111,Woven fabrics of carded wool,Textiles,industry,produced
+5112,Woven fabrics of combed wool,Textiles,industry,produced
+5113,Woven fabrics of coarse animal hair,Textiles,industry,produced
+5201,Raw cotton,Textiles,agriculture,raw
+5202,Cotton waste,Textiles,agriculture,raw
+5203,"Cotton, carded or combed",Textiles,agriculture,raw
+5204,Cotton sewing thread,Textiles,industry,produced
+5205,Cotton yarn of > 85%,Textiles,industry,produced
+5206,Cotton yarn of < 85%,Textiles,industry,produced
+5207,Cotton yarn for retail sale,Textiles,industry,produced
+5208,Woven fabrics of cotton of > 85% weighing < 200 g/m2,Textiles,industry,produced
+5209,Woven fabrics of cotton of < 85% weighing > 200 g/m2,Textiles,industry,produced
+5210,Woven fabrics of cotton of < 85% weighing < 200 g/m2,Textiles,industry,produced
+5211,Woven fabrics of cotton of < 85% weighing > 200 g/m2,Textiles,industry,produced
+5212,Other woven cotton fabrics,Textiles,industry,produced
+5301,"Flax, raw or processed",Textiles,agriculture,raw
+5302,Hemp fiber,Textiles,agriculture,raw
+5303,Textile bast fibers,Textiles,agriculture,raw
+5304,Sisal and agave fibers,Textiles,agriculture,raw
+5305,Vegetable textile fibers,Textiles,agriculture,raw
+5306,Flax yarn,Textiles,industry,produced
+5307,Yarn of textile bast fibers,Textiles,industry,produced
+5308,Yarn of other vegetable textile fibers,Textiles,industry,produced
+5309,Woven fabrics of flax,Textiles,industry,produced
+5310,Woven fabrics of jute or of other textile bast fibers,Textiles,industry,produced
+5311,Woven fabrics of vegetable textile fibers,Textiles,industry,produced
+5401,Synthetic sowing thread,Textiles,industry,produced
+5402,Synthetic filament yarn,Textiles,industry,produced
+5403,Artificial filament yarn,Textiles,industry,produced
+5404,"Synthetic monofilament >67 dtex, thickness < 1mm",Textiles,industry,produced
+5405,"Artificial monofilament >67dtex t<1mm, strip, straws t<5mm",Textiles,industry,produced
+5406,Synthetic filament yarn for retail sale,Textiles,industry,produced
+5407,Woven fabrics of synthetic filament yarn,Textiles,industry,produced
+5408,Woven fabrics of artificial filament yarn,Textiles,industry,produced
+5501,Synthetic filament tow,Textiles,industry,produced
+5502,Artificial filament tow,Textiles,industry,produced
+5503,Synthetic staple fibers,Textiles,industry,produced
+5504,"Artificial staple fibers, not processed for spinning",Textiles,industry,produced
+5505,Waste of man-made fibers,Textiles,industry,produced
+5506,"Synthetic staple fibers, processed",Textiles,industry,produced
+5507,"Artificial staple fibers, processed",Textiles,industry,produced
+5508,Synthetic staple fibers sewing thread,Textiles,industry,produced
+5509,"Yarn of synthetic staple fibers, not for retail sale",Textiles,industry,produced
+5510,"Yarn of artificial staple fibers, not for retail sale",Textiles,industry,produced
+5511,"Yarn of synthetic staple fibers, for retail sale",Textiles,industry,produced
+5512,Woven fabrics of > 85% synthetic staple fibers,Textiles,industry,produced
+5513,Woven fabrics of < 85% synthetic staple fibers weighing < 170 g/m2,Textiles,industry,produced
+5514,Woven fabrics of < 85% synthetic staple fibers weighing > 170 g/m2,Textiles,industry,produced
+5515,Other woven fabrics of synthetic staple fibers,Textiles,industry,produced
+5516,Woven fabrics of artificial staple fibers,Textiles,industry,produced
+5601,Wadding of textile materials,Textiles,industry,produced
+5602,Felt,Textiles,industry,produced
+5603,Nonwoven textiles,Textiles,industry,produced
+5604,Rubber textiles,Textiles,industry,produced
+5605,Metallised yarn,Textiles,industry,produced
+5606,Gimp yarn,Textiles,industry,produced
+5607,Twine and ropes of baste fibers,Textiles,industry,produced
+5608,Nets,Textiles,industry,produced
+5609,"Articles of yarn, rope etc not elsewhere clasified",Textiles,industry,produced
+5701,"Carpets, knotted",Textiles,industry,produced
+5702,Woven carpets and rugs,Textiles,industry,produced
+5703,"Carpets, tufted",Textiles,industry,produced
+5704,Carpets of felt,Textiles,industry,produced
+5705,Other carpets,Textiles,industry,produced
+5801,Woven pile fabrics,Textiles,industry,produced
+5802,Terry cloth,Textiles,industry,produced
+5803,Gauze,Textiles,industry,produced
+5804,Lace and net fabrics,Textiles,industry,produced
+5805,Hand-woven tapestries,Textiles,industry,produced
+5806,Narrow woven fabrics,Textiles,industry,produced
+5807,Labels and badges of textiles,Textiles,industry,produced
+5808,Braids in piece,Textiles,industry,produced
+5809,Woven fabric incorporating metal threads,Textiles,industry,produced
+5810,Embroidery in the piece,Textiles,industry,produced
+5811,Quilted textile products,Textiles,industry,produced
+5901,Stiffened textiles,Textiles,industry,produced
+5902,Tire cord fabric,Textiles,industry,produced
+5903,Textile fabrics impregnated with plastics,Textiles,industry,produced
+5904,Linoleum,Textiles,industry,produced
+5905,Textile wall coverings,Textiles,industry,produced
+5906,Rubberized textile fabrics,Textiles,industry,produced
+5907,"Other textile fabrics impregnated, coated or covered",Textiles,industry,produced
+5908,Textile wicks,Textiles,industry,produced
+5909,Textile hosepiping and similar tubing,Textiles,industry,produced
+5910,"Transmission belts or belting, of textile material",Textiles,industry,produced
+5911,Textile articles for technical use,Textiles,industry,produced
+6001,"Pile fabrics, knit",Textiles,industry,produced
+6002,Other knitted fabrics,Textiles,industry,produced
+6101,"Men's overcoats, knit",Textiles,industry,produced
+6102,"Women's overcoats, knit",Textiles,industry,produced
+6103,"Men's suits, knit",Textiles,industry,produced
+6104,"Women's suits, knit",Textiles,industry,produced
+6105,"Men's shirts, knit",Textiles,industry,produced
+6106,"Women's shirts, knit",Textiles,industry,produced
+6107,"Men's undergarments, knit",Textiles,industry,produced
+6108,"Women's undergarments, knit",Textiles,industry,produced
+6109,"T-shirts, knit",Textiles,industry,produced
+6110,"Sweaters, pullovers, sweatshirts etc., knit",Textiles,industry,produced
+6111,"Babies' garments, knit",Textiles,industry,produced
+6112,"Activewear, knit",Textiles,industry,produced
+6113,Garments knit with impregnated fibers,Textiles,industry,produced
+6114,"Other garments, knit",Textiles,industry,produced
+6115,"Socks, stockings, etc., knit",Textiles,industry,produced
+6116,"Gloves, knit",Textiles,industry,produced
+6117,"Other clothing accesories, knit",Textiles,industry,produced
+6201,"Men's overcoats, not knit",Textiles,industry,produced
+6202,"Womens overcoats, not knit",Textiles,industry,produced
+6203,Men's suits and pants,Textiles,industry,produced
+6204,Women's suits and pants,Textiles,industry,produced
+6205,Men's shirts,Textiles,industry,produced
+6206,Women's shirts,Textiles,industry,produced
+6207,Men's undergarments,Textiles,industry,produced
+6208,Women's undergarments,Textiles,industry,produced
+6209,Babies' garments,Textiles,industry,produced
+6210,Garments made of textile felts and nonwoven fabric,Textiles,industry,produced
+6211,Activewear,Textiles,industry,produced
+6212,Brassieres,Textiles,industry,produced
+6213,Handkerchiefs,Textiles,industry,produced
+6214,"Shawls, scarves, etc.",Textiles,industry,produced
+6215,"Ties, bow ties and cravats",Textiles,industry,produced
+6216,Gloves,Textiles,industry,produced
+6217,Other clothing accesories,Textiles,industry,produced
+6301,Blankets,Textiles,industry,produced
+6302,House linen,Textiles,industry,produced
+6303,Curtains,Textiles,industry,produced
+6304,Other furnishing articles,Textiles,industry,produced
+6305,Bags for packing goods,Textiles,industry,produced
+6306,"Tents, tarpaulins, etc.",Textiles,industry,produced
+6307,Other made up articles,Textiles,industry,produced
+6308,Needlecraft sets of woven fabric and yarn,Textiles,industry,produced
+6309,Used clothes and textiles,Textiles,industry,produced
+6310,Used or new rags textile scraps,Textiles,industry,produced
+6401,Waterproof footwear,Textiles,industry,produced
+6402,Other footwear of rubber or plastics,Textiles,industry,produced
+6403,Leather footwear,Textiles,industry,produced
+6404,Textile footwear,Textiles,industry,produced
+6405,Other footwear,Textiles,industry,produced
+6406,Parts of footwear,Textiles,industry,produced
+6501,Hat forms,Textiles,industry,produced
+6502,Hat shapes,Textiles,industry,produced
+6503,Felt hats,Textiles,industry,produced
+6504,Hats,Textiles,industry,produced
+6505,"Hats, knit",Textiles,industry,produced
+6506,Other headgear,Textiles,industry,produced
+6507,Headbands,Textiles,industry,produced
+6601,Umbrellas,Textiles,industry,produced
+6602,Walking sticks,Textiles,industry,produced
+6603,Parts of umbrellas or walking sticks,Textiles,industry,produced
+6701,Feathers or down,Textiles,industry,produced
+6702,Artificial flowers,Textiles,industry,produced
+6703,Human animal hair prepared for use in wigs,Textiles,industry,produced
+6704,Wigs,Textiles,industry,produced
+6801,"Flagstones, of natural stone",Stone,industry,produced
+6802,Worked building stone,Stone,industry,produced
+6803,Worked slate,Stone,industry,produced
+6804,Grindstones,Stone,industry,produced
+6805,Natural or artificial abrasive powder,Stone,industry,produced
+6806,Mineral wools and insulating materials,Stone,industry,produced
+6807,Asphalt,Stone,industry,produced
+6808,Panels of vegetable fibers,Stone,industry,produced
+6809,Plaster articles,Stone,industry,produced
+6810,"Articles of cement, of concrete or of artificial stone",Stone,industry,produced
+6811,Asbestos-cement or cellulose fiber-cement,Stone,industry,produced
+6812,Asbestos fibres,Stone,industry,produced
+6813,Friction material and articles thereof,Stone,industry,produced
+6814,Mica articles,Stone,industry,produced
+6815,Articles of stone or of other mineral substances,Stone,industry,produced
+6901,"Bricks, blocks, and other ceramic goods",Stone,industry,produced
+6902,"Bricks, tiles and similar refractory ceramic constructional goods",Stone,industry,produced
+6903,Other refractory ceramic goods,Stone,industry,produced
+6904,Ceramic building bricks,Stone,industry,produced
+6905,Architectural ceramic ornaments,Stone,industry,produced
+6906,Ceramic pipes,Stone,industry,produced
+6907,Unglazed ceramic flags and pavers,Stone,industry,produced
+6908,Glazed ceramic flags and pavers,Stone,industry,produced
+6909,Ceramic wares for technical ware,Stone,industry,produced
+6910,"Ceramic sinks, washbasins, and similar sanitary fixtures",Stone,industry,produced
+6911,Porcelain or china household articles,Stone,industry,produced
+6912,Ceramic household articles,Stone,industry,produced
+6913,Ornamental ceramic articles,Stone,industry,produced
+6914,Other ceramic articles,Stone,industry,produced
+7001,Cullet and other scraps of glass,Stone,industry,produced
+7002,Glass balls,Stone,industry,produced
+7003,"Glass, cast or rolled",Stone,industry,produced
+7004,Drawn and blown glass,Stone,industry,produced
+7005,Float glass,Stone,industry,produced
+7006,Worked glass,Stone,industry,produced
+7007,Safety glass,Stone,industry,produced
+7008,Multiple-walled insulating glass,Stone,industry,produced
+7009,Glass mirrors,Stone,industry,produced
+7010,Glass containers for conveyance,Stone,industry,produced
+7011,Glass envelopes,Stone,industry,produced
+7012,Glass inners for vacuum flasks,Stone,industry,produced
+7013,Glassware for interior decorative use,Stone,industry,produced
+7014,Signaling glassware,Stone,industry,produced
+7015,Clock or watch glasses and similar glasses,Stone,industry,produced
+7016,Glass paving blocks or other molded products,Stone,industry,produced
+7017,"Laboratory, hygienic or pharmaceutical glassware",Stone,industry,produced
+7018,Glass beads,Stone,industry,produced
+7019,Glass fibers,Stone,industry,produced
+7020,Other articles of glass,Stone,industry,produced
+7101,Pearls,Stone,industry,produced
+7102,Diamonds,Stone,industry,raw
+7103,Precious stones,Stone,industry,produced
+7104,Synthetic precious stones,Stone,industry,produced
+7105,Diamond dust,Stone,industry,produced
+7106,Silver,Stone,industry,produced
+7107,Silver clad metals,Stone,industry,produced
+7108,Gold,Stone,industry,produced
+7109,Gold clad metals,Stone,industry,produced
+7110,Platinum,Stone,industry,produced
+7111,Platinum clad metals,Stone,industry,produced
+7112,Scrap of precious metal,Stone,industry,produced
+7113,Jewelry of precious metal,Stone,industry,produced
+7114,Goldsmith and silversmith wares,Stone,industry,produced
+7115,Other articles of precious metals,Stone,industry,produced
+7116,Articles of precious stones,Stone,industry,produced
+7117,Imitation jewelry,Stone,industry,produced
+7118,Coin,Stone,industry,produced
+7201,Pig iron,Metals,industry,produced
+7202,Ferroalloys,Metals,industry,produced
+7203,Ferrous products from the reduction of iron ore,Metals,industry,produced
+7204,Ferrous waste and scrap,Metals,industry,produced
+7205,Powders of iron or steel,Metals,industry,produced
+7206,Iron and nonalloy steel,Metals,industry,produced
+7207,Semifinished products of iron or nonalloy steel,Metals,industry,produced
+7208,"Flat-rolled iron, width > 600mm, hot-rolled, not clad",Metals,industry,produced
+7209,"Flat-rolled iron, width > 600mm, cold-rolled, not clad",Metals,industry,produced
+7210,"Flat rolled iron, width > 600mm, clad",Metals,industry,produced
+7211,"Flat-rolled iron, width < 600mm, not clad",Metals,industry,produced
+7212,"Flat-rolled iron, width < 600mm, clad",Metals,industry,produced
+7213,Hot rolled bars of iron,Metals,industry,produced
+7214,"Other bars of iron, not further worked than forged",Metals,industry,produced
+7215,Other bars and rods of iron or nonalloy steel,Metals,industry,produced
+7216,Angles of iron or nonalloy steel,Metals,industry,produced
+7217,Wire of iron or nonalloy steel,Metals,industry,produced
+7218,Stainless steel in ingots,Metals,industry,produced
+7219,Flat-rolled products of stainless steel of a width > 600 mm,Metals,industry,produced
+7220,Flat-rolled products of stainless steel of a width < 600 mm,Metals,industry,produced
+7221,"Bars of stainless steel, hot-rolled",Metals,industry,produced
+7222,Other bars and rods of stainless steel,Metals,industry,produced
+7223,Wire of stainless steel,Metals,industry,produced
+7224,Other alloy steel in primary form,Metals,industry,produced
+7225,"Flat-rolled products of other alloy steel, width > 600 mm",Metals,industry,produced
+7226,"Flat-rolled products of other alloy steel, width < 600 mm",Metals,industry,produced
+7227,Bars of other alloy steel,Metals,industry,produced
+7228,Other bars and rods of other alloy steel,Metals,industry,produced
+7229,Wire of other alloy steel,Metals,industry,produced
+7301,Sheet piling of iron or steel,Metals,industry,produced
+7302,Railway construction material of iron or steel,Metals,industry,produced
+7303,Tubes of cast iron,Metals,industry,produced
+7304,"Tubes, seamless, of iron or steel",Metals,industry,produced
+7305,"Other tubes and pipes, diameter > 406.4 mm, of iron or steel",Metals,industry,produced
+7306,"Other tubes, pipes and hollow profiles of iron or steel",Metals,industry,produced
+7307,Tube or pipe fittings of iron or steel,Metals,industry,produced
+7308,"Structures and their parts, of iron or steel",Metals,industry,produced
+7309,"Tanks etc. > 300 liters, iron or steel",Metals,industry,produced
+7310,"Tanks etc. < 300 liters, iron or steel",Metals,industry,produced
+7311,Containers for compressed or liquified gas,Metals,industry,produced
+7312,"Wire of iron or steel, not insulated",Metals,industry,produced
+7313,Barbed wire of iron or steel,Metals,industry,produced
+7314,Cloth of iron or steel wire,Metals,industry,produced
+7315,Chain of iron or steel,Metals,industry,produced
+7316,Anchors of iron or steel,Metals,industry,produced
+7317,Nails and similar articles of iron or steel,Metals,industry,produced
+7318,Screws and similar articles of iron or steel,Metals,industry,produced
+7319,Articles for sewing of iron or steel,Metals,industry,produced
+7320,Springs of iron or steel,Metals,industry,produced
+7321,Stoves and similar non-electric appliances of iron or steel,Metals,industry,produced
+7322,Radiators for central heating of iron or steel,Metals,industry,produced
+7323,Household articles of iron or steel,Metals,industry,produced
+7324,Sanitary ware and parts of iron or steel,Metals,industry,produced
+7325,Other cast articles of iron or steel,Metals,industry,produced
+7326,Other articles of iron or steel,Metals,industry,produced
+7401,Copper mattes,Metals,industry,produced
+7402,Unrefined copper,Metals,industry,produced
+7403,Refined copper and copper alloys,Metals,industry,produced
+7404,Copper waste and scrap,Metals,industry,produced
+7405,Master alloys of copper,Metals,industry,produced
+7406,Copper powders and flakes,Metals,industry,produced
+7407,"Copper bars, rods and profiles",Metals,industry,produced
+7408,Copper wire,Metals,industry,produced
+7409,"Copper plates, sheets and strip > 0.15 mm",Metals,industry,produced
+7410,Copper foil < 0.15 mm thick,Metals,industry,produced
+7411,Copper tubes and pipes,Metals,industry,produced
+7412,Copper tube or pipe fittings,Metals,industry,produced
+7413,"Copper wire, uninsulated",Metals,industry,produced
+7414,Endless bands of copper wire for machinery,Metals,industry,produced
+7415,Screws and similar articles of copper,Metals,industry,produced
+7416,Copper springs,Metals,industry,produced
+7417,Copper cooking products,Metals,industry,produced
+7418,Household articles of copper,Metals,industry,produced
+7419,Other articles of copper,Metals,industry,produced
+7501,Nickel mattes,Metals,industry,produced
+7502,Nickel unwrought,Metals,industry,produced
+7503,Nickel waste and scrap,Metals,industry,produced
+7504,Nickel powders,Metals,industry,produced
+7505,"Nickel bars, wire etc.",Metals,industry,produced
+7506,Nickel plates,Metals,industry,produced
+7507,Nickel tubes and pipes,Metals,industry,produced
+7508,Other articles of nickel,Metals,industry,produced
+7601,Unwrought aluminum,Metals,industry,produced
+7602,"Waste or scrap, aluminium",Metals,industry,produced
+7603,Aluminum powders,Metals,industry,produced
+7604,Aluminum bars,Metals,industry,produced
+7605,Aluminum wire,Metals,industry,produced
+7606,Aluminum plates > 0.2 mm,Metals,industry,produced
+7607,Aluminum foil < 0.2 mm,Metals,industry,produced
+7608,Aluminum tubes and pipes,Metals,industry,produced
+7609,Aluminum tube or pipe fittings,Metals,industry,produced
+7610,"Aluminum structures (bridges, towers etc)",Metals,industry,produced
+7611,"Aluminum containers, >300 liters",Metals,industry,produced
+7612,"Aluminum containers, <300 liters",Metals,industry,produced
+7613,Aluminum containers for compressed or liquefied gas,Metals,industry,produced
+7614,"Aluminum wire, not insulated",Metals,industry,produced
+7615,Household articles of aluminum,Metals,industry,produced
+7616,Other articles of aluminum,Metals,industry,produced
+7801,Lead refined unwrought,Metals,industry,produced
+7802,Lead waste or scrap,Metals,industry,produced
+7803,"Lead bars, rods, profiles and wire",Metals,industry,produced
+7804,Lead foil <2mm,Metals,industry,produced
+7805,"Lead tubes, pipes and fittings",Metals,industry,produced
+7806,Other articles of lead,Metals,industry,produced
+7901,Unwrought zinc,Metals,industry,produced
+7902,Zinc waste and scrap,Metals,industry,produced
+7903,Zinc powders,Metals,industry,produced
+7904,Zinx bars and wire,Metals,industry,produced
+7905,Zinc plates and foil,Metals,industry,produced
+7906,"Zinc tubes, pipes and tube or pipe fittings",Metals,industry,produced
+7907,Other articles of zinc,Metals,industry,produced
+8001,Unwrought tin,Metals,industry,produced
+8002,Tin waste and scrap,Metals,industry,produced
+8003,Tin bars and wire,Metals,industry,produced
+8004,"Tin plates, sheets and strips, thickness > 0.2 mm",Metals,industry,produced
+8005,"Tin foil, thickness < 0.2 mm",Metals,industry,produced
+8006,Tin pipes or tubes and pipe fittings,Metals,industry,produced
+8007,Other articles of tin,Metals,industry,produced
+8101,Tungsten (wolfram),Metals,industry,produced
+8102,Molybdenum,Metals,industry,produced
+8103,Tantalum,Metals,industry,produced
+8104,Magnesium,Metals,industry,produced
+8105,Cobalt,Metals,industry,produced
+8106,Bismuth,Metals,industry,produced
+8107,Cadmium,Metals,industry,produced
+8108,Titanium,Metals,industry,produced
+8109,Zirconium,Metals,industry,produced
+8110,Antimony,Metals,industry,produced
+8111,Manganese,Metals,industry,produced
+8112,Other metals,Metals,industry,produced
+8113,Cermets,Metals,industry,produced
+8201,Handtools for gardening,Metals,industry,produced
+8202,Handsaws,Metals,industry,produced
+8203,"Pliers, pincers and other metal handtools",Metals,industry,produced
+8204,Wrenches,Metals,industry,produced
+8205,Hand tools n.e.c.,Metals,industry,produced
+8206,Retail tool sets,Metals,industry,produced
+8207,Interchangeable tools for hand tools,Metals,industry,produced
+8208,Knives and blades for machines,Metals,industry,produced
+8209,"Articles for utensils, of cermet",Metals,industry,produced
+8210,"Hand-operated appliances, food preparation, <10kg",Metals,industry,produced
+8211,Knife sets,Metals,industry,produced
+8212,Razors,Metals,industry,produced
+8213,Scissors,Metals,industry,produced
+8214,Other cutlery,Metals,industry,produced
+8215,Cutlery,Metals,industry,produced
+8301,Padlocks and locks,Metals,industry,produced
+8302,"Base metal mountings, fittings and similar articles",Metals,industry,produced
+8303,Safes,Metals,industry,produced
+8304,"Paper trays and similar office equipment, of base metal",Metals,industry,produced
+8305,"Paper clips and similar office articles, of metal",Metals,industry,produced
+8306,"Ornaments, statuettes, etc. of metal",Metals,industry,produced
+8307,Flexible tubing of base metal,Metals,industry,produced
+8308,"Clasps, buckles etc. of metal",Metals,industry,produced
+8309,"Stoppers, caps and lids of metal",Metals,industry,produced
+8310,Sign plates and similar plates of base metal,Metals,industry,produced
+8311,Wire etc. used for welding,Metals,industry,produced
+8401,Nuclear reactors and related equipment,Machinery,industry,produced
+8402,Steam boilers,Machinery,industry,produced
+8403,Central heating boilers,Machinery,industry,produced
+8404,Auxiliary parts for use with boilers,Machinery,industry,produced
+8405,Water gas generators,Machinery,industry,produced
+8406,Steam turbines,Machinery,industry,produced
+8407,Spark-ignition reciprocating internal combustion piston engines,Machinery,industry,produced
+8408,Compression-ignition internal combustion piston engines,Machinery,industry,produced
+8409,Parts suitable for use with spark-ignition engines,Machinery,industry,produced
+8410,"Hydraulic turbines, water wheels and regulators",Machinery,industry,produced
+8411,Gas turbines,Machinery,industry,produced
+8412,Other engines and motors,Machinery,industry,produced
+8413,Pumps for liquids,Machinery,industry,produced
+8414,"Pumps, compressors, fans, etc.",Machinery,industry,produced
+8415,Air conditioners,Machinery,industry,produced
+8416,Furnace burners,Machinery,industry,produced
+8417,Industrial furnaces,Machinery,industry,produced
+8418,"Refrigerators, freezers",Machinery,industry,produced
+8419,Equipment for temperature change of materials,Machinery,industry,produced
+8420,"Calendering or other rolling machines, other than for metals or glass",Machinery,industry,produced
+8421,Centrifuges,Machinery,industry,produced
+8422,Dish washing machines,Machinery,industry,produced
+8423,Weighing machinery,Machinery,industry,produced
+8424,Sprays and powder dispersers,Machinery,industry,produced
+8425,Pulleys and winches,Machinery,industry,produced
+8426,Ships' derricks; cranes,Machinery,industry,produced
+8427,Fork-lift trucks,Machinery,industry,produced
+8428,Other lifting machinery,Machinery,industry,produced
+8429,"Self-propelled bulldozers, excavators and road rollers",Machinery,industry,produced
+8430,"Other moving, excavating or boring machinery",Machinery,industry,produced
+8431,Parts for use with hoists and excavation machinery,Machinery,industry,produced
+8432,Machinery for soil preparation or cultivation,Machinery,industry,produced
+8433,Harvesting or agricultural machinery,Machinery,industry,produced
+8434,Dairy machinery,Machinery,industry,produced
+8435,Machines for wine and juice production,Machinery,industry,produced
+8436,Other agricultural machinery,Machinery,industry,produced
+8437,Machinery for processing grain,Machinery,industry,produced
+8438,Machinery for the industrial preparation of food or drink,Machinery,industry,produced
+8439,Machinery for making paper,Machinery,industry,produced
+8440,Bookbinding machinery,Machinery,industry,produced
+8441,Other machinery for making paper,Machinery,industry,produced
+8442,Machinery for making printing components,Machinery,industry,produced
+8443,Printers and copiers,Machinery,industry,produced
+8444,"Machines to extrude, cut manmade textile fibres",Machinery,industry,produced
+8445,Machines for preparing textile fibers,Machinery,industry,produced
+8446,Looms,Machinery,industry,produced
+8447,Knitting machines,Machinery,industry,produced
+8448,Auxiliary machinery for use with knitting and textile machines,Machinery,industry,produced
+8449,Machinery to manufacture felt,Machinery,industry,produced
+8450,Household- or laundry-type washing machines,Machinery,industry,produced
+8451,Machinery for processing fabrics,Machinery,industry,produced
+8452,Sewing machines,Machinery,industry,produced
+8453,Machinery for preparing leather,Machinery,industry,produced
+8454,Machines used in metallurgy,Machinery,industry,produced
+8455,Metal-rolling mills,Machinery,industry,produced
+8456,Machines for working materials by laser and similar means,Machinery,industry,produced
+8457,Machining centers for working metal,Machinery,industry,produced
+8458,Lathes for removing metal,Machinery,industry,produced
+8459,Machine tools for drilling by removing metal,Machinery,industry,produced
+8460,Machines with grinding stones for finishing metal,Machinery,industry,produced
+8461,Other machine tools for planing and cutting metals,Machinery,industry,produced
+8462,Machine tools for molding and forging metals,Machinery,industry,produced
+8463,"Other machine tools for working metal, without removal",Machinery,industry,produced
+8464,Machine tools for working stone,Machinery,industry,produced
+8465,Machine tools for working wood,Machinery,industry,produced
+8466,Parts and accessories for metal working machines,Machinery,industry,produced
+8467,"Tools for hand working, pneumatic, hydraulic motors",Machinery,industry,produced
+8468,Machinery for soldering,Machinery,industry,produced
+8469,Word processing machines,Machinery,industry,produced
+8470,"Cash registers, calculators, etc.",Machinery,industry,produced
+8471,Computers,Machinery,industry,produced
+8472,Other office machines,Machinery,industry,produced
+8473,Parts and accessories for office machines,Machinery,industry,produced
+8474,Machinery for working minerals,Machinery,industry,produced
+8475,Machines for assembling electric lamps,Machinery,industry,produced
+8476,Automatic goods-vending machines,Machinery,industry,produced
+8477,Machinery for working rubber or plastics,Machinery,industry,produced
+8478,Machinery for preparing tobacco,Machinery,industry,produced
+8479,Machines n.e.c.,Machinery,industry,produced
+8480,Molding boxes for metal foundry,Machinery,industry,produced
+8481,Appliances for thermostatically controlled valves,Machinery,industry,produced
+8482,Ball or roller bearings,Machinery,industry,produced
+8483,Transmission shafts,Machinery,industry,produced
+8484,Gaskets and similar joints of metal sheeting,Machinery,industry,produced
+8485,"Machinery parts, not containing electrical features, n.e.c.",Machinery,industry,produced
+8501,Electric motors and generators,Electronics,industry,produced
+8502,Electric generating sets and rotary converters,Electronics,industry,produced
+8503,Parts for use with electric generators,Electronics,industry,produced
+8504,Electrical transformers,Electronics,industry,produced
+8505,Electromagnets,Electronics,industry,produced
+8506,Primary cells and primary batteries,Electronics,industry,produced
+8507,Batteries,Electronics,industry,produced
+8508,Vacuum cleaners,Electronics,industry,produced
+8509,Electromechanical domestic appliances,Electronics,industry,produced
+8510,Electric shavers and hair clippers,Electronics,industry,produced
+8511,Electrical ignition equipment,Electronics,industry,produced
+8512,Electrical lighting equipment used for motor vehicles,Electronics,industry,produced
+8513,Portable electric lamps,Electronics,industry,produced
+8514,Industrial electric furnaces,Electronics,industry,produced
+8515,Electric soldering machines,Electronics,industry,produced
+8516,Electric heaters,Electronics,industry,produced
+8517,Telephones,Electronics,industry,produced
+8518,Microphones,Electronics,industry,produced
+8519,Sound reproducing apparatus,Electronics,industry,produced
+8520,Magnetic tape recorders,Electronics,industry,produced
+8521,Video recording apparatus,Electronics,industry,produced
+8522,Parts and accessories for video or sound equipment,Electronics,industry,produced
+8523,Sound storage media,Electronics,industry,produced
+8524,"Tapes, cassettes, records and compact disks",Electronics,industry,produced
+8525,"Transmission apparatus for radio, telephone and TV",Electronics,industry,produced
+8526,Radar,Electronics,industry,produced
+8527,Reception apparatus for radio broadcasting,Electronics,industry,produced
+8528,Monitors and projectors,Electronics,industry,produced
+8529,"Parts of radios, telephones, and T.V.s",Electronics,industry,produced
+8530,Electric signal and traffic controls,Electronics,industry,produced
+8531,Electric sound or visual signaling apparatus,Electronics,industry,produced
+8532,Electrical capacitors,Electronics,industry,produced
+8533,Electrical resistors,Electronics,industry,produced
+8534,Electronic printed circuits,Electronics,industry,produced
+8535,Electrical apparatus for > 1k volts,Electronics,industry,produced
+8536,Electrical apparatus for < 1k volts,Electronics,industry,produced
+8537,Electrical boards,Electronics,industry,produced
+8538,Parts for electrical apparatus,Electronics,industry,produced
+8539,Electrical filament,Electronics,industry,produced
+8540,"Thermionic, cold cathode or photocathode tubes",Electronics,industry,produced
+8541,Semiconductor devices,Electronics,industry,produced
+8542,Electronic integrated circuits,Electronics,industry,produced
+8543,Electrical machines with individual functions n.e.c.,Electronics,industry,produced
+8544,Insulated electrical wire,Electronics,industry,produced
+8545,Carbon articles for eletrical purposes,Electronics,industry,produced
+8546,Electrical insulators of any material,Electronics,industry,produced
+8547,Insulating fittings for electrical machines,Electronics,industry,produced
+8548,Waste and scrap of batteries,Electronics,industry,produced
+8601,Electric trains,Vehicles,industry,produced
+8602,Other rail locomotives,Vehicles,industry,produced
+8603,Self-propelled railway coaches,Vehicles,industry,produced
+8604,Railway service vehicles,Vehicles,industry,produced
+8605,"Railway coaches, not self-propelled",Vehicles,industry,produced
+8606,"Railway cars, not self-propelled",Vehicles,industry,produced
+8607,Parts of railway locomotives,Vehicles,industry,produced
+8608,Railway track fixtures,Vehicles,industry,produced
+8609,Containers for multimodal transportation,Vehicles,industry,produced
+8701,Tractors,Vehicles,industry,produced
+8702,Buses,Vehicles,industry,produced
+8703,Cars,Vehicles,industry,produced
+8704,Motor vehicles for transporting goods,Vehicles,industry,produced
+8705,Special purpose motor vehicles,Vehicles,industry,produced
+8706,Vehicle chassis fitted with engines,Vehicles,industry,produced
+8707,Vehicle Bodies,Vehicles,industry,produced
+8708,Parts of motor vehicles,Vehicles,industry,produced
+8709,Work trucks,Vehicles,industry,produced
+8710,Tanks and other armored fighting vehicles,Vehicles,industry,produced
+8711,Motorcycles,Vehicles,industry,produced
+8712,Bicycles,Vehicles,industry,produced
+8713,Wheelchairs,Vehicles,industry,produced
+8714,Parts of motorcycles or wheelchairs,Vehicles,industry,produced
+8715,Baby carriages,Vehicles,industry,produced
+8716,Trailers and semi-trailers,Vehicles,industry,produced
+8801,"Gliders, hang gliders",Vehicles,industry,produced
+8802,Other aircraft and spacecraft,Vehicles,industry,produced
+8803,Parts of other aircraft,Vehicles,industry,produced
+8804,Parachutes,Vehicles,industry,produced
+8805,Aircraft launching gear,Vehicles,industry,produced
+8901,Cargo ships and similar vessels,Vehicles,industry,produced
+8902,Fishing vessels,Vehicles,industry,produced
+8903,Pleasure or sport boats,Vehicles,industry,produced
+8904,Tugs and pusher craft,Vehicles,industry,produced
+8905,"Special function vessels, n.e.c.",Vehicles,industry,produced
+8906,Other vessels,Vehicles,industry,produced
+8907,Other floating structures,Vehicles,industry,produced
+8908,Floating structures for scrapping,Vehicles,industry,produced
+9001,Optical fibers,Machinery,industry,produced
+9002,Lenses and other optical elements,Machinery,industry,produced
+9003,"Frames for spectacles, goggles",Machinery,industry,produced
+9004,Glasses,Machinery,industry,produced
+9005,Binoculars and telescopes,Machinery,industry,produced
+9006,Photographic cameras,Machinery,industry,produced
+9007,Cinematographic cameras and projectors,Machinery,industry,produced
+9008,Still image projectors,Machinery,industry,produced
+9009,Electrostatic photo-copyers,Machinery,industry,produced
+9010,"Apparatus and equipment for photographic laboratories, n.e.c.",Machinery,industry,produced
+9011,Optical microscopes,Machinery,industry,produced
+9012,"Microscopes, other than optical",Machinery,industry,produced
+9013,Liquid crystal devices,Machinery,industry,produced
+9014,Navigational instruments,Machinery,industry,produced
+9015,Surveying instruments,Machinery,industry,produced
+9016,Balances of a sensitivity < 50 milligram,Machinery,industry,produced
+9017,Drafting tables and machines,Machinery,industry,produced
+9018,Medical instruments,Machinery,industry,produced
+9019,Therapy applicances,Machinery,industry,produced
+9020,Other breathing appliances and gas masks,Machinery,industry,produced
+9021,Orthopedic appliances,Machinery,industry,produced
+9022,X-ray machines,Machinery,industry,produced
+9023,Instruments designed for demonstrational purposes,Machinery,industry,produced
+9024,Machines for testing the mechanical properties of materials,Machinery,industry,produced
+9025,"Thermometers, hydrometers etc.",Machinery,industry,produced
+9026,Instruments for measuring properties of liquids or gases,Machinery,industry,produced
+9027,Instruments for physical or chemical analysis,Machinery,industry,produced
+9028,"Gas, liquid or electricity meters",Machinery,industry,produced
+9029,Meters,Machinery,industry,produced
+9030,Instruments for measuring electricity,Machinery,industry,produced
+9031,Measuring instruments,Machinery,industry,produced
+9032,Automatic regulating instruments,Machinery,industry,produced
+9033,Other parts for machines and appliances,Machinery,industry,produced
+9101,Watches with precious metal,Machinery,industry,produced
+9102,Watches,Machinery,industry,produced
+9103,Clocks with watch movements,Machinery,industry,produced
+9104,Instrument panel clocks for vehicles,Machinery,industry,produced
+9105,Other clocks,Machinery,industry,produced
+9106,Apparatus for measuring intervals of time,Machinery,industry,produced
+9107,Time switches,Machinery,industry,produced
+9108,"Watch movements, complete",Machinery,industry,produced
+9109,"Clock movements, complete",Machinery,industry,produced
+9110,"Clock movements, complete, unassembled",Machinery,industry,produced
+9111,Watch cases and parts,Machinery,industry,produced
+9112,Clock cases,Machinery,industry,produced
+9113,Watch straps,Machinery,industry,produced
+9114,Other clock or watch parts,Machinery,industry,produced
+9201,Pianos,Machinery,industry,produced
+9202,"Musical instruments, string",Machinery,industry,produced
+9203,"Harmoniums, pipe organs, etc",Machinery,industry,produced
+9204,Accordions and similar instruments,Machinery,industry,produced
+9205,"Musical instruments, wind",Machinery,industry,produced
+9206,"Musical instruments, percussion",Machinery,industry,produced
+9207,"Musical instruments, electric",Machinery,industry,produced
+9208,"Other musical instruments, n.e.c.",Machinery,industry,produced
+9209,Parts of musical instruments,Machinery,industry,produced
+9301,"Military weapons, other than pistols and swords",Machinery,industry,produced
+9302,Revolvers and pistols,Machinery,industry,produced
+9303,Other firearms,Machinery,industry,produced
+9304,"Other arms (air guns, truncheons, etc.)",Machinery,industry,produced
+9305,Parts of military weapons,Machinery,industry,produced
+9306,Munitions of war,Machinery,industry,produced
+9307,Swords,Machinery,industry,produced
+9401,Seats,Textiles,industry,produced
+9402,"Medical, dental or veterinary furniture",Textiles,industry,produced
+9403,Other furniture and parts,Textiles,industry,produced
+9404,Mattresses and bedding,Textiles,industry,produced
+9405,Lamps,Textiles,industry,produced
+9406,Prefabricated buildings,Textiles,industry,produced
+9501,"Rideable wheeled toys, dolls carriages",Machinery,industry,produced
+9502,Dolls,Machinery,industry,produced
+9503,Toys,Machinery,industry,produced
+9504,Games,Machinery,industry,produced
+9505,Christmas and other festivity articles,Machinery,industry,produced
+9506,Sports equipment,Machinery,industry,produced
+9507,Fishing and hunting equipment,Machinery,industry,produced
+9508,Fairground amusements,Machinery,industry,produced
+9601,Worked animal carving material,Machinery,industry,produced
+9602,Worked vegetable or mineral carving material,Machinery,industry,produced
+9603,Brooms and mops,Machinery,industry,produced
+9604,Hand sieves and riddles,Machinery,industry,produced
+9605,Travel sets,Machinery,industry,produced
+9606,Buttons,Machinery,industry,produced
+9607,Slide fasteners,Machinery,industry,produced
+9608,Pens,Machinery,industry,produced
+9609,"Pencils, crayons, pastels, etc.",Machinery,industry,produced
+9610,"Slates and boards, with writing or drawing surfaces",Machinery,industry,produced
+9611,Hand-operated stamps,Machinery,industry,produced
+9612,Typewriter ribbons and ink pads,Machinery,industry,produced
+9613,Cigarette lighters,Machinery,industry,produced
+9614,Smoking pipes,Machinery,industry,produced
+9615,"Combs, hair-slides etc.",Machinery,industry,produced
+9616,Scent sprays,Machinery,industry,produced
+9617,Vacuum vessels,Machinery,industry,produced
+9618,Mannequins,Machinery,industry,produced
+9701,Paintings and drawings,Textiles,industry,produced
+9702,Original engravings,Textiles,industry,produced
+9703,Sculptures,Textiles,industry,produced
+9704,Postage or revenue stamps,Textiles,industry,produced
+9705,Collectors pieces,Textiles,industry,produced
+9706,Antiques >100 years,Textiles,industry,produced
+9999,Commodities not specified according to kind,Other,industry,produced
+financial,Insurance & finance,Services,services,
+ict,Business,Services,services,
+transport,Transport,Services,services,
+travel,Travel & tourism,Services,services,
+unspecified,Unspecified,Services,services,
+XXXX,Trade data discrepancies,Other,industry,produced

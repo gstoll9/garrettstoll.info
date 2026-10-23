@@ -4,7 +4,16 @@ import StandardLayout from '@/layouts/standardLayout';
 import Graph3D, { GraphNode, GraphLink } from './components/Graph3D';
 import './styles/knowledgegraph.css';
 
+// Built-in graphs; the first is loaded on mount. The data-sources graph is generated from
+// scripts/data-sources.mjs (npm run data:graph); every link is source -> page (or source ->
+// derived dataset) and its predicate is the license.
+const PRESET_GRAPHS = [
+  { label: 'Site data sources & licenses', file: '/knowledgegraph/datasources.fol' },
+  { label: 'Planets', file: '/knowledgegraph/planets.fol' },
+];
+
 export default function KnowledgeGraphPage() {
+  const [presetFile, setPresetFile] = useState(PRESET_GRAPHS[0].file);
   const [nodes, setNodes] = useState<GraphNode[]>([]);
   const [links, setLinks] = useState<GraphLink[]>([]);
   const [filterText, setFilterText] = useState('');
@@ -69,18 +78,20 @@ export default function KnowledgeGraphPage() {
     });
   }, [links]);
 
-  const initialized = useRef(false);
   useEffect(() => {
-    if (!initialized.current) {
-      initialized.current = true;
-      fetch('/knowledgegraph/planets.fol')
-        .then(res => res.text())
-        .then(text => {
-          if (text) parseFOL(text);
-        })
-        .catch(err => console.error("Failed to load default FOL graph", err));
-    }
-  }, []); // Run parseFOL once on mount
+    let cancelled = false;
+    fetch(presetFile)
+      .then(res => res.text())
+      .then(text => {
+        if (cancelled || !text) return;
+        setHiddenNodes(new Set());
+        setHiddenRelations(new Set());
+        setFilterText('');
+        parseFOL(text);
+      })
+      .catch(err => console.error("Failed to load FOL graph", err));
+    return () => { cancelled = true; };
+  }, [presetFile]);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -152,7 +163,14 @@ export default function KnowledgeGraphPage() {
     <div className="kg-page">
       <div className="kg-sidebar">
         <h2>Knowledge Graph Tools</h2>
-        
+
+        <div className="kg-form-group">
+          <strong>Graph</strong>
+          <select className="kg-input" value={presetFile} onChange={e => setPresetFile(e.target.value)}>
+            {PRESET_GRAPHS.map(g => <option key={g.file} value={g.file}>{g.label}</option>)}
+          </select>
+        </div>
+
         <div className="kg-form-group">
           <strong>Upload & Download (FOL)</strong>
           <input type="file" accept=".txt" ref={fileInputRef} onChange={handleFileUpload} style={{ fontSize: '0.8rem' }} />

@@ -37,6 +37,48 @@
       "env": {
         "NEXT_DIST_DIR": ".next-brain"
       }
+    },
+    {
+      "name": "knowledgegraph-isolated",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "next",
+        "dev",
+        "-p",
+        "3009"
+      ],
+      "port": 3009,
+      "env": {
+        "NEXT_DIST_DIR": ".next-kg"
+      }
+    },
+    {
+      "name": "worldmap-claude",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "next",
+        "dev",
+        "-p",
+        "3011"
+      ],
+      "port": 3011,
+      "env": {
+        "NEXT_DIST_DIR": ".next-claude"
+      }
+    },
+    {
+      "name": "solarsystem-claude",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "next",
+        "dev",
+        "-p",
+        "3013"
+      ],
+      "port": 3013,
+      "env": {
+        "NEXT_DIST_DIR": ".next-solar"
+      }
     }
   ]
 }

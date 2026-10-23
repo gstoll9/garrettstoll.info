@@ -90,7 +90,48 @@ browser only downloads the clicked country's data.
 indices). Coverage is uneven: population is widely available; economic figures exist for
 only a few percent of subregions.
 
+### trade_products — product catalogue (Atlas of Economic Complexity, HS 1992)
+`code` (**PK**: HS 4-digit code, or a service code such as `travel`), `name` (Atlas short
+name, e.g. *Cars*), `section` (Atlas section: Agriculture, Minerals, Machinery, …, Services),
+`sector` (`agriculture` | `industry` | `services` — the World Bank's sector split: the
+Agriculture section, the Services section, everything else), `stage` (`raw` | `produced` for goods,
+empty for services — raw = unprocessed farm, fish, forest and mineral goods: HS 01–14 except
+processed dairy and milled products, cocoa beans, raw tobacco, minerals except cement, ores,
+coal, crude oil, natural gas, raw rubber, hides, logs, fibres, rough diamonds).
+
+### trade_totals — trade totals per country, flow and sector
+`iso3` (FK), `flow` (`X` exports | `M` imports), `year` (latest Atlas year),
+`sector` (`agriculture` | `industry` | `services`), `value` (US$).
+
+### trade_values/`<iso3>`.csv — top traded products, partitioned by country
+`flow`, `code` (FK → trade_products), `year`, `value` (US$). The top 20 products per flow
+and sector, so per-sector and overall top-10 lists can both be read from it.
+
+### trade_partners/`<iso3>`.csv — top trade partners, partitioned by country
+`flow` (`X` | `M`), `partner` (FK → countries `iso3`), `year`, `raw`, `produced` (US$,
+goods only). The country's top 15 partners per flow, split by `trade_products.stage`;
+drives the map's trade arcs.
+
+### entities — historical territories (time slider), one row per CShapes territory
+Built by `node scripts/build-history.mjs`, not by `build-worldmap-db.mjs`.
+`gwcode` (**PK**, Gleditsch–Ward code as used by CShapes 2.0: stable across a territory's
+regime and status changes), `name` (CShapes name), `valid_from`, `valid_to` (ISO dates,
+inclusive; CShapes ends 2019-12-31), `iso3` (FK → countries: the present-day country the
+territory became, if any).
+
+### entity_periods — a territory's states over time, 1886–2019
+`gwcode` (FK → entities), `valid_from`, `valid_to` (inclusive), `name`, `wikipedia`
+(article title), `wikidata` (QID), `capital`, `capital_lat`, `capital_lon`, `area_km2`.
+One row per span in which the territory's borders, capital and state were all unchanged —
+the same rows, in the same order, as the features of `public/worldmap/history/countries.json`.
+The state for each span (e.g. 365: Russian Empire → Russian Republic → RSFSR → Soviet Union
+→ Russia) is hand-curated in `scripts/worldmap-history-names.mjs`.
+
 ## Sources and licences
 - Wikidata — CC0
 - Wikipedia (legislature infoboxes) — CC BY-SA 4.0
 - World Bank World Development Indicators and Worldwide Governance Indicators — CC BY 4.0
+- The Growth Lab at Harvard University, Atlas of Economic Complexity (trade tables) —
+  check its terms of use (https://atlas.hks.harvard.edu) before reuse; attribute where shown
+- CShapes 2.0 (Schvitz, Rüegger, Girardin, Cederman, Weidmann, Gleditsch; ETH Zürich) —
+  CC BY-NC-SA 4.0 (non-commercial); `entities`, `entity_periods` and the historical borders
