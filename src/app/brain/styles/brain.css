@@ -1,191 +1,29 @@
-/* ── Neutralise standardlayout-main when it wraps the brain page ─────────── */
-:has(.brainPage) .standardlayout-main,
-:has(.brainPage) .container0 {
-  padding: 0 !important;
-  margin: 0 !important;
-  border: 0 !important;
-  background-color: #111 !important;
-  box-shadow: none !important;
-  outline: none !important;
-  overflow: hidden !important;
+/* ── Full-bleed: the canvas fills the viewport, UI floats over it ───────── */
+/* 'plain' variant + 'tyro-only' header (no layout height), so no header offset here. */
+:has(.brainPage) .standardlayout-main {
+  height: 100dvh;
+  overflow: hidden;
+  background-color: #111;
 }
 
-/* Matches layout from Hydrogen/Solarsystem */
 .brainPage {
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  height: 100vh;
-  background-color: #111; /* Brighter than black */
+  --brain-panel-bg: rgba(24, 24, 28, 0.82);
+  --brain-panel-border: rgba(255, 255, 255, 0.09);
+  --brain-edge: 16px;
+  --brain-top: 84px; /* below the Tyro button and the view nav */
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  background-color: #111;
   color: #fff;
   overflow: hidden;
 }
 
-/* ── Top Nav ─────────────────────────────────────────────────────────────── */
-.brainNav {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 64px;
-  background: #111;
-}
-
-.brainTrack {
-  position: relative;
-  width: 600px;
-  max-width: 80%;
-  height: 20px;
-}
-
-.brainLine {
+.brainPage .brainCanvas {
   position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.22);
-  transform: translateY(-50%);
-  pointer-events: none;
+  inset: 0;
 }
 
-.brainNode {
-  position: absolute;
-  top: calc(50% - 7px);
-  transform: translateX(-50%);
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.brainDot {
-  display: block;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 0.35);
-  background: transparent;
-  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
-}
-
-.brainNode.active .brainDot {
-  background: #fff;
-  border-color: #fff;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.45);
-}
-
-.brainLabel {
-  color: rgba(255, 255, 255, 0.32);
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  transition: color 0.2s;
-  user-select: none;
-}
-
-.brainNode.active .brainLabel {
-  color: rgba(255, 255, 255, 0.88);
-}
-
-.brainNode:hover .brainDot {
-  border-color: rgba(255, 255, 255, 0.75);
-  box-shadow: 0 0 6px rgba(255, 255, 255, 0.25);
-}
-
-.brainNode:hover .brainLabel {
-  color: rgba(255, 255, 255, 0.65);
-}
-
-.workArea {
-  display: flex;
-  flex: 1;
-  width: 100%;
-  height: 100%;
-}
-
-.mathDrawer {
-  width: 320px;
-  background-color: #1a1a1a;
-  border-right: 1px solid #333;
-  transition: transform 0.3s ease;
-  overflow-y: auto;
-}
-
-.mathDrawerInner {
-  padding: 1.5rem;
-}
-
-.mathDrawer.closed {
-  transform: translateX(-100%);
-  width: 0;
-  border-right: none;
-}
-
-.canvasArea {
-  position: relative;
-  flex: 1;
-  background-color: #111;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-/* ── Small screens: canvas on top, info drawer below ─────────────────────── */
-@media (max-width: 768px) {
-  .brainPage {
-    width: 100%;
-    height: 100dvh;
-  }
-
-  .brainPage .brainNav {
-    position: relative;
-    z-index: 11;
-    height: 76px;
-    padding-left: 96px;
-    padding-right: 44px;
-  }
-
-  .brainPage .brainTrack {
-    max-width: 100%;
-  }
-
-  .brainPage .brainLabel {
-    max-width: 76px;
-    font-size: 9.5px;
-    letter-spacing: 0.04em;
-    line-height: 1.25;
-    text-align: center;
-    white-space: normal;
-  }
-
-  .brainPage .workArea {
-    flex-direction: column-reverse;
-    min-height: 0;
-  }
-
-  .brainPage .mathDrawer {
-    width: 100%;
-    max-height: 34dvh;
-    border-right: 0;
-    border-top: 1px solid #333;
-  }
-
-  .brainPage .mathDrawerInner {
-    padding: 1rem 1.1rem;
-  }
-
-  .brainPage .canvasArea {
-    min-height: 0;
-  }
-}
-
-/* ── Sidebar: region info, legend, credit ────────────────────────────────── */
 .brainPage .brainLoading {
   display: flex;
   justify-content: center;
@@ -195,25 +33,159 @@
   color: #aaa;
 }
 
-.brainPage .brainTitle {
-  margin: 0 0 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid #444;
+.brainPage .brainLoadingOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
 }
 
-.brainPage .brainInfo {
-  min-height: 11rem;
+/* ── View nav ─────────────────────────────────────────────────────────────── */
+.brainPage .brainNav {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 10;
+  width: min(600px, calc(100% - 200px));
+  height: 64px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.brainPage .brainTrack {
+  position: relative;
+  width: 100%;
+  height: 20px;
+}
+
+.brainPage .brainLine {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(-50%);
+}
+
+.brainPage .brainNode {
+  position: absolute;
+  top: calc(50% - 7px);
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.brainPage .brainDot {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  background: #111;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.brainPage .brainNode.active .brainDot {
+  background: #fff;
+  border-color: #fff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.45);
+}
+
+.brainPage .brainLabel {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-shadow: 0 1px 4px #000;
+  transition: color 0.2s;
+  user-select: none;
+}
+
+.brainPage .brainNode.active .brainLabel {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.brainPage .brainNode:hover .brainDot {
+  border-color: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.25);
+}
+
+.brainPage .brainNode:hover .brainLabel {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ── Floating panels ──────────────────────────────────────────────────────── */
+.brainPage .brainPanel {
+  position: absolute;
+  z-index: 5;
+  border: 1px solid var(--brain-panel-border);
+  border-radius: 14px;
+  background: var(--brain-panel-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.brainPage .brainInfoPanel {
+  top: var(--brain-top);
+  left: var(--brain-edge);
+  width: 320px;
+  max-height: calc(100% - var(--brain-top) - var(--brain-edge));
+  overflow-y: auto;
+  padding: 1.1rem 1.25rem;
+}
+
+.brainPage .brainRegionsPanel {
+  top: var(--brain-top);
+  right: var(--brain-edge);
+  width: 220px;
+  max-height: calc(100% - var(--brain-top) - var(--brain-edge));
+  overflow-y: auto;
+}
+
+.brainPage .brainTitle {
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #3a3a3a;
+  font-size: 1.25rem;
 }
 
 .brainPage .brainInfo h3 {
   margin: 0.35rem 0 0.5rem;
+  font-size: 1.05rem;
 }
 
 .brainPage .brainInfo p,
 .brainPage .brainHint {
   margin: 0;
   color: #bbb;
+  font-size: 14px;
   line-height: 1.5;
+}
+
+.brainPage .brainHintTouch {
+  display: none;
+}
+
+@media (hover: none) {
+  .brainPage .brainHintPointer {
+    display: none;
+  }
+
+  .brainPage .brainHintTouch {
+    display: inline;
+  }
 }
 
 .brainPage .brainInfoGroup {
@@ -226,6 +198,23 @@
   text-transform: uppercase;
 }
 
+.brainPage .brainClose {
+  margin-left: auto;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ccc;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.brainPage .brainClose:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
 .brainPage .brainSwatch {
   display: inline-block;
   flex-shrink: 0;
@@ -234,21 +223,77 @@
   border-radius: 3px;
 }
 
-.brainPage .brainLegendHeader {
+.brainPage .brainWiki {
+  display: inline-block;
+  margin-top: 0.6rem;
+  color: #8cc4ff;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.brainPage .brainWiki:hover {
+  text-decoration: underline;
+}
+
+.brainPage .brainGroupInfo {
+  margin-top: 1rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.brainPage .brainGroupInfo h4 {
+  margin: 0 0 0.35rem;
+  color: #ddd;
+  font-size: 13px;
+}
+
+.brainPage .brainInfo .brainGroupInfo p {
+  color: #999;
+  font-size: 13px;
+}
+
+.brainPage .brainCredit {
+  margin: 1rem 0 0;
+  color: #777;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.brainPage .brainCredit a {
+  color: #999;
+}
+
+/* ── Regions panel ────────────────────────────────────────────────────────── */
+.brainPage .brainPanelToggle {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 1.25rem;
-  padding-top: 1rem;
-  border-top: 1px solid #333;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 0;
+  background: none;
+  color: #eee;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-.brainPage .brainLegendHeader h3 {
-  margin: 0;
+.brainPage .brainChevron {
+  transition: transform 0.2s;
+}
+
+.brainPage .brainRegionsPanel.open .brainChevron {
+  transform: rotate(180deg);
+}
+
+.brainPage .brainRegionsBody {
+  padding: 0 1rem 0.9rem;
 }
 
 .brainPage .brainToggle {
-  padding: 0.3rem 0.7rem;
+  width: 100%;
+  padding: 0.4rem 0.7rem;
   border: 1px solid #555;
   border-radius: 999px;
   background: transparent;
@@ -263,7 +308,7 @@
 
 .brainPage .brainLegend {
   list-style: none;
-  margin: 0.75rem 0 0;
+  margin: 0.6rem 0 0;
   padding: 0;
 }
 
@@ -271,19 +316,83 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.2rem 0;
+  padding: 0.25rem 0;
   color: #ccc;
   font-size: 14px;
   cursor: pointer;
 }
 
-.brainPage .brainCredit {
-  margin: 1.25rem 0 0;
-  color: #777;
-  font-size: 11px;
-  line-height: 1.5;
+/* ── Tablets: narrower panels ─────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .brainPage .brainInfoPanel {
+    width: 280px;
+  }
+
+  .brainPage .brainRegionsPanel {
+    width: 200px;
+  }
 }
 
-.brainPage .brainCredit a {
-  color: #999;
+/* ── Phones / small screens: nav up top, info as a bottom sheet ──────────── */
+@media (max-width: 768px) {
+  .brainPage {
+    --brain-edge: 8px;
+    --brain-top: 76px;
+  }
+
+  .brainPage .brainNav {
+    left: 92px;
+    right: 36px;
+    width: auto;
+    height: 72px;
+    transform: none;
+  }
+
+  .brainPage .brainLabel {
+    max-width: 70px;
+    font-size: 9.5px;
+    letter-spacing: 0.04em;
+    line-height: 1.25;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .brainPage .brainRegionsPanel {
+    width: auto;
+    min-width: 150px;
+    max-height: calc(100% - var(--brain-top) - 36dvh - 2 * var(--brain-edge));
+  }
+
+  .brainPage .brainPanelToggle {
+    padding: 0.55rem 0.85rem;
+  }
+
+  .brainPage .brainInfoPanel {
+    top: auto;
+    bottom: var(--brain-edge);
+    left: var(--brain-edge);
+    right: var(--brain-edge);
+    width: auto;
+    max-height: 36dvh;
+    padding: 0.85rem 1rem;
+  }
+
+  /* Keep the sheet small until something is selected. */
+  .brainPage .brainInfoPanel .brainTitle {
+    margin-bottom: 0.4rem;
+    padding-bottom: 0.35rem;
+    font-size: 1.05rem;
+  }
+
+  .brainPage .brainInfoPanel.hasPart .brainTitle {
+    display: none;
+  }
+
+  .brainPage .brainHint {
+    font-size: 13px;
+  }
+
+  .brainPage .brainCredit {
+    margin-top: 0.5rem;
+  }
 }

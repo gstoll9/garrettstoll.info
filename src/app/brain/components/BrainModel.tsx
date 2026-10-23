@@ -1,5 +1,5 @@
 import { Canvas, ThreeEvent, useThree } from '@react-three/fiber';
-import { Bvh, OrbitControls, useGLTF } from '@react-three/drei';
+import { Bvh, OrbitControls, useGLTF, useProgress } from '@react-three/drei';
 import { useEffect, useMemo } from 'react';
 import * as THREE from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
@@ -92,34 +92,59 @@ function Brain({ viewMode, hiddenGroups, hoveredId, selectedId, onHover, onSelec
   );
 }
 
+// Matches the bottom-sheet breakpoint in brain.css.
+const NARROW_PX = 768;
+// Share of the screen height the info sheet covers on narrow screens (36dvh + margin).
+const SHEET_FRACTION = 0.38;
+
 function CameraRig({ viewMode }: { viewMode: ViewMode }) {
-  const camera = useThree((s) => s.camera);
+  const camera = useThree((s) => s.camera) as THREE.PerspectiveCamera;
   const controls = useThree((s) => s.controls) as OrbitControlsImpl | null;
+  const { width, height } = useThree((s) => s.size);
+  const narrow = width <= NARROW_PX;
+
+  // On narrow screens, shift the image up so the brain is centered in the area above the sheet.
   useEffect(() => {
-    camera.position.set(...CAMERA[viewMode]);
+    if (narrow) camera.setViewOffset(width, height, 0, (height * SHEET_FRACTION) / 2, width, height);
+    else camera.clearViewOffset();
+  }, [camera, narrow, width, height]);
+
+  // Back the camera off until the brain (~1.7 units across, plus margin) fits the screen.
+  const aspectBucket = Math.round((width / height) * 10) / 10;
+  useEffect(() => {
+    const halfFov = THREE.MathUtils.degToRad(camera.fov / 2);
+    const visibleHeight = narrow ? 1 - SHEET_FRACTION : 1;
+    const fitDistance = Math.max(0.95 / Math.tan(halfFov) / visibleHeight, 1.15 / (Math.tan(halfFov) * aspectBucket));
+    const base = new THREE.Vector3(...CAMERA[viewMode]);
+    camera.position.copy(base.setLength(Math.max(base.length(), fitDistance)));
     controls?.target.set(0, 0, 0);
     controls?.update();
-  }, [camera, controls, viewMode]);
+  }, [camera, controls, viewMode, aspectBucket, narrow]);
   return null;
 }
 
 export default function BrainModel(props: Props) {
+  // The GLB loads inside the Canvas, so the page's Suspense fallback never shows for it.
+  const { active, progress } = useProgress();
   return (
-    <Canvas
-      camera={{ position: CAMERA.full, fov: 40, near: 0.05, far: 50 }}
-      gl={{ localClippingEnabled: true }}
-      onPointerMissed={() => props.onSelect(null)}
-    >
-      <color attach="background" args={['#111111']} />
-      <hemisphereLight args={['#ffffff', '#303040', 1.1]} />
-      <directionalLight position={[-3, 4, 3]} intensity={1.6} />
-      <directionalLight position={[3, -1, -3]} intensity={0.6} />
-      <Bvh firstHitOnly={false}>
-        <Brain {...props} />
-      </Bvh>
-      <CameraRig viewMode={props.viewMode} />
-      <OrbitControls makeDefault enablePan minDistance={1} maxDistance={8} />
-    </Canvas>
+    <>
+      {active && <div className="brainLoading brainLoadingOverlay">Loading brain model… {Math.round(progress)}%</div>}
+      <Canvas
+        camera={{ position: CAMERA.full, fov: 40, near: 0.05, far: 50 }}
+        gl={{ localClippingEnabled: true }}
+        onPointerMissed={() => props.onSelect(null)}
+      >
+        <color attach="background" args={['#111111']} />
+        <hemisphereLight args={['#ffffff', '#303040', 1.1]} />
+        <directionalLight position={[-3, 4, 3]} intensity={1.6} />
+        <directionalLight position={[3, -1, -3]} intensity={0.6} />
+        <Bvh firstHitOnly={false}>
+          <Brain {...props} />
+        </Bvh>
+        <CameraRig viewMode={props.viewMode} />
+        <OrbitControls makeDefault enablePan minDistance={1} maxDistance={12} />
+      </Canvas>
+    </>
   );
 }
 
