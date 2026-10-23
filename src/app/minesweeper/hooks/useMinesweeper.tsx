@@ -392,7 +392,7 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
       minesLeft: number,
     };
 
-    let numberedTiles: numberedTileInfo[] = [];
+    const numberedTiles: numberedTileInfo[] = [];
     // let updatingCells: CellType[] = [];
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
@@ -435,7 +435,7 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
 
     // get chains of overlapping numbered tiles (BFS for transitivity: A-B and B-C → one chain)
     let remaining = [...numberedTiles];
-    let chains: numberedTileInfo[][] = [];
+    const chains: numberedTileInfo[][] = [];
 
     while (remaining.length > 0) {
       const chain: numberedTileInfo[] = [remaining.shift()!];
@@ -459,15 +459,15 @@ export const useMinesweeper = (rows: number, cols: number, mines: number) => {
     }
 
 
-    for (let chain of chains) {
-      let A: number[][] = [];
-      let b: number[] = [];
-      let cellIndexMap: Map<string, number> = new Map();
-      let cellList: CellType[] = [];
+    for (const chain of chains) {
+      const A: number[][] = [];
+      const b: number[] = [];
+      const cellIndexMap: Map<string, number> = new Map();
+      const cellList: CellType[] = [];
       
       // Build the system of equations
       chain.forEach((nt, rowIndex) => {
-        let row = Array(cellList.length).fill(0);
+        const row = Array(cellList.length).fill(0);
         nt.coveredNeighbors.forEach(c => {
           const key = `${c.x},${c.y}`;
           if (!cellIndexMap.has(key)) {

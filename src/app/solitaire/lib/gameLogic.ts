@@ -4,7 +4,7 @@ export function createDeck(): Card[] {
   const suits: Suit[] = ['♠', '♥', '♦', '♣'];
   const deck: Card[] = [];
 
-  for (let suit of suits) {
+  for (const suit of suits) {
     for (let rank = 1; rank <= 13; rank++) {
         let rankString: string;
         switch (rank) {

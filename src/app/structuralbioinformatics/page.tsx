@@ -147,7 +147,7 @@ export default function StructuralBioinformaticsPage() {
           <BlockMath math="\Delta G = \Delta H - T\Delta S_{sys}"></BlockMath>
           <BlockMath math="\Delta H = \Delta E - \Delta (PV)"></BlockMath>
           <BlockMath math="\Delta E = \Delta U + \Delta K"></BlockMath>
-          <p>In biological systems: <InlineMath math="\Delta K = \frac{3}{2} k_B T" /> and we don't worry about <InlineMath math="\Delta (PV)" /></p>
+          <p>In biological systems: <InlineMath math="\Delta K = \frac{3}{2} k_B T" /> and we don&apos;t worry about <InlineMath math="\Delta (PV)" /></p>
           <BlockMath math="\Delta G = \Delta U + T(\frac{3}{2} k_B - \Delta S_{sys})"></BlockMath>
           <li>Force-field based calculations calculate U using <b>molecular mechanics</b></li>
           <table><tbody>

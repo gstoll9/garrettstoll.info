@@ -77,7 +77,7 @@ export default function NumericalMethodsPage() {
             <p>Wikipedia: <a href="https://en.wikipedia.org/wiki/Least_squares">Least-squares</a></p>
             <p>The least-squares approximation finds an <InlineMath math="m"/>th-order polynomial, <InlineMath math="p_m(x)" />, that minimizes the square of the residuals, <InlineMath math="[p_m(x)-f(x)]^2" /></p>
             <BlockMath math="p_m(x) = \sum_{k=0}^m a_k x^k" />
-            <p>To find the coefficients <InlineMath math="a_k"/>, we need to minimize <InlineMath math="\chi^2[a_k]" /> "<InlineMath math="\chi^2" /> is the conventional notation for the summation of the squares of the deviation." (Pang p.24)</p>
+            <p>To find the coefficients <InlineMath math="a_k"/>, we need to minimize <InlineMath math="\chi^2[a_k]" /> &ldquo;<InlineMath math="\chi^2" /> is the conventional notation for the summation of the squares of the deviation.&rdquo; (Pang p.24)</p>
             <table style={{ width: '100%' }}>
                 <thead>
                     <tr>
