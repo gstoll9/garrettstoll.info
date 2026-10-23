@@ -154,12 +154,6 @@
   overflow-y: auto;
 }
 
-.brainPage .brainTitle {
-  margin: 0 0 0.75rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid #3a3a3a;
-  font-size: 1.25rem;
-}
 
 .brainPage .brainInfo h3 {
   margin: 0.35rem 0 0.5rem;
@@ -377,16 +371,6 @@
     padding: 0.85rem 1rem;
   }
 
-  /* Keep the sheet small until something is selected. */
-  .brainPage .brainInfoPanel .brainTitle {
-    margin-bottom: 0.4rem;
-    padding-bottom: 0.35rem;
-    font-size: 1.05rem;
-  }
-
-  .brainPage .brainInfoPanel.hasPart .brainTitle {
-    display: none;
-  }
 
   .brainPage .brainHint {
     font-size: 13px;

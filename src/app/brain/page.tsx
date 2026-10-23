@@ -83,8 +83,7 @@ export default function BrainPage() {
         </div>
       </nav>
 
-      <aside className={`brainPanel brainInfoPanel${part ? ' hasPart' : ''}`}>
-        <h2 className="brainTitle">Human Brain</h2>
+      <aside className="brainPanel brainInfoPanel">
         {part && group ? (
           <div className="brainInfo">
             <div className="brainInfoGroup">
