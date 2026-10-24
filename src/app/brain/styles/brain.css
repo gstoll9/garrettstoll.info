@@ -149,7 +149,7 @@
 .brainPage .brainRegionsPanel {
   top: var(--brain-top);
   right: var(--brain-edge);
-  width: 220px;
+  width: 270px;
   max-height: calc(100% - var(--brain-top) - var(--brain-edge));
   overflow-y: auto;
 }
@@ -316,6 +316,165 @@
   cursor: pointer;
 }
 
+/* ── Side notes, sources ──────────────────────────────────────────────────── */
+.brainPage .brainSide {
+  color: #999;
+  font-weight: 400;
+}
+
+.brainPage .brainSideNotes {
+  margin: 0.75rem 0 0;
+}
+
+.brainPage .brainSideNotes > div {
+  margin-top: 0.4rem;
+  padding: 0.45rem 0.65rem;
+  border-left: 2px solid #444;
+  opacity: 0.6;
+}
+
+.brainPage .brainSideNotes > div.current {
+  border-left-color: #8cc4ff;
+  opacity: 1;
+}
+
+.brainPage .brainSideNotes dt {
+  color: #999;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.brainPage .brainSideNotes dd {
+  margin: 0.15rem 0 0;
+  color: #ccc;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.brainPage .brainRefs {
+  margin-top: 0.75rem;
+}
+
+.brainPage .brainRefs h4 {
+  margin: 0 0 0.25rem;
+  color: #999;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.brainPage .brainRefs ul {
+  margin: 0;
+  padding-left: 1rem;
+  color: #888;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.brainPage .brainRefs a {
+  color: #9ab;
+}
+
+/* ── Hemisphere switch, region list ──────────────────────────────────────── */
+.brainPage .brainSegmented {
+  display: flex;
+  margin-bottom: 0.5rem;
+  border: 1px solid #555;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.brainPage .brainSegmented button {
+  flex: 1;
+  padding: 0.35rem 0;
+  border: 0;
+  background: transparent;
+  color: #bbb;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.brainPage .brainSegmented button.active {
+  background: #eee;
+  color: #111;
+}
+
+.brainPage .brainLegendRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.brainPage .brainExpand {
+  flex-shrink: 0;
+  padding: 0.15rem 0.35rem;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #888;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.brainPage .brainExpand:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ccc;
+}
+
+.brainPage .brainExpand[aria-expanded="true"] .brainChevron {
+  display: inline-block;
+  transform: rotate(180deg);
+}
+
+.brainPage .brainRegionList {
+  list-style: none;
+  margin: 0.1rem 0 0.4rem;
+  padding: 0 0 0 1.4rem;
+}
+
+.brainPage .brainRegionList li {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.12rem 0;
+  color: #bbb;
+  font-size: 12.5px;
+}
+
+.brainPage .brainRegionList .brainSwatch {
+  width: 9px;
+  height: 9px;
+}
+
+.brainPage .brainRegionName {
+  flex: 1;
+  min-width: 0;
+}
+
+.brainPage .brainSidePick {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: transparent;
+  color: #ccc;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.brainPage .brainSidePick:hover {
+  border-color: #999;
+}
+
+.brainPage .brainSidePick.active {
+  border-color: #8cc4ff;
+  background: #8cc4ff;
+  color: #111;
+}
+
 /* ── Tablets: narrower panels ─────────────────────────────────────────────── */
 @media (max-width: 1100px) {
   .brainPage .brainInfoPanel {
@@ -323,7 +482,7 @@
   }
 
   .brainPage .brainRegionsPanel {
-    width: 200px;
+    width: 240px;
   }
 }
 
@@ -355,6 +514,10 @@
     width: auto;
     min-width: 150px;
     max-height: calc(100% - var(--brain-top) - 36dvh - 2 * var(--brain-edge));
+  }
+
+  .brainPage .brainRegionsPanel.open {
+    left: var(--brain-edge);
   }
 
   .brainPage .brainPanelToggle {
