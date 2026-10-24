@@ -1,0 +1,27 @@
+API VERSION: 1.2
+API SOURCE: NASA/JPL Horizons API
+
+*******************************************************************************
+JPL/HORIZONS              (136199) Eris I Dysnomia        # obs: 19 (2005-2018)
+PRE-COMPUTED              Satellite body: 120136199
+                        Soln.date: 2022-Sep-07_11:48:50
+ 
+NOTE: Dysnomia SATELLITE body from TNO satellite solution
+
+      See also:    '136199;' for CURRENT barycenter
+                  '20136199' for SATELLITE SOLUTION barycenter
+                 '920136199' for PRIMARY body (Eris)
+
+Asteroid physical parameters (km, seconds, rotational period in hours):
+   GM=  9.56 - 29.7 km^3/s^2   RAD= 350 +- 57.5 km          ROTPER= n.a. 
+   GM_rat= 0.0087 to 0.0270      H~ 5.6                          G= n.a.
+   B-V= n.a.                ALBEDO= 0.04 (+0.02,-0.01)        STYP= n.a.
+
+  Position uncertainty wrt primary on 2025-Jan-1: 110 km
+
+ASTEROID comments: 
+1: soln ref.= wrt/JPL#80 system barycenter, OCC=3
+2: source= tnosat_v001_20136199_jpl080_20220908
+*******************************************************************************
+
+No ephemeris for target "Dysnomia" after A.D. 2030-JAN-01 00:00:00.0000 TDB

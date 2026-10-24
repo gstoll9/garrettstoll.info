@@ -159,7 +159,7 @@ export const planets = [
     orbitSpeed: 0.15, 
     rotationalSpeed: 0.038,
 
-    moons: ['Mimas', 'Enceladus', 'Tethys', 'Dione', 'Rhea', 'Titan', 'Hyperion', 'Iapetus'],
+    moons: ['Mimas', 'Enceladus', 'Tethys', 'Telesto', 'Calypso', 'Dione', 'Helene', 'Polydeuces', 'Rhea', 'Titan', 'Hyperion', 'Iapetus', 'Phoebe'],
     
     // elliptical
       orbitData: {

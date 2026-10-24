@@ -71,7 +71,18 @@ type OrbitControlsMenuProps = {
   setShowOrbits: (show: boolean) => void;
   showBackground: boolean;
   setShowBackground: (show: boolean) => void;
+  // undefined hides the control (the galaxy-scale views have no planets to trail)
+  galacticTrailYears?: number;
+  setGalacticTrailYears: (years: number) => void;
 };
+
+const GALACTIC_TRAIL_OPTIONS = [
+  { years: 0, label: 'Off' },
+  { years: 1, label: '1' },
+  { years: 10, label: '10' },
+  { years: 100, label: '100' },
+  { years: 1000, label: '1000' },
+];
 
 export default function OrbitControlsMenu({
   showOrbits,
@@ -82,6 +93,8 @@ export default function OrbitControlsMenu({
   setTimeScale,
   showBackground,
   setShowBackground,
+  galacticTrailYears,
+  setGalacticTrailYears,
 }: OrbitControlsMenuProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -161,6 +174,23 @@ export default function OrbitControlsMenu({
               <span>Show Orbits</span>
             </label>
           </div>
+
+          {galacticTrailYears !== undefined && (
+            <div className="control-group">
+              <label className="control-label">Galactic Path (years)</label>
+              <div className="button-group button-group--compact">
+                {GALACTIC_TRAIL_OPTIONS.map(({ years, label }) => (
+                  <button
+                    key={years}
+                    className={`mode-button ${galacticTrailYears === years ? 'active' : ''}`}
+                    onClick={() => setGalacticTrailYears(years)}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
         </div>
       )}

@@ -38,6 +38,12 @@ export const SOURCES = [
   { id: 'mcconnachie', name: 'McConnachie Nearby Galaxies Catalog',
     url: 'https://www.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/en/community/nearby/', license: 'Cite_McConnachie_2012',
     usedBy: ['/solarsystem'] },
+  // Spiral-arm fits (Table 2), parsed from the arXiv TeX source saved in src/app/solarsystem/literature/reid2019/
+  { id: 'reid2019', name: 'Reid et al. 2019 · Milky Way spiral arms from BeSSeL maser parallaxes', url: 'https://arxiv.org/abs/1910.03357',
+    license: 'Cite_Reid_2019', usedBy: ['/solarsystem'] },
+  // IBEX interstellar-wind direction the heliosphere's nose points into
+  { id: 'swaczyna2023', name: 'Swaczyna et al. 2023 · IBEX interstellar neutral helium', url: 'https://arxiv.org/abs/2307.06694',
+    license: 'Cite_Swaczyna_2023', usedBy: ['/solarsystem'] },
   // Inferred from the 8k equirectangular star map + constellation overlays; not recorded in the repo
   { id: 'svsstarmaps', name: 'NASA SVS Deep Star Maps', url: 'https://svs.gsfc.nasa.gov/4851', license: 'NASA_Media_Guidelines',
     usedBy: ['/solarsystem'] },
@@ -98,7 +104,7 @@ export const JOBS = [
   },
   {
     id: 'hydrogen-nist', kind: 'auto', everyDays: 730, sources: ['nist'],
-    steps: [['python', '-I', 'src/app/hydrogen/nist/nistScraper.py'], ['python', '-I', 'src/app/hydrogen/nist/generateTs.py']],
+    steps: [['python', 'src/app/hydrogen/nist/nistScraper.py'], ['python', 'src/app/hydrogen/nist/generateTs.py']],
     outputs: ['src/app/hydrogen/nist', 'src/app/hydrogen/data/nistSpectralLines.ts'],
   },
   {
@@ -125,6 +131,24 @@ export const JOBS = [
     checklist: [
       'Re-save the planet/asteroid pages under src/app/solarsystem/wikipedia/ (wikiScraper.py)',
       'Diff the infobox/layer values against data/planetStructure.ts, asteroids.ts, dwarfPlanets.ts, rings.ts and moonAppearance.ts; these are hand-extracted, so update by hand',
+    ],
+  },
+  {
+    id: 'solarsystem-milkyway', kind: 'manual', everyDays: 365, sources: ['reid2019', 'wikipedia'],
+    outputs: ['src/app/solarsystem/data/milkyWay.ts'],
+    checklist: [
+      'Re-save the object lists named in src/app/solarsystem/galaxy/generateMilkyWay.py (reached from Wikipedia "Lists of astronomical objects") under src/app/solarsystem/wikipedia/Galaxy/Lists/',
+      'python -I src/app/solarsystem/galaxy/generateMilkyWay.py',
+      'Check the printed kept/skipped counts per list; a big drop means a table layout changed',
+    ],
+  },
+  {
+    id: 'solarsystem-galactic-motion', kind: 'manual', everyDays: null, sources: ['wikipedia', 'swaczyna2023'],
+    outputs: ['src/app/solarsystem/data/galacticMotion.ts', 'src/app/solarsystem/components/Heliosphere.tsx'],
+    checklist: [
+      'Re-save the pages under src/app/solarsystem/wikipedia/Galaxy/ (Oort constants, Solar apex, Sun, Galactic year, Milky Way, Local standard of rest)',
+      'Hand-curated: update the constants in data/galacticMotion.ts and re-check the consistency figures in its header',
+      'Heliosphere nose: INFLOW_LON/INFLOW_LAT in components/Heliosphere.tsx come from Swaczyna et al. 2023 (abstract in src/app/solarsystem/literature/); update if IBEX/IMAP publish a newer inflow vector',
     ],
   },
   {

@@ -3,6 +3,8 @@ import { moonElements, type MoonElements } from './data/moonElements';
 import type { Comet } from './data/comets';
 import { localGroupGalaxies, type LocalGroupGalaxy } from './data/localGroup';
 import { ANDROMEDA, DISK_OVERRIDES, MILKY_WAY, SPHEROID_OVERRIDES, type DiskSpec } from './data/localGroupHosts';
+import { GALACTIC_MOTION } from './data/galacticMotion';
+import { milkyWayArms, milkyWayObjects, type MilkyWayObjectKind, type SpiralArm } from './data/milkyWay';
 
 export const REAL_LIVE_BODIES: Record<string, Body> = {
     'Sun': Body.Sun,
@@ -66,6 +68,15 @@ export const simulationState = {
     dateMs: Date.now()
 };
 
+// Scroll-zoom moves between the nested models (Local Group ⇄ Milky Way ⇄ Solar System ⇄
+// planet). When a zoom crosses a model's edge, ScaleTransitions sets `entry` before
+// switching focus, so CameraController can place the camera at the matching end of the next
+// model: zooming out of the Solar System arrives at the Milky Way zoomed in on the Sun, etc.
+export const scaleTransition: { entry: 'fromInner' | 'fromOuter' | null; planetFrameDistance: number | null } = {
+    entry: null,
+    planetFrameDistance: null, // the focused planet's framing distance (CameraController), for zooming back out
+};
+
 export function orbitalPosition(orbitMode: string, t: number, orbitData: OrbitProps, useSimplifiedDistance: boolean = false, name?: string, dateMs?: number): [number, number, number] {
     const { 
         semimajorAxis, semimajorAxisSimplified, eccentricity, inclination, 
@@ -117,10 +128,9 @@ export function orbitalPosition(orbitMode: string, t: number, orbitData: OrbitPr
         // Epoch-anchored elliptical body (no astronomy-engine ephemeris): phase must come
         // from real elapsed time since the elements' epoch, not the page-load-relative `t`.
         const M = (meanAnomaly * Math.PI / 180) + (2 * Math.PI * (dateMs - orbitData.epochMs) / 1000) / orbitalPeriod;
-        let E = M;
-        for (let j = 0; j < 5; j++) {
-            E = M + eccentricity * Math.sin(E);
-        }
+        // Newton's method: the old 5-step fixed-point iteration didn't converge for
+        // high-eccentricity orbits (Sedna, 2017 OF201 were tens of degrees off Horizons)
+        const E = solveKepler(((M % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI), eccentricity);
         const x = radius * (Math.cos(E) - eccentricity);
         const y = radius * Math.sqrt(1 - eccentricity ** 2) * Math.sin(E);
 
@@ -150,10 +160,7 @@ export function orbitalPosition(orbitMode: string, t: number, orbitData: OrbitPr
     const M = meanAnomaly + (2 * Math.PI * t) / orbitalPeriod
   
     // Solve Kepler's Equation: M = E - e * sin(E)
-    let E = M
-    for (let j = 0; j < 5; j++) {
-      E = M + eccentricity * Math.sin(E) // Newton-Raphson iteration
-    }
+    const E = solveKepler(((M % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI), eccentricity)
   
     // Position in orbital plane
     const x = radius * (Math.cos(E) - eccentricity)
@@ -399,9 +406,9 @@ function skyBasis(raDeg: number, decDeg: number) {
     };
 }
 
-const SUN_GALACTOCENTRIC: Vec3 = [-MILKY_WAY.sunGalactocentricKpc, 0, MILKY_WAY.sunHeightKpc];
+export const SUN_GALACTOCENTRIC: Vec3 = [-MILKY_WAY.sunGalactocentricKpc, 0, MILKY_WAY.sunHeightKpc];
 
-function galactocentricKpc(raDeg: number, decDeg: number, distanceKpc: number): Vec3 {
+export function galactocentricKpc(raDeg: number, decDeg: number, distanceKpc: number): Vec3 {
     return v3.add(SUN_GALACTOCENTRIC, v3.scale(skyBasis(raDeg, decDeg).los, distanceKpc));
 }
 
@@ -412,16 +419,16 @@ export function localGroupToScene(p: Vec3): Vec3 {
 
 export const SUN_SCENE_POSITION = localGroupToScene(SUN_GALACTOCENTRIC);
 
-// Camera framing: centred between the Local Group's two dominant spirals, looking at the
-// pair side-on (perpendicular to the Milky Way–Andromeda line) so they don't overlap.
+// Camera framing: centred on the Milky Way (our home galaxy, and the frame everything
+// here is measured in), looking side-on to the Milky Way–Andromeda line so the two spirals
+// don't overlap, and pulled back far enough that Andromeda (765 kpc) stays in view.
 const M31_SCENE = localGroupToScene(galactocentricKpc(ANDROMEDA.raDeg, ANDROMEDA.decDeg, ANDROMEDA.distanceKpc));
-export const LOCAL_GROUP_VIEW_TARGET = v3.scale(M31_SCENE, 0.5);
+export const LOCAL_GROUP_VIEW_TARGET: Vec3 = [0, 0, 0];
 export const LOCAL_GROUP_VIEW_POSITION = v3.add(
-    LOCAL_GROUP_VIEW_TARGET,
-    v3.add(v3.scale(v3.norm(v3.cross(M31_SCENE, [0, 1, 0])), 95), [0, 30, 0]));
+    v3.scale(v3.norm(v3.cross(M31_SCENE, [0, 1, 0])), 150), [0, 45, 0]);
 
 // Deterministic PRNG so the particle clouds don't reshuffle between renders/reloads.
-function mulberry32(seed: number) {
+export function mulberry32(seed: number) {
     return () => {
         seed |= 0; seed = (seed + 0x6d2b79f5) | 0;
         let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
@@ -430,7 +437,7 @@ function mulberry32(seed: number) {
     };
 }
 
-function gaussian(rand: () => number): number {
+export function gaussian(rand: () => number): number {
     return Math.sqrt(-2 * Math.log(rand() || 1e-9)) * Math.cos(2 * Math.PI * rand());
 }
 
@@ -629,4 +636,199 @@ export function buildLocalGroup(): LocalGroupParticles {
         sizes: new Float32Array(out.s),
         bodies,
     };
+}
+
+// ── Galactic motion ─────────────────────────────────────────────────────────
+// The Sun's orbit around the Milky Way, from the constants in data/galacticMotion.ts, in
+// the galactocentric frame above (kpc; x from the Sun toward the Centre, y along the
+// rotation, z toward the north galactic pole).
+//
+// Model: an axisymmetric power-law rotation curve Vc ∝ R^β whose local angular speed and
+// slope reproduce the Oort constants (so its galactic year and epicycle period match theirs),
+// plus a harmonic vertical oscillation with the observed ~83 Myr period. The Sun starts at
+// its measured position and velocity and is integrated (leapfrog) through that potential.
+// Real orbits are perturbed by the bar and spiral arms; this is the standard smooth model.
+
+const KMS_TO_KPC_PER_MYR = 1.0227e-3;
+const KMS_TO_AU_PER_YEAR = 0.210945;
+const OMEGA0 = GALACTIC_MOTION.oortA - GALACTIC_MOTION.oortB; // km/s/kpc
+const ROTATION_SLOPE = -(GALACTIC_MOTION.oortA + GALACTIC_MOTION.oortB) / OMEGA0; // β
+const R_SUN = MILKY_WAY.sunGalactocentricKpc;
+export const CIRCULAR_SPEED_KMS = OMEGA0 * R_SUN;
+export const GALACTIC_YEAR_MYR = 2 * Math.PI / (OMEGA0 * KMS_TO_KPC_PER_MYR);
+const NU = 2 * Math.PI / GALACTIC_MOTION.verticalPeriodMyr; // rad/Myr
+
+// The Sun's velocity relative to the Galactic Centre (km/s, galactic axes): circular speed
+// plus its peculiar motion relative to the local standard of rest
+const { U, V, W } = GALACTIC_MOTION.peculiarKms;
+export const SUN_GALACTIC_VELOCITY_KMS: Vec3 = [U, CIRCULAR_SPEED_KMS + V, W];
+export const SUN_GALACTIC_SPEED_KMS = Math.hypot(...SUN_GALACTIC_VELOCITY_KMS);
+
+// Sun's galactocentric position (kpc) every `stepMyr` from now over `spanMyr` (negative =
+// into the past). Index 0 is the present.
+export function sunGalacticOrbit(spanMyr: number, stepMyr = 0.5): Vec3[] {
+    const dt = Math.sign(spanMyr) * stepMyr;
+    const steps = Math.ceil(Math.abs(spanMyr) / stepMyr);
+    const vc0 = CIRCULAR_SPEED_KMS * KMS_TO_KPC_PER_MYR;
+    const accel = (x: number, y: number): [number, number] => {
+        const r = Math.hypot(x, y);
+        const vc = vc0 * Math.pow(r / R_SUN, ROTATION_SLOPE);
+        const a = -vc * vc / r; // centripetal, toward the centre
+        return [a * x / r, a * y / r];
+    };
+    let [x, y] = [SUN_GALACTOCENTRIC[0], SUN_GALACTOCENTRIC[1]];
+    let vx = U * KMS_TO_KPC_PER_MYR; // U is toward the Centre, which is +x here
+    let vy = (CIRCULAR_SPEED_KMS + V) * KMS_TO_KPC_PER_MYR;
+    const z0 = SUN_GALACTOCENTRIC[2];
+    const w0 = W * KMS_TO_KPC_PER_MYR;
+    const out: Vec3[] = [[x, y, z0]];
+    let [ax, ay] = accel(x, y);
+    for (let i = 1; i <= steps; i++) {
+        vx += 0.5 * dt * ax; vy += 0.5 * dt * ay;
+        x += dt * vx; y += dt * vy;
+        [ax, ay] = accel(x, y);
+        vx += 0.5 * dt * ax; vy += 0.5 * dt * ay;
+        const t = i * dt;
+        out.push([x, y, z0 * Math.cos(NU * t) + (w0 / NU) * Math.sin(NU * t)]);
+    }
+    return out;
+}
+
+// Galactic direction -> this solar-system scene's axes (galactic -> J2000 equatorial ->
+// ecliptic -> three.js Y-up, the same remap the planet positions use)
+const OBLIQUITY = 23.4392911 * Math.PI / 180;
+function galacticToSolarScene(g: Vec3): Vec3 {
+    const eq: Vec3 = [0, 1, 2].map(i => EQ_TO_GAL[0][i] * g[0] + EQ_TO_GAL[1][i] * g[1] + EQ_TO_GAL[2][i] * g[2]) as Vec3;
+    const ecl: Vec3 = [eq[0], eq[1] * Math.cos(OBLIQUITY) + eq[2] * Math.sin(OBLIQUITY), -eq[1] * Math.sin(OBLIQUITY) + eq[2] * Math.cos(OBLIQUITY)];
+    return [ecl[0], ecl[2], -ecl[1]];
+}
+
+// How far the whole Solar System moves around the Galaxy per year, in scene units
+// (12 per AU) — over the centuries the trails span, the galactic orbit is a straight line
+// (its radius of curvature is 1.7 billion AU)
+export const SUN_GALACTIC_VELOCITY_SCENE_PER_YEAR = v3.scale(galacticToSolarScene(SUN_GALACTIC_VELOCITY_KMS), KMS_TO_AU_PER_YEAR * 12);
+// Unit vectors in the scene: direction of travel, and toward the north galactic pole
+export const GALACTIC_TRAVEL_DIRECTION_SCENE = v3.norm(SUN_GALACTIC_VELOCITY_SCENE_PER_YEAR);
+export const GALACTIC_NORTH_SCENE = galacticToSolarScene([0, 0, 1]);
+
+// ── Milky Way model ─────────────────────────────────────────────────────────
+// The galaxy on its own, ~100x closer than the Local Group view: same galactocentric frame,
+// 10 scene units per kpc.
+//
+// Real: the spiral arms are Reid et al. 2019's maser-parallax fits (data/milkyWay.ts), drawn
+// at full density over the azimuths their masers cover and extrapolated ±60° beyond at lower
+// density (flagged in the arm buffers) — the arms' far-side courses are unmeasured. Disk
+// scale length 3.4 kpc (exponential disk with the infobox's 5.75 kpc half-light radius;
+// R_half = 1.678 h), thin-disk thickness 220–450 pc ("Milky Way" infobox), long bar 5 kpc
+// half-length at 27° (Wegg et al. 2015, see localGroupHosts.ts). Every catalogued object sits
+// at its measured direction and distance.
+
+export const MILKY_WAY_UNITS_PER_KPC = 10;
+
+export function milkyWayToScene(p: Vec3): Vec3 {
+    const s = MILKY_WAY_UNITS_PER_KPC;
+    return [p[0] * s, p[2] * s, -p[1] * s];
+}
+
+export const MILKY_WAY_SUN_SCENE = milkyWayToScene(SUN_GALACTOCENTRIC);
+
+const DISK_SCALE_LENGTH_KPC = 5.75 / 1.678;
+const THIN_DISK_SIGMA_KPC = 0.33 / 2;
+const ARM_WIDTH_GROWTH = 0.042; // kpc of extra arm width per kpc of radius (Reid 2019, §4)
+const ARM_EXTRAPOLATION_DEG = 60;
+
+export const ARM_DISPLAY_NAMES: Record<string, string> = {
+    '3-kpc(N)': 'Near 3-kpc arm',
+    Norma: 'Norma arm',
+    'Sct-Cen': 'Scutum–Centaurus arm',
+    'Sgr-Car': 'Sagittarius–Carina arm',
+    Local: 'Local (Orion) arm',
+    Perseus: 'Perseus arm',
+    Outer: 'Outer arm',
+};
+
+// Galactocentric position of an arm's centre line at azimuth beta (deg): beta = 0 toward the
+// Sun, increasing along the rotation (+y here)
+export function armPoint(arm: SpiralArm, betaDeg: number): Vec3 {
+    const pitch = (betaDeg <= arm.betaKink ? arm.pitchBelow : arm.pitchAbove) * Math.PI / 180;
+    const r = arm.rKink * Math.exp(-((betaDeg - arm.betaKink) * Math.PI / 180) * Math.tan(pitch));
+    const b = betaDeg * Math.PI / 180;
+    return [-r * Math.cos(b), r * Math.sin(b), 0];
+}
+
+export type MilkyWayParticles = { positions: Float32Array; colors: Float32Array; sizes: Float32Array };
+
+export function buildMilkyWay(): MilkyWayParticles {
+    const rand = mulberry32(77);
+    const S = MILKY_WAY_UNITS_PER_KPC;
+    const p: number[] = [], c: number[] = [], sz: number[] = [];
+    const push = (pos: Vec3, color: Vec3, size: number, bright: number) => {
+        const q = milkyWayToScene(pos);
+        p.push(q[0], q[1], q[2]);
+        c.push(color[0] * bright, color[1] * bright, color[2] * bright);
+        sz.push(size * S);
+    };
+    const maxR = MILKY_WAY.diameterKpc / 2 * 1.1;
+
+    // smooth exponential disk (older stars)
+    for (let i = 0; i < 70000; i++) {
+        let r = -DISK_SCALE_LENGTH_KPC * Math.log((rand() || 1e-9) * (rand() || 1e-9));
+        if (r > maxR) r = rand() * maxR;
+        const th = rand() * 2 * Math.PI;
+        push([r * Math.cos(th), r * Math.sin(th), gaussian(rand) * THIN_DISK_SIGMA_KPC], STAR_COLORS.disk, 0.09, 0.35);
+    }
+
+    // measured spiral arms (young stars, H II regions)
+    for (const arm of milkyWayArms) {
+        const lo = arm.betaMin - ARM_EXTRAPOLATION_DEG, hi = arm.betaMax + ARM_EXTRAPOLATION_DEG;
+        const n = Math.round(9000 * (hi - lo) / 200);
+        for (let i = 0; i < n; i++) {
+            const beta = lo + rand() * (hi - lo);
+            const measured = beta >= arm.betaMin && beta <= arm.betaMax;
+            if (!measured && rand() < 0.5) continue;
+            const centre = armPoint(arm, beta);
+            const r = Math.hypot(centre[0], centre[1]);
+            if (r < 2.5 || r > maxR) continue;
+            const width = Math.max(0.08, arm.width + ARM_WIDTH_GROWTH * (r - arm.rKink));
+            const off = gaussian(rand) * width;
+            const along = gaussian(rand) * width;
+            const ux = centre[0] / r, uy = centre[1] / r;
+            const pos: Vec3 = [centre[0] + ux * off - uy * along, centre[1] + uy * off + ux * along, gaussian(rand) * THIN_DISK_SIGMA_KPC * 0.6];
+            const hii = rand() < 0.06;
+            push(pos, hii ? STAR_COLORS.hii : STAR_COLORS.young, hii ? 0.13 : 0.08, measured ? 0.75 : 0.4);
+        }
+    }
+
+    // long bar + bulge (old stars); the bar's near end points into the first quadrant (+y)
+    const bar = MILKY_WAY.barAngleDeg * Math.PI / 180;
+    const barAxis: Vec3 = [-Math.cos(bar), Math.sin(bar), 0];
+    for (let i = 0; i < 22000; i++) {
+        const along = gaussian(rand) * MILKY_WAY.barLengthKpc * 0.38;
+        const across = gaussian(rand) * 0.45;
+        push([barAxis[0] * along - barAxis[1] * across, barAxis[1] * along + barAxis[0] * across, gaussian(rand) * 0.3], STAR_COLORS.old, 0.1, 0.55);
+    }
+    for (let i = 0; i < 12000; i++) {
+        const d = randomUnitVector(rand);
+        const r = Math.abs(gaussian(rand)) * 0.7;
+        push([d[0] * r, d[1] * r, d[2] * r * 0.7], STAR_COLORS.old, 0.1, 0.7);
+    }
+
+    return { positions: new Float32Array(p), colors: new Float32Array(c), sizes: new Float32Array(sz) };
+}
+
+export type MilkyWayMarker = { name: string; kind: MilkyWayObjectKind | 'satellite galaxy'; scene: Vec3; distanceKpc: number };
+
+// Catalogued objects + the Milky Way's satellite galaxies (within 300 kpc, from the Local
+// Group catalog), at their real positions
+export function milkyWayMarkers(): MilkyWayMarker[] {
+    const out: MilkyWayMarker[] = milkyWayObjects.map(o => ({
+        name: o.name, kind: o.kind, distanceKpc: o.distanceKpc,
+        scene: milkyWayToScene(galactocentricKpc(o.ra, o.dec, o.distanceKpc)),
+    }));
+    for (const g of localGroupGalaxies) {
+        const centre = galactocentricKpc(g.raDeg, g.decDeg, g.distanceKpc);
+        if (Math.hypot(...centre) > 300 || g.catalogName.startsWith('*')) continue;
+        out.push({ name: g.name, kind: 'satellite galaxy', distanceKpc: g.distanceKpc, scene: milkyWayToScene(centre) });
+    }
+    return out;
 }

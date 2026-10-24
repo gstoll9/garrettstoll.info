@@ -9,6 +9,7 @@ import './styles/solarsystem.css';
 
 const TABS = [
   { id: 'cosmic', label: 'Local Group' },
+  { id: 'milkyway', label: 'Milky Way' },
   { id: 'solar',  label: 'Solar System' },
   { id: 'planet', label: 'Planet' },
 ] as const;
@@ -45,7 +46,7 @@ export default function Home() {
   const [focus, setFocus] = useState<string>('solarsystem');
   const [focusedPlanet, setFocusedPlanet] = useState<PlanetProps | null>(null);
 
-  const activeTab: Tab = focus === 'solarsystem' ? 'solar' : focus === 'cosmic' ? 'cosmic' : 'planet';
+  const activeTab: Tab = focus === 'solarsystem' ? 'solar' : focus === 'cosmic' ? 'cosmic' : focus === 'milkyway' ? 'milkyway' : 'planet';
   const activePlanetName = focusedPlanet?.name ?? null;
 
   const handleFocusChange = (newFocus: string, planetData: PlanetProps | null) => {
@@ -58,6 +59,8 @@ export default function Home() {
       handleFocusChange('solarsystem', null);
     } else if (tab === 'cosmic') {
       handleFocusChange('cosmic', null);
+    } else if (tab === 'milkyway') {
+      handleFocusChange('milkyway', null);
     } else {
       // default to Earth if no planet has been selected yet
       const target = focusedPlanet ?? EARTH;

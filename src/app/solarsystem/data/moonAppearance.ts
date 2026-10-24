@@ -34,6 +34,13 @@ export const PLANET_EQUATORIAL_RADIUS_KM: Record<string, number> = {
   Saturn: 60268,
   Uranus: 25559,
   Neptune: 24764,
+  // Dwarf planets: mean radius (their display spheres are sized from the same diameter)
+  Pluto: 1188.3,
+  Eris: 1163,
+  Haumea: 780,
+  Quaoar: 1115.7 / 2,
+  Orcus: 910 / 2,
+  Salacia: 838 / 2,
 };
 
 export const moonAppearance: Record<string, MoonAppearance> = {
@@ -66,4 +73,23 @@ export const moonAppearance: Record<string, MoonAppearance> = {
   Proteus: { geometricAlbedo: 0.096, color: '#8b857e', mottle: 0.3, triaxialRadiiKm: [218, 208, 201], tidallyLocked: true },
   Triton: { geometricAlbedo: 0.76, color: '#e3d3cf', mottle: 0.25, tidallyLocked: true },
   Nereid: { geometricAlbedo: 0.155, color: '#9d9890', mottle: 0.2, tidallyLocked: false, rotationPeriodHours: 11.594 },
+
+  // Added from Wikipedia's List of Solar System objects — albedo, triaxial dimensions and
+  // rotation from each moon's Wikipedia infobox (saved under wikipedia/SmallBodies/).
+  Phoebe: { geometricAlbedo: 0.0856, color: '#57524b', mottle: 0.35, triaxialRadiiKm: [109.7, 109.7, 101.2], tidallyLocked: false, rotationPeriodHours: 9.27365 },
+  Telesto: { geometricAlbedo: 0.97, color: '#eeece8', mottle: 0.1, triaxialRadiiKm: [16.6, 11.7, 9.6], tidallyLocked: true },
+  Calypso: { geometricAlbedo: 1.34, color: '#f4f3f0', mottle: 0.1, triaxialRadiiKm: [14.7, 9.3, 6.4], tidallyLocked: true },
+  Helene: { geometricAlbedo: 1.67, color: '#f2f1ee', mottle: 0.1, triaxialRadiiKm: [22.6, 19.6, 13.3], tidallyLocked: true },
+  Polydeuces: { geometricAlbedo: 1.24, color: '#efeeea', mottle: 0.1, triaxialRadiiKm: [1.75, 1.55, 1.31], tidallyLocked: true },
+  Charon: { geometricAlbedo: 0.38, color: '#a39b92', mottle: 0.3, tidallyLocked: true },
+  Styx: { geometricAlbedo: 0.65, color: '#cfcbc4', mottle: 0.15, triaxialRadiiKm: [8, 4.5, 4], tidallyLocked: false, rotationPeriodHours: 3.24 * 24 },
+  Nix: { geometricAlbedo: 0.56, color: '#cac5bd', mottle: 0.15, triaxialRadiiKm: [24.9, 16.6, 15.55], tidallyLocked: false, rotationPeriodHours: 1.829 * 24 },
+  Kerberos: { geometricAlbedo: 0.56, color: '#c7c2ba', mottle: 0.15, triaxialRadiiKm: [9.5, 5, 4.5], tidallyLocked: false, rotationPeriodHours: 5.31 * 24 },
+  Hydra: { geometricAlbedo: 0.83, color: '#dcd8d1', mottle: 0.15, triaxialRadiiKm: [25.45, 18.05, 15.45], tidallyLocked: false, rotationPeriodHours: 10.31 },
+  Dysnomia: { geometricAlbedo: 0.05, color: '#4d4842', mottle: 0.2, tidallyLocked: true },
+  Hiʻiaka: { geometricAlbedo: 0.74, color: '#dcdad4', mottle: 0.15, triaxialRadiiKm: [240, 180, 143], tidallyLocked: false, rotationPeriodHours: 9.68 },
+  Namaka: { geometricAlbedo: 0.65, color: '#d4d1ca', mottle: 0.15, tidallyLocked: false },
+  Weywot: { geometricAlbedo: 0.036, color: '#4a4540', mottle: 0.2, triaxialRadiiKm: [82, 73, 65], tidallyLocked: true },
+  Vanth: { geometricAlbedo: 0.08, color: '#6a645d', mottle: 0.2, tidallyLocked: true },
+  Actaea: { geometricAlbedo: 0.021, color: '#3f3b37', mottle: 0.2, tidallyLocked: true },
 };

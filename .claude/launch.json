@@ -79,6 +79,20 @@
       "env": {
         "NEXT_DIST_DIR": ".next-solar"
       }
+    },
+    {
+      "name": "resume-claude",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "next",
+        "dev",
+        "-p",
+        "3015"
+      ],
+      "port": 3015,
+      "env": {
+        "NEXT_DIST_DIR": ".next-resume"
+      }
     }
   ]
 }

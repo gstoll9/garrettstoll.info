@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/fhiRjx04PiDITyafMG8pAfZJrT8</id>
+  <title>arXiv Query: search_query=&amp;id_list=2307.06694&amp;start=0&amp;max_results=10</title>
+  <updated>2026-10-24T08:26:51Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=&amp;start=0&amp;max_results=10&amp;id_list=2307.06694" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>10</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2307.06694v1</id>
+    <title>Interstellar Conditions Deduced from Interstellar Neutral Helium Observed by IBEX and Global Heliosphere Modeling</title>
+    <updated>2023-07-13T11:41:00Z</updated>
+    <link href="https://arxiv.org/abs/2307.06694v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2307.06694v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In situ observations of interstellar neutral (ISN) helium atoms by the IBEX-Lo instrument onboard the Interstellar Boundary Explorer (IBEX) mission are used to determine the velocity and temperature of the pristine very local interstellar medium (VLISM). Most ISN helium atoms penetrating the heliosphere, known as the primary population, originate in the pristine VLISM. As the primary atoms travel through the outer heliosheath, they charge exchange with He$^+$ ions in slowed and compressed plasma creating the secondary population. With more than 2.4 million ISN helium atoms sampled by IBEX during ISN seasons 2009-2020, we compare the observations with predictions of a parametrized model of ISN helium transport in the heliosphere. We account for the filtration of ISN helium atoms at the heliospheric boundaries by charge exchange and elastic collisions. We examine the sensitivity of the ISN helium fluxes to the interstellar conditions described by the pristine VLISM velocity, temperature, magnetic field, and composition. We show that comprehensive modeling of the filtration processes is critical for interpreting ISN helium observations, as the change in the derived VLISM conditions exceeds the statistical uncertainties when accounting for these effects. The pristine VLISM parameters found by this analysis are the flow speed (26.6 km s$^{-1}$), inflow direction in ecliptic coordinates (255.7$^\circ$, 5.04$^\circ$), temperature (7350 K), and B-V plane inclination to the ecliptic plane (53.7$^\circ$). The derived pristine VLISM He$^+$ density is $9.7\times10^3$ cm$^{-3}$. Additionally, we show a strong correlation between the interstellar plasma density and magnetic field strength deduced from these observations.</summary>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="astro-ph.SR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.space-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-07-13T11:41:00Z</published>
+    <arxiv:comment>13 pages, 3 figures, 2 tables, accepted for publication in ApJ</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.GA"/>
+    <author>
+      <name>P. Swaczyna</name>
+    </author>
+    <author>
+      <name>M. Bzowski</name>
+    </author>
+    <author>
+      <name>J. Heerikhuisen</name>
+    </author>
+    <author>
+      <name>M. A. Kubiak</name>
+    </author>
+    <author>
+      <name>F. Rahmanifard</name>
+    </author>
+    <author>
+      <name>E. J. Zirnstein</name>
+    </author>
+    <author>
+      <name>S. A. Fuselier</name>
+    </author>
+    <author>
+      <name>A. Galli</name>
+    </author>
+    <author>
+      <name>D. J. McComas</name>
+    </author>
+    <author>
+      <name>E. Möbius</name>
+    </author>
+    <author>
+      <name>N. A. Schwadron</name>
+    </author>
+    <arxiv:doi>10.3847/1538-4357/ace719</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.3847/1538-4357/ace719" title="doi"/>
+  </entry>
+</feed>

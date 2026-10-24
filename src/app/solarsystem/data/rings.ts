@@ -1,4 +1,5 @@
-// Real ring-system data for the four giant planets, sourced from Wikipedia
+// Real ring-system data for the four giant planets (plus Chariklo, Haumea and Quaoar at the
+// bottom), sourced from Wikipedia
 // (Rings of Jupiter / Rings of Saturn / Rings of Uranus / Rings of Neptune).
 // Radii are stored as a multiple of the planet's own real equatorial radius, not km —
 // this lets them scale with whichever display size the planet is currently rendered at
@@ -59,6 +60,26 @@ export const RINGS_BY_PLANET: Record<string, RingData[]> = {
     { name: 'Lassell', innerRadius: 2.149, outerRadius: 2.310, color: '#5a6e8c', opacity: 0.05 },
     { name: 'Arago', innerRadius: 2.3095, outerRadius: 2.3105, color: '#6a7e9c', opacity: 0.2 },
     { name: 'Adams', innerRadius: 2.5410, outerRadius: 2.5423, color: '#7a8eac', opacity: 0.3 },
+  ],
+
+  // Minor-body rings (the list's "Minor objects' rings"), from the saved Wikipedia articles
+  // under wikipedia/Rings/. Radii as multiples of the same body radius used for its display
+  // sphere and moons (data/moonAppearance.ts PLANET_EQUATORIAL_RADIUS_KM / Chariklo 124.8 km).
+  // Chariklo: "two narrow and dense bands, 6–7 km and 2–4 km wide, separated by a gap of 9 km
+  // … at distances of about 400 km" — placed either side of 400 km with those widths/gap.
+  Chariklo: [
+    { name: '2013C1R', innerRadius: 387.5 / 124.8, outerRadius: 394 / 124.8, color: '#cfc8bc', opacity: 0.6 },
+    { name: '2013C2R', innerRadius: 403 / 124.8, outerRadius: 406 / 124.8, color: '#cfc8bc', opacity: 0.45 },
+  ],
+  // Haumea: "radius of about 2,287 km, a width of ~70 km and an opacity of 0.5"
+  Haumea: [
+    { name: 'Ring', innerRadius: 2252 / 780, outerRadius: 2322 / 780, color: '#d8d4cc', opacity: 0.5 },
+  ],
+  // Quaoar: Q2R at 2,520 km, 10 km wide, optical depth 0.004; Q1R at 4,057 km, 5–300 km wide
+  // (irregular; drawn at ~100 km), optical depth 0.004–0.7
+  Quaoar: [
+    { name: 'Q2R', innerRadius: 2515 / 557.85, outerRadius: 2525 / 557.85, color: '#c9c2b6', opacity: 0.08 },
+    { name: 'Q1R', innerRadius: 4007 / 557.85, outerRadius: 4107 / 557.85, color: '#c9c2b6', opacity: 0.25 },
   ],
 };
 

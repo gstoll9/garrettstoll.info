@@ -1,0 +1,28 @@
+API VERSION: 1.2
+API SOURCE: NASA/JPL Horizons API
+
+*******************************************************************************
+JPL/HORIZONS              (136108) Haumea I Hi'iaka       # obs: 33 (2005-2008)
+PRE-COMPUTED             Satellite I body: 120136108
+                       Soln.date: 2022-Sep-08_11:38:19
+ 
+NOTE: Hi'iake SATELLITE body from TNO satellite solution
+
+      See also:    '136108;' for CURRENT barycenter
+                  '20136108' for SATELLITE SOLUTION barycenter (JPL#110)
+                 '920136108' for PRIMARY body (Haumea)
+                 '220136108' for satellite II body (Namaka)
+
+Asteroid SAT physical parameters (km, seconds, rotational period in hours):
+   GM=  1.151 +/- 0.069 km^3/s^2  RAD~ 160 km                  ROTPER= ~9.8
+   GM_rat= 0.0043                   H= n.a.                         G= n.a.
+   B-V= n.a.                   ALBEDO= 0.08 +- 0.07              STYP= n.a.
+
+ Position uncertainty wrt primary on 2025-Jan-01: 900 km
+
+ASTEROID comments: 
+1: soln ref.= wrt/JPL#110 system barycenter, OCC=2
+2: source= tnosat_v001b_20136108_jpl110_20221014
+*******************************************************************************
+
+No ephemeris for target "Hi'iaka" after A.D. 2030-JAN-01 00:00:00.0000 TDB

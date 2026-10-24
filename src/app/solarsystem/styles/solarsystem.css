@@ -57,7 +57,7 @@
 
 .solarTrack {
   position: relative;
-  width: min(260px, 42vw);
+  width: min(380px, 56vw);
   height: 20px;
 }
 
@@ -236,7 +236,7 @@
   }
 
   .solarTrack {
-    width: min(190px, 50vw);
+    width: min(280px, 62vw);
   }
 
   .solarLabel {
@@ -322,4 +322,149 @@
   transform: translateY(-12px);
   text-shadow: 0 0 4px #000, 0 0 2px #000;
   user-select: none;
+}
+
+/* ── Heliosphere boundary tags + Voyager crossing markers ────────────────── */
+/* The tag is centred on a point of the bubble's edge, so it reads as sitting on the
+   boundary; clicking it opens the info card beneath */
+.solarPage .helio-tag {
+  position: relative;
+  transform: translate(-50%, -50%);
+  user-select: none;
+}
+
+.solarPage .helio-tag-button {
+  pointer-events: auto;
+  cursor: pointer;
+  padding: 2px 9px 3px;
+  border-radius: 999px;
+  border: 1px solid var(--helio-color);
+  background: rgba(8, 12, 20, 0.78);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--helio-color) 45%, transparent);
+  color: var(--helio-color);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.solarPage .helio-tag-button:hover,
+.solarPage .helio-tag-button.open {
+  background: color-mix(in srgb, var(--helio-color) 22%, rgba(8, 12, 20, 0.9));
+}
+
+.solarPage .helio-card {
+  position: absolute;
+  top: calc(100% + 6px);
+  padding: 0.45rem 0.65rem 0.5rem;
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--helio-color) 45%, transparent);
+  border-top: 2px solid var(--helio-color);
+  background: rgba(8, 12, 20, 0.86);
+  backdrop-filter: blur(3px);
+  color: rgba(226, 232, 244, 0.6);
+  font-size: 10.5px;
+  line-height: 1.45;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* open inward, toward the middle of the screen, so a tag near the edge isn't clipped */
+.solarPage .helio-tag--right .helio-card { right: 0; }
+.solarPage .helio-tag--left .helio-card { left: 0; }
+
+.solarPage .helio-card-blurb {
+  margin-bottom: 0.2rem;
+  color: rgba(226, 232, 244, 0.88);
+}
+
+/* Each Voyager crosses both boundaries along nearly the same line of sight, so the
+   termination-shock tag reads to the left of its dot and the heliopause tag to the right */
+.solarPage .helio-crossing {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transform: translate(-4px, -50%);
+  color: var(--helio-color);
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  text-shadow: 0 0 4px #000, 0 0 2px #000;
+  user-select: none;
+}
+
+.solarPage .helio-crossing--terminationShock {
+  flex-direction: row-reverse;
+  transform: translate(calc(-100% + 4px), -50%);
+}
+
+.solarPage .helio-crossing-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid var(--helio-color);
+  background: rgba(8, 12, 20, 0.6);
+}
+
+.solarPage .helio-crossing-text {
+  opacity: 0.85;
+}
+
+/* ── Galactic path labels (GalacticTrails / Sun's galactic orbit) ───────── */
+.solarPage .galactic-label {
+  transform: translate(-50%, -150%);
+  padding: 2px 8px 3px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 210, 122, 0.55);
+  background: rgba(8, 12, 20, 0.75);
+  color: #ffd27a;
+  font-size: 10.5px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.solarPage .galactic-label--ahead {
+  transform: translate(8px, -50%);
+}
+
+/* ── Milky Way view ───────────────────────────────────────────────────────── */
+.solarPage .mw-arm-label {
+  color: rgba(170, 200, 255, 0.75);
+  font-size: 11px;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  text-shadow: 0 0 4px #000, 0 0 2px #000;
+  user-select: none;
+}
+
+.solarPage .mw-centre-label {
+  color: rgba(255, 222, 160, 0.9);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  transform: translateY(-16px);
+  text-shadow: 0 0 4px #000, 0 0 2px #000;
+  user-select: none;
+}
+
+.solarPage .mw-kind-row {
+  margin-bottom: 0.35rem;
+}
+
+.solarPage .mw-swatch {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.solarPage .mw-kind-count {
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
 }

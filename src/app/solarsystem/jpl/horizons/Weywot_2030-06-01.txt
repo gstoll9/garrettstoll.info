@@ -1,0 +1,28 @@
+API VERSION: 1.2
+API SOURCE: NASA/JPL Horizons API
+
+*******************************************************************************
+JPL/HORIZONS                (50000) Quaoar I Weywot        # obs: 9 (2006-2011)
+PRE-COMPUTED              Satellite I body: 120050000
+                         Soln.date: 2022-Sep-08_14:26:56
+ 
+NOTE: Weywot SATELLITE body from TNO satellite solution. Predictions outside 
+      the 2006-2011 interval spanned by the sparse dataset may be poor.
+
+      See also:     '50000;' for CURRENT barycenter
+                  '20050000' for SATELLITE SOLUTION barycenter
+                 '920050000' for PRIMARY body (Quaoar)
+
+Asteroid physical parameters (km, seconds, rotational period in hours):
+   GM= 0.04783 km^3/s^2         RAD~ 85 km                     ROTPER= n.a.
+   GM_rat= 0.0005                 H= n.a.                           G= n.a.
+   B-V= n.a.                 ALBEDO= n.a.                        STYP= n.a.
+
+   Position uncertainty wrt primary on 2025-Jan-1: 3600 km
+
+ASTEROID comments: 
+1: soln ref.= wrt/JPL#43 system barycenter, OCC=1
+2: source= tnosat_v001_20050000_jpl043_20220908
+*******************************************************************************
+
+No ephemeris for target "Weywot" after A.D. 2030-JAN-01 00:00:00.0000 TDB

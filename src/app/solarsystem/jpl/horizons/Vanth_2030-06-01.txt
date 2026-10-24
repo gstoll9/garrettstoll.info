@@ -1,0 +1,27 @@
+API VERSION: 1.2
+API SOURCE: NASA/JPL Horizons API
+
+*******************************************************************************
+JPL/HORIZONS                 (90482) Orcus I Vanth        # obs: 12 (2005-2015)
+PRE-COMPUTED              Satellite I body: 120090482
+                         Soln.date: 2022-Sep-08_14:33:25
+ 
+NOTE: Vanth SATELLITE body from TNO satellite solution
+
+      See also:     '90482;' for CURRENT barycenter
+                  '20090482' for SATELLITE SOLUTION barycenter
+                 '920090482' for PRIMARY body (Orcus)
+
+Asteroid physical parameters (km, seconds, rotational period in hours):
+   GM= 3.470366973 km^3/s^2     RAD~ 221.5 km                  ROTPER= sync
+   GM_rat= 0.082568807 (theory)   H= 4.88 +- 0.05                   G= n.a.
+   B-V= n.a.                 ALBEDO= 0.12                        STYP= n.a.
+
+   Position uncertainty wrt primary on 2025-Jan-1: 67 km 
+
+ASTEROID comments: 
+1: soln ref.= wrt/JPL#43 system barycenter, OCC=2
+2: source= tnosat_v001_20090482_jpl043_20220908
+*******************************************************************************
+
+No ephemeris for target "Vanth" after A.D. 2030-JAN-01 00:00:00.0000 TDB

@@ -52,6 +52,31 @@ MOONS = {
     'Miranda': ('705', '799'), 'Ariel': ('701', '799'), 'Umbriel': ('702', '799'),
     'Titania': ('703', '799'), 'Oberon': ('704', '799'),
     'Proteus': ('808', '899'), 'Triton': ('801', '899'), 'Nereid': ('802', '899'),
+    # Saturn's outer irregular Phoebe and the trojan moons sharing Tethys's/Dione's orbits
+    'Phoebe': ('609', '699'), 'Telesto': ('613', '699'), 'Calypso': ('614', '699'),
+    'Helene': ('612', '699'), 'Polydeuces': ('634', '699'),
+    # Charon is fitted around Pluto itself; the four small moons orbit the Pluto-Charon
+    # barycentre (Pluto-centred velocities include Pluto's own ~0.2 km/s wobble, which
+    # wrecks their osculating elements). Pluto's body sits ~2,100 km off that barycentre,
+    # a few degrees of error at their distances.
+    'Charon': ('901', '999'), 'Styx': ('905', '9'), 'Nix': ('902', '9'),
+    'Kerberos': ('904', '9'), 'Hydra': ('903', '9'),
+    # Dwarf-planet moons: not in JPL's satellite tables, so their mean semimajor axis, period
+    # and size come from their Wikipedia infoboxes (WIKI_MOONS below); Horizons still anchors
+    # the orbit. Xiangliu (Gonggong), Ilmarë (Varda) and Makemake's moon have no JPL
+    # ephemeris and are left out rather than given made-up orbits.
+    'Dysnomia': ('120136199', '20136199'),
+    'Hiʻiaka': ('120136108', '20136108'), 'Namaka': ('220136108', '20136108'),
+    'Weywot': ('120050000', '20050000'), 'Vanth': ('120090482', '20090482'),
+    'Actaea': ('120120347', '20120347'),
+}
+
+# moon -> (Wikipedia title, host body)
+WIKI_MOONS = {
+    'Dysnomia': ('Dysnomia_(moon)', 'Eris'),
+    'Hiʻiaka': ('Hiʻiaka_(moon)', 'Haumea'), 'Namaka': ('Namaka_(moon)', 'Haumea'),
+    'Weywot': ('Weywot', 'Quaoar'), 'Vanth': ('Vanth_(moon)', 'Orcus'),
+    'Actaea': ('Actaea_(moon)', 'Salacia'),
 }
 
 # label -> (Horizons TDB time, JD)
@@ -64,6 +89,7 @@ VALIDATE = [('2020-01-01 00:00', 2458849.5), ('2026-10-18 00:00', 2461331.5),
 
 ECLIPTIC_POLE = (270.0, 66.560708)
 URANUS_ROTATIONAL_POLE = (77.311, 15.175)
+PLUTO_POLE = (132.993, -6.163)  # IAU 2015 (positive pole), Pluto's equator for its moons
 D2R = math.pi / 180
 
 
@@ -94,17 +120,60 @@ def jpl_tables():
             pole = ECLIPTIC_POLE
         elif frame == 'equatorial' and planet == 'Uranus':
             pole = URANUS_ROTATIONAL_POLE
+        elif frame == 'equatorial' and planet == 'Pluto':
+            pole = PLUTO_POLE
         else:
             raise ValueError(f'unhandled frame {frame} for {name}')
         rows[name] = {
             'planet': planet, 'a': float(a), 'i': float(i), 'P': float(P),
-            'Pw': float(Pw) if Pw not in ('', 'n/a') and float(Pw) else None,
-            'Pnode': float(Pnode) if Pnode not in ('', 'n/a') and float(Pnode) else None,
-            'pole': pole, 'radius': radii[name],
+            'Pw': float(Pw) if Pw not in ('', 'n/a', '-') and float(Pw) else None,
+            'Pnode': float(Pnode) if Pnode not in ('', 'n/a', '-') and float(Pnode) else None,
+            'pole': pole, 'radius': radii.get(name) or wiki_radius(name),
         }
+    rows.update(wiki_moon_rows())
     missing = [m for m in MOONS if m not in rows]
     if missing:
         raise ValueError(f'missing from JPL tables: {missing}')
+    return rows
+
+
+def _smallbodies_module():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location('smallbodies', os.path.join(HERE, 'generateSmallBodies.py'))
+    sb = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(sb)
+    return sb
+
+
+# Moons JPL's physical-parameter table has no radius for -> their Wikipedia article
+WIKI_RADIUS_TITLES = {'Telesto': 'Telesto_(moon)', 'Calypso': 'Calypso_(moon)', 'Polydeuces': 'Polydeuces_(moon)'}
+
+
+def wiki_radius(name):
+    sb = _smallbodies_module()
+    d = sb.diameter_km(sb.infobox_rows(sb.wiki_html(WIKI_RADIUS_TITLES[name])))
+    print(f'  {name}: radius {d / 2} km from Wikipedia ({WIKI_RADIUS_TITLES[name]})')
+    return d / 2
+
+
+def wiki_moon_rows():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location('smallbodies', os.path.join(HERE, 'generateSmallBodies.py'))
+    sb = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(sb)
+    rows = {}
+    for name, (title, host) in WIKI_MOONS.items():
+        box = sb.infobox_rows(sb.wiki_html(title))
+        get = lambda key: next((v for k, v in box.items() if k.startswith(key)), '')
+        a = sb.first_number(get('semi-major axis'))
+        P = sb.first_number(get('orbital period'))
+        d = sb.diameter_km(box)
+        if not (a and P and d):
+            raise ValueError(f'{name}: infobox missing a/P/diameter ({a}, {P}, {d})')
+        # Orbit plane fitted from Horizons; ecliptic is just the reference frame here
+        rows[name] = {'planet': host, 'a': a, 'i': 0.0, 'P': P, 'Pw': None, 'Pnode': None,
+                      'pole': ECLIPTIC_POLE, 'radius': d / 2}
+        print(f'  {name}: a={a} km, P={P} d, D={d} km (Wikipedia: {title})')
     return rows
 
 
@@ -123,6 +192,8 @@ def horizons_state(name, when):
         text = urllib.request.urlopen(url, timeout=60).read().decode('utf-8')
         open(path, 'w', encoding='utf-8', newline='\n').write(text)
     text = open(path, encoding='utf-8').read()
+    if '$$SOE' not in text:
+        return None  # outside the ephemeris span (dwarf-planet moons end in 2030)
     block = text[text.index('$$SOE'):text.index('$$EOE')]
     nums = re.findall(r'(?:X|Y|Z|VX|VY|VZ)\s*=\s*([-\dE.+]+)', block)
     return [float(x) for x in nums[:6]]
@@ -178,14 +249,15 @@ def fit(name, jpl):
     o0 = osculating(horizons_state(name, FIT[0]), jpl['pole'], gm)
 
     rate = 360 / jpl['P']
-    for when, jd in UNWRAP_STEPS:
+    available = [(w, jd) for w, jd in UNWRAP_STEPS if horizons_state(name, w) is not None]
+    for when, jd in available:
         o = osculating(horizons_state(name, when), jpl['pole'], gm)
         rate = unwrap_rate(o0['lam'], o['lam'], rate, jd - FIT[1])
 
     prograde = 1 if jpl['i'] <= 90 else -1
     node_rate = -prograde * 360 / (jpl['Pnode'] * 365.25) if jpl['Pnode'] else 0.0
     peri_rate = node_rate + (360 / (jpl['Pw'] * 365.25) if jpl['Pw'] else 0.0)
-    far_when, far_jd = UNWRAP_STEPS[-1]
+    far_when, far_jd = available[-1]
     o10 = osculating(horizons_state(name, far_when), jpl['pole'], gm)
     span = far_jd - FIT[1]
     if 0.05 * D2R < o0['i'] < 179.95 * D2R:  # node undefined for (near-)equatorial orbits
@@ -208,6 +280,28 @@ def fit(name, jpl):
         'poleDecDeg': jpl['pole'][1],
         'periodDays': jpl['P'],
     }
+
+
+# Trojan moons librate around their host's L4/L5 point (Helene/Polydeuces by tens of
+# degrees over ~2 years), which no single linear rate follows. Instead they share the host's
+# mean motion at their average offset, so the error stays within the libration amplitude.
+COORBITAL = {'Telesto': 'Tethys', 'Calypso': 'Tethys', 'Helene': 'Dione', 'Polydeuces': 'Dione'}
+
+
+def lock_to_host(name, host, out, jpl):
+    gm_of = lambda n: (2 * math.pi / jpl[n]['P']) ** 2 * jpl[n]['a'] ** 3
+    offsets = []
+    for when, jd in [FIT] + UNWRAP_STEPS + VALIDATE:
+        sm, sh = horizons_state(name, when), horizons_state(host, when)
+        if sm and sh:
+            lm = osculating(sm, jpl[name]['pole'], gm_of(name))['lam']
+            lh = osculating(sh, jpl[host]['pole'], gm_of(host))['lam']
+            offsets.append(lm - lh)
+    mean_offset = math.degrees(math.atan2(sum(math.sin(d) for d in offsets), sum(math.cos(d) for d in offsets)))
+    h, f = out[host], out[name]
+    f['meanLongitudeRate'] = h['meanLongitudeRate']
+    f['meanLongitudeDeg'] = round((h['meanLongitudeDeg'] + mean_offset) % 360, 5)
+    print(f'  {name}: locked to {host} at {mean_offset:+.1f} deg (from {len(offsets)} samples)')
 
 
 def position(f, jd):
@@ -234,6 +328,8 @@ def angle_deg(a, b):
 
 
 def main():
+    import sys
+    sys.stdout.reconfigure(encoding='utf-8')
     jpl = jpl_tables()
     out = {}
     print('Angle from Horizons (deg): ' + ', '.join(w[:10] for w, _ in VALIDATE))
@@ -241,8 +337,14 @@ def main():
         f = fit(name, jpl[name])
         f = {'name': name, 'planet': jpl[name]['planet'], **f, 'meanRadiusKm': jpl[name]['radius']}
         out[name] = f
-        errs = [angle_deg(position(f, jd), horizons_state(name, when)[:3]) for when, jd in VALIDATE]
-        print(f'  {name:10s} ' + '  '.join(f'{x:6.2f}' for x in errs))
+    for name, host in COORBITAL.items():
+        lock_to_host(name, host, out, jpl)
+    for name, f in out.items():
+        errs = []
+        for when, jd in VALIDATE:
+            h = horizons_state(name, when)
+            errs.append(f'{angle_deg(position(f, jd), h[:3]):6.2f}' if h else '   n/a')
+        print(f'  {name:10s} ' + '  '.join(errs))
 
     with open(OUT, 'w', encoding='utf-8', newline='\n') as fh:
         fh.write('''// GENERATED by solarsystem/jpl/generateTs.py — do not hand-edit; regenerate instead.

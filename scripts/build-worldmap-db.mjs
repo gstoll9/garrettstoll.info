@@ -198,12 +198,26 @@ async function buildWikidata() {
       if (!cur || (r.start ?? '') > (cur.start ?? '')) holderParty.set(r.h, r);
     }
   }
+  // A holder's English label can be vandalised into a number (e.g. Greece's PM became
+  // "9811205000"), or be missing (the label service then returns the bare QID). Reject such
+  // labels and keep the name from the previous build; with none, fall back to the QID, which
+  // the page shows as a generic "Wikidata item" link.
+  const badLabel = l => !l?.trim() || /^Q\d+$/.test(l) || /^[\d\s.,+-]+$/.test(l);
+  const prevHolder = new Map(fs.existsSync(`${DB}/offices.csv`)
+    ? readCsv(`${DB}/offices.csv`).filter(o => !badLabel(o.holder)).map(o => [o.holder_qid, o.holder]) : []);
+  const holderLabel = (qid, label) => {
+    if (!badLabel(label)) return label;
+    const fallback = prevHolder.get(qid) ?? qid;
+    // A missing label (bare QID) is common for local officials; only report real oddities
+    if (label !== qid || fallback !== qid) console.warn(`  rejected label "${label}" for office holder ${qid}; using "${fallback}"`);
+    return fallback;
+  };
   const offices = units.flatMap(u => [
     ['head_of_state', hos, hosOffice], ['head_of_government', hog, hogOffice],
   ].flatMap(([role, people, office]) => (people.get(u.qid) ?? []).map(p => ({
     iso3: u.iso3, region_key: u.region_key, role,
     office_qid: first(office, u)?.v, office: first(office, u)?.vLabel,
-    holder_qid: p.v, holder: p.vLabel,
+    holder_qid: p.v, holder: holderLabel(p.v, p.vLabel),
     party_qid: holderParty.get(p.v)?.p, party: holderParty.get(p.v)?.pLabel,
   }))));
 

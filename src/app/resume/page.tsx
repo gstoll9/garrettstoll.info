@@ -120,8 +120,11 @@ const CAPABILITIES = [
 type Role = {
   logo: string;
   logoAlt: string;
+  /** White logo artwork that needs a dark tile behind it */
+  darkLogo?: boolean;
   org: string;
-  role: string;
+  /** Omitted for research roles, where the org line ("Professor · School") is the title */
+  role?: string;
   dates: string;
   bullets?: string[];
   projects?: { name: string; bullets: string[]; stack: string[] }[];
@@ -132,6 +135,7 @@ const EXPERIENCE: Role[] = [
   {
     logo: "/resumeImages/DataAnnotationLogo.svg",
     logoAlt: "Data Annotation logo",
+    darkLogo: true,
     org: "Data Annotation",
     role: "Programming Analyst / AI Trainer",
     dates: "Jan 2025 — Aug 2025",
@@ -179,6 +183,7 @@ const EXPERIENCE: Role[] = [
   {
     logo: "/resumeImages/SummitConsultingLogo.png",
     logoAlt: "Summit Consulting logo",
+    darkLogo: true,
     org: "Summit Consulting, LLC",
     role: "Intern",
     dates: "Aug 2021 — Dec 2021",
@@ -193,10 +198,29 @@ const EXPERIENCE: Role[] = [
 
 const RESEARCH: Role[] = [
   {
+    logo: "/resumeImages/templeLogo.png",
+    logoAlt: "Temple University logo",
+    org: "Dr. Vincenzo Carnevale · Temple University",
+    dates: "Aug 2026 — Present",
+    bullets: [
+      "Researching applications of neuromorphic computing to molecular dynamics simulations",
+    ],
+    stack: [],
+  },
+  {
+    logo: "/resumeImages/templeLogo.png",
+    logoAlt: "Temple University logo",
+    org: "Dr. Justin Shi · Temple University",
+    dates: "Jan 2026 — Present",
+    bullets: [
+      "Assisted in the development of a decentralized file system, Tarsus",
+    ],
+    stack: [],
+  },
+  {
     logo: "/resumeImages/VTlogo.png",
     logoAlt: "Virginia Tech logo",
-    org: "Virginia Tech · Dr. Vito Scarola",
-    role: "Research Assistant",
+    org: "Dr. Vito Scarola · Virginia Tech",
     dates: "Jan 2021 — Dec 2021",
     bullets: [
       "Simulated the Hubbard model in Python, then developed a combinatorial optimization algorithm to dynamically implement the Gutzwiller projection",
@@ -207,8 +231,7 @@ const RESEARCH: Role[] = [
   {
     logo: "/resumeImages/VTlogo.png",
     logoAlt: "Virginia Tech logo",
-    org: "Virginia Tech · Dr. Bob White",
-    role: "Research Assistant",
+    org: "Dr. Bob White · Virginia Tech",
     dates: "Aug 2017 — Dec 2019",
     bullets: [
       "Wet lab and computational biochemistry research experience",
@@ -348,9 +371,9 @@ function Chips({ items, tone = "default" }: { items: string[]; tone?: "default" 
   );
 }
 
-function Logo({ src, alt }: { src: string; alt: string }) {
+function Logo({ src, alt, dark }: { src: string; alt: string; dark?: boolean }) {
   return (
-    <div className="logo-tile">
+    <div className={dark ? "logo-tile logo-tile--dark" : "logo-tile"}>
       <Image src={src} alt={alt} width={96} height={96} unoptimized={src.endsWith(".svg")} />
     </div>
   );
@@ -359,12 +382,18 @@ function Logo({ src, alt }: { src: string; alt: string }) {
 function RoleCard({ r }: { r: Role }) {
   return (
     <article className="role reveal">
-      <Logo src={r.logo} alt={r.logoAlt} />
+      <Logo src={r.logo} alt={r.logoAlt} dark={r.darkLogo} />
       <div className="role-body">
         <header className="role-head">
           <div>
-            <h3 className="role-title">{r.role}</h3>
-            <p className="role-org">{r.org}</p>
+            {r.role ? (
+              <>
+                <h3 className="role-title">{r.role}</h3>
+                <p className="role-org">{r.org}</p>
+              </>
+            ) : (
+              <h3 className="role-title">{r.org}</h3>
+            )}
           </div>
           <span className="role-dates">{r.dates}</span>
         </header>
@@ -392,10 +421,10 @@ function RoleCard({ r }: { r: Role }) {
   );
 }
 
-function SectionHead({ eyebrow, title, children }: { eyebrow: string; title: string; children?: React.ReactNode }) {
+function SectionHead({ eyebrow, title, children }: { eyebrow?: string; title: string; children?: React.ReactNode }) {
   return (
     <div className="section-head reveal">
-      <p className="eyebrow">{eyebrow}</p>
+      {eyebrow && <p className="eyebrow">{eyebrow}</p>}
       <h2>{title}</h2>
       {children && <p className="section-lead">{children}</p>}
     </div>
@@ -521,25 +550,10 @@ function Resume() {
         </div>
       </section>
 
-      {/* Experience */}
+      {/* Experience: education, research and work history */}
       <section className="section section--alt" id="experience">
         <div className="wrap">
-          <SectionHead eyebrow="Experience" title="Where I've worked" />
-          <div className="roles">
-            {EXPERIENCE.map((r) => <RoleCard key={r.org} r={r} />)}
-          </div>
-
-          <SectionHead eyebrow="Research" title="In the lab" />
-          <div className="roles">
-            {RESEARCH.map((r) => <RoleCard key={r.org} r={r} />)}
-          </div>
-        </div>
-      </section>
-
-      {/* Education */}
-      <section className="section">
-        <div className="wrap">
-          <SectionHead eyebrow="Education" title="Where I've studied" />
+          <SectionHead title="Education" />
           <div className="edu-grid">
             {EDUCATION.map((e) => (
               <article key={e.school} className="edu reveal">
@@ -554,11 +568,21 @@ function Resume() {
               </article>
             ))}
           </div>
+
+          <SectionHead title="Research" />
+          <div className="roles">
+            {RESEARCH.map((r) => <RoleCard key={r.org} r={r} />)}
+          </div>
+
+          <SectionHead title="Work" />
+          <div className="roles">
+            {EXPERIENCE.map((r) => <RoleCard key={r.org} r={r} />)}
+          </div>
         </div>
       </section>
 
       {/* Skills */}
-      <section className="section section--alt" id="skills">
+      <section className="section" id="skills">
         <div className="wrap">
           <SectionHead eyebrow="Toolkit" title="Technical skills" />
           <div className="skills">

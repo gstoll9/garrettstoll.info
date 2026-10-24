@@ -1,0 +1,27 @@
+API VERSION: 1.2
+API SOURCE: NASA/JPL Horizons API
+
+*******************************************************************************
+JPL/HORIZONS               120347 Salacia I Actaea        # obs: 14 (2006-2016)
+PRE-COMPUTED              Satellite body: 120120347
+                       Soln.date: 2022-Sep-08_14:00:40
+ 
+NOTE: Actaea SATELLITE body from TNO satellite solution
+
+      See also:    '120347;' for CURRENT barycenter
+                  '20120347' for SATELLITE SOLUTION barycenter
+                 '920120347' for PRIMARY body (Salacia)
+
+Asteroid physical parameters (km, seconds, rotational period in hours):
+   GM= n.a.                     RAD= 151.5 +- 17.5 km        ROTPER= n.a. 
+   GM_rat= n.a.                   H= n.a.                         G= n.a.
+   B-V= n.a.                 ALBEDO= 0.035                     STYP= n.a.
+
+   Position uncertainty wrt primary on 2025-Jan-1: 110 km
+
+ASTEROID comments: 
+1: soln ref.= wrt/JPL#25 system barycenter, OCC=2
+2: source= tnosat_v001_20120347_jpl025_20220908
+*******************************************************************************
+
+No ephemeris for target "Actaea" after A.D. 2030-JAN-01 00:00:00.0000 TDB

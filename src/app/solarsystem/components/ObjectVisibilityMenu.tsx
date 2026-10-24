@@ -3,13 +3,17 @@ import '../styles/orbitControls.css';
 import { planets } from '../data/planets';
 import { dwarfPlanets } from '../data/dwarfPlanets';
 import { asteroids } from '../data/asteroids';
-import { INNER_PLANETS, ASTEROID_BELT_BODIES, JUPITER_TROJAN_BODIES, TROJAN_SWARMS, OUTER_PLANETS, REGION_COLORS } from '../data/regions';
+import { comets } from '../data/comets';
+import { smallBodyNames } from '../data/smallBodies.display';
+import { spacecraftTrajectories } from '../data/spacecraft';
+import { INNER_PLANETS, ASTEROID_BELT_BODIES, JUPITER_TROJAN_BODIES, TROJAN_SWARMS, TNO_CLOUDS, OUTER_PLANETS, REGION_COLORS } from '../data/regions';
 
 const innerPlanetNames = planets.filter(p => INNER_PLANETS.has(p.name)).map(p => p.name);
 const outerPlanetNames = planets.filter(p => OUTER_PLANETS.has(p.name)).map(p => p.name);
 const beltDwarfNames = dwarfPlanets.filter(d => ASTEROID_BELT_BODIES.has(d.name)).map(d => d.name);
 const transNeptunianNames = dwarfPlanets.filter(d => !ASTEROID_BELT_BODIES.has(d.name)).map(d => d.name);
 const beltAsteroids = asteroids.filter(a => ASTEROID_BELT_BODIES.has(a.name));
+const cometNames = (kind: string) => comets.filter(c => c.kind === kind).map(c => c.name);
 const namedTrojanNames = asteroids.filter(a => JUPITER_TROJAN_BODIES.has(a.name)).map(a => a.name);
 
 // Split the asteroid batch by real diameter (km) so the menu can offer a size-bucketed
@@ -30,6 +34,7 @@ type Group = { label: string; bodies?: string[]; subgroups?: SubGroup[]; color: 
 const REGION_GROUPS: Group[] = [
   { label: 'Sun', bodies: ['Sun'], color: SUN_HEADER_COLOR },
   { label: 'Inner Planets', bodies: innerPlanetNames, color: REGION_COLORS.inner },
+  { label: 'Near-Earth Objects', bodies: smallBodyNames('near-earth'), color: REGION_COLORS.inner },
   {
     label: 'Asteroid Belt',
     color: REGION_COLORS.asteroidBelt,
@@ -44,10 +49,36 @@ const REGION_GROUPS: Group[] = [
     label: 'Trojans',
     color: REGION_COLORS.trojans,
     bodies: TROJAN_SWARMS,
-    subgroups: [{ label: 'Named', bodies: namedTrojanNames }],
+    subgroups: [{ label: 'Named', bodies: [...namedTrojanNames, ...smallBodyNames('trojan')] }],
   },
+  { label: 'Centaurs', bodies: smallBodyNames('centaur'), color: REGION_COLORS.centaurs },
   { label: 'Outer Planets', bodies: outerPlanetNames, color: REGION_COLORS.outer },
-  { label: 'Dwarf Planets', bodies: transNeptunianNames, color: REGION_COLORS.transNeptunian },
+  {
+    label: 'Comets',
+    color: REGION_COLORS.comets,
+    subgroups: [
+      { label: 'Periodic', bodies: cometNames('periodic') },
+      { label: 'Long-period', bodies: cometNames('long-period') },
+      { label: 'Interstellar', bodies: cometNames('interstellar') },
+    ],
+  },
+  { label: 'Dwarf Planets', bodies: [...transNeptunianNames, ...smallBodyNames('dwarf')], color: REGION_COLORS.transNeptunian },
+  {
+    label: 'Trans-Neptunian Objects',
+    color: REGION_COLORS.transNeptunian,
+    bodies: TNO_CLOUDS,
+    subgroups: [
+      { label: 'Kuiper belt', bodies: smallBodyNames('kuiper') },
+      { label: 'Scattered disc', bodies: smallBodyNames('scattered') },
+      { label: 'Detached', bodies: smallBodyNames('detached') },
+    ],
+  },
+  {
+    label: 'Heliosphere & Spacecraft',
+    color: REGION_COLORS.heliosphere,
+    bodies: ['Heliosphere'],
+    subgroups: [{ label: 'Spacecraft', bodies: Object.keys(spacecraftTrajectories) }],
+  },
 ];
 
 type ObjectVisibilityMenuProps = {

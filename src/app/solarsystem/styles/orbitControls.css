@@ -615,3 +615,15 @@
     padding: 0.5rem 0.55rem;
   }
 }
+
+/* five short options (Path Through the Galaxy) in one row */
+.solarPage .button-group--compact {
+  gap: 0.3rem;
+}
+
+.solarPage .button-group--compact .mode-button {
+  padding: 0.45rem 0.2rem;
+  border-radius: 9px;
+  font-size: 0.74rem;
+  white-space: nowrap;
+}

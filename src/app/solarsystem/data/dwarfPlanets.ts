@@ -12,6 +12,7 @@ const yearInSeconds = 365.25 * 24 * 60 * 60; // Julian year, for orbitalPeriod (
 export const dwarfPlanets = [
   {
     name: 'Pluto',
+    moons: ['Charon', 'Styx', 'Nix', 'Kerberos', 'Hydra'],
     color: '#c9b29b',
     size: 0.3,
     realDiameter: 0.1865, // 2 * 1,188.3 km / Earth diameter (12,742 km)
@@ -46,6 +47,7 @@ export const dwarfPlanets = [
   },
   {
     name: 'Eris',
+    moons: ['Dysnomia'],
     color: '#d8d8d8',
     size: 0.3,
     realDiameter: 0.1825, // 2 * 1,163 km / 12,742 km
@@ -63,6 +65,7 @@ export const dwarfPlanets = [
   },
   {
     name: 'Haumea',
+    moons: ['Hiʻiaka', 'Namaka'],
     color: '#e6e6e6',
     size: 0.3,
     realDiameter: 0.2423, // 2 * 1,544 km (mean/equivalent radius; Haumea is triaxial) / 12,742 km
