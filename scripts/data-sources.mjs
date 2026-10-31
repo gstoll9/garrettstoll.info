@@ -51,6 +51,10 @@ export const SOURCES = [
     usedBy: ['svsstarmaps'] },
   { id: 'planettextures', name: 'Planet textures', url: null, license: 'Unverified', usedBy: ['/solarsystem'] },
   { id: 'bodyparts3d', name: 'BodyParts3D', url: 'https://lifesciencedb.jp/bp3d/', license: 'CC_BY-SA_2.1_JP', usedBy: ['/brain'] },
+  // Lead images in the Milky Way object panel, fetched live via Wikipedia's REST summaries;
+  // only Commons-hosted (freely licensed) files are shown, each linked to its file page
+  { id: 'commons', name: 'Wikimedia Commons', url: 'https://commons.wikimedia.org', license: 'Per-file_free_licenses',
+    usedBy: ['/solarsystem'] },
   { id: 'uniprot', name: 'UniProt', url: 'https://www.uniprot.org', license: 'CC_BY_4.0', usedBy: ['/methanogens'] },
   { id: 'pdb', name: 'RCSB PDB', url: 'https://www.rcsb.org', license: 'CC0_1.0', usedBy: ['/methanogens'] },
 ];

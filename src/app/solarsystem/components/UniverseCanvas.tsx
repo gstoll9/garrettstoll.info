@@ -5,8 +5,11 @@ import SolarSystem from './SolarSystem'
 import GalaxyField from './GalaxyField'
 import MilkyWayField, { type MarkerKind } from './MilkyWayField'
 import MilkyWayMenu from './MilkyWayMenu'
+import MilkyWayObjectPanel from './MilkyWayObjectPanel'
+import type { ModelPlan } from './ObjectModel'
+import type { MilkyWayMarker } from '../utils'
 import ScaleTransitions, { SOLAR_EXIT_DISTANCE } from './ScaleTransitions'
-import { useEffect, useState, useRef } from 'react'
+import { useCallback, useEffect, useState, useRef } from 'react'
 import {PlanetProps, HoveredLayer} from './Planet';
 import OrbitControlsMenu from './OrbitControls';
 import ObjectVisibilityMenu from './ObjectVisibilityMenu';
@@ -82,6 +85,11 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
     return next;
   });
   const isGalaxyScale = focus === 'cosmic' || focus === 'milkyway';
+  // the object picked in the Milky Way view (its 3D model + details panel)
+  const [selectedMwObject, setSelectedMwObject] = useState<MilkyWayMarker | null>(null);
+  const [mwModelPlan, setMwModelPlan] = useState<ModelPlan | null>(null);
+  useEffect(() => { setSelectedMwObject(null); }, [focus]);
+  const closeMwObject = useCallback(() => setSelectedMwObject(null), []);
   // The Galactic Objects menu mounts a moment after the Milky Way view does: swapping the
   // menu stack's contents in the same commit as the scene switch reliably lost the WebGL
   // context (reproduced in Chromium even with a bare <div> in the menu's place).
@@ -219,6 +227,9 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
           )}
         </div>
       )}
+      {focus === 'milkyway' && selectedMwObject && (
+        <MilkyWayObjectPanel marker={selectedMwObject} plan={mwModelPlan} onClose={closeMwObject} />
+      )}
       <Canvas
         ref={canvasRef}
         camera={{ position: [0, 150, 600], fov: 60, near: 0.1, far: 2000000 }}
@@ -289,7 +300,8 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
             persistent Canvas/WebGL context as the planetary scene (rather than a separate
             <Canvas>) since mounting a second Canvas here caused WebGL context loss. */}
         {focus === 'cosmic' && <GalaxyField />}
-        {focus === 'milkyway' && <MilkyWayField orbitControlsRef={orbitControlsRef} hiddenKinds={hiddenMilkyWayKinds} />}
+        {focus === 'milkyway' && <MilkyWayField orbitControlsRef={orbitControlsRef} hiddenKinds={hiddenMilkyWayKinds}
+          selected={selectedMwObject} onSelect={setSelectedMwObject} onPlan={setMwModelPlan} />}
         <ScaleTransitions
           focus={focus}
           setFocus={(next) => setFocus(next, null)}

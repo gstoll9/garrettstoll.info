@@ -11,8 +11,9 @@ import { scaleTransition } from '../utils'
 
 // Solar System: 12 units/AU — leaving at ~2,500 AU (or past the longest galactic tracer)
 export const SOLAR_EXIT_DISTANCE = 30000
-// Milky Way: 10 units/kpc — in below 0.12 kpc, out beyond 70 kpc
-export const MILKY_WAY_ENTER_SOLAR = 1.2
+// Milky Way: 10 units/kpc — in below 0.3 pc (inside the nearest stars, 1.3 pc away), out
+// beyond 70 kpc
+export const MILKY_WAY_ENTER_SOLAR = 0.003
 export const MILKY_WAY_EXIT_DISTANCE = 700
 // Local Group: 0.1 units/kpc — in below 50 kpc
 export const LOCAL_GROUP_ENTER_MILKY_WAY = 5
@@ -35,7 +36,7 @@ export default function ScaleTransitions({ focus, setFocus, orbitControlsRef, so
 
   useFrame(({ camera }) => {
     const controls = orbitControlsRef.current
-    if (!controls || performance.now() - enteredAt.current < SETTLE_MS) return
+    if (!controls || scaleTransition.locked || performance.now() - enteredAt.current < SETTLE_MS) return
     const d = camera.position.distanceTo(controls.target)
     const go = (next: string, entry: 'fromInner' | 'fromOuter') => {
       scaleTransition.entry = entry

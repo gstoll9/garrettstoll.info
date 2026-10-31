@@ -4,7 +4,7 @@ import type { Comet } from './data/comets';
 import { localGroupGalaxies, type LocalGroupGalaxy } from './data/localGroup';
 import { ANDROMEDA, DISK_OVERRIDES, MILKY_WAY, SPHEROID_OVERRIDES, type DiskSpec } from './data/localGroupHosts';
 import { GALACTIC_MOTION } from './data/galacticMotion';
-import { milkyWayArms, milkyWayObjects, type MilkyWayObjectKind, type SpiralArm } from './data/milkyWay';
+import { milkyWayArms, milkyWayObjects, type MilkyWayObjectInfo, type MilkyWayObjectKind, type SpiralArm } from './data/milkyWay';
 
 export const REAL_LIVE_BODIES: Record<string, Body> = {
     'Sun': Body.Sun,
@@ -72,9 +72,10 @@ export const simulationState = {
 // planet). When a zoom crosses a model's edge, ScaleTransitions sets `entry` before
 // switching focus, so CameraController can place the camera at the matching end of the next
 // model: zooming out of the Solar System arrives at the Milky Way zoomed in on the Sun, etc.
-export const scaleTransition: { entry: 'fromInner' | 'fromOuter' | null; planetFrameDistance: number | null } = {
+export const scaleTransition: { entry: 'fromInner' | 'fromOuter' | null; planetFrameDistance: number | null; locked: boolean } = {
     entry: null,
     planetFrameDistance: null, // the focused planet's framing distance (CameraController), for zooming back out
+    locked: false, // true while the Milky Way view is zoomed onto a selected object: no scale switching
 };
 
 export function orbitalPosition(orbitMode: string, t: number, orbitData: OrbitProps, useSimplifiedDistance: boolean = false, name?: string, dateMs?: number): [number, number, number] {
@@ -816,19 +817,80 @@ export function buildMilkyWay(): MilkyWayParticles {
     return { positions: new Float32Array(p), colors: new Float32Array(c), sizes: new Float32Array(sz) };
 }
 
-export type MilkyWayMarker = { name: string; kind: MilkyWayObjectKind | 'satellite galaxy'; scene: Vec3; distanceKpc: number };
+export type MilkyWayMarker = {
+    name: string;
+    kind: MilkyWayObjectKind | 'satellite galaxy';
+    scene: Vec3;
+    distanceKpc: number;
+    wiki?: string; // Wikipedia article title
+    info?: MilkyWayObjectInfo;
+    galaxy?: { absMagV: number | null; halfLightKpc: number | null; ellipticity: number | null };
+};
 
 // Catalogued objects + the Milky Way's satellite galaxies (within 300 kpc, from the Local
 // Group catalog), at their real positions
 export function milkyWayMarkers(): MilkyWayMarker[] {
     const out: MilkyWayMarker[] = milkyWayObjects.map(o => ({
-        name: o.name, kind: o.kind, distanceKpc: o.distanceKpc,
+        name: o.name, kind: o.kind, distanceKpc: o.distanceKpc, wiki: o.wiki, info: o.info,
         scene: milkyWayToScene(galactocentricKpc(o.ra, o.dec, o.distanceKpc)),
     }));
     for (const g of localGroupGalaxies) {
         const centre = galactocentricKpc(g.raDeg, g.decDeg, g.distanceKpc);
         if (Math.hypot(...centre) > 300 || g.catalogName.startsWith('*')) continue;
-        out.push({ name: g.name, kind: 'satellite galaxy', distanceKpc: g.distanceKpc, scene: milkyWayToScene(centre) });
+        out.push({
+            name: g.name, kind: 'satellite galaxy', distanceKpc: g.distanceKpc, scene: milkyWayToScene(centre), wiki: g.name,
+            galaxy: { absMagV: g.absMagV, halfLightKpc: g.halfLightKpc, ellipticity: g.ellipticity },
+        });
     }
     return out;
+}
+
+// ── Star physics for the object models ─────────────────────────────────────
+// The nearest-star list gives each star's spectral class and mass but not its radius or
+// temperature, so those are estimated from the class (standard values per Harvard class,
+// interpolated by subtype; white dwarfs from their DA number, T = 50,400 K / n) and the mass
+// (main sequence R ∝ M^0.8; giants ~10 R☉; white dwarfs ~0.012 R☉; brown dwarfs ~0.1 R☉).
+// The colour is the blackbody colour at that temperature.
+
+const CLASS_TEMPERATURE: Record<string, [number, number]> = { // [subtype 0, subtype 9] in K
+    O: [45000, 31000], B: [30000, 10500], A: [10000, 7500], F: [7300, 6100], G: [6000, 5300],
+    K: [5200, 3900], M: [3850, 2400], L: [2300, 1400], T: [1300, 600], Y: [500, 300],
+    W: [70000, 40000], // Wolf–Rayet (WN, WC)
+};
+
+export function spectralTemperature(spectralClass: string | undefined): number | null {
+    if (!spectralClass) return null;
+    const s = spectralClass.trim().toUpperCase();
+    const wd = /^D[A-Z]*\s*(\d+(?:\.\d+)?)/.exec(s);
+    if (wd) return 50400 / Math.max(parseFloat(wd[1]), 0.5);
+    if (s.startsWith('D')) return 10000;
+    const m = /^([OBAFGKMLTYW])\s*(\d+(?:\.\d+)?)?/.exec(s);
+    if (!m) return null;
+    const [t0, t9] = CLASS_TEMPERATURE[m[1]];
+    const sub = m[2] !== undefined ? Math.min(parseFloat(m[2]), 9.5) : 5;
+    return t0 + (t9 - t0) * sub / 9;
+}
+
+// Blackbody colour (Tanner Helland's fit to the CIE colour-matching data), as linear 0–1 RGB
+export function blackbodyColor(kelvin: number): Vec3 {
+    const t = Math.min(Math.max(kelvin, 1000), 40000) / 100;
+    const r = t <= 66 ? 255 : 329.698727446 * Math.pow(t - 60, -0.1332047592);
+    const g = t <= 66 ? 99.4708025861 * Math.log(t) - 161.1195681661 : 288.1221695283 * Math.pow(t - 60, -0.0755148492);
+    const b = t >= 66 ? 255 : t <= 19 ? 0 : 138.5177312231 * Math.log(t - 10) - 305.0447927307;
+    const c = (v: number) => Math.min(Math.max(v, 0), 255) / 255;
+    return [c(r), c(g), c(b)];
+}
+
+export function starRadiusSun(spectralClass: string | undefined, massSun: number | undefined): number {
+    const s = (spectralClass ?? '').trim().toUpperCase();
+    if (s.startsWith('D')) return 0.012;
+    if (/^[LTY]/.test(s)) return 0.1;
+    if (/\b(III|II|I[AB]?)\b/.test(s) || /^W/.test(s)) return 10;
+    if (s.startsWith('BH')) return 0;
+    return Math.pow(massSun ?? 0.5, 0.8);
+}
+
+// Separation of a binary from Kepler's third law: a³ = (M₁ + M₂) P² (AU, M☉, years)
+export function binarySeparationAU(totalMassSun: number, periodDays: number): number {
+    return Math.cbrt(totalMassSun * Math.pow(periodDays / 365.25, 2));
 }

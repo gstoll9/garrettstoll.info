@@ -468,3 +468,169 @@
   font-size: 0.75rem;
   font-variant-numeric: tabular-nums;
 }
+
+.solarPage .mw-star-label {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 10px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  transform: translate(7px, -50%);
+  text-shadow: 0 0 4px #000, 0 0 2px #000;
+  user-select: none;
+}
+
+.solarPage .mw-clickable {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.solarPage .mw-clickable:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* ── Milky Way object panel ───────────────────────────────────────────────── */
+.solarPage .mw-object-panel {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 1000;
+  width: min(340px, calc(100% - 2rem));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(173, 201, 255, 0.14);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(10, 15, 23, 0.94), rgba(4, 8, 14, 0.9));
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.42);
+  color: #e8eef8;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.solarPage .mw-object-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem 0.6rem;
+}
+
+.solarPage .mw-object-kind {
+  color: rgba(170, 200, 255, 0.75);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.solarPage .mw-object-title {
+  margin: 0.15rem 0 0;
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+.solarPage .mw-object-close {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.solarPage .mw-object-close:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.solarPage .mw-object-figure {
+  margin: 0;
+  background: #000;
+}
+
+.solarPage .mw-object-figure img {
+  display: block;
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+}
+
+.solarPage .mw-object-figure figcaption {
+  padding: 0.3rem 1rem;
+  color: rgba(232, 238, 248, 0.5);
+  font-size: 10.5px;
+}
+
+.solarPage .mw-object-panel a {
+  color: #9cc6ff;
+}
+
+.solarPage .mw-object-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.6rem 1rem 1rem;
+}
+
+.solarPage .mw-object-extract {
+  margin: 0 0 0.4rem;
+}
+
+.solarPage .mw-object-link {
+  font-size: 12px;
+}
+
+.solarPage .mw-object-muted {
+  color: rgba(232, 238, 248, 0.5);
+}
+
+.solarPage .mw-object-facts {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0.85rem 0;
+  padding: 0.6rem 0.75rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.solarPage .mw-object-facts > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.solarPage .mw-object-facts dt {
+  color: rgba(232, 238, 248, 0.55);
+}
+
+.solarPage .mw-object-facts dd {
+  margin: 0;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.solarPage .mw-object-model {
+  font-size: 12px;
+  color: rgba(232, 238, 248, 0.75);
+}
+
+.solarPage .mw-object-model-title {
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.solarPage .mw-object-model ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.solarPage .mw-object-credit {
+  margin-top: 0.85rem;
+  font-size: 10.5px;
+}

@@ -28,7 +28,7 @@ type CameraControllerProps = {
 const SOLAR_ARRIVAL_DIRECTION: [number, number, number] = [0, 0.243, 0.970] // the default view's (0, 150, 600)
 const SOLAR_ARRIVAL_DISTANCE = 18000 // 1,500 AU, inside ScaleTransitions' 30,000 exit
 const GALAXY_ARRIVAL_DIRECTION: [number, number, number] = [0.42, 0.62, 0.66] // above the disk, from the Sun's side
-const MILKY_WAY_ARRIVAL_NEAR = 3 // 0.3 kpc from the Sun (enter-Solar-System threshold is 1.2)
+const MILKY_WAY_ARRIVAL_NEAR = 0.008 // 0.8 pc from the Sun, among the nearest stars (enter-Solar-System threshold is 0.003)
 const MILKY_WAY_ARRIVAL_FAR = 450 // 45 kpc (exit-to-Local-Group threshold is 700)
 const MILKY_WAY_OVERVIEW = 300 // 30 kpc: the whole disk, seen mostly face-on so the arms read
 const MILKY_WAY_OVERVIEW_DIRECTION: [number, number, number] = [0.2, 0.88, 0.43]
@@ -112,8 +112,9 @@ export default function CameraController({ focus, planetData, orbitControlsRef, 
         }
         orbitControlsRef.current.update()
       }
-      if ((camera as THREE.PerspectiveCamera).near !== 0.01) {
-        (camera as THREE.PerspectiveCamera).near = 0.01;
+      // the nearest stars are ~0.013 units out, so the near plane has to be far smaller
+      if ((camera as THREE.PerspectiveCamera).near !== 0.0001) {
+        (camera as THREE.PerspectiveCamera).near = 0.0001;
         (camera as THREE.PerspectiveCamera).updateProjectionMatrix();
       }
     } else if (focus && planetData) {

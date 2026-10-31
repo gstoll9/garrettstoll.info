@@ -5,15 +5,18 @@ import { Html } from '@react-three/drei'
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 import { milkyWayArms } from '../data/milkyWay'
 import {
-  ARM_DISPLAY_NAMES, MILKY_WAY_SUN_SCENE, armPoint, buildMilkyWay, milkyWayMarkers, milkyWayToScene,
+  ARM_DISPLAY_NAMES, MILKY_WAY_SUN_SCENE, armPoint, buildMilkyWay, milkyWayMarkers, milkyWayToScene, scaleTransition,
   type MilkyWayMarker,
 } from '../utils'
 import { createStarParticleMaterial, updateStarParticleMaterial } from './starParticles'
 import SunGalacticOrbit from './SunGalacticOrbit'
+import ObjectModel, { planModel, type ModelPlan } from './ObjectModel'
 
 // The Milky Way model between the Local Group and the Solar System: measured spiral arms,
 // bar and disk (utils.tsx "Milky Way model") plus ~600 catalogued objects and the satellite
-// galaxies at their real positions. Hover a marker for its name and distance.
+// galaxies at their real positions. Hover a marker for its name and distance; click a marker
+// or a name tag to fly in to a 3D model of it (ObjectModel.tsx) with its details alongside
+// (MilkyWayObjectPanel.tsx, outside the canvas). Closing flies back to where you were.
 
 export type MarkerKind = MilkyWayMarker['kind']
 
@@ -60,6 +63,11 @@ const markerFragment = /* glsl */ `
   }
 `
 
+// nearest-star names show once zoomed in among them (camera within 15 pc of the Sun)
+const NEARBY_LABEL_DISTANCE = 0.15
+// "Lalande 21185 (BD+36°2147, Gliese 411, HD 95735)" -> "Lalande 21185"; the tooltip keeps the full name
+const shortName = (name: string) => name.replace(/ \(.*\)$/, '')
+
 const formatLy = (kpc: number) => {
   const ly = kpc * 3261.56
   return ly >= 10000 ? `${Math.round(ly / 1000).toLocaleString()} thousand ly` : `${Math.round(ly).toLocaleString()} ly`
@@ -68,9 +76,18 @@ const formatLy = (kpc: number) => {
 type Props = {
   orbitControlsRef: RefObject<OrbitControlsImpl | null>
   hiddenKinds: Set<MarkerKind>
+  selected: MilkyWayMarker | null
+  onSelect: (marker: MilkyWayMarker | null) => void
+  onPlan: (plan: ModelPlan | null) => void
 }
 
-export default function MilkyWayField({ orbitControlsRef, hiddenKinds }: Props) {
+const FLIGHT_SECONDS = 1.8
+// how far from a selected model the camera stops, in model radii
+const FRAMING = 3.2
+
+type Flight = { fromTarget: THREE.Vector3; toTarget: THREE.Vector3; fromDistance: number; toDistance: number; dir: THREE.Vector3; start: number }
+
+export default function MilkyWayField({ orbitControlsRef, hiddenKinds, selected, onSelect, onPlan }: Props) {
   const { size, pointer, camera, gl } = useThree()
   // hover only while the pointer is actually over the canvas (pointer starts at the centre)
   const pointerInside = useRef(false)
@@ -121,8 +138,51 @@ export default function MilkyWayField({ orbitControlsRef, hiddenKinds }: Props) 
     at: milkyWayToScene(armPoint(arm, arm.betaMax + 25)),
   })), [])
   const satelliteLabels = useMemo(() => MARKERS.filter((m) => m.kind === 'satellite galaxy' && /Magellanic|Sagittarius/.test(m.name)), [])
+  const nearbyStars = useMemo(() => shown.filter((m) => m.kind === 'nearby star'), [shown])
+  const nearbyRefs = useRef<(HTMLDivElement | null)[]>([])
 
   const [hovered, setHovered] = useState<MilkyWayMarker | null>(null)
+  const hoveredRef = useRef<MilkyWayMarker | null>(null)
+
+  // click (not drag) on a marker selects it
+  useEffect(() => {
+    const el = gl.domElement
+    let down: { x: number; y: number } | null = null
+    const onDown = (e: PointerEvent) => { down = { x: e.clientX, y: e.clientY } }
+    const onUp = (e: PointerEvent) => {
+      if (down && Math.hypot(e.clientX - down.x, e.clientY - down.y) < 5 && hoveredRef.current) onSelect(hoveredRef.current)
+      down = null
+    }
+    el.addEventListener('pointerdown', onDown)
+    el.addEventListener('pointerup', onUp)
+    return () => { el.removeEventListener('pointerdown', onDown); el.removeEventListener('pointerup', onUp) }
+  }, [gl, onSelect])
+
+  // the selected object's model, and the camera flight to it (and back again on close)
+  const plan = useMemo(() => (selected ? planModel(selected) : null), [selected])
+  useEffect(() => { onPlan(plan) }, [plan, onPlan])
+  const flight = useRef<Flight | null>(null)
+  const homeView = useRef<{ target: THREE.Vector3; position: THREE.Vector3 } | null>(null)
+  useEffect(() => {
+    const controls = orbitControlsRef.current
+    if (!controls) return
+    const fromTarget = controls.target.clone()
+    const fromDistance = camera.position.distanceTo(controls.target)
+    const dir = camera.position.clone().sub(controls.target).normalize()
+    if (selected && plan) {
+      if (!homeView.current) homeView.current = { target: fromTarget.clone(), position: camera.position.clone() }
+      flight.current = { fromTarget, toTarget: new THREE.Vector3(...selected.scene), fromDistance, toDistance: plan.radius * FRAMING, dir, start: performance.now() }
+    } else if (homeView.current) {
+      const home = homeView.current
+      homeView.current = null
+      flight.current = {
+        fromTarget, toTarget: home.target, fromDistance, toDistance: home.position.distanceTo(home.target),
+        dir: home.position.clone().sub(home.target).normalize(), start: performance.now(),
+      }
+    }
+    scaleTransition.locked = !!selected
+    return () => { scaleTransition.locked = false }
+  }, [selected, plan, camera, orbitControlsRef])
   const overviewRef = useRef<HTMLDivElement[]>([])
   const projected = useMemo(() => new THREE.Vector3(), [])
   const cameraDir = useMemo(() => new THREE.Vector3(), [])
@@ -130,7 +190,19 @@ export default function MilkyWayField({ orbitControlsRef, hiddenKinds }: Props) 
   useFrame(() => {
     updateStarParticleMaterial(starMaterial, camera, size.height)
     const controls = orbitControlsRef.current
-    if (controls) {
+    const f = flight.current
+    if (controls && f) {
+      // fly: pivot moves straight there, distance changes logarithmically (scales differ by 10^6)
+      const p = Math.min((performance.now() - f.start) / (FLIGHT_SECONDS * 1000), 1)
+      const e = p * p * (3 - 2 * p)
+      const fromDir = camera.position.clone().sub(controls.target).normalize()
+      const dir = fromDir.lerp(f.dir, e).normalize()
+      controls.target.lerpVectors(f.fromTarget, f.toTarget, e)
+      const distance = Math.exp(THREE.MathUtils.lerp(Math.log(f.fromDistance), Math.log(f.toDistance), e))
+      camera.position.copy(controls.target).addScaledVector(dir, distance)
+      controls.update()
+      if (p >= 1) flight.current = null
+    } else if (controls && !selected) {
       // ease the orbit pivot between the Sun and the Galactic Centre with zoom
       const d = camera.position.distanceTo(controls.target)
       const t = THREE.MathUtils.smoothstep(Math.log(d), Math.log(NEAR_DISTANCE), Math.log(FAR_DISTANCE))
@@ -144,6 +216,15 @@ export default function MilkyWayField({ orbitControlsRef, hiddenKinds }: Props) 
       // overview labels (arms, centre) only once the galaxy is in view
       const showOverview = d > 25
       for (const el of overviewRef.current) if (el) el.style.visibility = showOverview ? 'visible' : 'hidden'
+      // nearest-star names: only while zoomed in among them, and only for stars in front of the camera
+      const near = camera.position.distanceTo(SUN) < NEARBY_LABEL_DISTANCE
+      camera.getWorldDirection(cameraDir)
+      nearbyStars.forEach((m, i) => {
+        const el = nearbyRefs.current[i]
+        if (!el) return
+        const inFront = projected.set(...m.scene).sub(camera.position).dot(cameraDir) > 0
+        el.style.visibility = near && inFront && (!selected || selected === m) ? 'visible' : 'hidden'
+      })
     }
 
     // hover: nearest shown marker within 9 px of the pointer
@@ -159,6 +240,7 @@ export default function MilkyWayField({ orbitControlsRef, hiddenKinds }: Props) 
       const px = Math.hypot(dx, dy)
       if (px < bestPx) { bestPx = px; best = m }
     }
+    hoveredRef.current = best
     if (best !== hovered) setHovered(best)
   })
 
@@ -167,6 +249,7 @@ export default function MilkyWayField({ orbitControlsRef, hiddenKinds }: Props) 
       <points geometry={stars} material={starMaterial} frustumCulled={false} />
       <primitive object={markerPoints} />
       <SunGalacticOrbit />
+      {selected && plan && <ObjectModel marker={selected} plan={plan} />}
 
       {armLabels.map((a, i) => (
         <Html key={a.name} position={a.at} center zIndexRange={[15, 0]} style={{ pointerEvents: 'none' }}>
@@ -176,16 +259,22 @@ export default function MilkyWayField({ orbitControlsRef, hiddenKinds }: Props) 
       <Html position={[0, 0, 0]} center zIndexRange={[15, 0]} style={{ pointerEvents: 'none' }}>
         <div ref={(el) => { if (el) overviewRef.current[armLabels.length] = el }} className="mw-centre-label">Galactic Centre · Sgr A*</div>
       </Html>
+      {nearbyStars.map((m, i) => (
+        <Html key={m.name} position={m.scene} zIndexRange={[14, 0]} style={{ pointerEvents: 'none' }}>
+          <div ref={(el) => { nearbyRefs.current[i] = el }} className="mw-star-label mw-clickable" style={{ visibility: 'hidden' }}
+            onClick={() => onSelect(m)}>{shortName(m.name)}</div>
+        </Html>
+      ))}
       {satelliteLabels.map((m) => (
         <Html key={m.name} position={m.scene} zIndexRange={[15, 0]} style={{ pointerEvents: 'none' }}>
-          <div className="lg-label">{m.name}</div>
+          <div className="lg-label mw-clickable" onClick={() => onSelect(m)}>{m.name}</div>
         </Html>
       ))}
       <Html position={MILKY_WAY_SUN_SCENE} zIndexRange={[20, 0]} style={{ pointerEvents: 'none' }}>
         <div className="lg-sun-marker">Sun</div>
       </Html>
 
-      {hovered && (
+      {hovered && hovered !== selected && (
         <Html position={hovered.scene} zIndexRange={[30, 20]} style={{ pointerEvents: 'none' }}>
           <div className="lg-tooltip">
             <div className="lg-tooltip-name">{hovered.name}</div>

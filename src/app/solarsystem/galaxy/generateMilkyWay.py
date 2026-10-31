@@ -19,9 +19,11 @@ Run:  python -I generateMilkyWay.py
 """
 import html
 import json
+import math
 import os
 import re
 import sys
+import urllib.parse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 LISTS = os.path.join(HERE, '..', 'wikipedia', 'Galaxy', 'Lists')
@@ -61,14 +63,23 @@ def parse_arms():
 
 # ── Wikipedia tables ────────────────────────────────────────────────────────
 
+class Cell(str):
+    """A table cell's text, plus the article its first wiki link points to (or None)."""
+    href = None
+
+
 def strip(cell):
     cell = re.sub(r"data-mw='[^']*'", '', cell)
     cell = re.sub(r'data-mw="[^"]*"', '', cell)
     cell = re.sub(r'<style.*?</style>', '', cell, flags=re.S)
     cell = re.sub(r'<sup.*?</sup>', '', cell, flags=re.S)
     cell = re.sub(r'<span[^>]*display:\s*none[^>]*>.*?</span>', '', cell, flags=re.S)
+    link = re.search(r'<a[^>]*rel="mw:WikiLink"[^>]*href="\./([^"#?]+)"', cell)
     text = html.unescape(re.sub(r'<[^>]+>', ' ', cell)).replace('\xad', '')
-    return re.sub(r'\s+', ' ', text).strip()
+    out = Cell(re.sub(r'\s+', ' ', text).strip())
+    if link and not link.group(1).startswith(('File:', 'Template:', 'Help:')):
+        out.href = urllib.parse.unquote(link.group(1)).replace('_', ' ')
+    return out
 
 
 def tables(title):
@@ -104,12 +115,33 @@ def parse_dec(s):
 
 def parse_distance(s):
     """'4,570', '27,200-27,700' (mean), '1,560 ± 10', '~3,000' -> float, or None"""
-    s = s.replace(',', '').replace('−', '-').replace('–', '-').replace('~', '').replace('≈', '')
+    s = s.replace(',', '').replace('−', '-').replace('–', '-').replace('~', '').replace('≈', '').replace('<', '')
     m = re.match(r'^\s*(\d+(?:\.\d+)?)(?:\s*-\s*(\d+(?:\.\d+)?))?', s)
     if not m:
         return None
     a = float(m.group(1))
     return (a + float(m.group(2))) / 2 if m.group(2) else a
+
+
+number = parse_distance  # same leading-number rules for masses, ages, radii, …
+
+
+def parse_power(s):
+    """'5.50 × 10' with the exponent lost to <sup> stripping can't be recovered; plain numbers only"""
+    return None if '×' in s else number(s)
+
+
+def angular_size_arcmin(s):
+    """"330'", '12', '8′', '420″ × 290″', '2°' -> the largest dimension in arcminutes"""
+    best = None
+    for value, unit in re.findall(r'(\d+(?:\.\d+)?)\s*(°|′|\'|″|")?', s.replace(',', '')):
+        v = float(value) * {'°': 60, '″': 1 / 60, '"': 1 / 60}.get(unit, 1)
+        best = v if best is None else max(best, v)
+    return best
+
+
+def physical_size_pc(arcmin, distance_kpc):
+    return round(distance_kpc * 1000 * math.radians(arcmin / 60), 3) if arcmin and distance_kpc else None
 
 
 def col(header, *names):
@@ -121,8 +153,16 @@ def col(header, *names):
     return None
 
 
+def clean_name(name):
+    return re.sub(r'\s+', ' ', name).strip(' *†‡$#§&')
+
+
+def compact(info):
+    return {k: v for k, v in info.items() if v not in (None, '', '?', 'N/A', '—')}
+
+
 def from_table(rows, kind, name_keys, dist_keys, dist_to_kpc, ra_keys=('right ascension', 'r. a.', 'ra'), dec_keys=('declination', 'dec'),
-               header_rows=1, keep=lambda cells, header: True):
+               header_rows=1, keep=lambda cells, header: True, extra=lambda cells, header, dist_kpc: {}):
     header = rows[0]
     if header_rows == 2:
         # "Epoch J2000" spans RA/Dec on a second header row
@@ -146,33 +186,89 @@ def from_table(rows, kind, name_keys, dist_keys, dist_to_kpc, ra_keys=('right as
         if not name or ra is None or dec is None or not dist:
             skipped += 1
             continue
-        out.append({'name': re.sub(r'\s+', ' ', name).strip(' *†‡$#'), 'kind': kind,
-                    'ra': round(ra, 4), 'dec': round(dec, 4), 'distanceKpc': round(dist * dist_to_kpc, 4)})
+        dist_kpc = dist * dist_to_kpc
+        o = {'name': clean_name(name), 'kind': kind, 'ra': round(ra, 4), 'dec': round(dec, 4), 'distanceKpc': round(dist_kpc, 4)}
+        if name.href:
+            o['wiki'] = name.href
+        info = compact(extra(cells, header, dist_kpc))
+        if info:
+            o['info'] = info
+        out.append(o)
     print(f'  {kind:20s} {len(out):4d} kept, {skipped} skipped')
     return out
 
 
+def cell(cells, header, *names):
+    i = col(header, *names)
+    return cells[i] if i is not None and i < len(cells) else ''
+
+
 def parse_objects():
-    objs = []
+    objs, systems = [], []
     LY = 1 / LY_PER_KPC
 
     t = tables('List_of_globular_clusters')
-    objs += from_table(t[0], 'globular cluster', ('identifier',), ('distance',), LY, header_rows=2)
+    objs += from_table(t[0], 'globular cluster', ('identifier',), ('distance',), LY, header_rows=2,
+                       extra=lambda c, h, d: {'diameterPc': physical_size_pc(angular_size_arcmin(cell(c, h, 'diameter')), d),
+                                              'apparentMagnitude': number(cell(c, h, 'magnitude')),
+                                              'constellation': cell(c, h, 'constellation')})
 
     t = tables('List_of_open_clusters')
-    objs += from_table(t[0], 'open cluster', ('cluster identifier', 'identifier'), ('distance',), LY, ra_keys=('r. a.',), dec_keys=('dec.',), header_rows=2)
+    objs += from_table(t[0], 'open cluster', ('cluster identifier', 'identifier'), ('distance',), LY, ra_keys=('r. a.',), dec_keys=('dec.',), header_rows=2,
+                       extra=lambda c, h, d: {'diameterPc': physical_size_pc(angular_size_arcmin(cell(c, h, 'diameter')), d),
+                                              'ageMyr': number(cell(c, h, 'age')),
+                                              'apparentMagnitude': number(cell(c, h, 'magnitude')),
+                                              'constellation': cell(c, h, 'constellation')})
 
     t = tables('List_of_supernova_remnants')
     objs += from_table(t[0], 'supernova remnant', ('name',), ('distance',), LY,
-                       keep=lambda c, h: 'milky' in c[col(h, 'galaxy')].lower())
+                       keep=lambda c, h: 'milky' in c[col(h, 'galaxy')].lower(),
+                       extra=lambda c, h, d: {'supernovaType': cell(c, h, 'type'), 'remnant': cell(c, h, 'remnant'),
+                                              'firstSeen': cell(c, h, 'first visible')})
 
+    # black holes: a system's first row names it and gives one component; the components
+    # after it get short rows of their own ([designation, class, mass]). Which ones have an
+    # accretion disk: the X-ray binaries (named for their X-ray source — A0620-00, GRS, XTE,
+    # GRO, GS, Swift, 4U, Cygnus X-1/X-3, V404 Cygni), which accrete from their companion,
+    # and Sagittarius A*'s faint hot flow; not the dormant Gaia BH binaries (wide orbits, no
+    # mass transfer) or the isolated microlensing detections.
     t = tables('List_of_nearest_known_black_holes')
     rows = t[0]
-    header = rows[1]  # second row carries the column names (ly, kpc, Designation, …)
-    objs += from_table([header] + rows[2:], 'black hole', ('designation',), ('(kpc)',), 1.0)
+    header = rows[1]
+    di, ni, de, ri, ci = col(header, '(kpc)'), col(header, 'designation'), col(header, 'description'), col(header, 'right'), col(header, 'declination')
+    ki, cl, ma = 7, 8, 9  # component designation / stellar class / mass ("Desig nation" repeats the header word)
+    xray = re.compile(r'^(A0620|GRS|XTE|GRO|GS |Swift|4U|Cygnus X|V404|MAXI|H1705|GX )')
+    period_units = {'h': 1 / 24, 'd': 1, 'yr': 365.25}
+    n = 0
+    current = None
+    for c in rows[2:]:
+        if len(c) >= 10:
+            ra, dec, dist = parse_ra(c[ri]), parse_dec(c[ci]), parse_distance(c[di])
+            current = None
+            if ra is None or dec is None or not dist:
+                continue
+            desc = c[de]
+            name = clean_name(re.sub(r' \(.*\)$', '', c[ni]))
+            name = 'Sagittarius A*' if name == 'Sagittarius A' else name
+            period = re.search(r't\s*=\s*([\d.]+)\s*(h|d|yr)', desc)
+            current = {'name': name, 'kind': 'black hole', 'ra': round(ra, 4), 'dec': round(dec, 4), 'distanceKpc': round(dist, 4),
+                       'info': compact({'description': desc, 'components': [],
+                                        'accreting': bool(xray.match(name)) or 'supermassive' in desc.lower(),
+                                        'orbitalPeriodDays': round(float(period.group(1)) * period_units[period.group(2)], 5) if period else None})}
+            if c[ni].href:
+                current['wiki'] = c[ni].href
+            current['info']['components'].append(compact({'name': c[ki], 'spectralClass': c[cl], 'massSun': number(c[ma])}))
+            objs.append(current)
+            n += 1
+        elif current and 2 <= len(c) <= 4:
+            current['info']['components'].append(compact({'name': c[0], 'spectralClass': c[1], 'massSun': number(c[2]) if len(c) > 2 else None}))
+    print(f'  {"black hole":20s} {n:4d} kept, {sum(1 for o in objs if o["kind"] == "black hole" and o["info"]["accreting"])} accreting')
 
     t = tables('List_of_neutron_stars')
-    objs += from_table(t[0], 'neutron star', ('designation',), ('distance',), 1 / 1000)
+    objs += from_table(t[0], 'neutron star', ('designation',), ('distance',), 1 / 1000,
+                       extra=lambda c, h, d: {'type': cell(c, h, 'type'), 'massSun': number(cell(c, h, 'mass')),
+                                              'radiusKm': number(cell(c, h, 'radius')), 'spinPeriodS': number(cell(c, h, 'spin')),
+                                              'temperatureK': parse_power(cell(c, h, 'temperature'))})
 
     t = tables('List_of_star-forming_regions_in_the_Local_Group')
     rows = t[0]
@@ -185,7 +281,14 @@ def parse_objects():
         except (ValueError, IndexError):
             continue
         if dist:
-            objs.append({'name': c[ni], 'kind': 'star-forming region', 'ra': ra, 'dec': dec, 'distanceKpc': round(dist / 1000, 4)})
+            o = {'name': clean_name(c[ni]), 'kind': 'star-forming region', 'ra': ra, 'dec': dec, 'distanceKpc': round(dist / 1000, 4)}
+            if c[ni].href:
+                o['wiki'] = c[ni].href
+            info = compact({'ageMyr': number(cell(c, header, 'age')), 'earliestSpectralType': cell(c, header, 'earliest'),
+                            'stars': number(cell(c, header, 'number')), 'cloudMassSun': parse_power(cell(c, header, 'cloud mass'))})
+            if info:
+                o['info'] = info
+            objs.append(o)
             n += 1
     print(f'  {"star-forming region":20s} {n:4d} kept')
 
@@ -206,47 +309,106 @@ def parse_objects():
             continue
         common = c[cni] if c[cni] not in ('—', '-', '') else ''
         kind = 'planetary nebula' if 'planetary' in typ else 'nebula'
-        objs.append({'name': f'{c[ni]} {common}'.strip(), 'kind': kind, 'ra': round(ra, 4), 'dec': round(dec, 4), 'distanceKpc': round(dist * 1000 / LY_PER_KPC, 4)})
+        dist_kpc = dist * 1000 / LY_PER_KPC
+        o = {'name': f'{c[ni]} {common}'.strip(), 'kind': kind, 'ra': round(ra, 4), 'dec': round(dec, 4), 'distanceKpc': round(dist_kpc, 4)}
+        href = c[cni].href or c[ni].href
+        if href:
+            o['wiki'] = href
+        o['info'] = compact({'nebulaType': c[ti], 'diameterPc': physical_size_pc(angular_size_arcmin(cell(c, header, 'dimensions')), dist_kpc),
+                             'apparentMagnitude': number(cell(c, header, 'magnitude')), 'constellation': cell(c, header, 'constellation')})
+        objs.append(o)
         n += 1
     print(f'  {"messier nebulae":20s} {n:4d} kept')
 
-    # nearest stars: RA/Dec share one cell ("14 29 43.0 −62 ° 40 ′ 46 ″"); a system's first
-    # row also carries the system name and constellation, its other members' rows don't
+    # nearest stars: RA/Dec share one cell ("14 29 43.0 −62 ° 40 ′ 46 ″"). Row layouts, by
+    # where that cell sits:
+    #   [system, distance, constellation, coords, class, mass, …]          a single star
+    #   [system, member, distance, constellation, coords, class, mass, …]  first member of a multiple system
+    #   [member, distance, coords, class, mass, …]                         another member with its own distance
+    #   [member, coords, class, mass, …]                                   another member at the system's distance
+    #   [member, class, mass, …]  (no coords)                              a companion too close to separate
+    # Members are often just a component letter ("A", "Ba"), so they're named with their system.
+    # Every member (with or without its own position) is also listed under its system in
+    # milkyWaySystems, which the 3D model draws.
     t = tables('List_of_nearest_stars')
     rows = t[1]
     coord_re = re.compile(r'^(\d+) (\d+) ([\d.]+) ([+−-])\s*(\d+) ° (\d+) ′ ([\d.]+) ″')
-    n = 0
+    marks = re.compile(r'[\s$&‡§#*]+$')
+    component = re.compile(r'^[A-Z][a-z]?(?:\s|$|\()')
+    system, system_dist, n = None, None, 0
+
+    def star_name(member):
+        member = marks.sub('', member)
+        if system is None:
+            return member
+        if component.match(member):
+            return f"{re.sub(r' [(].*', '', system['name'])} {member}"  # "Sirius A", "Gliese 65 A (BL Ceti)"
+        return re.sub(r' [(].*', '', member)  # a member with its own name: "Proxima Centauri"
+
+    def new_system(cell_):
+        s = {'name': marks.sub('', cell_), 'members': []}
+        if cell_.href:
+            s['wiki'] = cell_.href
+        systems.append(s)
+        return s
+
     for c in rows[2:]:
         idx = next((i for i, x in enumerate(c) if coord_re.match(x)), None)
-        if idx not in (2, 4):
+        if idx == 3 and c[0].startswith('Solar'):
+            system = None
             continue
-        name, dist = (c[1], c[2]) if idx == 4 else (c[0], c[1])
-        dist = parse_distance(dist)
+        if idx == 3:
+            system, system_dist = new_system(c[0]), parse_distance(c[1])
+            name, dist, href = system['name'], system_dist, c[0].href
+        elif idx == 4:
+            system, system_dist = new_system(c[0]), parse_distance(c[2])
+            name, dist, href = star_name(c[1]), system_dist, c[1].href or c[0].href
+        elif idx == 2:
+            name, dist, href = star_name(c[0]), parse_distance(c[1]), c[0].href
+        elif idx == 1:
+            name, dist, href = star_name(c[0]), system_dist, c[0].href
+        elif idx is None and system is not None and 3 <= len(c) <= 6:
+            # a companion with no position of its own: part of the model, not a marker
+            system['members'].append(compact({'name': star_name(c[0]), 'spectralClass': marks.sub('', c[1]), 'massSun': number(c[2])}))
+            continue
+        else:
+            continue
+        if system is None:
+            continue
+        member = compact({'name': name, 'spectralClass': marks.sub('', c[idx + 1]) if idx + 1 < len(c) else '',
+                          'massSun': number(c[idx + 2]) if idx + 2 < len(c) else None})
+        system['members'].append(member)
+        if not dist:
+            continue
         m = coord_re.match(c[idx])
-        if not dist or name.startswith('Sun'):
-            continue
         ra = (int(m.group(1)) + int(m.group(2)) / 60 + float(m.group(3)) / 3600) * 15
         dec = (int(m.group(5)) + int(m.group(6)) / 60 + float(m.group(7)) / 3600) * (-1 if m.group(4) in '−-' else 1)
-        objs.append({'name': re.sub(r'\s*\$$', '', name), 'kind': 'nearby star', 'ra': round(ra, 4), 'dec': round(dec, 4), 'distanceKpc': round(dist / LY_PER_KPC, 6)})
+        o = {'name': name, 'kind': 'nearby star', 'ra': round(ra, 4), 'dec': round(dec, 4), 'distanceKpc': round(dist / LY_PER_KPC, 6),
+             'wiki': href or system.get('wiki'), 'info': compact({**{k: v for k, v in member.items() if k != 'name'}, 'system': len(systems) - 1})}
+        if not o['wiki']:
+            del o['wiki']
+        objs.append(o)
         n += 1
-    print(f'  {"nearby star":20s} {n:4d} kept')
+    print(f'  {"nearby star":20s} {n:4d} kept in {len(systems)} systems')
 
-    # drop exact duplicates (an object can appear in two lists)
+    # drop exact duplicates (an object can appear in two lists); nearby stars only merge when
+    # they share a position to the arcsecond, so close pairs like Alpha Cen A/B both stay
     seen, unique = set(), []
     for o in objs:
-        key = (round(o['ra'], 1), round(o['dec'], 1), o['kind'])
+        p = 4 if o['kind'] == 'nearby star' else 1
+        key = (round(o['ra'], p), round(o['dec'], p), o['kind'])
         if key in seen:
             continue
         seen.add(key)
         unique.append(o)
-    return unique
+    return unique, systems
 
 
 def main():
     arms = parse_arms()
     print('arms:', ', '.join(a['name'] for a in arms))
-    objs = parse_objects()
-    print(f'{len(objs)} objects')
+    objs, systems = parse_objects()
+    print(f'{len(objs)} objects, {sum(1 for o in objs if o.get("wiki"))} with a Wikipedia article')
     with open(OUT, 'w', encoding='utf-8', newline='\n') as f:
         f.write('''// GENERATED by solarsystem/galaxy/generateMilkyWay.py — do not hand-edit; regenerate instead.
 //
@@ -257,7 +419,12 @@ def main():
 // (Reid's fits assume R0 = 8.15 kpc); width = Gaussian 1-sigma at R_kink, kpc.
 //
 // milkyWayObjects: catalogued objects with RA/Dec (J2000, deg) and distance from the Sun,
-// from the Wikipedia lists saved under solarsystem/wikipedia/Galaxy/Lists/.
+// from the Wikipedia lists saved under solarsystem/wikipedia/Galaxy/Lists/. `wiki` is the
+// article the list links the object to; `info` holds whatever physical data that list gives
+// (sizes in pc are the listed angular size times the distance).
+//
+// milkyWaySystems: the nearest-star systems, every member listed (including close companions
+// with no position of their own); a nearby star's info.system indexes into it.
 
 export type SpiralArm = {
   name: string;
@@ -273,15 +440,52 @@ export type SpiralArm = {
 export type MilkyWayObjectKind = 'globular cluster' | 'open cluster' | 'supernova remnant' | 'black hole' | 'neutron star'
   | 'star-forming region' | 'planetary nebula' | 'nebula' | 'nearby star';
 
+export type StarComponent = { name?: string; spectralClass?: string; massSun?: number };
+
+export type MilkyWayObjectInfo = {
+  diameterPc?: number;
+  ageMyr?: number;
+  apparentMagnitude?: number;
+  constellation?: string;
+  supernovaType?: string;
+  remnant?: string;
+  firstSeen?: string;
+  description?: string;
+  components?: StarComponent[];
+  accreting?: boolean;
+  orbitalPeriodDays?: number;
+  type?: string;
+  massSun?: number;
+  radiusKm?: number;
+  spinPeriodS?: number;
+  temperatureK?: number;
+  earliestSpectralType?: string;
+  stars?: number;
+  cloudMassSun?: number;
+  nebulaType?: string;
+  spectralClass?: string;
+  system?: number;
+};
+
 export type MilkyWayObject = {
   name: string;
   kind: MilkyWayObjectKind;
   ra: number;
   dec: number;
   distanceKpc: number;
+  wiki?: string;
+  info?: MilkyWayObjectInfo;
 };
 
+export type StarSystem = { name: string; wiki?: string; members: StarComponent[] };
+
 export const milkyWayArms: SpiralArm[] = ''' + json.dumps(arms, indent=2, ensure_ascii=False) + ''';
+
+export const milkyWaySystems: StarSystem[] = [
+''')
+        for s in systems:
+            f.write('  ' + json.dumps(s, ensure_ascii=False) + ',\n')
+        f.write('''];
 
 export const milkyWayObjects: MilkyWayObject[] = [
 ''')
