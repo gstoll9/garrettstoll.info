@@ -1,8 +1,8 @@
 'use client'
-// Trade arcs: curved flows from the selected country to its top trade partners, raised off
-// the flat map so they read as 3D, split into raw (primary) and produced (processed) goods.
-import { useMemo } from 'react';
-import type * as d3 from 'd3';
+// Trade arcs: great-circle flows from the selected country to its top trade partners, split
+// into raw (primary) and produced (processed) goods.
+import { geoInterpolate } from 'd3';
+import type { Feature, LineString, Point } from 'geojson';
 import type { TradeFlow } from '../lib/db';
 import { compact } from '../lib/format';
 
@@ -22,57 +22,45 @@ const DEFINITIONS = 'Raw: unprocessed farm, fish, forest and mineral goods (crop
   'crude oil, gas, coal). Produced: everything processed or manufactured (food products, refined fuels, metals, ' +
   'chemicals, machinery, vehicles). Goods only, no services. Source: The Growth Lab at Harvard, Atlas of Economic Complexity.';
 
-// ── Map layer (inside the zoomed group, so arcs move with the map) ───────────
-export function TradeArcLayer({ arcs, projection, onHover, onLeave }: {
-  arcs: TradeArcs;
-  projection: d3.GeoProjection;
-  onHover: (e: React.MouseEvent, text: string) => void;
-  onLeave: () => void;
-}) {
-  const shapes = useMemo(() => {
-    const o = projection([arcs.origin.lon, arcs.origin.lat]);
-    if (!o) return [];
-    const max = Math.max(...arcs.partners.map(p => Math.max(p.raw, p.produced)), 1);
-    const width = (v: number) => (v > 0 ? 0.8 + 7 * Math.sqrt(v / max) : 0);
-    return arcs.partners.flatMap(p => {
-      const q = projection([p.lon, p.lat]);
-      if (!q) return [];
-      // Exports flow out of the origin, imports flow into it; dashes animate start → end
-      const [a, b] = arcs.flow === 'X' ? [o, q] : [q, o];
-      const dist = Math.hypot(b[0] - a[0], b[1] - a[1]);
-      // Lift: the control point sits above the midpoint, higher for longer routes — a
-      // flat-map stand-in for an arc leaving the surface. Produced flies above raw.
-      const arc = (lift: number) => {
-        const h = Math.min(dist * lift, 220);
-        return `M${a[0]},${a[1]} Q${(a[0] + b[0]) / 2},${(a[1] + b[1]) / 2 - h} ${b[0]},${b[1]}`;
-      };
-      const tip = `${arcs.origin.name} ${FLOW_VERB[arcs.flow]} ${p.name}: $${compact(p.raw + p.produced)}` +
-        ` (raw $${compact(p.raw)} · produced $${compact(p.produced)})`;
-      return [{
-        key: p.iso3, tip, end: q,
-        ground: `M${a[0]},${a[1]} L${b[0]},${b[1]}`,
-        raw: { d: arc(0.32), w: width(p.raw) },
-        produced: { d: arc(0.48), w: width(p.produced) },
-      }];
-    });
-  }, [arcs, projection]);
+// ── Map layer: great-circle lines, as GeoJSON for the map's arc layers ──────────────────
+// Each partner gets a raw and a produced line running side by side (offset in px), width ∝
+// the square root of its value; the arc-ends layer marks the partners' capitals.
+export function arcFeatures(arcs: TradeArcs): { lines: Feature<LineString>[]; ends: Feature<Point>[] } {
+  const o: [number, number] = [arcs.origin.lon, arcs.origin.lat];
+  const max = Math.max(...arcs.partners.map(p => Math.max(p.raw, p.produced)), 1);
+  const width = (v: number) => (v > 0 ? 1 + 6 * Math.sqrt(v / max) : 0);
+  const lines: Feature<LineString>[] = [];
+  const ends: Feature<Point>[] = [];
+  for (const p of arcs.partners) {
+    const q: [number, number] = [p.lon, p.lat];
+    // Exports flow out of the origin, imports flow into it
+    const [a, b] = arcs.flow === 'X' ? [o, q] : [q, o];
+    const tip = `${arcs.origin.name} ${FLOW_VERB[arcs.flow]} ${p.name}: $${compact(p.raw + p.produced)}` +
+      ` (raw $${compact(p.raw)} · produced $${compact(p.produced)})`;
+    const coords = greatCircle(a, b);
+    for (const [kind, value, color, offset] of [['raw', p.raw, RAW_COLOR, -2], ['produced', p.produced, PRODUCED_COLOR, 2]] as const) {
+      if (value <= 0) continue;
+      lines.push({
+        type: 'Feature', geometry: { type: 'LineString', coordinates: coords },
+        properties: { key: `${p.iso3}-${kind}`, tip, color, width: width(value), offset },
+      });
+    }
+    ends.push({ type: 'Feature', geometry: { type: 'Point', coordinates: q }, properties: { key: p.iso3 } });
+  }
+  return { lines, ends };
+}
 
-  return (
-    <g className={`wm-arcs wm-arcs-${arcs.flow}`}>
-      {shapes.map(s => (
-        <g key={s.key} className="wm-arc" onMouseMove={e => onHover(e, s.tip)} onMouseLeave={onLeave}
-          onClick={e => e.stopPropagation()}>
-          <path className="wm-arc-ground" d={s.ground} />
-          {s.raw.w > 0 && <path className="wm-arc-line" d={s.raw.d} stroke={RAW_COLOR} strokeWidth={s.raw.w} />}
-          {s.produced.w > 0 && <path className="wm-arc-line" d={s.produced.d} stroke={PRODUCED_COLOR} strokeWidth={s.produced.w} />}
-          {/* Wide invisible copies make thin arcs easy to hover */}
-          <path className="wm-arc-hit" d={s.produced.d} />
-          <path className="wm-arc-hit" d={s.raw.d} />
-          <circle className="wm-arc-end" cx={s.end[0]} cy={s.end[1]} r={2.2} />
-        </g>
-      ))}
-    </g>
-  );
+// Points along the great circle from a to b, longitudes kept continuous across ±180° so the
+// line doesn't jump back across the map
+function greatCircle(a: [number, number], b: [number, number]): [number, number][] {
+  const interp = geoInterpolate(a, b);
+  const out: [number, number][] = [];
+  for (let i = 0; i <= 64; i++) {
+    const [lon, lat] = interp(i / 64);
+    const prev = out[i - 1]?.[0];
+    out.push([prev == null ? lon : lon + 360 * Math.round((prev - lon) / 360), lat]);
+  }
+  return out;
 }
 
 // ── Control: off / exports / imports, legend, top partners ───────────────────

@@ -3,8 +3,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { geoCentroid, geoContains } from 'd3';
 import { feature } from 'topojson-client';
 import type { Topology, GeometryCollection } from 'topojson-specification';
+import dynamic from 'next/dynamic';
 import StandardLayout from '@/layouts/standardLayout';
-import WorldMap, { Country, Insets, Subregion, SubregionProps } from './components/WorldMap';
+import type { Basemap, Country, Insets, Subregion, SubregionProps } from './components/WorldMap';
 import CountryPanel, { Tab } from './components/CountryPanel';
 import { countrySlug, wikiTitleFor } from './lib/countryNames';
 import { Capital, TradeFlow, iso3ForSlug, loadCapitals, loadTables, loadTradePartners } from './lib/db';
@@ -14,6 +15,12 @@ import ColorByControl from './components/ColorByControl';
 import TimeSlider from './components/TimeSlider';
 import { HISTORY_END, HISTORY_START, PeriodFeature, changesPerYear, formatDate, loadHistory } from './lib/history';
 import './styles/worldmap.css';
+
+// MapLibre needs a browser (WebGL, window), so the map isn't rendered on the server
+const WorldMap = dynamic(() => import('./components/WorldMap'), {
+  ssr: false,
+  loading: () => <div className="wm-loading">Loading map…</div>,
+});
 
 const PANEL_WIDTH = 420;
 // Matches the bottom-sheet breakpoint in worldmap.css
@@ -69,6 +76,7 @@ export default function WorldMapPage() {
   const [history, setHistory] = useState<PeriodFeature[] | null>(null);
   // Shown when a change of year moved the selection to a different country
   const [carryNote, setCarryNote] = useState<string | null>(null);
+  const [basemap, setBasemap] = useState<Basemap>('satellite');
 
   useEffect(() => {
     const mq = window.matchMedia(MOBILE_QUERY);
@@ -362,6 +370,8 @@ export default function WorldMapPage() {
         insets={insets}
         year={year}
         history={history}
+        basemap={basemap}
+        onBasemapChange={setBasemap}
       />
 
       <div className="wm-search">
@@ -406,7 +416,14 @@ export default function WorldMapPage() {
       />
 
       <div className="wm-credits" style={{ right: insets.right + 8, bottom: insets.bottom + 6 }}>
-        Map data:{' '}
+        <a href="https://openfreemap.org" target="_blank" rel="noreferrer">OpenFreeMap</a>{' '}
+        <a href="https://www.openmaptiles.org" target="_blank" rel="noreferrer">© OpenMapTiles</a>{' '}
+        <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap</a> ·{' '}
+        {basemap === 'satellite' && <>
+          <a href="https://s2maps.eu" target="_blank" rel="noreferrer">Sentinel-2 cloudless 2024 by EOX</a>{' '}
+          (Copernicus data, CC BY-NC-SA) ·{' '}
+        </>}
+        Borders:{' '}
         {historical
           ? <><a href={CSHAPES.url} target="_blank" rel="noreferrer">CShapes 2.0</a> (CC BY-NC-SA 4.0)</>
           : <>

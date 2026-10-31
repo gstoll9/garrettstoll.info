@@ -36,11 +36,11 @@
     ".next-claude/types/**/*.ts",
     ".next-isolated/types/**/*.ts",
     ".next-kg/types/**/*.ts",
+    ".next-resume/types/**/*.ts",
     ".next-solar/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     ".next/types/**/*.ts",
-    "next-env.d.ts",
-    ".next-resume/types/**/*.ts"
+    "next-env.d.ts"
   ],
   "exclude": [
     "node_modules"

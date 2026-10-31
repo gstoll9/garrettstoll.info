@@ -376,6 +376,314 @@
   color: #9ab;
 }
 
+/* ── Tissue ───────────────────────────────────────────────────────────────── */
+.brainPage .brainTissue {
+  margin-top: 0.9rem;
+}
+
+.brainPage .brainInfo .brainTissueType {
+  margin: 0 0 0.25rem;
+  color: #ddd;
+  font-size: 13px;
+}
+
+.brainPage .brainTissueType span {
+  color: #999;
+}
+
+.brainPage .brainInfo .brainTissueDesc,
+.brainPage .brainInfo .brainTissueNote {
+  margin: 0 0 0.35rem;
+  color: #aaa;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.brainPage .brainInfo .brainTissueNote {
+  color: #ccc;
+}
+
+.brainPage .brainTissueDesc a {
+  color: #8cc4ff;
+  text-decoration: none;
+}
+
+.brainPage .brainTissueStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1.2rem;
+  margin: 0.5rem 0;
+}
+
+.brainPage .brainTissueStats dt {
+  color: #999;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.brainPage .brainTissueStats dd {
+  margin: 0.1rem 0 0;
+  color: #ddd;
+  font-size: 13px;
+}
+
+.brainPage .brainTissueStats dd span {
+  color: #777;
+  font-size: 11px;
+}
+
+.brainPage .brainTissueLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.9rem;
+  list-style: none;
+  margin: 0.35rem 0 0;
+  padding: 0;
+  color: #bbb;
+  font-size: 12px;
+}
+
+.brainPage .brainTissueLegend li {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* ── Cell types ───────────────────────────────────────────────────────────── */
+.brainPage .brainCells {
+  margin-top: 0.9rem;
+}
+
+.brainPage .brainTissue h4,
+.brainPage .brainCells h4 {
+  margin: 0 0 0.35rem;
+  color: #999;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.brainPage .brainInfo .brainTransmitters {
+  margin: 0 0 0.5rem;
+  color: #bbb;
+  font-size: 12px;
+}
+
+.brainPage .brainCellGroup {
+  margin-top: 0.6rem;
+}
+
+.brainPage .brainCellGroup h5 {
+  margin: 0 0 0.3rem;
+  color: #ddd;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.brainPage .brainCellGroup h5 span {
+  color: #777;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.brainPage .brainCellBar {
+  display: flex;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #333;
+}
+
+.brainPage .brainCellGroup ul {
+  list-style: none;
+  margin: 0.35rem 0 0;
+  padding: 0;
+}
+
+.brainPage .brainCellGroup summary {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.12rem 0;
+  color: #ccc;
+  font-size: 12px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.brainPage .brainCellGroup summary::-webkit-details-marker {
+  display: none;
+}
+
+.brainPage .brainCellGroup summary:hover .brainCellName {
+  text-decoration: underline;
+}
+
+.brainPage .brainCellName {
+  flex: 1;
+}
+
+.brainPage .brainCellShare {
+  color: #999;
+  font-variant-numeric: tabular-nums;
+}
+
+.brainPage .brainInfo .brainCellGroup details p {
+  margin: 0.15rem 0 0.35rem 1.2rem;
+  color: #999;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.brainPage .brainInfo .brainCellNote {
+  margin: 0.6rem 0 0;
+  color: #777;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.brainPage .brainCellNote a {
+  color: #9ab;
+}
+
+/* ── Receptors, gene expression ───────────────────────────────────────────── */
+.brainPage .brainReceptors,
+.brainPage .brainGenes {
+  margin-top: 0.9rem;
+}
+
+.brainPage .brainReceptors h4,
+.brainPage .brainGenes h4 {
+  margin: 0 0 0.35rem;
+  color: #999;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.brainPage .brainReceptorSystem h5 {
+  margin: 0.45rem 0 0.1rem;
+  color: #ddd;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.brainPage .brainReceptorSystem ul,
+.brainPage .brainGenes ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.brainPage .brainReceptorSystem summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.1rem 0;
+  color: #ccc;
+  font-size: 12px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.brainPage .brainReceptorSystem summary::-webkit-details-marker {
+  display: none;
+}
+
+.brainPage .brainReceptorSystem summary:hover .brainReceptorName {
+  text-decoration: underline;
+}
+
+.brainPage .brainReceptorName {
+  flex: 1;
+  min-width: 0;
+}
+
+.brainPage .brainReceptorBar {
+  flex: 0 0 38%;
+  height: 6px;
+  border-radius: 3px;
+  background: #333;
+  overflow: hidden;
+}
+
+.brainPage .brainReceptorBar span {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  background: #8cc4ff;
+}
+
+.brainPage .brainReceptorRank,
+.brainPage .brainReceptorRef {
+  flex: 0 0 2.6em;
+  color: #999;
+  font-size: 11px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.brainPage .brainReceptorRef {
+  flex-basis: calc(38% + 3.1em);
+  color: #777;
+  font-style: italic;
+}
+
+.brainPage .brainInfo .brainReceptorSystem details p {
+  margin: 0.15rem 0 0.4rem;
+  color: #999;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.brainPage .brainInfo .brainReceptorSystem details .brainReceptorTracer {
+  color: #777;
+  font-size: 11px;
+}
+
+.brainPage .brainReceptorSystem details a {
+  color: #8cc4ff;
+  text-decoration: none;
+}
+
+.brainPage .brainInfo .brainGenesIntro {
+  margin: 0 0 0.3rem;
+  color: #bbb;
+  font-size: 12px;
+}
+
+.brainPage .brainGenes li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.08rem 0;
+  font-size: 12px;
+}
+
+.brainPage .brainGenes li a {
+  flex: 0 0 5.5em;
+  color: #8cc4ff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11.5px;
+  text-decoration: none;
+}
+
+.brainPage .brainGeneName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: #aaa;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.brainPage .brainGeneFold {
+  color: #999;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
 /* ── Hemisphere switch, region list ──────────────────────────────────────── */
 .brainPage .brainSegmented {
   display: flex;

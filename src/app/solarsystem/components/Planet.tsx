@@ -1,14 +1,15 @@
 import { useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
-import { useRef, useState } from 'react'
+import { Suspense, useMemo, useRef, useState } from 'react'
 import { Edges } from '@react-three/drei'
 import Label from './Label'
-import { orbitalPosition, getBodyAxis, BodyAxis } from '../utils'
+import { orbitalPosition, getBodyAxis, BodyAxis, planetViewState } from '../utils'
 import Moon from './Moon'
 import { getPlanetSize } from '../data/planets'
 import { simulationState } from '../utils'
 import { PlanetStructure, LayerFacts, LayerKey } from '../data/planetStructure'
 import Rings from './Rings'
+import { AtmosphereGlow, EarthLayers } from './PlanetAtmosphere'
 
 // A hover/focus target: any radial layer key, the whole-planet fallback sphere used when
 // a body has no `structure` data ('total_crust'), or nothing hovered.
@@ -42,6 +43,8 @@ export type PlanetProps = {
   showCrust?: boolean // default true — peel back the crust shell in the 3D cutaway
   hoveredLayer?: HoveredLayer // lifted state so a DOM sibling (LayerCrossSection) can share it; falls back to local state if omitted
   setHoveredLayer?: (layer: HoveredLayer) => void
+  focusedMoon?: string | null // planet view: the moon the camera follows (highlighted)
+  onMoonSelect?: (moon: string) => void
 }
 
 // --- Tooltip formatting helpers (exported for reuse by LayerCrossSection.tsx) -----------
@@ -198,7 +201,7 @@ function Shell({
   hoverKey,
   hoveredLayer,
   setHoveredLayer,
-  emissiveIntensity = 0.2,
+  emissiveIntensity = 0.55, // the close-up is lit by the real Sun: keep the cut faces readable on the night side
 }: {
   innerR: number
   outerR: number
@@ -272,6 +275,8 @@ export default function Planet({
   showCrust = true,
   hoveredLayer: hoveredLayerProp,
   setHoveredLayer: setHoveredLayerProp,
+  focusedMoon = null,
+  onMoonSelect,
 }: PlanetProps) {
   const ref = useRef<THREE.Group>(null!)
   const groupRef = useRef<THREE.Group>(null!)
@@ -283,6 +288,14 @@ export default function Planet({
   // Real axial tilt/spin for this body (see getBodyAxis in utils.tsx); shared with
   // Rings so they lie in the real equatorial plane.
   const axisRef = useRef<BodyAxis | null>(null)
+  // world-space direction from this planet toward the Sun (at the origin), for the close-up's
+  // day/night effects
+  const sunDir = useMemo(() => ({ value: new THREE.Vector3(1, 0, 0) }), [])
+  // The close-up freezes the planet so its cut faces the camera; to keep the real geography
+  // under the real Sun anyway, the surface maps are shifted in longitude by the difference
+  // between the planet's real spin (IAU prime meridian, getBodyAxis) and that frozen yaw.
+  // Axial tilt isn't carried over, so the terminator's latitude can be off by up to the tilt.
+  const uvOffset = useMemo(() => ({ value: 0 }), [])
 
   const textureUrl = useLoader(
     THREE.TextureLoader,
@@ -320,15 +333,25 @@ export default function Planet({
       const position = orbitalPosition(orbitMode, simulationState.elapsed, orbitData, useSimplifiedDistance, name, simulationState.dateMs)
 
       groupRef.current.position.set(...position); // Update position
+      if (isFocused) sunDir.value.set(-position[0], -position[1], -position[2]).normalize()
     }
     if (ref.current) {
       if (isFocused) {
-        // Freeze and align the cut to face our specific camera angle
-        ref.current.rotation.y = 0;
-        ref.current.rotation.x = 0;
-        ref.current.rotation.z = 0;
-        ref.current.quaternion.identity();
+        // Freeze and turn the cut to face the close-up camera (see planetViewState)
+        ref.current.rotation.set(0, planetViewState.yaw, 0);
+        const axis = getBodyAxis(name, simulationState.dateMs);
+        if (axis) {
+          const real = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), new THREE.Vector3(...axis.northThree).normalize())
+            .multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), THREE.MathUtils.degToRad(axis.spinDegrees)));
+          const meridian = new THREE.Vector3(1, 0, 0).applyQuaternion(real);
+          const realYaw = Math.atan2(-meridian.z, meridian.x);
+          const offset = (((planetViewState.yaw - realYaw) / (2 * Math.PI)) % 1 + 1) % 1;
+          uvOffset.value = offset;
+          if (textureUrl.wrapS !== THREE.RepeatWrapping) { textureUrl.wrapS = THREE.RepeatWrapping; textureUrl.needsUpdate = true; }
+          textureUrl.offset.x = offset;
+        }
       } else if (orbitMode === 'RealLive') {
+        if (textureUrl.offset.x !== 0) textureUrl.offset.x = 0; // the close-up's longitude shift
         const axis = getBodyAxis(name, simulationState.dateMs);
         axisRef.current = axis;
         if (axis) {
@@ -420,7 +443,7 @@ export default function Planet({
                       uv.needsUpdate = true;
                     }}
                   />
-                  <meshStandardMaterial map={textureUrl} color={color} side={THREE.DoubleSide} emissive={color} emissiveIntensity={0.05} />
+                  <meshStandardMaterial map={textureUrl} side={THREE.DoubleSide} />
                 </mesh>
                 <mesh>
                   <sphereGeometry
@@ -435,26 +458,34 @@ export default function Planet({
                       uv.needsUpdate = true;
                     }}
                   />
-                  <meshStandardMaterial map={textureUrl} color={color} side={THREE.DoubleSide} emissive={color} emissiveIntensity={0.05} />
+                  <meshStandardMaterial map={textureUrl} side={THREE.DoubleSide} />
                 </mesh>
 
                 {/* Flat cut faces - Crust portion */}
                 <mesh rotation={[0, Math.PI, 0]} position={[0, 0, 0]}>
                   <ringGeometry args={[mantleR, crustR, 64, 1, 0, Math.PI / 2]} />
-                  <meshStandardMaterial color={structure.crust.color || '#8b5a2b'} side={THREE.DoubleSide} emissive={structure.crust.color || '#8b5a2b'} emissiveIntensity={0.05} />
+                  <meshStandardMaterial color={structure.crust.color || '#8b5a2b'} side={THREE.DoubleSide} emissive={structure.crust.color || '#8b5a2b'} emissiveIntensity={0.45} />
                   <Edges color={hoveredLayer === 'crust' ? "#ffffff" : (structure.crust.color || '#8b5a2b')} threshold={15} />
                 </mesh>
                 <mesh rotation={[0, Math.PI / 2, 0]} position={[0, 0, 0]}>
                   <ringGeometry args={[mantleR, crustR, 64, 1, 0, Math.PI / 2]} />
-                  <meshStandardMaterial color={structure.crust.color || '#8b5a2b'} side={THREE.DoubleSide} emissive={structure.crust.color || '#8b5a2b'} emissiveIntensity={0.05} />
+                  <meshStandardMaterial color={structure.crust.color || '#8b5a2b'} side={THREE.DoubleSide} emissive={structure.crust.color || '#8b5a2b'} emissiveIntensity={0.45} />
                   <Edges color={hoveredLayer === 'crust' ? "#ffffff" : (structure.crust.color || '#8b5a2b')} threshold={15} />
                 </mesh>
                 <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
                   <ringGeometry args={[mantleR, crustR, 64, 1, Math.PI / 2, Math.PI / 2]} />
-                  <meshStandardMaterial color={structure.crust.color || '#8b5a2b'} side={THREE.DoubleSide} emissive={structure.crust.color || '#8b5a2b'} emissiveIntensity={0.05} />
+                  <meshStandardMaterial color={structure.crust.color || '#8b5a2b'} side={THREE.DoubleSide} emissive={structure.crust.color || '#8b5a2b'} emissiveIntensity={0.45} />
                   <Edges color={hoveredLayer === 'crust' ? "#ffffff" : (structure.crust.color || '#8b5a2b')} threshold={15} />
                 </mesh>
               </group>
+            )}
+
+            {/* Atmosphere rim glow, and Earth's clouds + night-side city lights */}
+            {showAtmosphere && <AtmosphereGlow radius={crustR} planet={name} sunDir={sunDir} />}
+            {name === 'Earth' && showCrust && (
+              <Suspense fallback={null}>
+                <EarthLayers radius={crustR} sunDir={sunDir} uvOffset={uvOffset} showClouds={showAtmosphere} />
+              </Suspense>
             )}
 
             {/* Mantle: upper mantle if split, otherwise the whole mantle */}
@@ -523,11 +554,11 @@ export default function Planet({
 
       {/* Moons */}
       {isFocused && moons && moons.map(moon => (
-        <Moon key={moon} name={moon} planetName={name} planetSize={planetSize} />
+        <Moon key={moon} name={moon} planetName={name} planetSize={planetSize} focused={focusedMoon === moon} onSelect={onMoonSelect} />
       ))}
 
-      {/* Label */}
-      <Label text={name} position={[0, planetSize + (isFocused ? 0.5 : 1), 0]} fontSize={isFocused ? 0.3 : 1} />
+      {/* Label (the planet view names it in the info card instead) */}
+      {!isFocused && <Label text={name} position={[0, planetSize + 1, 0]} fontSize={1} />}
     </group>
   )
 }

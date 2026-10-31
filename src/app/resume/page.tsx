@@ -123,7 +123,7 @@ type Role = {
   /** White logo artwork that needs a dark tile behind it */
   darkLogo?: boolean;
   org: string;
-  /** Omitted for research roles, where the org line ("Professor · School") is the title */
+  /** Omitted for research roles, where the org line ("School · Professor") is the title */
   role?: string;
   dates: string;
   bullets?: string[];
@@ -200,7 +200,7 @@ const RESEARCH: Role[] = [
   {
     logo: "/resumeImages/templeLogo.png",
     logoAlt: "Temple University logo",
-    org: "Dr. Vincenzo Carnevale · Temple University",
+    org: "Temple University · Dr. Vincenzo Carnevale",
     dates: "Aug 2026 — Present",
     bullets: [
       "Researching applications of neuromorphic computing to molecular dynamics simulations",
@@ -210,7 +210,7 @@ const RESEARCH: Role[] = [
   {
     logo: "/resumeImages/templeLogo.png",
     logoAlt: "Temple University logo",
-    org: "Dr. Justin Shi · Temple University",
+    org: "Temple University · Dr. Justin Shi",
     dates: "Jan 2026 — Present",
     bullets: [
       "Assisted in the development of a decentralized file system, Tarsus",
@@ -220,7 +220,7 @@ const RESEARCH: Role[] = [
   {
     logo: "/resumeImages/VTlogo.png",
     logoAlt: "Virginia Tech logo",
-    org: "Dr. Vito Scarola · Virginia Tech",
+    org: "Virginia Tech · Dr. Vito Scarola",
     dates: "Jan 2021 — Dec 2021",
     bullets: [
       "Simulated the Hubbard model in Python, then developed a combinatorial optimization algorithm to dynamically implement the Gutzwiller projection",
@@ -231,10 +231,10 @@ const RESEARCH: Role[] = [
   {
     logo: "/resumeImages/VTlogo.png",
     logoAlt: "Virginia Tech logo",
-    org: "Dr. Bob White · Virginia Tech",
+    org: "Virginia Tech · Dr. Bob White",
     dates: "Aug 2017 — Dec 2019",
     bullets: [
-      "Wet lab and computational biochemistry research experience",
+      "Wet lab and computational biochemistry research",
       "Studied metalloprotein families, radical SAM enzymes, and novel thiol molecules",
       "Protein homology modeling, molecular docking simulations, comparative genomics, GC-MS, liquid chromatography, and chemical assays",
     ],

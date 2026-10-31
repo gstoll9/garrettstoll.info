@@ -1,65 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import { useWikiSummary } from './wikiSummary'
 import { milkyWaySystems } from '../data/milkyWay'
 import { spectralTemperature, starRadiusSun, type MilkyWayMarker } from '../utils'
 import type { ModelPlan } from './ObjectModel'
 
 // Details for the object selected in the Milky Way view: its Wikipedia summary and lead image
-// (fetched live from the REST API, like the world map's panels), the catalogue data the model
-// was built from, and what in the model is real vs. estimated vs. illustrative.
-//
-// Images: only files hosted on Wikimedia Commons (freely licensed) are shown, with a link to
-// the file's Commons page for its author and license. A lead image stored on English
-// Wikipedia itself is non-free (fair use) and is skipped.
-
-type Summary = {
-  title: string
-  extract: string
-  url: string
-  image: { src: string; full: string; filePage: string } | null
-}
-
-const cache = new Map<string, Summary | null>()
-
-// Catalogue names ("Sagittarius dSph", "FSR 584") often aren't article titles; when the list
-// gave no link or the title 404s, take the top Wikipedia search hit for the name plus its kind
-async function searchTitle(query: string): Promise<string | null> {
-  const url = `https://en.wikipedia.org/w/api.php?action=query&list=search&format=json&origin=*&srlimit=5&srsearch=${encodeURIComponent(query)}`
-  const j = await fetch(url).then((r) => r.json())
-  const hit = (j.query?.search ?? []).find((h: { title: string }) => !/^(List of|Lists of|Satellite galaxies of)/.test(h.title))
-  return hit?.title ?? null
-}
-
-async function fetchPage(title: string) {
-  const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title.replace(/ /g, '_'))}?redirect=true`)
-  if (!res.ok) return null
-  const j = await res.json()
-  return j.type === 'disambiguation' ? null : j
-}
-
-async function fetchSummary(title: string, searchQuery: string): Promise<Summary | null> {
-  if (cache.has(title)) return cache.get(title)!
-  try {
-    let j = await fetchPage(title)
-    if (!j) {
-      const found = await searchTitle(searchQuery)
-      j = found ? await fetchPage(found) : null
-    }
-    if (!j) throw new Error('not found')
-    const original: string | undefined = j.originalimage?.source
-    const thumb: string | undefined = j.thumbnail?.source
-    let image: Summary['image'] = null
-    if (original && thumb && original.includes('/wikipedia/commons/')) {
-      const file = decodeURIComponent(original.split('/').pop() ?? '')
-      image = { src: thumb, full: original, filePage: `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(file)}` }
-    }
-    const summary: Summary = { title: j.title, extract: j.extract ?? '', url: j.content_urls?.desktop?.page ?? `https://en.wikipedia.org/wiki/${encodeURIComponent(title)}`, image }
-    cache.set(title, summary)
-    return summary
-  } catch {
-    cache.set(title, null)
-    return null
-  }
-}
+// (wikiSummary.ts), the catalogue data the model was built from, and what in the model is
+// real vs. estimated vs. illustrative.
 
 const formatLy = (kpc: number) => {
   const ly = kpc * 3261.56
@@ -110,13 +57,7 @@ function facts(marker: MilkyWayMarker): [string, string][] {
 export default function MilkyWayObjectPanel({ marker, plan, onClose }: { marker: MilkyWayMarker; plan: ModelPlan | null; onClose: () => void }) {
   const title = marker.wiki ?? marker.name
   const searchQuery = `${marker.name.replace(/ \(.*\)$/, '')} ${marker.kind === 'nearby star' ? 'star' : marker.kind}`
-  const [summary, setSummary] = useState<Summary | null | undefined>(cache.get(title))
-  useEffect(() => {
-    let live = true
-    setSummary(cache.get(title))
-    if (!cache.has(title)) fetchSummary(title, searchQuery).then((s) => { if (live) setSummary(s) })
-    return () => { live = false }
-  }, [title, searchQuery])
+  const summary = useWikiSummary(title, searchQuery)
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
     window.addEventListener('keydown', onKey)

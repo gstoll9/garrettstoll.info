@@ -24,6 +24,16 @@ export const SOURCES = [
     usedBy: ['/worldmap'] },
   { id: 'naturalearth', name: 'Natural Earth', url: 'https://www.naturalearthdata.com', license: 'Public_Domain',
     usedBy: ['/worldmap', 'worldatlas'] },
+  // Basemap: OSM vector tiles (OpenMapTiles schema) and Sentinel-2 imagery, loaded live by the page;
+  // only the style built from OpenFreeMap's is saved locally (public/worldmap/basemap/style.json)
+  { id: 'openstreetmap', name: 'OpenStreetMap', url: 'https://www.openstreetmap.org/copyright', license: 'ODbL_1.0',
+    usedBy: ['openfreemap'] },
+  { id: 'openfreemap', name: 'OpenFreeMap · OpenMapTiles', url: 'https://openfreemap.org', license: 'OpenMapTiles_CC_BY_4.0',
+    usedBy: ['/worldmap'] },
+  { id: 'eoxs2cloudless', name: 'Sentinel-2 cloudless 2024 · EOX', url: 'https://s2maps.eu', license: 'CC_BY-NC-SA_4.0',
+    usedBy: ['/worldmap'] },
+  { id: 'copernicus', name: 'Copernicus Sentinel-2 data', url: 'https://sentinels.copernicus.eu', license: 'Copernicus_Free_Open',
+    usedBy: ['eoxs2cloudless'] },
   { id: 'worldatlas', name: 'world-atlas', url: 'https://github.com/topojson/world-atlas', license: 'ISC', usedBy: ['/worldmap'] },
   // Per-country licenses, grouped by family (see public/worldmap/admin2/sources.json)
   { id: 'geoboundaries', name: 'geoBoundaries gbOpen', url: 'https://www.geoboundaries.org', usedBy: ['/worldmap'],
@@ -41,6 +51,14 @@ export const SOURCES = [
   // Spiral-arm fits (Table 2), parsed from the arXiv TeX source saved in src/app/solarsystem/literature/reid2019/
   { id: 'reid2019', name: 'Reid et al. 2019 · Milky Way spiral arms from BeSSeL maser parallaxes', url: 'https://arxiv.org/abs/1910.03357',
     license: 'Cite_Reid_2019', usedBy: ['/solarsystem'] },
+  // Earth's cloud cover (Blue Marble) and city lights (Black Marble 2016) in the planet close-up,
+  // saved under public/solarsystemImages/
+  { id: 'nasavisibleearth', name: 'NASA Visible Earth', url: 'https://visibleearth.nasa.gov', license: 'Public_Domain',
+    usedBy: ['/solarsystem'] },
+  // Lead images in the Milky Way object panel, fetched live via Wikipedia's REST summaries;
+  // only Commons-hosted (freely licensed) files are shown, each linked to its file page
+  { id: 'commons', name: 'Wikimedia Commons', url: 'https://commons.wikimedia.org', license: 'Per-file_free_licenses',
+    usedBy: ['/solarsystem'] },
   // IBEX interstellar-wind direction the heliosphere's nose points into
   { id: 'swaczyna2023', name: 'Swaczyna et al. 2023 · IBEX interstellar neutral helium', url: 'https://arxiv.org/abs/2307.06694',
     license: 'Cite_Swaczyna_2023', usedBy: ['/solarsystem'] },
@@ -50,11 +68,22 @@ export const SOURCES = [
   { id: 'gaia', name: 'ESA Gaia DR2', url: 'https://www.cosmos.esa.int/web/gaia/dr2', license: 'CC_BY-SA_3.0_IGO',
     usedBy: ['svsstarmaps'] },
   { id: 'planettextures', name: 'Planet textures', url: null, license: 'Unverified', usedBy: ['/solarsystem'] },
-  { id: 'bodyparts3d', name: 'BodyParts3D', url: 'https://lifesciencedb.jp/bp3d/', license: 'CC_BY-SA_2.1_JP', usedBy: ['/brain'] },
-  // Lead images in the Milky Way object panel, fetched live via Wikipedia's REST summaries;
-  // only Commons-hosted (freely licensed) files are shown, each linked to its file page
-  { id: 'commons', name: 'Wikimedia Commons', url: 'https://commons.wikimedia.org', license: 'Per-file_free_licenses',
-    usedBy: ['/solarsystem'] },
+  { id: 'cerebra', name: 'CerebrA atlas · Manera et al. 2020', url: 'https://doi.org/10.12751/g-node.be5e62', license: 'CC0_1.0',
+    usedBy: ['/brain'] },
+  // MNI-ICBM152 2009c template (Fonov et al. 2011) and its tissue maps: free use with copyright notice
+  { id: 'mni-icbm152', name: 'MNI-ICBM152 2009c template · Fonov et al. 2011',
+    url: 'https://nist.mni.mcgill.ca/icbm-152-nonlinear-atlases-2009/', license: 'MNI_Free_Use_With_Notice',
+    usedBy: ['/brain'] },
+  // Human Brain Cell Atlas v1.0 (Siletti et al. 2023): CC BY 4.0 on CELLxGENE; the per-cell metadata
+  // is read from the Allen Brain Cell Atlas's public S3 mirror of the same data
+  { id: 'siletti-hbca', name: 'Human Brain Cell Atlas v1.0 · Siletti et al. 2023',
+    url: 'https://cellxgene.cziscience.com/collections/283d65eb-dd53-496d-adb7-7570c7caa443', license: 'CC_BY_4.0',
+    usedBy: ['/brain'] },
+  // Group-average receptor PET maps collected from ~20 original studies (cited per map on the page)
+  { id: 'hansen-receptors', name: 'Neurotransmitter receptor PET maps · Hansen et al. 2022',
+    url: 'https://github.com/netneurolab/hansen_receptors', license: 'CC_BY-NC-SA_4.0', usedBy: ['/brain'] },
+  { id: 'allen-hba', name: 'Allen Human Brain Atlas · Hawrylycz et al. 2012', url: 'https://human.brain-map.org',
+    license: 'Allen_Terms_Of_Use', usedBy: ['/brain'] },
   { id: 'uniprot', name: 'UniProt', url: 'https://www.uniprot.org', license: 'CC_BY_4.0', usedBy: ['/methanogens'] },
   { id: 'pdb', name: 'RCSB PDB', url: 'https://www.rcsb.org', license: 'CC0_1.0', usedBy: ['/methanogens'] },
 ];
@@ -87,6 +116,13 @@ export const JOBS = [
     id: 'worldmap-history', kind: 'auto', everyDays: 365, sources: ['cshapes', 'wikipedia', 'wikidata'],
     steps: [['node', 'scripts/build-history.mjs', `${CACHE}/cshapes`]],
     outputs: ['public/worldmap/history', 'public/worldmap/db/entities.csv', 'public/worldmap/db/entity_periods.csv'],
+  },
+  {
+    // The local basemap style (re-tinted OpenFreeMap "dark" + Sentinel-2 layer) and MapLibre's
+    // worker; re-run after upgrading maplibre-gl so the worker file matches its version
+    id: 'worldmap-basemap', kind: 'auto', everyDays: 365, sources: ['openfreemap', 'eoxs2cloudless'],
+    steps: [['node', 'scripts/build-basemap-style.mjs', `${CACHE}/basemap`]],
+    outputs: ['public/worldmap/basemap', 'public/worldmap/vendor'],
   },
   {
     // Office holders, legislatures and capitals change with elections; the subregion steps
@@ -135,6 +171,7 @@ export const JOBS = [
     checklist: [
       'Re-save the planet/asteroid pages under src/app/solarsystem/wikipedia/ (wikiScraper.py)',
       'Diff the infobox/layer values against data/planetStructure.ts, asteroids.ts, dwarfPlanets.ts, rings.ts and moonAppearance.ts; these are hand-extracted, so update by hand',
+      'python -I src/app/solarsystem/wikipedia/generateLayerCitations.py (regenerates data/layerCitations.ts; fix any NO MATCH regex, and the layer value, if a page was reworded)',
     ],
   },
   {
@@ -156,11 +193,44 @@ export const JOBS = [
     ],
   },
   {
-    id: 'brain-model', kind: 'manual', everyDays: null, sources: ['bodyparts3d'],
+    id: 'brain-model', kind: 'manual', everyDays: null, sources: ['cerebra'],
     outputs: ['public/brainImages/brain.glb'],
     checklist: [
-      'BodyParts3D is a finished release, pinned to a mirror commit (COMMIT in scripts/build-brain-model.mjs); only rerun after changing PARTS or the commit',
+      'CerebrA is a finished release; only rerun after changing the meshing (needs numpy, scipy, scikit-image, h5py)',
+      'python -P scripts/brain/cerebra_meshes.py',
       'node scripts/build-brain-model.mjs',
+    ],
+  },
+  {
+    id: 'brain-tissue', kind: 'manual', everyDays: null, sources: ['cerebra', 'mni-icbm152'],
+    outputs: ['src/app/brain/data/tissue.ts'],
+    checklist: [
+      'Finished releases; rerun after changing the CerebrA label volume in cerebra_meshes.py (downloads ~60 MB, needs numpy, scipy, h5py)',
+      'python -P scripts/brain/tissue.py',
+    ],
+  },
+  {
+    id: 'brain-cell-types', kind: 'manual', everyDays: null, sources: ['siletti-hbca'],
+    outputs: ['src/app/brain/data/cellTypes.ts'],
+    checklist: [
+      'Siletti et al. is a finished release; rerun after changing ROI_TO_REGION or if the Allen mirror publishes a newer cell_metadata version (downloads ~830 MB, needs pandas)',
+      'python -P scripts/brain/siletti_cell_types.py',
+    ],
+  },
+  {
+    id: 'brain-receptors', kind: 'manual', everyDays: null, sources: ['hansen-receptors', 'cerebra'],
+    outputs: ['src/app/brain/data/receptors.ts'],
+    checklist: [
+      'Finished release; rerun after changing the CerebrA label volume or the TARGETS/REFERENCE tables (downloads ~450 MB of PET maps, needs numpy, scipy)',
+      'python -P scripts/brain/receptors.py',
+    ],
+  },
+  {
+    id: 'brain-genes', kind: 'manual', everyDays: null, sources: ['allen-hba'],
+    outputs: ['src/app/brain/data/genes.ts'],
+    checklist: [
+      'The microarray data is a finished release; rerun after changing REGION_STRUCTURES (clear scripts/.cache/ahba/diff_* first; the API fails intermittently, the script retries)',
+      'python -P scripts/brain/ahba_genes.py',
     ],
   },
 ];

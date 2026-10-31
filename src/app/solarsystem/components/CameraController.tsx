@@ -2,7 +2,7 @@ import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
-import { LOCAL_GROUP_VIEW_POSITION, LOCAL_GROUP_VIEW_TARGET, MILKY_WAY_SUN_SCENE, orbitalPosition, OrbitProps, scaleTransition, simulationState } from '../utils'
+import { LOCAL_GROUP_VIEW_POSITION, LOCAL_GROUP_VIEW_TARGET, MILKY_WAY_SUN_SCENE, moonPositionKm, orbitalPosition, OrbitProps, planetViewState, scaleTransition, simulationState } from '../utils'
 
 import { getPlanetSize } from '../data/planets'
 import { moonElements } from '../data/moonElements'
@@ -22,7 +22,12 @@ type CameraControllerProps = {
   orbitControlsRef: React.RefObject<OrbitControlsImpl | null>;
   useSimplifiedDistance: boolean;
   useRealisticSizes?: boolean;
+  // within a planet view: follow one of its moons, or frame the whole moon system
+  focusedMoon?: string | null;
 }
+
+// focusedMoon value meaning "frame the planet with all of its listed moons"
+export const MOON_SYSTEM = '__system__'
 
 // Arrival framings when scroll-zooming between models (components/ScaleTransitions.tsx)
 const SOLAR_ARRIVAL_DIRECTION: [number, number, number] = [0, 0.243, 0.970] // the default view's (0, 150, 600)
@@ -34,7 +39,7 @@ const MILKY_WAY_OVERVIEW = 300 // 30 kpc: the whole disk, seen mostly face-on so
 const MILKY_WAY_OVERVIEW_DIRECTION: [number, number, number] = [0.2, 0.88, 0.43]
 const LOCAL_GROUP_ARRIVAL_DISTANCE = 9 // 90 kpc (back-into-the-Milky-Way threshold is 5)
 
-export default function CameraController({ focus, planetData, orbitControlsRef, useSimplifiedDistance, useRealisticSizes = false }: CameraControllerProps) {
+export default function CameraController({ focus, planetData, orbitControlsRef, useSimplifiedDistance, useRealisticSizes = false, focusedMoon = null }: CameraControllerProps) {
   const { camera } = useThree()
   const isFollowing = useRef(false)
   // null until the first effect run: the canvas content can mount late (it suspends while
@@ -133,6 +138,13 @@ export default function CameraController({ focus, planetData, orbitControlsRef, 
     prevFocus.current = focus
   }, [focus, planetData, orbitControlsRef, camera])
 
+  // picking a moon (or the whole system, or back to the planet) re-frames the camera
+  const prevMoon = useRef<string | null>(focusedMoon)
+  useEffect(() => {
+    if (prevMoon.current !== focusedMoon && isFollowing.current) isJumpPending.current = true
+    prevMoon.current = focusedMoon
+  }, [focusedMoon])
+
   useFrame(() => {
     if (isFollowing.current && planetData && orbitControlsRef.current) {
       const [x, y, z] = orbitalPosition(
@@ -144,6 +156,14 @@ export default function CameraController({ focus, planetData, orbitControlsRef, 
         simulationState.dateMs
       )
       const pPos = new THREE.Vector3(x, y, z)
+      let planetSizeNow = 1
+      if (planetData.size !== undefined && planetData.realDiameter !== undefined) {
+        planetSizeNow = useRealisticSizes ? getPlanetSize({ size: planetData.size, realDiameter: planetData.realDiameter }, true) : planetData.size
+      }
+      const kmToScene = planetSizeNow / (PLANET_EQUATORIAL_RADIUS_KM[planetData.name] ?? 1)
+      const moon = focusedMoon && focusedMoon !== MOON_SYSTEM ? focusedMoon : null
+      const moonOffset = moon ? moonPositionKm(moon, simulationState.dateMs) : null
+      if (moonOffset) pPos.add(new THREE.Vector3(moonOffset[0], moonOffset[1], moonOffset[2]).multiplyScalar(kmToScene))
       
       if (isJumpPending.current) {
         // Calculate max radius including moons
@@ -167,17 +187,40 @@ export default function CameraController({ focus, planetData, orbitControlsRef, 
 
         // fov 60 => tan(30deg) ~ 0.577, so ~1.7x the radius fits vertically; 1.6 is enough
         // since the (wider) horizontal extent carries the orbit.
-        const zoomDist = Math.max(fitRadius * 1.6, planetSize * 6);
+        const planetFrame = Math.max(fitRadius * 1.6, planetSize * 3.6);
+        let zoomDist = planetFrame;
+        if (moon && moonElements[moon]) {
+          // a moon fills about a third of the view
+          zoomDist = Math.max(moonElements[moon].meanRadiusKm * kmToScene * 7, planetSize * 0.02)
+        } else if (focusedMoon === MOON_SYSTEM) {
+          // every listed moon's orbit in frame
+          let maxApo = 0
+          for (const name of planetData.moons ?? []) {
+            const el = moonElements[name]
+            if (el) maxApo = Math.max(maxApo, el.semimajorAxisKm * (1 + el.eccentricity))
+          }
+          zoomDist = Math.max(maxApo * kmToScene * 1.25, zoomDist)
+        }
 
         // Fixed camera direction looking into the top-half 1/8th slice chunk
         // A lower, more direct angle helps show off the cross-section layers without being too top-down
         // Rotated an additional 20 degrees to the left for better visibility
-        const camDir = new THREE.Vector3(-1.0, 0.35, -1.0)
+        const cutDir = new THREE.Vector3(-1.0, 0.35, -1.0)
           .applyAxisAngle(new THREE.Vector3(0, 1, 0), -40 * Math.PI / 180)
           .normalize();
+        // The close-up is lit by the real Sun, so look from ~50° off the sunward direction
+        // (mostly day side, with the terminator in view); Planet.tsx turns the planet by the
+        // same azimuth so the cutaway still faces us.
+        const sunward = new THREE.Vector3(-x, 0, -z).normalize()
+        const camDir = sunward.applyAxisAngle(new THREE.Vector3(0, 1, 0), 50 * Math.PI / 180)
+        camDir.y = cutDir.y * Math.hypot(camDir.x, camDir.z) / Math.hypot(cutDir.x, cutDir.z)
+        camDir.normalize()
+        planetViewState.yaw = Math.atan2(camDir.x, camDir.z) - Math.atan2(cutDir.x, cutDir.z)
         
         camera.position.copy(pPos.clone().add(camDir.multiplyScalar(zoomDist)));
-        scaleTransition.planetFrameDistance = zoomDist;
+        // zooming out past ~15 of these hands back to the Solar System; never less than the
+        // planet's own framing, so stepping back from a close-up moon doesn't leave the view
+        scaleTransition.planetFrameDistance = Math.max(zoomDist, planetFrame);
         // Update target NOW so the motion-tracking block below adds zero delta this frame
         orbitControlsRef.current.target.copy(pPos);
         orbitControlsRef.current.update();

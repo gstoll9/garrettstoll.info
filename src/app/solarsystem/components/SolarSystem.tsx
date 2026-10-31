@@ -48,9 +48,11 @@ type SolarSystemProps = {
   hoveredLayer: HoveredLayer;
   setHoveredLayer: (layer: HoveredLayer) => void;
   galacticTrailYears: number; // 0 = off
+  focusedMoon: string | null;
+  onMoonSelect: (moon: string) => void;
 };
 
-export default function SolarSystem({ setFocus, focus, showOrbits, orbitMode, useSimplifiedDistance, useRealisticSizes, hiddenBodies, showAtmosphere, showCrust, hoveredLayer, setHoveredLayer, galacticTrailYears }: SolarSystemProps) {
+export default function SolarSystem({ setFocus, focus, showOrbits, orbitMode, useSimplifiedDistance, useRealisticSizes, hiddenBodies, showAtmosphere, showCrust, hoveredLayer, setHoveredLayer, galacticTrailYears, focusedMoon, onMoonSelect }: SolarSystemProps) {
 
   const isSolarSystem = focus === 'solarsystem';
   const isSunFocused = focus === 'Sun';
@@ -134,6 +136,8 @@ export default function SolarSystem({ setFocus, focus, showOrbits, orbitMode, us
               useSimplifiedDistance={useSimplifiedDistance}
               useRealisticSizes={useRealisticSizes}
               isFocused={isThisPlanetFocused}
+              focusedMoon={focusedMoon}
+              onMoonSelect={onMoonSelect}
               showAtmosphere={showAtmosphere}
               showCrust={showCrust}
               hoveredLayer={hoveredLayer}

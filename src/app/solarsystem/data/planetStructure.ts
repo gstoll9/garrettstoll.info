@@ -323,8 +323,9 @@ export const planetStructures: Record<string, PlanetStructure> = {
       ],
       surfacePressureKPa: 101.325,
       tempK: { min: 184, mean: 288, max: 330 }, // -89.2 / 14.76 / 56.7 °C
-      // Standard, textbook-level layer boundaries (Atmosphere_of_Earth.html confirms the
-      // same 5-layer troposphere/stratosphere/mesosphere/thermosphere/exosphere ordering).
+      // Boundaries from Atmosphere_of_Earth.html's "Stratification" list (0–12 / 12–50 / 50–80 /
+      // 80–700 / 700–10,000 km; see data/layerCitations.ts). Earlier textbook values of 85 and
+      // 600 km for the mesopause/thermopause were replaced to match the saved source.
       layers: [
         {
           name: 'Troposphere',
@@ -343,21 +344,21 @@ export const planetStructures: Record<string, PlanetStructure> = {
         {
           name: 'Mesosphere',
           color: ATMO_LAYER_COLORS.mesosphere,
-          altitudeKm: { min: 50, max: 85 },
+          altitudeKm: { min: 50, max: 80 },
           tempK: { min: 187, max: 270 },
           note: "Earth's coldest atmospheric layer; most meteors burn up here",
         },
         {
           name: 'Thermosphere',
           color: ATMO_LAYER_COLORS.thermosphere,
-          altitudeKm: { min: 85, max: 600 },
+          altitudeKm: { min: 80, max: 700 },
           tempK: { min: 187, max: 1773 },
           note: 'Temperature swings enormously with solar activity; the ISS and most satellites orbit within this layer',
         },
         {
           name: 'Exosphere',
           color: ATMO_LAYER_COLORS.exosphere,
-          altitudeKm: { min: 600, max: 10000 },
+          altitudeKm: { min: 700, max: 10000 },
           note: "Outermost layer, thinning gradually into interplanetary space — Earth's atmosphere has no sharp outer edge",
         },
       ],

@@ -59,6 +59,9 @@
   position: relative;
   width: min(380px, 56vw);
   height: 20px;
+  /* the dot labels hang below the track (absolutely positioned); reserve their height so
+     anything wrapping onto the next row (the planet picker) doesn't sit on top of them */
+  margin-bottom: 20px;
 }
 
 .solarLine {
@@ -162,11 +165,16 @@
 
 /* ── Planet picker strip ────────────────────────────────────────────────── */
 .planetPicker {
+  /* its own centred row under the tab track, one line, scrolling sideways if it must */
+  flex-basis: 100%;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-  margin-left: 1rem;
+  justify-content: safe center; /* "safe": when it overflows, start at the left edge instead of clipping both ends */
+  flex-wrap: nowrap;
+  gap: 0.35rem;
+  margin-top: -0.35rem;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 
 .planetPickBtn {
@@ -177,10 +185,10 @@
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 999px;
   color: #c7ccd4;
-  font-size: 11px;
+  font-size: 10.5px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 0.45rem 0.8rem;
+  padding: 0.28rem 0.65rem;
   cursor: pointer;
   transition: transform 0.2s, border-color 0.2s, color 0.2s, background 0.2s;
   white-space: nowrap;
@@ -204,7 +212,7 @@
 }
 
 .planetPickSymbol {
-  font-size: 1.25rem;
+  font-size: 1rem;
   line-height: 1;
 }
 
@@ -633,4 +641,169 @@
 .solarPage .mw-object-credit {
   margin-top: 0.85rem;
   font-size: 10.5px;
+}
+
+/* ── Planet view: info card + moon focus ──────────────────────────────────── */
+.solarPage .planet-info .menu-toggle-label {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.solarPage .planet-info-kind {
+  color: rgba(170, 200, 255, 0.7);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.solarPage .planet-info-body {
+  padding: 0 0.9rem 0.85rem;
+  color: rgba(232, 238, 248, 0.86);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.solarPage .planet-info-figure {
+  margin: 0 -0.9rem 0.55rem;
+  background: #000;
+}
+
+.solarPage .planet-info-figure img {
+  display: block;
+  width: 100%;
+  max-height: 150px;
+  object-fit: cover;
+}
+
+.solarPage .planet-info-figure figcaption {
+  padding: 0.2rem 0.9rem;
+  font-size: 10px;
+}
+
+.solarPage .planet-info-body a {
+  color: #9cc6ff;
+}
+
+.solarPage .planet-info-extract {
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.solarPage .planet-info-extract.open {
+  display: block;
+}
+
+.solarPage .planet-info-links {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.2rem 0 0.55rem;
+  font-size: 11px;
+}
+
+.solarPage .planet-info-more {
+  padding: 0;
+  border: none;
+  background: none;
+  color: #9cc6ff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.solarPage .planet-info-facts {
+  display: grid;
+  gap: 0.15rem;
+  margin: 0;
+  padding: 0.5rem 0.65rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.solarPage .planet-info-facts > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.solarPage .planet-info-facts dt {
+  color: rgba(232, 238, 248, 0.5);
+}
+
+.solarPage .planet-info-facts dd {
+  margin: 0;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.solarPage .planet-info-fun {
+  margin: 0.5rem 0 0;
+  color: rgba(232, 238, 248, 0.6);
+  font-style: italic;
+}
+
+.solarPage .planet-info-moons {
+  margin-top: 0.65rem;
+}
+
+.solarPage .planet-info-moons-title {
+  margin-bottom: 0.3rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.solarPage .planet-info-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.solarPage .planet-chip {
+  padding: 0.2rem 0.55rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(232, 238, 248, 0.82);
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.solarPage .planet-chip:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.solarPage .planet-chip.active {
+  border-color: rgba(130, 185, 255, 0.85);
+  background: rgba(66, 133, 244, 0.32);
+  color: #fff;
+}
+
+.solarPage .planet-info-muted {
+  margin: 0;
+  color: rgba(232, 238, 248, 0.5);
+}
+
+.solarPage .planet-info-credit {
+  margin-top: 0.55rem;
+  font-size: 10px;
+}
+
+.solarPage .moon-label--clickable {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.solarPage .moon-label--clickable:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.solarPage .moon-label--focused {
+  color: #9cc6ff;
 }

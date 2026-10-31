@@ -11,7 +11,7 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   // Build output (incl. NEXT_DIST_DIR dev builds) and generated/scratch files.
-  { ignores: [".next/**", ".next-*/**", "out/**", "build/**", "next-env.d.ts", "moonScript.js"] },
+  { ignores: [".next/**", ".next-*/**", "out/**", "build/**", "next-env.d.ts", "moonScript.js", "public/worldmap/vendor/**"] },
   ...compat.extends("next/core-web-vitals", "next/typescript"),
 ];
 

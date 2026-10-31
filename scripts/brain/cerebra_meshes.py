@@ -55,7 +55,7 @@ def fetch():
             urllib.request.urlretrieve(SRC + name, path)
 
 
-def read_nifti(path):
+def read_nifti(path, as_float=False):
     b = path.read_bytes()
     dims = struct.unpack('<8h', b[40:56])
     dtype = {2: np.uint8, 4: np.int16, 8: np.int32, 16: np.float32, 64: np.float64}[struct.unpack('<h', b[70:72])[0]]
@@ -63,6 +63,9 @@ def read_nifti(path):
     srow = np.array([struct.unpack('<4f', b[280 + 16 * i:296 + 16 * i]) for i in range(3)])
     n = dims[1] * dims[2] * dims[3]
     vol = np.frombuffer(b, dtype=dtype, count=n, offset=offset).reshape(dims[1:4], order='F')
+    if as_float:
+        slope, inter = struct.unpack('<2f', b[112:120])
+        return (vol.astype(np.float32) * (slope or 1) + inter), srow
     return np.rint(vol).astype(np.int32), srow
 
 
@@ -127,11 +130,11 @@ def fill_2d(mask, axis):
     return out
 
 
-def main():
+def label_volume():
+    """-> (CerebrA label volume plus derived white matter, srow, label jobs)"""
     fetch()
     vol, srow = read_nifti(CACHE / 'CerebrA.nii')
     labels = read_labels(CACHE / 'CerebrA_LabelDetails.csv')
-    OUT.mkdir(parents=True, exist_ok=True)
 
     # White matter: unlabelled voxels inside the closed cerebral labels (filled slice by slice in
     # two orientations, since a 3D fill leaks through the openings at the corpus callosum and
@@ -153,12 +156,18 @@ def main():
                                          ('R-cerebral-white-matter', 'Right', 41, 'Cerebral White Matter', 1002, xs > 0)):
         full[wm & half] = cid
         jobs.append((key, side, mb, name, cid))
+    return full, srow, jobs
+
+
+def main():
+    full, srow, jobs = label_volume()
+    OUT.mkdir(parents=True, exist_ok=True)
 
     # Pass 1: the highest and second-highest blurred indicator at every voxel, and whose it is.
     ids = [0] + [cid for *_, cid in jobs]
-    top = np.full(vol.shape, -1.0, np.float32)
-    second = np.full(vol.shape, -1.0, np.float32)
-    owner = np.full(vol.shape, -1, np.int32)
+    top = np.full(full.shape, -1.0, np.float32)
+    second = np.full(full.shape, -1.0, np.float32)
+    owner = np.full(full.shape, -1, np.int32)
     blur = lambda cid: ndimage.gaussian_filter((full == cid).astype(np.float32), BLUR_SIGMA)
     for cid in ids:
         b = blur(cid)

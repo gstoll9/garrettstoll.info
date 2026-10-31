@@ -72,6 +72,11 @@ export const simulationState = {
 // planet). When a zoom crosses a model's edge, ScaleTransitions sets `entry` before
 // switching focus, so CameraController can place the camera at the matching end of the next
 // model: zooming out of the Solar System arrives at the Milky Way zoomed in on the Sun, etc.
+// The planet close-up's camera azimuth offset (radians about +Y) from the direction the
+// cutaway geometry was built to face: CameraController picks a sun-side viewpoint and
+// Planet.tsx turns the focused planet by this much so its cut still faces the camera.
+export const planetViewState = { yaw: 0 };
+
 export const scaleTransition: { entry: 'fromInner' | 'fromOuter' | null; planetFrameDistance: number | null; locked: boolean } = {
     entry: null,
     planetFrameDistance: null, // the focused planet's framing distance (CameraController), for zooming back out

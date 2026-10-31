@@ -59,7 +59,7 @@ function buildMoonGeometry(name: string): THREE.SphereGeometry {
 const _x = new THREE.Vector3(), _y = new THREE.Vector3(), _z = new THREE.Vector3()
 const _m = new THREE.Matrix4()
 
-export default function Moon({ name, planetName, planetSize }: { name: string; planetName: string; planetSize: number }) {
+export default function Moon({ name, planetName, planetSize, focused = false, onSelect }: { name: string; planetName: string; planetSize: number; focused?: boolean; onSelect?: (moon: string) => void }) {
   const groupRef = useRef<THREE.Group>(null!)
   const meshRef = useRef<THREE.Mesh>(null!)
   const look = moonAppearance[name]
@@ -118,11 +118,12 @@ export default function Moon({ name, planetName, planetSize }: { name: string; p
           ref={meshRef}
           geometry={geometry}
           scale={[radii[0] * kmToScene, radii[2] * kmToScene, radii[1] * kmToScene]}
+          onClick={(e) => { e.stopPropagation(); onSelect?.(name) }}
         >
           <meshStandardMaterial vertexColors roughness={1} metalness={0} />
         </mesh>
         <Html center zIndexRange={[15, 0]} style={{ pointerEvents: 'none' }}>
-          <div className="moon-label">{name}</div>
+          <div className={`moon-label moon-label--clickable${focused ? ' moon-label--focused' : ''}`} onClick={() => onSelect?.(name)}>{name}</div>
         </Html>
       </group>
     </>

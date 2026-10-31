@@ -1,12 +1,21 @@
 'use client'
+// The map itself: a MapLibre GL globe over an OpenStreetMap / Sentinel-2 basemap
+// (public/worldmap/basemap/style.json, built by scripts/build-basemap-style.mjs), with the
+// page's own countries, subregions, districts, labels, capitals and trade arcs drawn as
+// GeoJSON layers on top. Country fills fade as you zoom in so streets or imagery show through.
 import { useEffect, useMemo, useRef, useState } from 'react';
+// The CSP build, with its worker served from public/ (copied by build-basemap-style.mjs):
+// Next's bundler breaks the worker the default build inlines, and the map never loads
+import maplibregl from 'maplibre-gl/dist/maplibre-gl-csp';
+import type { ExpressionSpecification, GeoJSONSource, LngLatBoundsLike } from 'maplibre-gl';
+import 'maplibre-gl/dist/maplibre-gl.css';
 import * as d3 from 'd3';
 import { feature } from 'topojson-client';
 import type { Topology, GeometryCollection } from 'topojson-specification';
-import type { Feature, Geometry } from 'geojson';
+import type { Feature, FeatureCollection, Geometry } from 'geojson';
 import { wikiTitleFor } from '../lib/countryNames';
 import type { Capital } from '../lib/db';
-import { TradeArcLayer, TradeArcs } from './TradeArcs';
+import { TradeArcs, arcFeatures } from './TradeArcs';
 import { PeriodFeature, Period, periodsAt } from '../lib/history';
 
 export type Country = {
@@ -39,17 +48,9 @@ export type Subregion = SubregionProps & {
 // Screen area covered by the info panel; zooming centers in the remaining space
 export type Insets = { right: number; bottom: number };
 
-type MapLabel = {
-  key: string;
-  text: string;
-  // 0 country, 1 subregion, 2 district
-  level: 0 | 1 | 2;
-  // Anchor and size of the labelled shape, in unzoomed projected pixels
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-};
+export type Basemap = 'streets' | 'satellite';
+
+type Choropleth = { level: 0 | 1 | 2; fills: Map<string, string>; labels: Map<string, string> };
 
 type Props = {
   selectedKey: string | null;
@@ -63,7 +64,7 @@ type Props = {
   // Capital(s) of the selected region, marked on the map
   capitals: Capital[];
   // Data colouring of one level's shapes: fill colour and tooltip value per shape key
-  choropleth: { level: 0 | 1 | 2; fills: Map<string, string>; labels: Map<string, string> } | null;
+  choropleth: Choropleth | null;
   // Trade flows from the selected country to its partners; the map zooms out to show them
   arcs?: TradeArcs | null;
   // Called with the countries drawn, whenever they change (load, or a new year)
@@ -72,22 +73,49 @@ type Props = {
   // Year shown, or null for the present-day map; historical years draw `history`
   year: number | null;
   history: PeriodFeature[] | null;
+  basemap: Basemap;
+  onBasemapChange: (b: Basemap) => void;
 };
+
+// Our layers, bottom to top. Fills and outlines go under the basemap's labels; our own
+// labels, arcs and capitals go above everything.
+const LEVELS = [
+  { id: 'countries', fill: '#34466a', hover: '#5b7bb0', selected: '#e0a43a', dim: '#34466a', line: '#0b1220' },
+  { id: 'subregions', fill: '#c98f2e', hover: '#e8b558', selected: '#ffd98a', dim: '#8a6a32', line: '#0b1220' },
+  { id: 'districts', fill: '#f2c46d', hover: '#ffe3a6', selected: '#fff4d6', dim: '#f2c46d', line: '#5a3c0a' },
+] as const;
+type LevelId = typeof LEVELS[number]['id'];
+
+// Fill opacity by zoom, per level: solid on the globe, then fading so the basemap shows.
+// Satellite mode is lighter throughout; coloured (choropleth) shapes stay more opaque.
+const FADE: Record<LevelId, [number, number][]> = {
+  countries: [[2, 0.92], [4, 0.6], [6.5, 0.1]],
+  subregions: [[3, 0.9], [5.5, 0.5], [8, 0.1]],
+  districts: [[6, 0.8], [8.5, 0.4], [11, 0.08]],
+};
+const opacityExpr = (level: LevelId, basemap: Basemap, choro: boolean): ExpressionSpecification => {
+  const scale = basemap === 'satellite' ? 0.45 : 1;
+  const stops = FADE[level].flatMap(([z, o], i) => {
+    const base = Math.min(1, o * scale + (choro ? (i ? 0.3 : 0) : 0));
+    // Selected shapes stay visible a little longer than their neighbours
+    return [z, ['case', ['boolean', ['feature-state', 'selected'], false], Math.max(base, 0.35 * scale + 0.1), base]];
+  });
+  return ['interpolate', ['linear'], ['zoom'], ...stops] as ExpressionSpecification;
+};
+
+maplibregl.setWorkerUrl(`/worldmap/vendor/maplibre-gl-csp-worker-${maplibregl.getVersion()}.js`);
+
+const FONT = ['Noto Sans Regular'];
+const FONT_BOLD = ['Noto Sans Bold'];
 
 export default function WorldMap({
   selectedKey, onSelect, subregions, selectedSubKey, onSelectSubregion,
-  districts, selectedDistrictKey, onSelectDistrict, capitals, choropleth, arcs, onLoad, insets, year, history,
+  districts, selectedDistrictKey, onSelectDistrict, capitals, choropleth, arcs, onLoad, insets, year, history, basemap, onBasemapChange,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const svgRef = useRef<SVGSVGElement>(null);
-  const gRef = useRef<SVGGElement>(null);
-  const labelsRef = useRef<SVGGElement>(null);
-  const capitalsRef = useRef<SVGGElement>(null);
-  const transformRef = useRef<d3.ZoomTransform>(d3.zoomIdentity);
   const tooltipRef = useRef<HTMLDivElement>(null);
-  const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
-
-  const [size, setSize] = useState({ width: 0, height: 0 });
+  const mapRef = useRef<maplibregl.Map | null>(null);
+  const [ready, setReady] = useState(false);
   const [modern, setModern] = useState<Country[]>([]);
   const [land, setLand] = useState<Feature<Geometry> | null>(null);
 
@@ -124,304 +152,441 @@ export default function WorldMap({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countries]);
 
+  // Latest props for the map's event handlers, which are registered once
+  const live = useRef({ countries, subregions, districts, choropleth, onSelect, onSelectSubregion, onSelectDistrict, arcs });
+  live.current = { countries, subregions, districts, choropleth, onSelect, onSelectSubregion, onSelectDistrict, arcs };
+
+  // ── Map setup ──────────────────────────────────────────────────────────────
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
-    const ro = new ResizeObserver(([entry]) => {
-      const { width, height } = entry.contentRect;
-      setSize({ width, height });
+    const map = new maplibregl.Map({
+      container: el,
+      style: '/worldmap/basemap/style.json',
+      center: [15, 22],
+      zoom: worldZoom(el.clientWidth, el.clientHeight),
+      attributionControl: false,
+      dragRotate: false,
+      pitchWithRotate: false,
+      touchPitch: false,
+      maxZoom: 18,
     });
-    ro.observe(el);
-    return () => ro.disconnect();
+    map.touchZoomRotate.disableRotation();
+    mapRef.current = map;
+
+    // style.load, not load: our shapes don't need to wait for every basemap tile
+    map.once('style.load', () => {
+      const labelsStart = (map.getStyle().metadata as Record<string, string> | undefined)?.['wm:labels-start'];
+      const empty: FeatureCollection = { type: 'FeatureCollection', features: [] };
+      const addSource = (id: string) => map.addSource(id, { type: 'geojson', data: empty, promoteId: 'key' });
+
+      map.addSource('graticule', { type: 'geojson', data: { type: 'Feature', properties: {}, geometry: d3.geoGraticule10() } });
+      map.addLayer({
+        id: 'wm-graticule', type: 'line', source: 'graticule',
+        paint: { 'line-color': '#3a5384', 'line-width': 0.6, 'line-opacity': ['interpolate', ['linear'], ['zoom'], 0, 0.35, 4, 0] },
+      }, labelsStart);
+
+      addSource('land');
+      map.addLayer({
+        id: 'wm-land', type: 'fill', source: 'land',
+        paint: { 'fill-color': '#111a2b', 'fill-opacity': ['interpolate', ['linear'], ['zoom'], 2, 0.9, 7, 0.2] },
+      }, labelsStart);
+
+      for (const lvl of LEVELS) {
+        addSource(lvl.id);
+        const state = (s: string) => ['boolean', ['feature-state', s], false] as ExpressionSpecification;
+        map.addLayer({
+          id: `wm-${lvl.id}-fill`, type: 'fill', source: lvl.id,
+          paint: {
+            // Data colouring wins; hover and selection are then shown by the outline
+            'fill-color': ['case',
+              ['has', 'fill'], ['get', 'fill'],
+              state('selected'), lvl.selected,
+              state('hover'), lvl.hover,
+              ['boolean', ['get', 'dim'], false], lvl.dim,
+              lvl.fill],
+            'fill-opacity': opacityExpr(lvl.id, 'streets', false),
+          },
+        }, labelsStart);
+        map.addLayer({
+          id: `wm-${lvl.id}-line`, type: 'line', source: lvl.id,
+          layout: { 'line-join': 'round' },
+          paint: {
+            'line-color': ['case', state('selected'), '#ffffff', state('hover'), '#dfe7f5', lvl.line],
+            'line-width': ['case', state('selected'), 2.2, state('hover'), 1.4, lvl.id === 'countries' ? 0.7 : 0.6],
+            'line-opacity': ['case', state('selected'), 1, 0.85],
+          },
+        }, labelsStart);
+      }
+
+      addSource('arcs');
+      map.addLayer({
+        id: 'wm-arcs', type: 'line', source: 'arcs',
+        layout: { 'line-cap': 'round', 'line-join': 'round' },
+        paint: {
+          'line-color': ['get', 'color'],
+          'line-width': ['get', 'width'],
+          // Raw and produced arcs of one partner run side by side
+          'line-offset': ['get', 'offset'],
+          'line-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, 0.82],
+        },
+      });
+      // Wide invisible copies make thin arcs easy to hover
+      map.addLayer({ id: 'wm-arcs-hit', type: 'line', source: 'arcs', paint: { 'line-width': 12, 'line-opacity': 0 } });
+      addSource('arc-ends');
+      map.addLayer({
+        id: 'wm-arc-ends', type: 'circle', source: 'arc-ends',
+        paint: { 'circle-radius': 3, 'circle-color': '#e6ebf3', 'circle-stroke-color': '#0b1220', 'circle-stroke-width': 1 },
+      });
+
+      const labelLayer = (id: string, source: string, size: ExpressionSpecification, opts: { min?: number; max?: number; bold?: boolean; color: string; filter?: ExpressionSpecification }) =>
+        map.addLayer({
+          id, type: 'symbol', source, minzoom: opts.min ?? 0, maxzoom: opts.max ?? 24,
+          ...(opts.filter ? { filter: opts.filter } : {}),
+          layout: {
+            'text-field': ['get', 'text'],
+            'text-font': opts.bold ? FONT_BOLD : FONT,
+            'text-size': size,
+            'text-max-width': 8,
+            'text-letter-spacing': 0.02,
+            'text-padding': 3,
+            // Bigger shapes claim label space first
+            'symbol-sort-key': ['-', 0, ['get', 'rank']],
+          },
+          paint: { 'text-color': opts.color, 'text-halo-color': 'rgba(8, 13, 24, 0.9)', 'text-halo-width': 1.4, 'text-halo-blur': 0.3 },
+        });
+      for (const lvl of LEVELS) addSource(`${lvl.id}-labels`);
+      // Label size grows with zoom and with the shape's area (rank = ln of its area)
+      const sized = (stops: [number, number, number][]): ExpressionSpecification => ['interpolate', ['linear'], ['zoom'],
+        ...stops.flatMap(([z, small, big]) => [z, ['interpolate', ['linear'], ['get', 'rank'], -11, small, -1, big]])] as ExpressionSpecification;
+      labelLayer('wm-districts-labels', 'districts-labels', sized([[5, 9, 12], [10, 11, 16], [14, 13, 20]]), { min: 4, color: '#fff3d6' });
+      labelLayer('wm-subregions-labels', 'subregions-labels', sized([[2, 9, 12], [6, 11, 17], [10, 13, 22]]), { max: 12, color: '#fbe3b3', bold: true });
+      // Small countries and islands are only labelled once zoomed in a little
+      const SMALL = -7.5;
+      labelLayer('wm-countries-labels', 'countries-labels', sized([[1, 8, 15], [4, 10, 22], [7, 13, 28]]),
+        { max: 8, color: '#e8edf5', bold: true, filter: ['>=', ['get', 'rank'], SMALL] });
+      labelLayer('wm-countries-labels-small', 'countries-labels', sized([[1, 8, 15], [4, 10, 22], [7, 13, 28]]),
+        { min: 3.5, max: 8, color: '#e8edf5', bold: true, filter: ['<', ['get', 'rank'], SMALL] });
+
+      addSource('capitals');
+      map.addLayer({
+        id: 'wm-capitals-dot', type: 'circle', source: 'capitals',
+        paint: { 'circle-radius': 5, 'circle-color': '#ffffff', 'circle-stroke-color': '#e0a43a', 'circle-stroke-width': 2.5 },
+      });
+      map.addLayer({
+        id: 'wm-capitals-label', type: 'symbol', source: 'capitals',
+        layout: {
+          'text-field': ['get', 'text'], 'text-font': FONT_BOLD, 'text-size': 13,
+          'text-anchor': 'left', 'text-offset': [0.9, 0], 'text-allow-overlap': true,
+        },
+        paint: { 'text-color': '#ffffff', 'text-halo-color': 'rgba(8, 13, 24, 0.95)', 'text-halo-width': 1.6 },
+      });
+      setReady(true);
+    });
+
+    // ── Pointer: the most specific shape under the cursor wins ───────────────
+    const hitLayers = ['wm-arcs-hit', 'wm-districts-fill', 'wm-subregions-fill', 'wm-countries-fill', 'wm-land'];
+    const topHit = (point: maplibregl.PointLike) => {
+      const layers = hitLayers.filter(l => map.getLayer(l));
+      const hits = map.queryRenderedFeatures(point, { layers });
+      return hitLayers.map(l => hits.find(h => h.layer.id === l)).find(Boolean) ?? null;
+    };
+    let hovered: { source: string; id: string | number } | null = null;
+    const setHover = (next: typeof hovered) => {
+      if (hovered && (hovered.source !== next?.source || hovered.id !== next?.id)) map.setFeatureState(hovered, { hover: false });
+      if (next) map.setFeatureState(next, { hover: true });
+      hovered = next;
+    };
+    map.on('mousemove', e => {
+      const hit = topHit(e.point);
+      const tip = tooltipRef.current;
+      if (!hit || hit.id == null) {
+        setHover(null);
+        map.getCanvas().style.cursor = '';
+        if (tip) tip.style.display = 'none';
+        return;
+      }
+      setHover(hit.layer.id === 'wm-land' ? null : { source: hit.source, id: hit.id });
+      map.getCanvas().style.cursor = hit.layer.id === 'wm-land' ? '' : 'pointer';
+      if (tip) {
+        tip.textContent = tooltipText(hit.layer.id, hit.properties as Record<string, unknown>, live.current.choropleth);
+        tip.style.display = 'block';
+        tip.style.left = `${e.point.x + 14}px`;
+        tip.style.top = `${e.point.y + 14}px`;
+      }
+    });
+    map.on('movestart', () => { if (tooltipRef.current) tooltipRef.current.style.display = 'none'; });
+    map.getCanvas().addEventListener('mouseleave', () => {
+      setHover(null);
+      if (tooltipRef.current) tooltipRef.current.style.display = 'none';
+    });
+    map.on('click', e => {
+      const hit = topHit(e.point);
+      const key = hit?.properties?.key as string | undefined;
+      const p = live.current;
+      if (hit?.layer.id === 'wm-arcs-hit') return;
+      if (hit?.layer.id === 'wm-districts-fill') { const d = p.districts.find(x => x.key === key); if (d) return p.onSelectDistrict(d); }
+      if (hit?.layer.id === 'wm-subregions-fill') { const s = p.subregions.find(x => x.key === key); if (s) return p.onSelectSubregion(s); }
+      if (hit?.layer.id === 'wm-countries-fill') { const c = p.countries.find(x => x.key === key); if (c) return p.onSelect(c); }
+      p.onSelect(null);
+    });
+
+    return () => { map.remove(); mapRef.current = null; setReady(false); };
   }, []);
 
-  const { projection, path } = useMemo(() => {
-    const projection = d3.geoNaturalEarth1().fitExtent(
-      [[8, 8], [Math.max(size.width - 8, 9), Math.max(size.height - 8, 9)]],
-      { type: 'Sphere' },
-    );
-    return { projection, path: d3.geoPath(projection) };
-  }, [size.width, size.height]);
-
-  const paths = useMemo(
-    () => countries.map(c => ({ key: c.key, d: path(c.feature) ?? '' })),
-    [countries, path],
-  );
-  // Land under historical countries, showing where the source has no territory
-  const landPath = useMemo(() => (year != null && land ? path(land) ?? '' : ''), [year, land, path]);
-  const subPaths = useMemo(
-    () => subregions.map(s => ({ key: s.key, d: path(s.feature) ?? '' })),
-    [subregions, path],
-  );
-  const districtPaths = useMemo(
-    () => districts.map(s => ({ key: s.key, d: path(s.feature) ?? '' })),
-    [districts, path],
-  );
-  const labels = useMemo(() => {
-    const out: MapLabel[] = [];
-    const add = (key: string, text: string, level: MapLabel['level'], f: Feature<Geometry>, anchor: [number, number]) => {
-      const p = projection(anchor);
-      const poly = largestPolygon(f);
-      const [[x0, y0], [x1, y1]] = path.bounds(poly);
-      if (p) out.push({ key, text, level, x: p[0], y: p[1], w: x1 - x0, h: y1 - y0 });
-    };
-    // A shape whose children are drawn gives up its label to them
-    for (const d of districts) add(d.key, d.name, 2, d.feature, d.label);
-    for (const s of subregions) {
-      if (s.key === selectedSubKey && districts.length) continue;
-      add(s.key, s.name, 1, s.feature, s.label);
-    }
-    for (const c of countries) {
-      if (c.key === selectedKey && subregions.length) continue;
-      const wiki = c.period ? c.name : wikiTitleFor(c.name);
-      add(c.key, wiki.length < c.name.length ? wiki : c.name, 0, c.feature, interiorPoint(largestPolygon(c.feature)));
-    }
-    // Deeper levels claim label space first, then bigger shapes
-    return out.sort((a, b) => b.level - a.level || b.w * b.h - a.w * a.h);
-  }, [countries, subregions, districts, selectedKey, selectedSubKey, projection, path]);
-
-  // Positions labels for the current zoom; a label shows only if it fits inside its
-  // shape and doesn't overlap a label placed before it.
-  const layoutLabels = () => {
-    const g = labelsRef.current;
-    if (!g) return;
-    const t = transformRef.current;
-    const placed: [number, number, number, number][] = [];
-    // Capitals first, so region labels make room for them
-    capitals.forEach((c, i) => {
-      const el = capitalsRef.current?.children[i] as SVGGElement | undefined;
-      const p = projection([c.lon, c.lat]);
-      if (!el || !p) return;
-      const [x, y] = t.apply(p);
-      el.setAttribute('transform', `translate(${x},${y})`);
-      const tw = c.name.length * 12 * 0.58;
-      placed.push([x - 9, y - 9, x + 12 + tw, y + 9]);
-    });
-    labels.forEach((l, i) => {
-      const el = g.children[i] as SVGTextElement | undefined;
-      if (!el) return;
-      const sw = l.w * t.k;
-      const sh = l.h * t.k;
-      // Labels grow with zoom level, and big shapes get bigger labels still
-      const fs =
-        l.level === 2 ? Math.min(20, Math.max(9 * t.k ** 0.2, Math.sqrt(sw * sh) / 9))
-        : l.level === 1 ? Math.min(24, Math.max(10 * t.k ** 0.25, Math.sqrt(sw * sh) / 9))
-        : Math.min(32, Math.max(10 * t.k ** 0.3, Math.sqrt(sw * sh) / 11));
-      const tw = l.text.length * fs * 0.58;
-      const [x, y] = t.apply([l.x, l.y]);
-      const box: [number, number, number, number] = [x - tw / 2 - 2, y - fs / 2 - 1, x + tw / 2 + 2, y + fs / 2 + 1];
-      const visible =
-        // Subregion labels may overhang their shape a little; collisions still keep them apart
-        tw <= sw * (l.level ? 1.4 : 0.95) && fs <= sh * (l.level ? 1.2 : 0.9) &&
-        box[0] >= 0 && box[2] <= size.width - insets.right && box[1] >= 0 && box[3] <= size.height - insets.bottom &&
-        !placed.some(b => box[0] < b[2] && box[2] > b[0] && box[1] < b[3] && box[3] > b[1]);
-      if (visible) placed.push(box);
-      el.style.display = visible ? '' : 'none';
-      el.setAttribute('x', String(x));
-      el.setAttribute('y', String(y));
-      el.style.fontSize = `${fs}px`;
-    });
+  // ── Data ───────────────────────────────────────────────────────────────────
+  const setData = (id: string, data: FeatureCollection) => {
+    (mapRef.current?.getSource(id) as GeoJSONSource | undefined)?.setData(data);
   };
-  const layoutRef = useRef(layoutLabels);
-  layoutRef.current = layoutLabels;
-  useEffect(() => { layoutRef.current(); }, [labels, capitals]);
+  const fillFor = (level: 0 | 1 | 2, key: string) =>
+    choropleth?.level === level ? choropleth.fills.get(key) : undefined;
 
-  const sphere = useMemo(() => path({ type: 'Sphere' }) ?? '', [path]);
-  const graticule = useMemo(() => path(d3.geoGraticule10()) ?? '', [path]);
+  // Label anchors are expensive (interior points), so they're computed once per shape list
+  const countryLabels = useMemo(() => countries.map(c => {
+    const poly = largestPolygon(c.feature);
+    const wiki = c.period ? c.name : wikiTitleFor(c.name);
+    return { key: c.key, text: wiki.length < c.name.length ? wiki : c.name, at: interiorPoint(poly), rank: Math.log(d3.geoArea(poly) + 1e-12) };
+  }), [countries]);
+  const regionLabels = (list: Subregion[]) => list.map(s => ({
+    key: s.key, text: s.name, at: s.label, rank: Math.log(d3.geoArea(largestPolygon(s.feature)) + 1e-12),
+  }));
+  const subLabels = useMemo(() => regionLabels(subregions), [subregions]);
+  const districtLabels = useMemo(() => regionLabels(districts), [districts]);
 
   useEffect(() => {
-    const svg = svgRef.current;
-    if (!svg) return;
-    const zoom = d3.zoom<SVGSVGElement, unknown>()
-      // Below 1 only to fit the whole world beside the panel (trade arcs); the usual
-      // pan limits apply from 1 up
-      .scaleExtent([0.3, 600])
-      .translateExtent([[0, 0], [size.width, size.height]])
-      .constrain((t, extent, te) => (t.k < 1 ? t : constrainToExtent(t, extent, te)))
-      .on('zoom', e => {
-        d3.select(gRef.current).attr('transform', e.transform.toString());
-        transformRef.current = e.transform;
-        layoutRef.current();
-      });
-    zoomRef.current = zoom;
-    d3.select(svg).call(zoom).on('dblclick.zoom', null);
-    return () => { d3.select(svg).on('.zoom', null); };
-  }, [size.width, size.height]);
+    if (!ready) return;
+    setData('countries', shapes(countries.map(c => ({ key: c.key, name: c.name, geometry: clampPolar(c.feature.geometry), fill: fillFor(0, c.key) }))));
+    // A shape whose children are drawn gives up its label to them
+    setData('countries-labels', points(countryLabels.filter(l => !(l.key === selectedKey && subregions.length))));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, countries, countryLabels, choropleth, selectedKey, subregions.length]);
+  useEffect(() => {
+    if (!ready) return;
+    setData('subregions', shapes(subregions.map(s => ({
+      key: s.key, name: withType(s), geometry: s.feature.geometry, fill: fillFor(1, s.key),
+      // While a subregion's districts are shown, its neighbours recede
+      dim: districts.length > 0 && s.key !== selectedSubKey,
+    }))));
+    setData('subregions-labels', points(subLabels.filter(l => !(l.key === selectedSubKey && districts.length))));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, subregions, subLabels, choropleth, selectedSubKey, districts.length]);
+  useEffect(() => {
+    if (!ready) return;
+    setData('districts', shapes(districts.map(d => ({ key: d.key, name: withType(d), geometry: d.feature.geometry, fill: fillFor(2, d.key) }))));
+    setData('districts-labels', points(districtLabels));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, districts, districtLabels, choropleth]);
+  useEffect(() => {
+    if (!ready) return;
+    setData('land', { type: 'FeatureCollection', features: year != null && land ? [{ ...land, geometry: clampPolar(land.geometry), properties: { key: 'land' } }] : [] });
+  }, [ready, year, land]);
+  useEffect(() => {
+    if (!ready) return;
+    setData('capitals', points(capitals.map(c => ({ key: c.qid, text: c.name, at: [c.lon, c.lat] as [number, number], rank: 0 }))));
+  }, [ready, capitals]);
+  useEffect(() => {
+    if (!ready) return;
+    const { lines, ends } = arcs ? arcFeatures(arcs) : { lines: [], ends: [] };
+    setData('arcs', { type: 'FeatureCollection', features: lines });
+    setData('arc-ends', { type: 'FeatureCollection', features: ends });
+  }, [ready, arcs]);
 
-  // Zoom to the most specific selection, else the whole world. Not again when only the
-  // year changed: the view stays put while the time slider plays.
+  // Selection state, re-applied whenever a level's data is replaced
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!ready || !map) return;
+    const sel: [LevelId, string | null, { key: string }[]][] = [
+      ['countries', selectedKey, countries], ['subregions', selectedSubKey, subregions], ['districts', selectedDistrictKey, districts],
+    ];
+    for (const [source, key, list] of sel) {
+      map.removeFeatureState({ source });
+      if (key && list.some(x => x.key === key)) map.setFeatureState({ source, id: key }, { selected: true });
+    }
+  }, [ready, selectedKey, selectedSubKey, selectedDistrictKey, countries, subregions, districts, choropleth]);
+
+  // Basemap mode and fill opacity
+  const roadOpacity = useRef(new Map<string, unknown>());
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!ready || !map) return;
+    for (const layer of map.getStyle().layers) {
+      const mode = (layer.metadata as Record<string, string> | undefined)?.['wm:mode'];
+      if (mode === 'streets' || mode === 'satellite') {
+        map.setLayoutProperty(layer.id, 'visibility', mode === basemap ? 'visible' : 'none');
+      }
+      // Basemap place names are today's (Kaliningrad, not Königsberg): hidden in past years
+      if (layer.id.startsWith('place_')) map.setLayoutProperty(layer.id, 'visibility', year == null ? 'visible' : 'none');
+      // Roads drawn over imagery are faint, so the imagery reads first
+      if (mode === 'both' && layer.type === 'line') {
+        const saved = roadOpacity.current;
+        if (!saved.has(layer.id)) saved.set(layer.id, map.getPaintProperty(layer.id, 'line-opacity') ?? 1);
+        map.setPaintProperty(layer.id, 'line-opacity', basemap === 'satellite' ? 0.3 : saved.get(layer.id));
+      }
+    }
+    for (const lvl of LEVELS) {
+      map.setPaintProperty(`wm-${lvl.id}-fill`, 'fill-opacity',
+        opacityExpr(lvl.id, basemap, choropleth?.level === LEVELS.indexOf(lvl)));
+      map.setPaintProperty(`wm-${lvl.id}-line`, 'line-color', basemap === 'satellite'
+        ? ['case', ['boolean', ['feature-state', 'selected'], false], '#ffffff', 'rgba(255, 255, 255, 0.55)']
+        : ['case', ['boolean', ['feature-state', 'selected'], false], '#ffffff', ['boolean', ['feature-state', 'hover'], false], '#dfe7f5', lvl.line]);
+    }
+  }, [ready, basemap, choropleth, year]);
+
+  // ── Camera: fly to the most specific selection, else the whole globe. Not again when
+  // only the year changed, so the view stays put while the time slider plays. ──────────
   const lastZoomRef = useRef('');
   useEffect(() => {
-    const svg = svgRef.current;
-    const zoom = zoomRef.current;
-    if (!svg || !zoom || !size.width) return;
-    const zoomKey = [selectedKey, selectedSubKey, selectedDistrictKey, size.width, size.height, insets.right, insets.bottom, arcs ? 'arcs' : ''].join('|');
+    const map = mapRef.current;
+    const el = containerRef.current;
+    if (!ready || !map || !el) return;
+    const zoomKey = [selectedKey, selectedSubKey, selectedDistrictKey, insets.right, insets.bottom, arcs ? 'arcs' : ''].join('|');
     const hasTarget = !selectedKey || countries.some(c => c.key === selectedKey);
     if (zoomKey === lastZoomRef.current || !hasTarget) return;
     lastZoomRef.current = zoomKey;
-    const sel = d3.select(svg).transition().duration(750);
+    const w = el.clientWidth, h = el.clientHeight;
+    // Room for the search box, the time slider and the side panel or bottom sheet
+    const padding = {
+      top: Math.min(80, h * 0.1), left: 30,
+      right: Math.min(insets.right + 30, w * 0.7),
+      bottom: Math.min(insets.bottom + 120, h * 0.75),
+    };
     const district = districts.find(d => d.key === selectedDistrictKey);
     const sub = subregions.find(s => s.key === selectedSubKey);
     const country = countries.find(c => c.key === selectedKey);
-    const availW = Math.max(size.width - insets.right, size.width * 0.4);
-    const availH = Math.max(size.height - insets.bottom, size.height * 0.3);
-    // Trade arcs span the world: fit all of it into the area beside the panel
-    if (arcs) {
-      const k = Math.min(1, availW / size.width, availH / size.height);
-      sel.call(zoom.transform, d3.zoomIdentity.translate((availW - size.width * k) / 2, (availH - size.height * k) / 2).scale(k));
-      return;
-    }
     const target = district?.feature ?? sub?.feature ?? country?.feature;
-    if (!target) {
-      sel.call(zoom.transform, d3.zoomIdentity);
+    if (!target || arcs) {
+      // The whole globe beside the panel; trade arcs centre on their origin
+      const availW = w - padding.left - padding.right, availH = h - padding.top - padding.bottom;
+      const center: [number, number] = arcs ? [arcs.origin.lon, Math.max(-30, Math.min(40, arcs.origin.lat))] : [map.getCenter().lng, 20];
+      map.flyTo({ center, zoom: worldZoom(availW, availH), padding, duration: 1200 });
       return;
     }
-    const [[x0, y0], [x1, y1]] = path.bounds(largestPolygon(target));
-    // Smaller units get a looser fit so their neighbours stay visible
-    const fill = district ? 0.35 : sub ? 0.6 : 0.75;
-    const k = Math.min(sub ? 400 : 20, fill / Math.max((x1 - x0) / availW, (y1 - y0) / availH));
-    sel.call(
-      zoom.transform,
-      d3.zoomIdentity
-        .translate(availW / 2, availH / 2)
-        .scale(Math.max(1, k))
-        .translate(-(x0 + x1) / 2, -(y0 + y1) / 2),
-    );
-  }, [selectedKey, selectedSubKey, selectedDistrictKey, countries, subregions, districts, path, size.width, size.height, insets.right, insets.bottom, arcs]);
+    const [[x0, y0], [x1, y1]] = d3.geoBounds(largestPolygon(target));
+    const maxZoom = district ? 11 : sub ? 8.5 : 6;
+    if (x1 >= x0) {
+      map.fitBounds([[x0, y0], [x1, y1]], { padding, maxZoom, duration: 1200 });
+      return;
+    }
+    // Bounds crossing the antimeridian (Russia, Fiji) run past 180°, which fitBounds wraps
+    // back, framing the far side of the globe: size the view on a box of the same width
+    // centred on 0°, then fly to the real midpoint
+    const width = x1 + 360 - x0;
+    const fit: LngLatBoundsLike = [[-width / 2, y0], [width / 2, y1]];
+    const cam = map.cameraForBounds(fit, { padding, maxZoom });
+    if (cam?.zoom == null || !cam.center) return;
+    const midLon = ((x0 + width / 2 + 540) % 360) - 180;
+    map.flyTo({ center: [midLon, maplibregl.LngLat.convert(cam.center).lat], zoom: cam.zoom, padding, duration: 1200 });
+  }, [ready, selectedKey, selectedSubKey, selectedDistrictKey, countries, subregions, districts, insets.right, insets.bottom, arcs]);
 
-  // Tooltip is updated imperatively so mouse moves don't re-render every path
-  const moveTooltip = (e: React.MouseEvent, text: string) => {
-    const tip = tooltipRef.current;
-    const box = containerRef.current;
-    if (!tip || !box) return;
-    const r = box.getBoundingClientRect();
-    tip.textContent = text;
-    tip.style.display = 'block';
-    tip.style.left = `${e.clientX - r.left + 12}px`;
-    tip.style.top = `${e.clientY - r.top + 12}px`;
+  const resetView = () => {
+    const map = mapRef.current;
+    const el = containerRef.current;
+    if (map && el) map.flyTo({ center: [map.getCenter().lng, 20], zoom: worldZoom(el.clientWidth - insets.right, el.clientHeight - insets.bottom), duration: 1000 });
   };
-  const hideTooltip = () => { if (tooltipRef.current) tooltipRef.current.style.display = 'none'; };
-  // Inline fill (and value in the tooltip) for shapes of the coloured level
-  const choroFill = (lvl: 0 | 1 | 2, key: string) =>
-    choropleth?.level === lvl ? { fill: choropleth.fills.get(key) } : undefined;
-  const withValue = (lvl: 0 | 1 | 2, key: string, text: string) =>
-    choropleth?.level === lvl && choropleth.labels.has(key) ? `${text} · ${choropleth.labels.get(key)}` : text;
 
   return (
-    <div className="wm-map" ref={containerRef}>
-      <svg
-        ref={svgRef}
-        width={size.width}
-        height={size.height}
-        onClick={() => onSelect(null)}
-      >
-        <g ref={gRef} className={choropleth ? `wm-choro wm-choro-${choropleth.level}` : undefined}>
-          <path className="wm-sphere" d={sphere} />
-          <path className="wm-graticule" d={graticule} />
-          {landPath && (
-            <path
-              className="wm-land-nodata"
-              d={landPath}
-              onMouseMove={e => moveTooltip(e, 'No territory recorded here in CShapes')}
-              onMouseLeave={hideTooltip}
-            />
-          )}
-          {paths.map((p, i) => (
-            <path
-              key={p.key}
-              d={p.d}
-              className={`wm-country${p.key === selectedKey ? ' wm-selected' : ''}`}
-              style={choroFill(0, p.key)}
-              onClick={e => { e.stopPropagation(); onSelect(countries[i]); }}
-              onMouseMove={e => moveTooltip(e, withValue(0, p.key, countries[i].name))}
-              onMouseLeave={hideTooltip}
-            />
-          ))}
-          <g className={`wm-subregions${districts.length ? ' wm-dimmed' : ''}`}>
-            {subPaths.map((p, i) => (
-              <path
-                key={p.key}
-                d={p.d}
-                className={`wm-subregion${p.key === selectedSubKey ? ' wm-selected' : ''}`}
-                style={choroFill(1, p.key)}
-                onClick={e => { e.stopPropagation(); onSelectSubregion(subregions[i]); }}
-                onMouseMove={e => {
-                  const s = subregions[i];
-                  moveTooltip(e, withValue(1, p.key, s.type ? `${s.name} · ${s.type}` : s.name));
-                }}
-                onMouseLeave={hideTooltip}
-              />
-            ))}
-          </g>
-          <g className="wm-districts">
-            {districtPaths.map((p, i) => (
-              <path
-                key={p.key}
-                d={p.d}
-                className={`wm-district${p.key === selectedDistrictKey ? ' wm-selected' : ''}`}
-                style={choroFill(2, p.key)}
-                onClick={e => { e.stopPropagation(); onSelectDistrict(districts[i]); }}
-                onMouseMove={e => {
-                  const d = districts[i];
-                  moveTooltip(e, withValue(2, p.key, d.type ? `${d.name} · ${d.type}` : d.name));
-                }}
-                onMouseLeave={hideTooltip}
-              />
-            ))}
-          </g>
-          {arcs && <TradeArcLayer arcs={arcs} projection={projection} onHover={moveTooltip} onLeave={hideTooltip} />}
-        </g>
-        <g className="wm-labels" ref={labelsRef}>
-          {labels.map(l => (
-            <text
-              key={l.key}
-              className={`${LABEL_CLASS[l.level]}${l.key === selectedSubKey || l.key === selectedDistrictKey ? ' wm-selected' : ''}`}
-              style={{ display: 'none' }}
-            >
-              {l.text}
-            </text>
-          ))}
-        </g>
-        <g className="wm-capitals" ref={capitalsRef}>
-          {capitals.map(c => (
-            <g key={c.qid}>
-              <path className="wm-capital-star" d={STAR} />
-              <text className="wm-capital-label" x={11} y={0} dominantBaseline="central">{c.name}</text>
-            </g>
-          ))}
-        </g>
-      </svg>
+    <div className="wm-map">
+      <div className="wm-map-canvas" ref={containerRef} />
       <div className="wm-tooltip" ref={tooltipRef} />
-      {countries.length === 0 && <div className="wm-loading">Loading map…</div>}
+      {/* Basemap and zoom controls, above the time slider and clear of the side panel / bottom sheet */}
+      <div className="wm-map-controls" style={{ right: insets.right + 12, bottom: insets.bottom + 124 }}>
+        <div className="wm-basemap" role="group" aria-label="Basemap">
+          {(['streets', 'satellite'] as const).map(b => (
+            <button key={b} aria-pressed={basemap === b} className={basemap === b ? 'wm-active' : ''} onClick={() => onBasemapChange(b)}>
+              {b === 'streets' ? 'Map' : 'Satellite'}
+            </button>
+          ))}
+        </div>
+        <div className="wm-zoom" role="group" aria-label="Zoom">
+          <button onClick={() => mapRef.current?.zoomIn()} aria-label="Zoom in">+</button>
+          <button onClick={() => mapRef.current?.zoomOut()} aria-label="Zoom out">−</button>
+          <button onClick={resetView} aria-label="Show the whole globe" title="Whole globe">◯</button>
+        </div>
+      </div>
+      {(!ready || countries.length === 0) && <div className="wm-loading">Loading map…</div>}
     </div>
   );
 }
 
-// d3-zoom's default constrain (keeps the viewport inside the translate extent), reproduced
-// because d3 doesn't export it and a custom constrain replaces it entirely
-function constrainToExtent(t: d3.ZoomTransform, extent: [[number, number], [number, number]], te: [[number, number], [number, number]]) {
-  const dx0 = t.invertX(extent[0][0]) - te[0][0], dx1 = t.invertX(extent[1][0]) - te[1][0];
-  const dy0 = t.invertY(extent[0][1]) - te[0][1], dy1 = t.invertY(extent[1][1]) - te[1][1];
-  return t.translate(
-    dx1 > dx0 ? (dx0 + dx1) / 2 : Math.min(0, dx0) || Math.max(0, dx1),
-    dy1 > dy0 ? (dy0 + dy1) / 2 : Math.min(0, dy0) || Math.max(0, dy1),
-  );
+// Zoom at which the globe fills ~85% of a w×h area (at zoom z the globe is 512·2^z/π px across)
+function worldZoom(w: number, h: number) {
+  return Math.max(0.3, Math.log2((0.85 * Math.max(200, Math.min(w, h)) * Math.PI) / 512));
 }
 
-const LABEL_CLASS = ['wm-label-country', 'wm-label-sub', 'wm-label-district'] as const;
+// MapLibre's polygons are planar, while world-atlas is made for d3's spherical geometry:
+//  - Rings crossing the antimeridian (Russia's Chukotka, Fiji) jump from 180° to -180°; drawn
+//    planar, those edges span the whole map. Their longitudes are unwrapped instead (Chukotka
+//    runs on past 180°, which MapLibre draws in place).
+//  - Antarctica is a tiny ring round the South Pole with the coastline as a hole — on a
+//    sphere that encloses the continent, on a plane it fills a wedge. It's rebuilt with the
+//    coastline as the outer ring, its one antimeridian crossing routed along 85°S (where
+//    MapLibre's tiles stop).
+const POLE = -85;
+const polarCache = new WeakMap<Geometry, Geometry>();
+function clampPolar(g: Geometry): Geometry {
+  if (!g || (g.type !== 'Polygon' && g.type !== 'MultiPolygon')) return g;
+  const hit = polarCache.get(g);
+  if (hit) return hit;
+  const unwrap = (r: number[][]) => {
+    const out: number[][] = [];
+    for (const [x, y] of r) {
+      const prev = out[out.length - 1]?.[0];
+      out.push([prev == null ? x : x + 360 * Math.round((prev - x) / 360), y]);
+    }
+    return out;
+  };
+  const aroundPole = (r: number[][]) => {
+    const out: number[][] = [];
+    r.forEach(([x, y], i) => {
+      if (i && Math.abs(x - r[i - 1][0]) > 180) out.push([r[i - 1][0], POLE], [x, POLE]);
+      out.push([x, Math.max(y, POLE)]);
+    });
+    return out;
+  };
+  const polys = (g.type === 'Polygon' ? [g.coordinates] : g.coordinates).flatMap(p =>
+    p[0].every(([, y]) => y <= POLE) ? p.slice(1).map(hole => [aroundPole(hole)]) : [p.map(unwrap)]);
+  const out: Geometry = { type: 'MultiPolygon', coordinates: polys };
+  polarCache.set(g, out);
+  return out;
+}
 
-// Five-pointed star centred on the origin, outer radius 7px
-const STAR = Array.from({ length: 10 }, (_, i) => {
-  const r = i % 2 ? 3 : 7;
-  const a = (Math.PI / 5) * i - Math.PI / 2;
-  return `${i ? 'L' : 'M'}${(r * Math.cos(a)).toFixed(2)},${(r * Math.sin(a)).toFixed(2)}`;
-}).join('') + 'Z';
+// `name` is the tooltip text; `fill` (data colouring) and `dim` are only set where they apply
+function shapes(list: { key: string; name: string; geometry: Geometry; fill?: string; dim?: boolean }[]): FeatureCollection {
+  return {
+    type: 'FeatureCollection',
+    features: list.map(({ key, name, geometry, fill, dim }) => ({
+      type: 'Feature', geometry,
+      properties: { key, name, ...(fill ? { fill } : {}), ...(dim ? { dim } : {}) },
+    })),
+  };
+}
 
+const withType = (s: Subregion) => (s.type ? `${s.name} · ${s.type}` : s.name);
+
+function points(list: { key: string; text: string; at: [number, number]; rank: number }[]): FeatureCollection {
+  return {
+    type: 'FeatureCollection',
+    features: list.map(({ key, text, at, rank }) => ({
+      type: 'Feature', geometry: { type: 'Point', coordinates: at }, properties: { key, text, rank },
+    })),
+  };
+}
+
+// Tooltip text for whatever is under the cursor
+function tooltipText(layer: string, props: Record<string, unknown>, choropleth: Choropleth | null): string {
+  if (layer === 'wm-land') return 'No territory recorded here in CShapes';
+  if (layer === 'wm-arcs-hit') return String(props.tip ?? '');
+  const key = String(props.key);
+  const level = layer === 'wm-countries-fill' ? 0 : layer === 'wm-subregions-fill' ? 1 : 2;
+  const name = String(props.name ?? key);
+  const value = choropleth?.level === level ? choropleth.labels.get(key) : undefined;
+  return value ? `${name} · ${value}` : name;
+}
 // Countries like the US, France or Russia have far-flung territories; framing or labelling
 // their full extent misplaces things, so use the largest polygon instead.
 function largestPolygon(f: Feature<Geometry>): Feature<Geometry> {
   const g = f.geometry;
-  if (g.type !== 'MultiPolygon') return f;
+  if (!g || g.type !== 'MultiPolygon') return f;
   let best: Feature<Geometry> = f;
   let bestArea = -1;
   for (const coords of g.coordinates) {

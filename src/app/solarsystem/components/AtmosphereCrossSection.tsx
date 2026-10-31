@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import '../styles/orbitControls.css';
 import { PlanetStructure, AtmosphereLayer } from '../data/planetStructure';
 import { Row, formatTempK } from './Planet';
+import LayerSources from './LayerSources';
 
 type AtmosphereCrossSectionProps = {
+  planet: string; // for the layer's citations (data/layerCitations.ts)
   atmosphere?: PlanetStructure['atmosphere'];
 };
 
@@ -38,8 +40,8 @@ function formatAltitude({ min, max }: { min: number; max?: number }): string {
   return max === undefined ? `${fmt(min)} and up` : `${fmt(min)} to ${fmt(max)}`;
 }
 
-export default function AtmosphereCrossSection({ atmosphere }: AtmosphereCrossSectionProps) {
-  const [isExpanded, setIsExpanded] = useState(true);
+export default function AtmosphereCrossSection({ planet, atmosphere }: AtmosphereCrossSectionProps) {
+  const [isExpanded, setIsExpanded] = useState(false); // collapsed by default: the right column would otherwise overflow
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   // Clicked layer stays shown whenever nothing is hovered; cleared when the planet changes.
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -111,9 +113,13 @@ export default function AtmosphereCrossSection({ atmosphere }: AtmosphereCrossSe
                 </div>
                 <div className="layer-detail-grid">
                   <Row label="Altitude" value={formatAltitude(active.altitudeKm)} />
+                  {active.altitudeKm.max !== undefined && (
+                    <Row label="Thickness" value={`${(active.altitudeKm.max - active.altitudeKm.min).toLocaleString()} km`} />
+                  )}
                   {formatTempK(active.tempK) && <Row label="Temp" value={formatTempK(active.tempK)} />}
                   {active.note && <Row label="" value={active.note} />}
                 </div>
+                <LayerSources planet={planet} layerKey={`atmo:${active.name}`} />
               </>
             ) : (
               <div className="layer-detail-placeholder">Hover or click a layer above to see its data.</div>

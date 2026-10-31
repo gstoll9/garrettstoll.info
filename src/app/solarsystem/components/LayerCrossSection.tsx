@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import '../styles/orbitControls.css';
 import { PlanetStructure, getLayerSegments } from '../data/planetStructure';
-import { HoveredLayer, getTooltipContent } from './Planet';
+import { HoveredLayer, Row, formatKm, getTooltipContent } from './Planet';
+import LayerSources from './LayerSources';
 
 type LayerCrossSectionProps = {
+  planet: string; // for the layer's citations (data/layerCitations.ts)
   structure?: PlanetStructure;
   hoveredLayer: HoveredLayer;
   setHoveredLayer: (layer: HoveredLayer) => void;
@@ -27,7 +29,25 @@ function computeSegmentWidths(radiusFractions: number[]): number[] {
   return thicknesses.map((t) => MIN_SEGMENT_FRACTION + (total > 0 ? (t / total) * remaining : remaining / n));
 }
 
-export default function LayerCrossSection({ structure, hoveredLayer, setHoveredLayer, selectedLayer, setSelectedLayer }: LayerCrossSectionProps) {
+// Where a layer sits, derived from its boundaries' radius fractions (planetStructure.ts):
+// depth below the surface, thickness, and share of the planet's volume
+function layerGeometry(structure: PlanetStructure, key: string) {
+  const segments = getLayerSegments(structure).filter((s) => s.kind !== 'atmosphere');
+  const i = segments.findIndex((s) => s.key === key);
+  if (i < 0) return null;
+  const R = structure.facts.meanRadiusKm;
+  const outer = segments[i].radiusFraction;
+  const inner = i === 0 ? 0 : segments[i - 1].radiusFraction;
+  return {
+    depth: [(1 - outer) * R, (1 - inner) * R] as const,
+    thickness: (outer - inner) * R,
+    volumePct: (outer ** 3 - inner ** 3) * 100,
+  };
+}
+
+const pct = (v: number) => (v >= 10 ? `${v.toFixed(0)}%` : v >= 1 ? `${v.toFixed(1)}%` : `${v.toFixed(2)}%`);
+
+export default function LayerCrossSection({ planet, structure, hoveredLayer, setHoveredLayer, selectedLayer, setSelectedLayer }: LayerCrossSectionProps) {
   const [isExpanded, setIsExpanded] = useState(true);
 
   if (!structure) return null;
@@ -36,6 +56,7 @@ export default function LayerCrossSection({ structure, hoveredLayer, setHoveredL
   const widths = computeSegmentWidths(segments.map((s) => s.radiusFraction));
   const shownLayer = hoveredLayer && hoveredLayer !== 'total_crust' ? hoveredLayer : selectedLayer;
   const activeContent = shownLayer && shownLayer !== 'total_crust' ? getTooltipContent(structure, shownLayer) : null;
+  const geometry = shownLayer && shownLayer !== 'total_crust' ? layerGeometry(structure, shownLayer) : null;
   const toggleSelected = (key: HoveredLayer) => setSelectedLayer(selectedLayer === key ? null : key);
   const stateClass = (key: HoveredLayer) =>
     `${hoveredLayer === key ? 'active' : ''} ${selectedLayer === key ? 'selected' : ''}`;
@@ -91,7 +112,17 @@ export default function LayerCrossSection({ structure, hoveredLayer, setHoveredL
                 <div className="layer-detail-title" style={{ color: activeContent.color }}>
                   {activeContent.title}
                 </div>
-                <div className="layer-detail-grid">{activeContent.body}</div>
+                <div className="layer-detail-grid">
+                  {geometry && (
+                    <>
+                      <Row label="Depth" value={`${formatKm(geometry.depth[0])} – ${formatKm(geometry.depth[1])}`} />
+                      <Row label="Thickness" value={formatKm(geometry.thickness)} />
+                      <Row label="Volume" value={`${pct(geometry.volumePct)} of the planet`} />
+                    </>
+                  )}
+                  {activeContent.body}
+                </div>
+                {shownLayer && <LayerSources planet={planet} layerKey={shownLayer === 'outerCore' && !structure.core.innerCore ? 'core' : shownLayer} />}
               </>
             ) : (
               <div className="layer-detail-placeholder">

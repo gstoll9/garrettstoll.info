@@ -6,6 +6,7 @@ import GalaxyField from './GalaxyField'
 import MilkyWayField, { type MarkerKind } from './MilkyWayField'
 import MilkyWayMenu from './MilkyWayMenu'
 import MilkyWayObjectPanel from './MilkyWayObjectPanel'
+import PlanetInfoCard from './PlanetInfoCard'
 import type { ModelPlan } from './ObjectModel'
 import type { MilkyWayMarker } from '../utils'
 import ScaleTransitions, { SOLAR_EXIT_DISTANCE } from './ScaleTransitions'
@@ -13,7 +14,6 @@ import { useCallback, useEffect, useState, useRef } from 'react'
 import {PlanetProps, HoveredLayer} from './Planet';
 import OrbitControlsMenu from './OrbitControls';
 import ObjectVisibilityMenu from './ObjectVisibilityMenu';
-import LayerVisibilityControls from './LayerVisibilityControls';
 import LayerCrossSection from './LayerCrossSection';
 import AtmosphereCrossSection from './AtmosphereCrossSection';
 import CameraController from './CameraController';
@@ -71,8 +71,9 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
   const [timeScale, setTimeScale] = useState(1);
   const [galacticTrailYears, setGalacticTrailYears] = useState(0);
   const [hiddenBodies, setHiddenBodies] = useState<Set<string>>(() => new Set(DEFAULT_HIDDEN_BODIES));
-  const [showAtmosphere, setShowAtmosphere] = useState(true);
-  const [showCrust, setShowCrust] = useState(true);
+  // the planet close-up always shows its atmosphere and crust (the show/hide toggles were removed)
+  const showAtmosphere = true;
+  const showCrust = true;
   const [hoveredLayer, setHoveredLayer] = useState<HoveredLayer>(null);
   // A layer clicked in the cross-section panel stays selected (shown in the panel and
   // highlighted in 3D) whenever nothing is being hovered.
@@ -85,6 +86,10 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
     return next;
   });
   const isGalaxyScale = focus === 'cosmic' || focus === 'milkyway';
+  const isPlanetView = !isGalaxyScale && focus !== 'solarsystem' && focus !== 'Sun';
+  // planet view: a moon the camera follows, MOON_SYSTEM for the whole system, or null
+  const [focusedMoon, setFocusedMoon] = useState<string | null>(null);
+  useEffect(() => { setFocusedMoon(null); }, [focusedPlanet?.name]);
   // the object picked in the Milky Way view (its 3D model + details panel)
   const [selectedMwObject, setSelectedMwObject] = useState<MilkyWayMarker | null>(null);
   const [mwModelPlan, setMwModelPlan] = useState<ModelPlan | null>(null);
@@ -209,13 +214,9 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
       </div>
       {focusedPlanet?.structure && (
         <div className="solar-menu-stack-right">
-          <LayerVisibilityControls
-            showAtmosphere={showAtmosphere}
-            setShowAtmosphere={setShowAtmosphere}
-            showCrust={showCrust}
-            setShowCrust={setShowCrust}
-          />
+          <PlanetInfoCard planet={focusedPlanet} focusedMoon={focusedMoon} setFocusedMoon={setFocusedMoon} />
           <LayerCrossSection
+            planet={focusedPlanet.name}
             structure={focusedPlanet.structure}
             hoveredLayer={hoveredLayer}
             setHoveredLayer={setHoveredLayer}
@@ -223,7 +224,7 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
             setSelectedLayer={setSelectedLayer}
           />
           {showAtmosphere && (
-            <AtmosphereCrossSection atmosphere={focusedPlanet.structure.atmosphere} />
+            <AtmosphereCrossSection planet={focusedPlanet.name} atmosphere={focusedPlanet.structure.atmosphere} />
           )}
         </div>
       )}
@@ -249,8 +250,10 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
         }}
       >
         {/* lighting */}
-        <ambientLight intensity={focus === 'solarsystem' ? 0.22 : 1.0} />
-        <pointLight position={[0, 0, 0]} intensity={focus === 'solarsystem' ? 5000 : 500} />
+        {/* A planet close-up is lit by the Sun alone (no distance falloff, so every planet is
+            as readable) with a little fill light, giving it a real day and night side */}
+        <ambientLight intensity={focus === 'solarsystem' ? 0.22 : isPlanetView ? 0.08 : 1.0} />
+        <pointLight position={[0, 0, 0]} intensity={focus === 'solarsystem' ? 5000 : isPlanetView ? 3 : 500} decay={isPlanetView ? 0 : 2} />
 
         <TimeUpdater timeScale={timeScale} />
 
@@ -273,6 +276,7 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
           orbitControlsRef={orbitControlsRef}
           useSimplifiedDistance={false}
           useRealisticSizes={useRealisticSizes}
+          focusedMoon={focusedMoon}
         />
         {/* The Solar System stays mounted (hidden) in the galaxy-scale views: unmounting its
             dozens of drei <Line> orbits and rendering straight on reliably lost the WebGL
@@ -294,6 +298,8 @@ export function UniverseCanvas({ focus, focusedPlanet, setFocus }: UniverseCanva
             hoveredLayer={hoveredLayer ?? selectedLayer}
             setHoveredLayer={setHoveredLayer}
             galacticTrailYears={galacticTrailYears}
+            focusedMoon={focusedMoon}
+            onMoonSelect={setFocusedMoon}
           />
         </group>
         {/* Cosmic Web is a "warp cut" to a different scale — rendered inside the same

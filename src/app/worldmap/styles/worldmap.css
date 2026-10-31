@@ -44,136 +44,6 @@
   inset: 0;
 }
 
-.wm-map svg {
-  display: block;
-  cursor: grab;
-}
-
-.wm-map svg:active {
-  cursor: grabbing;
-}
-
-.wm-sphere {
-  fill: #101c33;
-  stroke: #2a3a5c;
-  vector-effect: non-scaling-stroke;
-}
-
-.wm-graticule {
-  fill: none;
-  stroke: #1b2b4a;
-  stroke-width: 0.5;
-  vector-effect: non-scaling-stroke;
-}
-
-.wm-country {
-  fill: #3b4a63;
-  stroke: #0b1220;
-  stroke-width: 0.6;
-  vector-effect: non-scaling-stroke;
-  cursor: pointer;
-  transition: fill 0.15s;
-}
-
-.wm-country:hover {
-  fill: #5b7bb0;
-}
-
-.wm-country.wm-selected {
-  fill: #e0a43a;
-}
-
-.wm-subregion {
-  fill: #c98f2e;
-  stroke: #0b1220;
-  stroke-width: 0.5;
-  vector-effect: non-scaling-stroke;
-  cursor: pointer;
-  transition: fill 0.15s;
-  animation: wm-fade-in 0.3s ease-out;
-}
-
-.wm-subregion:hover {
-  fill: #e8b558;
-}
-
-.wm-subregion.wm-selected {
-  fill: #ffd98a;
-  stroke: #fff;
-  stroke-width: 1.5;
-}
-
-/* While a subregion's districts are shown, its neighbours recede */
-.wm-subregions.wm-dimmed .wm-subregion:not(.wm-selected) {
-  fill: #8a6a32;
-}
-
-.wm-subregions.wm-dimmed .wm-subregion:not(.wm-selected):hover {
-  fill: #a9844a;
-}
-
-.wm-district {
-  fill: #f2c46d;
-  stroke: rgba(80, 52, 8, 0.7);
-  stroke-width: 0.8;
-  vector-effect: non-scaling-stroke;
-  cursor: pointer;
-  transition: fill 0.15s;
-  animation: wm-fade-in 0.3s ease-out;
-}
-
-.wm-district:hover {
-  fill: #ffe3a6;
-}
-
-.wm-district.wm-selected {
-  fill: #fff4d6;
-  stroke: #fff;
-  stroke-width: 1.5;
-}
-
-@keyframes wm-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.wm-labels text {
-  pointer-events: none;
-  text-anchor: middle;
-  dominant-baseline: central;
-  paint-order: stroke;
-  stroke-linejoin: round;
-  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
-}
-
-.wm-label-country {
-  fill: #dfe5ef;
-  stroke: #0b1220;
-  stroke-width: 3px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-}
-
-.wm-label-sub {
-  fill: #2b1d04;
-  stroke: rgba(240, 196, 110, 0.85);
-  stroke-width: 2.5px;
-  font-weight: 600;
-}
-
-.wm-label-district {
-  fill: #3a2806;
-  stroke: rgba(255, 236, 190, 0.85);
-  stroke-width: 2.5px;
-  font-weight: 500;
-}
-
-.wm-label-district.wm-selected,
-.wm-label-sub.wm-selected {
-  fill: #000;
-  stroke: #ffd98a;
-}
-
 .wm-tooltip {
   display: none;
   position: absolute;
@@ -722,28 +592,6 @@
 }
 
 /* ── Capital marker ──────────────────────────────────────────────────── */
-.wm-capitals {
-  pointer-events: none;
-}
-
-.wm-capital-star {
-  fill: #fff;
-  stroke: #0b1220;
-  stroke-width: 1.5px;
-  paint-order: stroke;
-}
-
-.wm-capital-label {
-  fill: #fff;
-  stroke: #0b1220;
-  stroke-width: 3px;
-  paint-order: stroke;
-  stroke-linejoin: round;
-  font-size: 12px;
-  font-weight: 600;
-  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
-}
-
 .wm-capital {
   margin: 3px 0 0;
   color: var(--wm-ink-2);
@@ -852,21 +700,6 @@
   font-size: 0.7rem;
 }
 
-/* With colouring on, hover and selection are shown by outline, not fill */
-.wm-choro-0 .wm-country:hover,
-.wm-choro-1 .wm-subregion:hover,
-.wm-choro-2 .wm-district:hover {
-  stroke: #fff;
-  stroke-width: 1.2;
-}
-
-.wm-choro-0 .wm-country.wm-selected,
-.wm-choro-1 .wm-subregion.wm-selected,
-.wm-choro-2 .wm-district.wm-selected {
-  stroke: #fff;
-  stroke-width: 2;
-}
-
 @media (max-width: 640px) {
   .wm-colorby {
     top: 70px;
@@ -886,13 +719,6 @@
 }
 
 /* ── Time slider ─────────────────────────────────────────────────────── */
-/* Land the historical source has no territory for (and coastline slivers between the
-   two datasets): darker than countries, so gaps read as gaps */
-.wm-land-nodata {
-  fill: #1c2840;
-  stroke: none;
-}
-
 .wm-time {
   position: absolute;
   left: 12px;
@@ -1159,57 +985,6 @@
 }
 
 /* ── Trade arcs ──────────────────────────────────────────────────────── */
-.wm-arcs {
-  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.7));
-}
-
-.wm-arc-ground {
-  fill: none;
-  stroke: rgba(0, 0, 0, 0.45);
-  stroke-width: 1.5;
-  stroke-dasharray: 2 4;
-  vector-effect: non-scaling-stroke;
-}
-
-.wm-arc-line {
-  fill: none;
-  stroke-linecap: round;
-  opacity: 0.85;
-  vector-effect: non-scaling-stroke;
-  stroke-dasharray: 10 6;
-  animation: wm-arc-flow 1.6s linear infinite;
-}
-
-.wm-arc-hit {
-  fill: none;
-  stroke: transparent;
-  stroke-width: 10;
-  vector-effect: non-scaling-stroke;
-  cursor: default;
-}
-
-.wm-arc:hover .wm-arc-line {
-  opacity: 1;
-}
-
-.wm-arc-end {
-  fill: #fff;
-  stroke: #0b1220;
-  stroke-width: 1;
-  vector-effect: non-scaling-stroke;
-}
-
-@keyframes wm-arc-flow {
-  to { stroke-dashoffset: -32; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .wm-arc-line {
-    animation: none;
-    stroke-dasharray: none;
-  }
-}
-
 @media (max-width: 640px) {
   .wm-right-controls {
     top: 70px;
@@ -1220,4 +995,188 @@
 .wm-info {
   color: #8fb4ff;
   cursor: help;
+}
+
+/* ── Map canvas (MapLibre) ───────────────────────────────────────────── */
+/* Space behind the globe */
+.wm-map {
+  background: radial-gradient(ellipse at 50% 45%, #13213d 0%, #0a1020 55%, #05080f 100%);
+}
+
+/* Higher specificity than maplibre-gl.css's .maplibregl-map { position: relative } */
+.wm-map .wm-map-canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.wm-map-canvas .maplibregl-canvas {
+  outline: none;
+}
+
+/* ── Glass surfaces: every floating control and the panel ────────────── */
+.wm-page {
+  --wm-glass: rgba(14, 21, 38, 0.72);
+  --wm-glass-strong: rgba(12, 18, 33, 0.86);
+  --wm-glass-border: rgba(148, 170, 214, 0.16);
+  --wm-glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --wm-radius: 12px;
+  --wm-accent: #e0a43a;
+}
+
+.wm-search input,
+.wm-search ul,
+.wm-colorby,
+.wm-arcsctl,
+.wm-time,
+.wm-basemap,
+.wm-zoom,
+.wm-tooltip {
+  background: var(--wm-glass);
+  border: 1px solid var(--wm-glass-border);
+  box-shadow: var(--wm-glass-shadow);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+
+.wm-search input,
+.wm-colorby,
+.wm-arcsctl,
+.wm-time {
+  border-radius: var(--wm-radius);
+}
+
+.wm-search input {
+  padding: 11px 14px;
+}
+
+.wm-search input:focus {
+  border-color: rgba(224, 164, 58, 0.6);
+  box-shadow: var(--wm-glass-shadow), 0 0 0 3px rgba(224, 164, 58, 0.15);
+}
+
+.wm-search ul {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.wm-search button:hover {
+  background: rgba(91, 123, 176, 0.22);
+}
+
+.wm-panel {
+  background: var(--wm-glass-strong);
+  border-left: 1px solid var(--wm-glass-border);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
+.wm-tooltip {
+  padding: 5px 10px;
+  border-radius: 8px;
+  z-index: 15;
+}
+
+.wm-seg-buttons {
+  background: rgba(8, 13, 24, 0.5);
+  border-color: var(--wm-glass-border);
+  border-radius: 8px;
+}
+
+.wm-seg-buttons button {
+  border-radius: 6px;
+}
+
+.wm-seg-buttons button.wm-active {
+  background: rgba(224, 164, 58, 0.22);
+  color: #ffe2ad;
+}
+
+.wm-time-play {
+  background: var(--wm-accent) !important;
+  color: #1a1206 !important;
+}
+
+.wm-time-play:hover {
+  background: #f0b85a !important;
+}
+
+/* ── Basemap toggle and zoom buttons (bottom right, beside the panel) ── */
+.wm-map-controls {
+  position: absolute;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  transition: right 0.25s, bottom 0.25s;
+}
+
+.wm-basemap {
+  display: flex;
+  padding: 3px;
+  border-radius: 10px;
+}
+
+.wm-basemap button {
+  padding: 6px 12px;
+  background: none;
+  border: 0;
+  border-radius: 7px;
+  color: var(--wm-ink-3);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.wm-basemap button:hover {
+  color: #e6e9ef;
+}
+
+.wm-basemap button.wm-active {
+  background: rgba(224, 164, 58, 0.22);
+  color: #ffe2ad;
+}
+
+.wm-zoom {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.wm-zoom button {
+  width: 36px;
+  height: 34px;
+  background: none;
+  border: 0;
+  color: #e6e9ef;
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.wm-zoom button + button {
+  border-top: 1px solid var(--wm-glass-border);
+}
+
+.wm-zoom button:hover {
+  background: rgba(91, 123, 176, 0.22);
+}
+
+.wm-zoom button:last-child {
+  font-size: 0.9rem;
+}
+
+.wm-credits {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 6px;
+  max-width: calc(100% - 24px);
+  text-align: right;
+}
+
+@media (max-width: 640px) {
+  .wm-zoom {
+    display: none;
+  }
 }
