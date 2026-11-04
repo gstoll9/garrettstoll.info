@@ -48,7 +48,8 @@ function layerGeometry(structure: PlanetStructure, key: string) {
 const pct = (v: number) => (v >= 10 ? `${v.toFixed(0)}%` : v >= 1 ? `${v.toFixed(1)}%` : `${v.toFixed(2)}%`);
 
 export default function LayerCrossSection({ planet, structure, hoveredLayer, setHoveredLayer, selectedLayer, setSelectedLayer }: LayerCrossSectionProps) {
-  const [isExpanded, setIsExpanded] = useState(true);
+  // collapsed to its header on a phone, where the right-hand panels form a bottom sheet
+  const [isExpanded, setIsExpanded] = useState(() => typeof window === 'undefined' || !window.matchMedia('(max-width: 768px)').matches);
 
   if (!structure) return null;
 

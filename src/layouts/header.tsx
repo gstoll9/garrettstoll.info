@@ -6,6 +6,8 @@ import * as React from "react";
 
 type HeaderProps = {
   title?: string;
+  /** Top-left brand image; defaults to Tyro. */
+  brandImage?: string;
 }
 
 const NAV_LINKS = [
@@ -14,7 +16,7 @@ const NAV_LINKS = [
   { href: "/#skills", label: "Skills" },
 ];
 
-function Header({ title }: HeaderProps) {
+function Header({ title, brandImage = "/TyroImages/TyroAvatar.png" }: HeaderProps) {
   const [scrolled, setScrolled] = React.useState(false);
 
   React.useEffect(() => {
@@ -30,7 +32,7 @@ function Header({ title }: HeaderProps) {
         <Link href="/" className="site-brand" aria-label="Garrett Stoll — home">
           <span className="site-brand-avatar">
             <Image
-              src="/TyroImages/TyroAvatar.png"
+              src={brandImage}
               alt=""
               width={96}
               height={96}

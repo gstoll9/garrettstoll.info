@@ -110,9 +110,12 @@ export default function MilkyWayField({ orbitControlsRef, hiddenKinds, selected,
   const starMaterial = useMemo(() => createStarParticleMaterial(3.5), [])
 
   const shown = useMemo(() => MARKERS.filter((m) => !hiddenKinds.has(m.kind)), [hiddenKinds])
+  // once an object is selected its own point and name tag give way to its 3D model, which
+  // labels each body in it
+  const drawn = useMemo(() => shown.filter((m) => m !== selected), [shown, selected])
   const markerPoints = useMemo(() => {
-    const pos = new Float32Array(shown.length * 3), col = new Float32Array(shown.length * 3), px = new Float32Array(shown.length)
-    shown.forEach((m, i) => {
+    const pos = new Float32Array(drawn.length * 3), col = new Float32Array(drawn.length * 3), px = new Float32Array(drawn.length)
+    drawn.forEach((m, i) => {
       pos.set(m.scene, i * 3)
       const c = new THREE.Color(MARKER_STYLES[m.kind].color)
       col.set([c.r, c.g, c.b], i * 3)
@@ -127,7 +130,7 @@ export default function MilkyWayField({ orbitControlsRef, hiddenKinds, selected,
     points.frustumCulled = false
     points.renderOrder = 5
     return points
-  }, [shown])
+  }, [drawn])
   useEffect(() => () => { stars.dispose(); starMaterial.dispose() }, [stars, starMaterial])
   useEffect(() => () => { markerPoints.geometry.dispose(); (markerPoints.material as THREE.Material).dispose() }, [markerPoints])
 
@@ -213,17 +216,20 @@ export default function MilkyWayField({ orbitControlsRef, hiddenKinds, selected,
         camera.position.add(delta)
         controls.update()
       }
-      // overview labels (arms, centre) only once the galaxy is in view
-      const showOverview = d > 25
+    }
+    if (controls) {
+      // overview labels (arms, centre) only once the galaxy is in view; nearest-star names only
+      // while zoomed in among them, in front of the camera — and none of either while an
+      // object is selected, whose model labels its own bodies
+      const showOverview = !selected && camera.position.distanceTo(controls.target) > 25
       for (const el of overviewRef.current) if (el) el.style.visibility = showOverview ? 'visible' : 'hidden'
-      // nearest-star names: only while zoomed in among them, and only for stars in front of the camera
-      const near = camera.position.distanceTo(SUN) < NEARBY_LABEL_DISTANCE
+      const near = !selected && camera.position.distanceTo(SUN) < NEARBY_LABEL_DISTANCE
       camera.getWorldDirection(cameraDir)
       nearbyStars.forEach((m, i) => {
         const el = nearbyRefs.current[i]
         if (!el) return
         const inFront = projected.set(...m.scene).sub(camera.position).dot(cameraDir) > 0
-        el.style.visibility = near && inFront && (!selected || selected === m) ? 'visible' : 'hidden'
+        el.style.visibility = near && inFront ? 'visible' : 'hidden'
       })
     }
 
@@ -231,7 +237,7 @@ export default function MilkyWayField({ orbitControlsRef, hiddenKinds, selected,
     camera.getWorldDirection(cameraDir)
     let best: MilkyWayMarker | null = null
     let bestPx = 9
-    for (const m of pointerInside.current ? shown : []) {
+    for (const m of pointerInside.current ? drawn : []) {
       projected.set(...m.scene)
       if (projected.clone().sub(camera.position).dot(cameraDir) <= 0) continue
       projected.project(camera)
@@ -265,7 +271,7 @@ export default function MilkyWayField({ orbitControlsRef, hiddenKinds, selected,
             onClick={() => onSelect(m)}>{shortName(m.name)}</div>
         </Html>
       ))}
-      {satelliteLabels.map((m) => (
+      {satelliteLabels.filter((m) => m !== selected).map((m) => (
         <Html key={m.name} position={m.scene} zIndexRange={[15, 0]} style={{ pointerEvents: 'none' }}>
           <div className="lg-label mw-clickable" onClick={() => onSelect(m)}>{m.name}</div>
         </Html>

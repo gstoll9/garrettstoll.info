@@ -211,6 +211,32 @@
   box-shadow: 0 0 18px rgba(255, 255, 255, 0.08);
 }
 
+/* dropdown stand-in for the chip row on narrow screens (see the media query below) */
+.planetSelect {
+  display: none;
+  flex-basis: 100%;
+  max-width: 220px;
+  margin: -0.35rem auto 0;
+  padding: 0.45rem 2rem 0.45rem 0.9rem;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.08)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23c7ccd4' stroke-width='1.5'/%3E%3C/svg%3E")
+    no-repeat right 0.85rem center;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  color: #dfe3e8;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.planetSelect option {
+  background: #0b111b;
+  color: #dfe3e8;
+  text-transform: none;
+}
+
 .planetPickSymbol {
   font-size: 1rem;
   line-height: 1;
@@ -243,17 +269,30 @@
     padding: 0.65rem 0.75rem 0.25rem 136px;
   }
 
+  /* the end labels hang half outside the track, so it stops short of the right edge, and
+     each label wraps onto two lines to fit between its neighbours */
   .solarTrack {
-    width: min(280px, 62vw);
+    width: min(280px, calc(100vw - 136px - 2.25rem));
+    margin-bottom: 30px;
   }
 
   .solarLabel {
+    display: block;
+    width: 64px;
     font-size: 10px;
     letter-spacing: 0.04em;
+    line-height: 1.15;
+    text-align: center;
+    white-space: normal;
   }
 
   .planetPicker {
-    margin-left: 0;
+    display: none;
+  }
+
+  .planetSelect {
+    display: block;
+    margin: 0;
   }
 
   .solarWorkArea {
@@ -806,4 +845,30 @@
 
 .solarPage .moon-label--focused {
   color: #9cc6ff;
+}
+
+
+/* name tags on the bodies of a selected object's 3D model (ObjectModel.tsx) */
+.solarPage .mw-mass-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1px 6px 2px;
+  border-radius: 6px;
+  background: rgba(6, 10, 18, 0.62);
+  white-space: nowrap;
+  text-shadow: 0 0 3px #000;
+  user-select: none;
+}
+
+.solarPage .mw-mass-label-name {
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.solarPage .mw-mass-label-detail {
+  color: rgba(214, 226, 245, 0.72);
+  font-size: 9.5px;
+  font-variant-numeric: tabular-nums;
 }

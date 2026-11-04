@@ -95,6 +95,21 @@ export default function Home() {
 
         {/* Planet picker — visible only when Planet tab is active */}
         {activeTab === 'planet' && (
+          // narrow screens get a dropdown instead of the chip row (CSS shows one or the other)
+          <select
+            className="planetSelect"
+            aria-label="Planet"
+            value={activePlanetName ?? ''}
+            onChange={(e) => handlePlanetPick(e.target.value)}
+          >
+            {planets.map(p => (
+              <option key={p.name} value={p.name}>
+                {PLANET_SYMBOLS[p.name] || '•'} {p.name}
+              </option>
+            ))}
+          </select>
+        )}
+        {activeTab === 'planet' && (
           <div className="planetPicker">
             {planets.map(p => (
               <button

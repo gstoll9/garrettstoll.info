@@ -1,9 +1,59 @@
 /* Home / resume page. Everything is scoped under .home so nothing leaks into
    other routes (global CSS persists across client-side navigation). */
 
+/* Dark theme: the design tokens are overridden here rather than in globals.css
+   so only this page (and the shared header while it's on this page) goes dark. */
+.container0:has(.home),
+.home {
+  --bg: #0b1014;
+  --surface: #12191e;
+  --surface-muted: rgba(255, 255, 255, 0.035);
+  --text-primary: #eaf4f1;
+  --text-secondary: #a3b5b1;
+  --text-tertiary: #7b8f8b;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --brand: #62d0a4;
+  --brand-strong: #8ae0bd;
+  --brand-soft: rgba(98, 208, 164, 0.12);
+  --accent: #62d0a4;
+  --shadow-card: none;
+  --shadow-lift: 0 24px 60px -24px rgba(0, 0, 0, 0.85);
+  --radius: 10px;
+  color: var(--text-primary);
+}
+
+html:has(.home) {
+  color-scheme: dark;
+  background: #0b1014;
+}
+
+body:has(.home) {
+  background: #0b1014;
+}
+
 .home {
   --home-ink: var(--text-primary);
   color: var(--home-ink);
+}
+
+/* Shared site header, while it sits on this page */
+.container0:has(.home) .site-brand-avatar {
+  background: #eef1f0; /* GS.png is black on transparent */
+}
+
+.container0:has(.home) .site-header.is-scrolled {
+  box-shadow: 0 10px 30px -18px rgba(0, 0, 0, 0.9);
+}
+
+.container0:has(.home) .site-nav-cta {
+  background: var(--text-primary);
+  color: #0b1014;
+}
+
+.container0:has(.home) .site-nav-cta:hover {
+  background: var(--brand-strong);
+  color: #0b1014;
 }
 
 .home .wrap {
@@ -31,7 +81,7 @@
   gap: 0.4rem;
   min-height: 44px;
   padding: 0.65rem 1.15rem;
-  border-radius: 999px;
+  border-radius: 8px;
   font-weight: 600;
   font-size: 0.95rem;
   text-decoration: none;
@@ -51,25 +101,24 @@
 
 .home .btn-primary {
   background: var(--brand);
-  color: #fff;
-  box-shadow: 0 6px 18px -8px color-mix(in srgb, var(--brand) 80%, transparent);
+  color: #08150f;
 }
 
 .home .btn-primary:hover {
   background: var(--brand-strong);
-  color: #fff;
+  color: #08150f;
   transform: translateY(-1px);
 }
 
 .home .btn-ghost {
-  background: var(--surface);
+  background: transparent;
   color: var(--text-primary);
   border-color: var(--line-strong);
 }
 
 .home .btn-ghost:hover {
   color: var(--text-primary);
-  border-color: var(--text-primary);
+  border-color: var(--text-secondary);
 }
 
 .home .btn-link {
@@ -82,24 +131,24 @@
 }
 
 .home .btn-light {
-  background: #fff;
-  color: var(--brand-strong);
+  background: var(--brand);
+  color: #08150f;
 }
 
 .home .btn-light:hover {
-  color: var(--brand-strong);
+  background: var(--brand-strong);
+  color: #08150f;
   transform: translateY(-1px);
-  box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.45);
 }
 
 .home .btn-outline-light {
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.4);
+  color: var(--text-primary);
+  border-color: var(--line-strong);
 }
 
 .home .btn-outline-light:hover {
-  color: #fff;
-  border-color: #fff;
+  color: var(--text-primary);
+  border-color: var(--text-secondary);
 }
 
 /* ── Hero ───────────────────────────────────────────────────────────────── */
@@ -117,7 +166,7 @@
   height: 60vw;
   max-width: 760px;
   max-height: 760px;
-  background: radial-gradient(closest-side, color-mix(in srgb, var(--brand) 16%, transparent), transparent);
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--brand) 8%, transparent), transparent);
   pointer-events: none;
 }
 
@@ -148,21 +197,14 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #2fb36b;
-  box-shadow: 0 0 0 0 rgba(47, 179, 107, 0.6);
-  animation: status-pulse 2.4s ease-out infinite;
-}
-
-@keyframes status-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(47, 179, 107, 0.55); }
-  80%, 100% { box-shadow: 0 0 0 9px rgba(47, 179, 107, 0); }
+  background: var(--brand);
 }
 
 .home .hero-title {
   font-size: clamp(2.3rem, 5.6vw, 4.1rem);
   line-height: 1.04;
-  letter-spacing: -0.035em;
-  font-weight: 700;
+  letter-spacing: -0.04em;
+  font-weight: 600;
 }
 
 .home .hero-title-accent {
@@ -204,27 +246,25 @@
 
 .home .hero-traits li::before {
   content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 2px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
   background: var(--accent);
-  transform: rotate(45deg);
 }
 
 .home .hero-visual {
   position: relative;
   justify-self: center;
-  width: min(100%, 400px);
+  width: min(100%, 360px);
 }
 
 .home .portrait {
   position: relative;
   aspect-ratio: 1;
-  border-radius: 32px;
+  border-radius: 50%;
   overflow: hidden;
-  background: linear-gradient(160deg, #e8e4da, #d8d3c6);
+  background: var(--surface);
   box-shadow: var(--shadow-lift);
-  transform: rotate(-2.5deg);
 }
 
 .home .portrait::after {
@@ -232,7 +272,7 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+  box-shadow: inset 0 0 0 1px var(--line-strong);
 }
 
 .home .portrait-img {
@@ -251,7 +291,7 @@
 }
 
 .home .section--alt {
-  background: var(--surface);
+  background: #0e1419;
   border-block: 1px solid var(--line);
 }
 
@@ -269,19 +309,19 @@
   margin-bottom: 0.6rem;
   color: var(--brand);
   font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
 .home .eyebrow--light {
-  color: #a9e3c0;
+  color: var(--brand);
 }
 
 .home .section-head h2 {
   font-size: clamp(1.7rem, 3.4vw, 2.4rem);
   letter-spacing: -0.03em;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .home .section-lead {
@@ -308,8 +348,7 @@
 .home .cap-num {
   display: block;
   margin-bottom: 1rem;
-  color: var(--accent);
-  font-family: var(--font-mono), monospace;
+  color: var(--text-tertiary);
   font-size: 0.8rem;
   font-weight: 600;
 }
@@ -369,7 +408,7 @@
 
 .home .work-card {
   --hue: 150;
-  --tint: hsl(var(--hue) 70% 45%);
+  --tint: hsl(var(--hue) 50% 72%);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -386,25 +425,11 @@
   transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
 }
 
-.home .work-card::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto;
-  height: 3px;
-  background: var(--tint);
-  opacity: 0;
-  transition: opacity 200ms ease;
-}
-
 .home .work-card:hover {
   color: var(--text-primary);
   transform: translateY(-3px);
   box-shadow: var(--shadow-lift);
-  border-color: color-mix(in srgb, var(--tint) 35%, transparent);
-}
-
-.home .work-card:hover::before {
-  opacity: 1;
+  border-color: var(--line-strong);
 }
 
 .home .work-icon {
@@ -413,14 +438,10 @@
   width: 46px;
   height: 46px;
   margin-bottom: 0.6rem;
-  border-radius: 12px;
-  color: hsl(var(--hue) 65% 36%);
-  background: hsl(var(--hue) 70% 94%);
+  border-radius: 10px;
+  color: var(--tint);
+  background: color-mix(in srgb, var(--tint) 12%, transparent);
   transition: transform 260ms cubic-bezier(.3, 1.5, .5, 1);
-}
-
-.home .work-card:hover .work-icon {
-  transform: rotate(-8deg) scale(1.08);
 }
 
 .home .work-icon svg {
@@ -446,7 +467,7 @@
   gap: 0.3rem;
   margin-top: auto;
   padding-top: 0.75rem;
-  color: hsl(var(--hue) 65% 34%);
+  color: var(--text-secondary);
   font-size: 0.88rem;
   font-weight: 600;
 }
@@ -475,7 +496,7 @@
   gap: 1.25rem;
   padding: 1.5rem;
   border-radius: var(--radius);
-  background: var(--bg);
+  background: var(--surface);
   border: 1px solid var(--line);
 }
 
@@ -485,16 +506,15 @@
   width: 64px;
   height: 64px;
   padding: 8px;
-  border-radius: 14px;
-  background: #fff;
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow-card);
+  border-radius: 12px;
+  background: #eef1f0;
+  border: 1px solid transparent;
   flex-shrink: 0;
 }
 
 .home .logo-tile--dark {
-  background: #1f2328;
-  border-color: #1f2328;
+  background: #0b1014;
+  border-color: var(--line-strong);
 }
 
 .home .logo-tile img {
@@ -524,12 +544,9 @@
 
 .home .role-dates {
   display: inline-block;
-  padding: 0.22rem 0.65rem;
-  border-radius: 999px;
-  background: var(--brand-soft);
-  color: var(--brand-strong);
-  font-size: 0.78rem;
-  font-weight: 600;
+  color: var(--text-tertiary);
+  font-size: 0.85rem;
+  font-weight: 500;
   white-space: nowrap;
 }
 
@@ -555,10 +572,10 @@
   position: absolute;
   left: 0;
   top: 0.62em;
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
-  background: color-mix(in srgb, var(--brand) 55%, transparent);
+  background: var(--text-tertiary);
 }
 
 .home .role-projects {
@@ -570,8 +587,8 @@
 
 .home .role-project {
   padding: 1.1rem;
-  border-radius: 12px;
-  background: var(--surface);
+  border-radius: var(--radius);
+  background: var(--surface-muted);
   border: 1px solid var(--line);
 }
 
@@ -598,8 +615,8 @@
 }
 
 .home .chip {
-  padding: 0.25rem 0.65rem;
-  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
   background: var(--surface-muted);
   border: 1px solid var(--line);
   color: var(--text-secondary);
@@ -693,7 +710,7 @@
   gap: 1.25rem;
   padding: 1.5rem;
   border-radius: var(--radius);
-  background: var(--bg);
+  background: var(--surface);
   border: 1px solid var(--line);
 }
 
@@ -724,11 +741,10 @@
   gap: 2rem;
   align-items: center;
   padding: clamp(1.75rem, 5vw, 3.5rem);
-  border-radius: 28px;
-  background:
-    radial-gradient(circle at 15% 100%, rgba(135, 210, 160, 0.25), transparent 50%),
-    linear-gradient(135deg, #123524 0%, #1c5a3a 100%);
-  color: #fff;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text-primary);
   box-shadow: var(--shadow-lift);
   overflow: visible;
 }
@@ -738,7 +754,7 @@
   max-width: 320px;
   height: auto;
   margin: -6.5rem auto -1rem;
-  filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.7));
   transition: transform 300ms ease;
 }
 
@@ -747,16 +763,16 @@
 }
 
 .home .contact-copy h2 {
-  color: #fff;
+  color: var(--text-primary);
   font-size: clamp(1.7rem, 3.6vw, 2.5rem);
   letter-spacing: -0.03em;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .home .contact-copy p:not(.eyebrow) {
   margin-top: 0.9rem;
   max-width: 48ch;
-  color: rgba(255, 255, 255, 0.78);
+  color: var(--text-secondary);
   font-size: 1.05rem;
 }
 

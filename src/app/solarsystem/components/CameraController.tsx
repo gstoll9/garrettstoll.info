@@ -187,11 +187,13 @@ export default function CameraController({ focus, planetData, orbitControlsRef, 
 
         // fov 60 => tan(30deg) ~ 0.577, so ~1.7x the radius fits vertically; 1.6 is enough
         // since the (wider) horizontal extent carries the orbit.
-        const planetFrame = Math.max(fitRadius * 1.6, planetSize * 3.6);
+        // on a portrait screen (a phone) the width is the tighter fit, so back off by 1/aspect
+        const portrait = Math.max(1, 1 / ((camera as THREE.PerspectiveCamera).aspect || 1));
+        const planetFrame = Math.max(fitRadius * 1.6, planetSize * 3.6) * portrait;
         let zoomDist = planetFrame;
         if (moon && moonElements[moon]) {
           // a moon fills about a third of the view
-          zoomDist = Math.max(moonElements[moon].meanRadiusKm * kmToScene * 7, planetSize * 0.02)
+          zoomDist = Math.max(moonElements[moon].meanRadiusKm * kmToScene * 7, planetSize * 0.02) * portrait
         } else if (focusedMoon === MOON_SYSTEM) {
           // every listed moon's orbit in frame
           let maxApo = 0
@@ -199,7 +201,7 @@ export default function CameraController({ focus, planetData, orbitControlsRef, 
             const el = moonElements[name]
             if (el) maxApo = Math.max(maxApo, el.semimajorAxisKm * (1 + el.eccentricity))
           }
-          zoomDist = Math.max(maxApo * kmToScene * 1.25, zoomDist)
+          zoomDist = Math.max(maxApo * kmToScene * 1.25 * portrait, zoomDist)
         }
 
         // Fixed camera direction looking into the top-half 1/8th slice chunk

@@ -1,7 +1,7 @@
 "use client";
 
 import * as d3 from 'd3';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { radialWavefunction } from '../utils/hydrogenCloud';
 
 interface WaveStatePlotsProps {
@@ -57,15 +57,36 @@ function angularPart(l: number, m: number, theta: number): number {
   return norm * p;
 }
 
+// Charts are drawn at their real pixel size (not a fixed viewBox scaled to fit), so
+// tick labels stay legible from a phone-width single column to a wide two-column grid.
+function useElementSize<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
+  const [size, setSize] = useState({ width: 0, height: 0 });
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      setSize(prev => (prev.width === width && prev.height === height ? prev : { width, height }));
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  return [ref, size] as const;
+}
+
 function buildChart(
   data: Point[],
   xDomain: [number, number],
   xTicksCount: number,
   yTicksCount: number,
-  xFormatter?: (value: number) => string
+  xFormatter: ((value: number) => string) | undefined,
+  width: number,
+  height: number
 ) {
-  const width = 760;
-  const height = 230;
+  // Fewer ticks when narrow so labels don't collide.
+  if (width < 360) xTicksCount = Math.min(xTicksCount, 4);
+  if (height < 160) yTicksCount = Math.min(yTicksCount, 3);
   const margin = { top: 16, right: 18, bottom: 34, left: 52 };
 
   const x = d3.scaleLinear().domain(xDomain).range([margin.left, width - margin.right]);
@@ -114,19 +135,34 @@ function thetaTickLabel(theta: number): string {
   return d3.format('.2f')(theta);
 }
 
+type ChartSpec = {
+  data: Point[];
+  xDomain: [number, number];
+  xTicks: number;
+  yTicks: number;
+  xFormatter?: (value: number) => string;
+};
+
 function Chart({
   title,
   subtitle,
   xLabel,
   yLabel,
-  chart,
+  spec,
 }: {
   title: string;
   subtitle: string;
   xLabel: string;
   yLabel: string;
-  chart: ReturnType<typeof buildChart>;
+  spec: ChartSpec;
 }) {
+  const [boxRef, size] = useElementSize<HTMLDivElement>();
+  const chart = useMemo(
+    () => buildChart(spec.data, spec.xDomain, spec.xTicks, spec.yTicks, spec.xFormatter,
+      Math.max(160, size.width), Math.max(120, size.height)),
+    [spec, size.width, size.height]
+  );
+
   return (
     <section className="wavePlotCard">
       <header className="wavePlotHead">
@@ -134,7 +170,9 @@ function Chart({
         <p>{subtitle}</p>
       </header>
 
-      <svg viewBox={`0 0 ${chart.width} ${chart.height}`} className="wavePlotSvg" role="img" aria-label={title}>
+      <div ref={boxRef} className="wavePlotSvg">
+      {size.width > 0 && (
+      <svg width={chart.width} height={chart.height} style={{ display: 'block' }} role="img" aria-label={title}>
         <rect x={0} y={0} width={chart.width} height={chart.height} fill="transparent" />
 
         {chart.yTicks.map((t) => (
@@ -190,6 +228,8 @@ function Chart({
           {yLabel}
         </text>
       </svg>
+      )}
+      </div>
     </section>
   );
 }
@@ -204,9 +244,9 @@ export default function WaveStatePlots({ n, l, m, Z = 1 }: WaveStatePlotsProps) 
     });
   }, [n, l, Z]);
 
-  const radialChart = useMemo(() => {
+  const radialChart = useMemo<ChartSpec>(() => {
     const rMax = radialData[radialData.length - 1]?.x ?? 1;
-    return buildChart(radialData, [0, rMax], 6, 5);
+    return { data: radialData, xDomain: [0, rMax], xTicks: 6, yTicks: 5 };
   }, [radialData]);
 
   const angularData = useMemo(() => {
@@ -217,8 +257,8 @@ export default function WaveStatePlots({ n, l, m, Z = 1 }: WaveStatePlotsProps) 
     });
   }, [l, m]);
 
-  const angularChart = useMemo(
-    () => buildChart(angularData, [0, Math.PI], 5, 5, thetaTickLabel),
+  const angularChart = useMemo<ChartSpec>(
+    () => ({ data: angularData, xDomain: [0, Math.PI], xTicks: 5, yTicks: 5, xFormatter: thetaTickLabel }),
     [angularData]
   );
 
@@ -229,14 +269,14 @@ export default function WaveStatePlots({ n, l, m, Z = 1 }: WaveStatePlotsProps) 
         subtitle={`R_${n}${l}(r)`}
         xLabel="r (a0)"
         yLabel="R_nl(r)"
-        chart={radialChart}
+        spec={radialChart}
       />
       <Chart
         title="Angular"
         subtitle={`Y_${l}${m}(theta, phi=0) core`}
         xLabel="theta"
         yLabel="A_lm(theta)"
-        chart={angularChart}
+        spec={angularChart}
       />
     </div>
   );

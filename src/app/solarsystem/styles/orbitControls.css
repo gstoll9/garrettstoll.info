@@ -607,12 +607,16 @@
     overflow-y: auto;
   }
 
+  /* on a phone the planet panels can't sit beside the left menu: they become a bottom
+     sheet, leaving the planet visible between the two */
   .solar-menu-stack-right {
-    top: 0.65rem;
+    top: auto;
+    left: 0.65rem;
     right: 0.65rem;
-    width: 210px;
-    max-width: calc(100vw - 1.3rem);
-    max-height: calc(100dvh - 5rem);
+    bottom: 0.65rem;
+    width: auto;
+    max-width: none;
+    max-height: 42%;
   }
 
   .menu-toggle-button {

@@ -17,6 +17,7 @@ import { wikiTitleFor } from '../lib/countryNames';
 import type { Capital } from '../lib/db';
 import { TradeArcs, arcFeatures } from './TradeArcs';
 import { PeriodFeature, Period, periodsAt } from '../lib/history';
+import type { FocusCategory, FocusPoint } from '../lib/focus';
 
 export type Country = {
   key: string;
@@ -75,6 +76,11 @@ type Props = {
   history: PeriodFeature[] | null;
   basemap: Basemap;
   onBasemapChange: (b: Basemap) => void;
+  // Places of the active focus (already filtered by category and year), and its categories
+  facilities: FocusPoint[];
+  focusCategories: FocusCategory[];
+  selectedFacilityId: string | null;
+  onSelectFacility: (f: FocusPoint) => void;
 };
 
 // Our layers, bottom to top. Fills and outlines go under the basemap's labels; our own
@@ -105,12 +111,16 @@ const opacityExpr = (level: LevelId, basemap: Basemap, choro: boolean): Expressi
 
 maplibregl.setWorkerUrl(`/worldmap/vendor/maplibre-gl-csp-worker-${maplibregl.getVersion()}.js`);
 
+// Latitude past which MapLibre renders nothing (its tiles stop at ±85.05°)
+const POLAR_EDGE = 85;
+
 const FONT = ['Noto Sans Regular'];
 const FONT_BOLD = ['Noto Sans Bold'];
 
 export default function WorldMap({
   selectedKey, onSelect, subregions, selectedSubKey, onSelectSubregion,
   districts, selectedDistrictKey, onSelectDistrict, capitals, choropleth, arcs, onLoad, insets, year, history, basemap, onBasemapChange,
+  facilities, focusCategories, selectedFacilityId, onSelectFacility,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
@@ -153,8 +163,8 @@ export default function WorldMap({
   }, [countries]);
 
   // Latest props for the map's event handlers, which are registered once
-  const live = useRef({ countries, subregions, districts, choropleth, onSelect, onSelectSubregion, onSelectDistrict, arcs });
-  live.current = { countries, subregions, districts, choropleth, onSelect, onSelectSubregion, onSelectDistrict, arcs };
+  const live = useRef({ countries, subregions, districts, choropleth, onSelect, onSelectSubregion, onSelectDistrict, arcs, facilities, onSelectFacility });
+  live.current = { countries, subregions, districts, choropleth, onSelect, onSelectSubregion, onSelectDistrict, arcs, facilities, onSelectFacility };
 
   // ── Map setup ──────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -281,11 +291,42 @@ export default function WorldMap({
         },
         paint: { 'text-color': '#ffffff', 'text-halo-color': 'rgba(8, 13, 24, 0.95)', 'text-halo-width': 1.6 },
       });
+      // Focus places: dots coloured by category, bigger for ones with a Wikipedia article;
+      // labelled once zoomed in (notable ones first)
+      addSource('focus');
+      const notable = ['==', ['get', 'notable'], 1] as ExpressionSpecification;
+      const selectedF = ['boolean', ['feature-state', 'selected'], false] as ExpressionSpecification;
+      map.addLayer({
+        id: 'wm-focus-dots', type: 'circle', source: 'focus',
+        // Notable places draw on top (feature-state isn't allowed in layout properties)
+        layout: { 'circle-sort-key': ['get', 'notable'] },
+        paint: {
+          'circle-color': ['get', 'color'],
+          'circle-radius': ['interpolate', ['linear'], ['zoom'],
+            1, ['case', selectedF, 7, notable, 3.4, 1.8],
+            6, ['case', selectedF, 10, notable, 6, 3.4],
+            12, ['case', selectedF, 13, notable, 9, 6]],
+          'circle-opacity': ['case', ['==', ['get', 'closed'], 1], 0.45, 0.95],
+          'circle-stroke-color': ['case', selectedF, '#ffffff', ['boolean', ['feature-state', 'hover'], false], '#ffffff', 'rgba(8, 13, 24, 0.85)'],
+          'circle-stroke-width': ['case', selectedF, 2.5, ['boolean', ['feature-state', 'hover'], false], 2, 0.8],
+        },
+      });
+      const focusLabel = (id: string, minzoom: number, filter: ExpressionSpecification) => map.addLayer({
+        id, type: 'symbol', source: 'focus', minzoom, filter,
+        layout: {
+          'text-field': ['get', 'name'], 'text-font': FONT, 'text-size': 11.5,
+          'text-anchor': 'left', 'text-offset': [0.9, 0], 'text-max-width': 12, 'text-optional': true,
+          'symbol-sort-key': ['-', 0, ['get', 'notable']],
+        },
+        paint: { 'text-color': '#eef2f8', 'text-halo-color': 'rgba(8, 13, 24, 0.92)', 'text-halo-width': 1.4 },
+      });
+      focusLabel('wm-focus-labels', 4.5, notable);
+      focusLabel('wm-focus-labels-minor', 8, ['!=', ['get', 'notable'], 1]);
       setReady(true);
     });
 
     // ── Pointer: the most specific shape under the cursor wins ───────────────
-    const hitLayers = ['wm-arcs-hit', 'wm-districts-fill', 'wm-subregions-fill', 'wm-countries-fill', 'wm-land'];
+    const hitLayers = ['wm-focus-dots', 'wm-arcs-hit', 'wm-districts-fill', 'wm-subregions-fill', 'wm-countries-fill', 'wm-land'];
     const topHit = (point: maplibregl.PointLike) => {
       const layers = hitLayers.filter(l => map.getLayer(l));
       const hits = map.queryRenderedFeatures(point, { layers });
@@ -325,6 +366,7 @@ export default function WorldMap({
       const key = hit?.properties?.key as string | undefined;
       const p = live.current;
       if (hit?.layer.id === 'wm-arcs-hit') return;
+      if (hit?.layer.id === 'wm-focus-dots') { const f = p.facilities.find(x => x.id === key); if (f) return p.onSelectFacility(f); }
       if (hit?.layer.id === 'wm-districts-fill') { const d = p.districts.find(x => x.key === key); if (d) return p.onSelectDistrict(d); }
       if (hit?.layer.id === 'wm-subregions-fill') { const s = p.subregions.find(x => x.key === key); if (s) return p.onSelectSubregion(s); }
       if (hit?.layer.id === 'wm-countries-fill') { const c = p.countries.find(x => x.key === key); if (c) return p.onSelect(c); }
@@ -404,6 +446,32 @@ export default function WorldMap({
     }
   }, [ready, selectedKey, selectedSubKey, selectedDistrictKey, countries, subregions, districts, choropleth]);
 
+  // Focus places
+  const focusMeta = useMemo(() => new Map(focusCategories.map(c => [c.id, c])), [focusCategories]);
+  useEffect(() => {
+    if (!ready) return;
+    setData('focus', {
+      type: 'FeatureCollection',
+      features: facilities.map(f => ({
+        // MapLibre draws nothing past ±85° (the South Pole sites: IceCube, the South Pole
+        // Telescope), so those dots sit on the 85° edge; the info box keeps the true position
+        type: 'Feature', geometry: { type: 'Point', coordinates: [f.lon, Math.max(-POLAR_EDGE, Math.min(POLAR_EDGE, f.lat))] },
+        properties: {
+          key: f.id, name: f.name, color: focusMeta.get(f.cat)?.color ?? '#cbd5e1', catLabel: focusMeta.get(f.cat)?.label ?? '',
+          notable: f.notable ? 1 : 0, closed: f.to != null ? 1 : 0,
+        },
+      })),
+    });
+  }, [ready, facilities, focusMeta]);
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!ready || !map) return;
+    map.removeFeatureState({ source: 'focus' });
+    if (selectedFacilityId && facilities.some(f => f.id === selectedFacilityId)) {
+      map.setFeatureState({ source: 'focus', id: selectedFacilityId }, { selected: true });
+    }
+  }, [ready, selectedFacilityId, facilities]);
+
   // Basemap mode and fill opacity
   const roadOpacity = useRef(new Map<string, unknown>());
   useEffect(() => {
@@ -439,7 +507,7 @@ export default function WorldMap({
     const map = mapRef.current;
     const el = containerRef.current;
     if (!ready || !map || !el) return;
-    const zoomKey = [selectedKey, selectedSubKey, selectedDistrictKey, insets.right, insets.bottom, arcs ? 'arcs' : ''].join('|');
+    const zoomKey = [selectedFacilityId, selectedKey, selectedSubKey, selectedDistrictKey, insets.right, insets.bottom, arcs ? 'arcs' : ''].join('|');
     const hasTarget = !selectedKey || countries.some(c => c.key === selectedKey);
     if (zoomKey === lastZoomRef.current || !hasTarget) return;
     lastZoomRef.current = zoomKey;
@@ -450,6 +518,17 @@ export default function WorldMap({
       right: Math.min(insets.right + 30, w * 0.7),
       bottom: Math.min(insets.bottom + 120, h * 0.75),
     };
+    // A focus place: close enough in that satellite imagery shows the site itself
+    const facility = selectedFacilityId ? facilities.find(f => f.id === selectedFacilityId) : undefined;
+    if (facility) {
+      // Polar sites can't be shown up close (see POLAR_EDGE): frame them from above Antarctica
+      const polar = Math.abs(facility.lat) > POLAR_EDGE;
+      map.flyTo({
+        center: [facility.lon, polar ? Math.sign(facility.lat) * 72 : facility.lat],
+        zoom: polar ? 2.4 : Math.max(map.getZoom(), 13), padding, duration: 1600,
+      });
+      return;
+    }
     const district = districts.find(d => d.key === selectedDistrictKey);
     const sub = subregions.find(s => s.key === selectedSubKey);
     const country = countries.find(c => c.key === selectedKey);
@@ -476,7 +555,7 @@ export default function WorldMap({
     if (cam?.zoom == null || !cam.center) return;
     const midLon = ((x0 + width / 2 + 540) % 360) - 180;
     map.flyTo({ center: [midLon, maplibregl.LngLat.convert(cam.center).lat], zoom: cam.zoom, padding, duration: 1200 });
-  }, [ready, selectedKey, selectedSubKey, selectedDistrictKey, countries, subregions, districts, insets.right, insets.bottom, arcs]);
+  }, [ready, selectedFacilityId, facilities, selectedKey, selectedSubKey, selectedDistrictKey, countries, subregions, districts, insets.right, insets.bottom, arcs]);
 
   const resetView = () => {
     const map = mapRef.current;
@@ -576,6 +655,7 @@ function points(list: { key: string; text: string; at: [number, number]; rank: n
 function tooltipText(layer: string, props: Record<string, unknown>, choropleth: Choropleth | null): string {
   if (layer === 'wm-land') return 'No territory recorded here in CShapes';
   if (layer === 'wm-arcs-hit') return String(props.tip ?? '');
+  if (layer === 'wm-focus-dots') return `${props.name} · ${props.catLabel}`;
   const key = String(props.key);
   const level = layer === 'wm-countries-fill' ? 0 : layer === 'wm-subregions-fill' ? 1 : 2;
   const name = String(props.name ?? key);

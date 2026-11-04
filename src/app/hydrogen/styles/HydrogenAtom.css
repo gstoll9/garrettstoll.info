@@ -55,6 +55,50 @@
   padding-left: 0.9rem;
 }
 
+.energyNavSideRight {
+  justify-content: flex-end;
+  padding-right: 0.9rem;
+}
+
+/* Nav button mirroring the drawer's edge tab. Like the drawer, the bare class
+   (never toggled) means open on desktop and closed on phones. */
+.mathNavToggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.32rem 0.7rem;
+  border-radius: 10px;
+  border: 1px solid rgba(173, 201, 255, 0.55);
+  background: rgba(145, 182, 255, 0.14);
+  color: #dce7ff;
+  cursor: pointer;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.mathNavToggle.closed {
+  border-color: rgba(173, 201, 255, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(220, 231, 255, 0.6);
+}
+
+.mathNavToggle:hover {
+  border-color: rgba(173, 201, 255, 0.75);
+  color: #fff;
+}
+
+.mathNavToggleIcon {
+  color: inherit;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.mathNavToggleLabel {
+  color: inherit;
+}
+
 .energyTrack {
   position: relative;
   flex: 0 0 auto;
@@ -188,11 +232,12 @@
   border-top: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 28px 28px 0 0;
   background: linear-gradient(180deg, rgba(1, 4, 7, 0.2), rgba(1, 4, 7, 0.68));
+  --drawer-w: 500px;
 }
 
 /* ── Math drawer ──────────────────────────────────────────────────────────── */
 .mathDrawer {
-  width: 500px;
+  width: var(--drawer-w);
   flex-shrink: 0;
   overflow: hidden;
   position: relative;
@@ -208,7 +253,7 @@
 }
 
 .mathDrawerInner {
-  width: 500px;
+  width: var(--drawer-w);
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
@@ -314,16 +359,25 @@
   line-height: 1;
 }
 
-/* Drawer open: tab sits on right edge of drawer, rounds left */
-.mathToggle.open {
-  border-right: none;
-  border-radius: 5px 0 0 5px;
-}
-
-/* Drawer closed: tab sits at left edge of viz, rounds right */
-.mathToggle.closed {
+/* The tab rides the drawer's right edge (left edge of the viz when closed). The
+   page leaves the state unset until first toggled, so the bare class is "open"
+   on desktop and "closed" on phones (see the mobile query below). */
+.mathToggle {
+  left: var(--drawer-w);
   border-left: none;
   border-radius: 0 5px 5px 0;
+}
+
+.mathToggle.closed {
+  left: 0;
+}
+
+.mathToggle::before {
+  content: '‹';
+}
+
+.mathToggle.closed::before {
+  content: '›';
 }
 
 .mathToggle:hover {
@@ -406,6 +460,7 @@
   height: calc(100% - 2rem);
   min-height: 150px;
   display: block;
+  overflow: hidden;
 }
 
 .waveGridLine {
@@ -458,6 +513,43 @@
   font-family: var(--font-mono), "SFMono-Regular", Menlo, monospace;
   backdrop-filter: blur(8px);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.34);
+}
+
+.hydrogenCloudControlsTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.hydrogenCloudControlsToggle {
+  font-size: 10px;
+  opacity: 0.6;
+}
+
+/* Expanded by default; .closed once collapsed (phones flip the default below). */
+.hydrogenCloudControlsToggle::before {
+  content: '▲';
+}
+
+.hydrogenCloudControls.closed .hydrogenCloudControlsToggle::before {
+  content: '▼';
+}
+
+.hydrogenCloudControls.closed .hydrogenCloudControlsBody {
+  display: none;
+}
+
+.hydrogenCloudControls.closed h3 {
+  margin-bottom: 0 !important;
 }
 
 .hydrogenCloudControls span,
@@ -559,12 +651,11 @@
     border-radius: 20px 20px 0 0;
   }
 
-  .mathDrawer {
-    width: min(420px, 78vw);
+  .workArea {
+    --drawer-w: min(420px, 50vw);
   }
 
   .mathDrawerInner {
-    width: min(420px, 78vw);
     padding: 1rem 1rem 2rem;
   }
 
@@ -608,6 +699,119 @@
 
   .elementBadgeName {
     display: none;
+  }
+
+  /* Badge left, tab track takes the rest; the margins leave room for the
+     end labels, which are centred on the first/last dots. */
+  .energyNavSide {
+    flex: 0 0 auto;
+  }
+
+  .energyNavSideRight {
+    padding-right: 0;
+  }
+
+  .mathNavToggleLabel {
+    display: none;
+  }
+
+  .mathNavToggle {
+    padding: 0.32rem 0.6rem;
+  }
+
+  .mathNavToggle:not(.open) {
+    border-color: rgba(173, 201, 255, 0.22);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(220, 231, 255, 0.6);
+  }
+
+  .energyTrack {
+    flex: 1 1 auto;
+    width: auto;
+    margin: 0 3rem 0 2.5rem;
+  }
+
+  /* The equations drawer overlays the visualization instead of squeezing it,
+     and starts closed. */
+  .workArea {
+    --drawer-w: calc(100vw - 28px);
+    border-radius: 16px 16px 0 0;
+  }
+
+  .mathDrawer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 15;
+    box-shadow: 12px 0 28px rgba(0, 0, 0, 0.55);
+  }
+
+  .mathDrawer:not(.open) {
+    width: 0;
+    border-right-color: transparent;
+    box-shadow: none;
+  }
+
+  .mathToggle {
+    width: 28px;
+    height: 64px;
+    font-size: 16px;
+    background: #141414;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .mathToggle:not(.open) {
+    left: 0;
+  }
+
+  .mathToggle:not(.open)::before {
+    content: '›';
+  }
+
+  .mathDrawerInner .katex-display > .katex {
+    font-size: 0.78em;
+  }
+
+  .waveCloudPanel {
+    flex-basis: 58%;
+    min-height: 0;
+  }
+
+  .wavePlotsPanel {
+    padding: 0.6rem;
+  }
+
+  .wavePlotsGrid {
+    height: auto;
+  }
+
+  .wavePlotSvg {
+    height: 170px;
+  }
+
+  /* Cloud controls collapse to their title line; tap it to expand. */
+  .hydrogenCloudControls {
+    top: 0.5rem;
+    left: 0.5rem;
+    max-width: min(230px, calc(100% - 1rem));
+    padding: 0.5rem 0.65rem;
+  }
+
+  .hydrogenCloudControls:not(.open) .hydrogenCloudControlsToggle::before {
+    content: '▼';
+  }
+
+  .hydrogenCloudControls:not(.open) .hydrogenCloudControlsBody {
+    display: none;
+  }
+
+  .hydrogenCloudControls:not(.open) h3 {
+    margin-bottom: 0 !important;
+  }
+
+  .hydrogenCloudControls input[type="range"] {
+    height: 24px;
   }
 
   .hydrogenSpectrumPane {

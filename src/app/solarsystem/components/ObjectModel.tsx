@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, type ReactElement } from 'react'
 import * as THREE from 'three'
 import { useFrame, useThree } from '@react-three/fiber'
+import { Html } from '@react-three/drei'
 import { milkyWaySystems, type StarComponent } from '../data/milkyWay'
 import {
   binarySeparationAU, blackbodyColor, gaussian, mulberry32, spectralTemperature, starRadiusSun,
@@ -53,6 +54,19 @@ function getGlowTexture() {
 const toColor = (rgb: [number, number, number]) => new THREE.Color(rgb[0], rgb[1], rgb[2])
 const starColor = (spectralClass?: string) => toColor(blackbodyColor(spectralTemperature(spectralClass) ?? 5800))
 const hashSeed = (s: string) => [...s].reduce((h, ch) => (h * 31 + ch.charCodeAt(0)) >>> 0, 7)
+const formatMass = (m?: number) => (m === undefined ? null : m >= 1e5 ? `${(m / 1e6).toFixed(2)} million M☉` : `${Number(m.toPrecision(3))} M☉`)
+
+// A name tag on one body of a model (each star, black hole, companion …), offset above it
+function MassLabel({ name, detail, offset }: { name: string; detail?: string | null; offset: number }) {
+  return (
+    <Html position={[0, offset, 0]} center zIndexRange={[25, 0]} style={{ pointerEvents: 'none' }}>
+      <div className="mw-mass-label">
+        <span className="mw-mass-label-name">{name}</span>
+        {detail && <span className="mw-mass-label-detail">{detail}</span>}
+      </div>
+    </Html>
+  )
+}
 
 function Star({ radius, color, glow = 3.5 }: { radius: number; color: THREE.Color; glow?: number }) {
   return (
@@ -113,6 +127,7 @@ function StarSystem({ members, highlight, spin }: { members: (StarComponent & { 
         return (
           <group key={i} position={pos}>
             <Star radius={m.drawnR} color={starColor(m.spectralClass)} />
+            <MassLabel name={m.name ?? 'Companion'} detail={[m.spectralClass, formatMass(m.massSun)].filter(Boolean).join(' · ')} offset={m.drawnR * 1.9} />
             {i === highlight && members.length > 1 && (
               <mesh rotation={[Math.PI / 2, 0, 0]}>
                 <ringGeometry args={[m.drawnR * 1.6, m.drawnR * 1.75, 64]} />
@@ -208,8 +223,8 @@ function Horizon({ radius, ringColor = '#ffb46b' }: { radius: number; ringColor?
 // Eggleton (1983) Roche-lobe radius as a fraction of the separation, for mass ratio q = M1/M2
 const rocheLobe = (q: number) => 0.49 * Math.pow(q, 2 / 3) / (0.6 * Math.pow(q, 2 / 3) + Math.log(1 + Math.cbrt(q)))
 
-function BlackHoleBinary({ a, bhMass, compMass, compR, compClass, horizonR, disk, stream }: {
-  a: number; bhMass: number; compMass: number; compR: number; compClass?: string; horizonR: number
+function BlackHoleBinary({ a, bhMass, compMass, compR, compClass, compName, horizonR, disk, stream }: {
+  a: number; bhMass: number; compMass: number; compR: number; compClass?: string; compName: string; horizonR: number
   disk: { inner: number; outer: number } | null; stream: boolean
 }) {
   const group = useRef<THREE.Group>(null)
@@ -242,9 +257,11 @@ function BlackHoleBinary({ a, bhMass, compMass, compR, compClass, horizonR, disk
       <group position={[bhX, 0, 0]}>
         <Horizon radius={horizonR} />
         {disk && <AccretionDisk inner={disk.inner} outer={disk.outer} />}
+        <MassLabel name="Black hole" detail={formatMass(bhMass)} offset={Math.max(horizonR * 4, (disk?.outer ?? 0) * 0.35)} />
       </group>
       <group position={[compX, 0, 0]}>
         <Star radius={compR} color={starColor(compClass)} glow={2.5} />
+        <MassLabel name={compName} detail={[compClass, formatMass(compMass)].filter(Boolean).join(' · ')} offset={compR * 1.9} />
       </group>
       {streamLine && <primitive object={streamLine} />}
     </group>
@@ -284,6 +301,7 @@ function planBlackHole(marker: MilkyWayMarker): ModelPlan {
       element: (
         <group scale={scale} rotation={[0.35, 0, 0]}>
           <BlackHoleBinary a={a} bhMass={bhMass} compMass={compMass} compR={compR} compClass={companion.spectralClass}
+            compName={companion.name && companion.name.length > 2 ? companion.name : 'Companion star'}
             horizonR={horizonR} disk={disk} stream={stream} />
         </group>
       ),
@@ -303,6 +321,7 @@ function planBlackHole(marker: MilkyWayMarker): ModelPlan {
     element: (
       <group scale={scale} rotation={[0.3, 0, 0.1]}>
         <Horizon radius={rs} ringColor={isSgrA ? '#ff9a3c' : '#c9d6ff'} />
+        <MassLabel name={marker.name} detail={formatMass(bhMass)} offset={info.accreting || isSgrA ? rs * 5 : rs * 2.4} />
         {(info.accreting || isSgrA) && <AccretionDisk inner={rs * 3} outer={rs * 14} />}
       </group>
     ),
@@ -362,7 +381,12 @@ function planNeutronStar(marker: MilkyWayMarker): ModelPlan {
   ]
   if (magnetar) notes.push('Magnetar: the strongest magnetic fields known')
   return {
-    element: <group scale={scale}><NeutronStar magnetar={magnetar} spinPeriod={info.spinPeriodS} /></group>,
+    element: (
+      <group scale={scale}>
+        <NeutronStar magnetar={magnetar} spinPeriod={info.spinPeriodS} />
+        <MassLabel name={marker.name} detail={[info.type, formatMass(info.massSun)].filter(Boolean).join(' · ')} offset={2.6} />
+      </group>
+    ),
     radius: DISPLAY_RADIUS,
     enlarged: scale / (PC / (3.086e13 / radiusKm)),
     notes,

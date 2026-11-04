@@ -88,6 +88,10 @@ export default function ElectronCloud({
   const [showPhase, setShowPhase] = useState(true);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showLowerOrbital, setShowLowerOrbital] = useState(false);
+  // null = not toggled yet: CSS shows the panel expanded on desktop, collapsed on phones.
+  const [controlsOpen, setControlsOpen] = useState<boolean | null>(null);
+  const toggleControls = () =>
+    setControlsOpen(o => !(o ?? !window.matchMedia('(max-width: 768px)').matches));
   const orbitControlsRef = useRef<OrbitControlsImpl>(null);
 
   // Keep local controls in sync when parent-selected state changes from the text panel.
@@ -236,10 +240,17 @@ export default function ElectronCloud({
   return (
     <div className="hydrogenCloudRoot">
       {/* Controls */}
-      <div className="hydrogenCloudControls">
+      <div className={`hydrogenCloudControls${controlsOpen === null ? '' : controlsOpen ? ' open' : ' closed'}`}>
+        {/* The title is the collapse toggle; the chevron is drawn in CSS so the
+            not-yet-toggled default can differ per breakpoint. */}
         <h3 style={{ margin: '0 0 6px 0', fontSize: '14px' }}>
-          {elementSymbol} (Z={Z}) — {stateLabel}
+          <button type="button" className="hydrogenCloudControlsTitle" onClick={toggleControls}>
+            <span>{elementSymbol} (Z={Z}) — {stateLabel}</span>
+            <span className="hydrogenCloudControlsToggle" aria-hidden="true" />
+          </button>
         </h3>
+
+        <div className="hydrogenCloudControlsBody">
 
         {/* Approximation vs. real-measurement comparison — the core of the all-atoms
             model: this subshell modeled as a hydrogenic orbital with Slater's Z_eff,
@@ -400,6 +411,7 @@ export default function ElectronCloud({
 
         <div style={{ fontSize: '12px', opacity: 0.8 }}>
           {isGenerating ? 'Generating surface...' : `Grid: ${gridResolution}³`}
+        </div>
         </div>
       </div>
 

@@ -13,6 +13,9 @@ import { TradeArcs, TradeArcsControl } from './components/TradeArcs';
 import { Level, METRICS, NO_DATA, ViewData, buildScale, loadViewData } from './lib/choropleth';
 import ColorByControl from './components/ColorByControl';
 import TimeSlider from './components/TimeSlider';
+import FocusControl from './components/FocusControl';
+import FacilityPanel from './components/FacilityPanel';
+import { FocusData, FocusId, FocusPoint, activeIn, loadFocus } from './lib/focus';
 import { HISTORY_END, HISTORY_START, PeriodFeature, changesPerYear, formatDate, loadHistory } from './lib/history';
 import './styles/worldmap.css';
 
@@ -78,6 +81,37 @@ export default function WorldMapPage() {
   const [carryNote, setCarryNote] = useState<string | null>(null);
   const [basemap, setBasemap] = useState<Basemap>('satellite');
 
+  // Focus: a themed set of places over the map, and the one whose info box is open
+  const [focusId, setFocusId] = useState<FocusId | null>(null);
+  const [focusData, setFocusData] = useState<FocusData | null>(null);
+  const [hiddenCats, setHiddenCats] = useState<Set<string>>(new Set());
+  const [facility, setFacility] = useState<FocusPoint | null>(null);
+  useEffect(() => {
+    setFocusData(null);
+    setFacility(null);
+    setHiddenCats(new Set());
+    if (!focusId) return;
+    let stale = false;
+    loadFocus(focusId)
+      .then(d => { if (!stale) setFocusData(d); })
+      .catch(err => console.error('Failed to load focus', err));
+    return () => { stale = true; };
+  }, [focusId]);
+  const facilities = useMemo(
+    () => (focusData?.points ?? []).filter(f => !hiddenCats.has(f.cat) && activeIn(f, year)),
+    [focusData, hiddenCats, year],
+  );
+  const toggleCat = (cat: string) => setHiddenCats(prev => {
+    const next = new Set(prev);
+    if (next.has(cat)) next.delete(cat); else next.add(cat);
+    return next;
+  });
+  // A place's info box replaces any country selection, and vice versa
+  const selectFacility = (f: FocusPoint | null) => {
+    setFacility(f);
+    if (f) { setSelected(null); setSelectedSub(null); setSelectedDistrict(null); }
+  };
+
   useEffect(() => {
     const mq = window.matchMedia(MOBILE_QUERY);
     const update = () => setIsMobile(mq.matches);
@@ -128,8 +162,18 @@ export default function WorldMapPage() {
       .slice(0, 8)
       .map(({ c }) => c);
   }, [query, countries]);
+  // With a focus on, its places are searchable too (notable ones first)
+  const facilityMatches = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return [];
+    return facilities
+      .filter(f => f.name.toLowerCase().includes(q))
+      .sort((a, b) => +!a.name.toLowerCase().startsWith(q) - +!b.name.toLowerCase().startsWith(q) || +!a.notable - +!b.notable || a.name.length - b.name.length)
+      .slice(0, 6);
+  }, [query, facilities]);
 
   const select = (c: Country | null) => {
+    if (c) setFacility(null);
     if (c?.key !== selected?.key) setSelected(c);
     setSelectedSub(null);
     setSelectedDistrict(null);
@@ -145,13 +189,14 @@ export default function WorldMapPage() {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'Escape' || (e.target as HTMLElement).tagName === 'INPUT') return;
-      if (selectedDistrict) setSelectedDistrict(null);
+      if (facility) setFacility(null);
+      else if (selectedDistrict) setSelectedDistrict(null);
       else if (selectedSub) setSelectedSub(null);
       else setSelected(null);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [selectedSub, selectedDistrict]);
+  }, [selectedSub, selectedDistrict, facility]);
 
   // When the year changes, keep the selection on the same territory if it's still drawn;
   // otherwise move it to whatever now holds its capital (or its middle), so Austria-Hungary
@@ -182,7 +227,7 @@ export default function WorldMapPage() {
     });
   }, []);
 
-  const panelOpen = !!selected;
+  const panelOpen = !!selected || !!facility;
   const insets: Insets = useMemo(() => ({
     right: panelOpen && !isMobile ? PANEL_WIDTH : 0,
     bottom: panelOpen && isMobile ? window.innerHeight * 0.6 : 0,
@@ -277,7 +322,17 @@ export default function WorldMapPage() {
   const districtSource = slug && districts.length ? admin2?.sources[slug] : undefined;
 
   let panel = null;
-  if (selected && selectedSub && selectedDistrict) {
+  if (facility && focusData) {
+    panel = (
+      <FacilityPanel
+        key={facility.id}
+        point={facility}
+        data={focusData}
+        category={focusData.categories.find(c => c.id === facility.cat)}
+        onClose={() => setFacility(null)}
+      />
+    );
+  } else if (selected && selectedSub && selectedDistrict) {
     panel = (
       <CountryPanel
         key={selectedDistrict.key}
@@ -372,22 +427,35 @@ export default function WorldMapPage() {
         history={history}
         basemap={basemap}
         onBasemapChange={setBasemap}
+        facilities={facilities}
+        focusCategories={focusData?.categories ?? []}
+        selectedFacilityId={facility?.id ?? null}
+        onSelectFacility={selectFacility}
       />
 
       <div className="wm-search">
         <input
-          placeholder="Search for a country…"
+          placeholder={focusId ? 'Search countries and places…' : 'Search for a country…'}
           value={query}
           onChange={e => setQuery(e.target.value)}
           onKeyDown={e => {
             if (e.key === 'Enter' && matches[0]) select(matches[0]);
+            else if (e.key === 'Enter' && facilityMatches[0]) { selectFacility(facilityMatches[0]); setQuery(''); }
             if (e.key === 'Escape') setQuery('');
           }}
         />
-        {matches.length > 0 && (
+        {(matches.length > 0 || facilityMatches.length > 0) && (
           <ul>
             {matches.map(c => (
               <li key={c.key}><button onClick={() => select(c)}>{wikiTitleFor(c.name)}</button></li>
+            ))}
+            {facilityMatches.map(f => (
+              <li key={f.id}>
+                <button onClick={() => { selectFacility(f); setQuery(''); }}>
+                  <span className="wm-focus-dot" style={{ background: focusData?.categories.find(c => c.id === f.cat)?.color }} /> {f.name}
+                  {f.country && <span className="wm-search-sub"> · {f.country}</span>}
+                </button>
+              </li>
             ))}
           </ul>
         )}
@@ -395,8 +463,18 @@ export default function WorldMapPage() {
 
       {panel}
 
-      {!historical && (
-        <div className="wm-right-controls" style={isMobile ? undefined : { right: insets.right + 12 }}>
+      <div className="wm-right-controls" style={isMobile ? undefined : { right: insets.right + 12 }}>
+        <FocusControl
+          focusId={focusId}
+          onChange={setFocusId}
+          data={focusData}
+          hidden={hiddenCats}
+          onToggle={toggleCat}
+          shown={facilities.length}
+          year={year}
+          collapse={!!facility}
+        />
+        {!historical && <>
           <ColorByControl
             level={level}
             data={viewData}
@@ -405,8 +483,8 @@ export default function WorldMapPage() {
             scale={scale}
           />
           <TradeArcsControl flow={arcFlow} onChange={setArcFlow} arcs={arcs} available={!!selected} />
-        </div>
-      )}
+        </>}
+      </div>
 
       <TimeSlider
         year={year}

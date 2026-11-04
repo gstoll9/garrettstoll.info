@@ -16,6 +16,8 @@ export const SOURCES = [
   { id: 'wikipedia', name: 'Wikipedia', url: 'https://en.wikipedia.org', license: 'CC_BY-SA_4.0',
     usedBy: ['/worldmap', '/solarsystem', '/hydrogen', '/hubbardmodel', '/numericalmethods'] },
   { id: 'wikidata', name: 'Wikidata', url: 'https://www.wikidata.org', license: 'CC0_1.0', usedBy: ['/worldmap'] },
+  // Images in the world map's focus info boxes (each file's own licence, linked from the box)
+  { id: 'commons', name: 'Wikimedia Commons', url: 'https://commons.wikimedia.org', license: 'Per-file_free_licenses', usedBy: ['/worldmap'] },
   { id: 'worldbank', name: 'World Bank Open Data', url: 'https://data.worldbank.org', license: 'CC_BY_4.0', usedBy: ['/worldmap'] },
   // License not confirmed: check the Growth Lab's Dataverse dataset pages / Atlas terms of use
   { id: 'atlas', name: 'Atlas of Economic Complexity · Harvard Growth Lab', url: 'https://atlas.hks.harvard.edu',
@@ -123,6 +125,36 @@ export const JOBS = [
     id: 'worldmap-basemap', kind: 'auto', everyDays: 365, sources: ['openfreemap', 'eoxs2cloudless'],
     steps: [['node', 'scripts/build-basemap-style.mjs', `${CACHE}/basemap`]],
     outputs: ['public/worldmap/basemap', 'public/worldmap/vendor'],
+  },
+  {
+    // World map "astrophysics" focus (observatories, telescopes, detectors) and the facts/references its info boxes cite
+    id: 'worldmap-focus-astrophysics', kind: 'auto', everyDays: 180, sources: ['wikidata', 'commons'],
+    steps: [['node', 'scripts/build-focus.mjs', 'astrophysics']],
+    outputs: ['public/worldmap/focus/astrophysics.json', 'public/worldmap/focus/astrophysics'],
+  },
+  {
+    // World map "archaeology" focus (archaeological sites with an English Wikipedia article) and the facts/references its info boxes cite
+    id: 'worldmap-focus-archaeology', kind: 'auto', everyDays: 180, sources: ['wikidata', 'commons'],
+    steps: [['node', 'scripts/build-focus.mjs', 'archaeology']],
+    outputs: ['public/worldmap/focus/archaeology.json', 'public/worldmap/focus/archaeology'],
+  },
+  {
+    // World map "airports" focus (airports with an IATA code) and the facts/references its info boxes cite
+    id: 'worldmap-focus-airports', kind: 'auto', everyDays: 180, sources: ['wikidata', 'commons'],
+    steps: [['node', 'scripts/build-focus.mjs', 'airports']],
+    outputs: ['public/worldmap/focus/airports.json', 'public/worldmap/focus/airports'],
+  },
+  {
+    // World map "ports" focus (seaports, inland ports, terminals, naval bases) and the facts/references its info boxes cite
+    id: 'worldmap-focus-ports', kind: 'auto', everyDays: 180, sources: ['wikidata', 'commons'],
+    steps: [['node', 'scripts/build-focus.mjs', 'ports']],
+    outputs: ['public/worldmap/focus/ports.json', 'public/worldmap/focus/ports'],
+  },
+  {
+    // World map "universities" focus (universities) and the facts/references its info boxes cite
+    id: 'worldmap-focus-universities', kind: 'auto', everyDays: 180, sources: ['wikidata', 'commons'],
+    steps: [['node', 'scripts/build-focus.mjs', 'universities']],
+    outputs: ['public/worldmap/focus/universities.json', 'public/worldmap/focus/universities'],
   },
   {
     // Office holders, legislatures and capitals change with elections; the subregion steps

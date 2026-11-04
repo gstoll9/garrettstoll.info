@@ -17,11 +17,14 @@ const TABS = [
 ] as const;
 type Tab = typeof TABS[number]['id'];
 
-const DRAWER_W = 480;
+// The drawer starts open on desktop and closed on phones, where it overlays the
+// visualization. `null` means "not toggled yet" and lets CSS pick per breakpoint
+// (keep this query in sync with the mobile media query in HydrogenAtom.css).
+const MOBILE_QUERY = '(max-width: 768px)';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>('wave');
-  const [mathOpen, setMathOpen] = useState(true);
+  const [mathOpen, setMathOpen] = useState<boolean | null>(null);
   const [selectedState, setSelectedState] = useState({ n: 2, l: 1, m: 0 });
   const [selectedZ, setSelectedZ] = useState(1);
   const [tableOpen, setTableOpen] = useState(false);
@@ -39,6 +42,9 @@ export default function Home() {
     // the table's job is done — collapse it back down.
     setTableOpen(false);
   };
+
+  const toggleMath = () => setMathOpen(o => !(o ?? !window.matchMedia(MOBILE_QUERY).matches));
+  const drawerState = mathOpen === null ? '' : mathOpen ? ' open' : ' closed';
 
   const renderZ = useMemo(
     () => effectiveNuclearCharge(selectedZ, element.configuration, selectedState.n, selectedState.l),
@@ -77,7 +83,16 @@ export default function Home() {
             </button>
           ))}
         </div>
-        <div className="energyNavSide energyNavSideRight" aria-hidden="true" />
+        <div className="energyNavSide energyNavSideRight">
+          <button
+            className={`mathNavToggle${drawerState}`}
+            onClick={toggleMath}
+            title="Show/hide equations"
+          >
+            <span className="mathNavToggleIcon">∑</span>
+            <span className="mathNavToggleLabel">Math</span>
+          </button>
+        </div>
       </nav>
 
       {/* ── Periodic table selector — drives Z/Z_eff for every visualization below ── */}
@@ -89,7 +104,7 @@ export default function Home() {
       <div className="workArea">
 
         {/* Collapsible math sidebar */}
-        <aside className={`mathDrawer${mathOpen ? '' : ' closed'}`}>
+        <aside className={`mathDrawer${drawerState}`}>
           <div className="mathDrawerInner">
             {activeTab === 'wave' ? (
               <HydrogenText
@@ -106,13 +121,11 @@ export default function Home() {
 
         {/* Toggle handle — slides with the drawer */}
         <button
-          className={`mathToggle${mathOpen ? ' open' : ' closed'}`}
-          style={{ left: mathOpen ? DRAWER_W : 0 }}
-          onClick={() => setMathOpen(o => !o)}
-          title={mathOpen ? 'Hide equations' : 'Show equations'}
-        >
-          {mathOpen ? '‹' : '›'}
-        </button>
+          className={`mathToggle${drawerState}`}
+          onClick={toggleMath}
+          title="Show/hide equations"
+          aria-label="Show/hide equations"
+        />
 
         {/* Visualization */}
         <div className="vizArea">

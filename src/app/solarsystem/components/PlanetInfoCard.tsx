@@ -67,7 +67,8 @@ export default function PlanetInfoCard({ planet, focusedMoon, setFocusedMoon }: 
   focusedMoon: string | null
   setFocusedMoon: (moon: string | null) => void
 }) {
-  const [expanded, setExpanded] = useState(true)
+  // on a phone the card is a bottom sheet over the planet, so it starts collapsed there
+  const [expanded, setExpanded] = useState(() => typeof window === 'undefined' || !window.matchMedia('(max-width: 768px)').matches)
   const [moreText, setMoreText] = useState(false)
   const moon = focusedMoon && focusedMoon !== MOON_SYSTEM ? focusedMoon : null
   const subject = moon ?? planet.name

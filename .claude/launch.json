@@ -93,6 +93,20 @@
       "env": {
         "NEXT_DIST_DIR": ".next-resume"
       }
+    },
+    {
+      "name": "hydrogen-claude",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "next",
+        "dev",
+        "-p",
+        "3017"
+      ],
+      "port": 3017,
+      "env": {
+        "NEXT_DIST_DIR": ".next-hydrogen"
+      }
     }
   ]
 }

@@ -1180,3 +1180,116 @@
     display: none;
   }
 }
+
+/* ── Focus control and facility info box ─────────────────────────────── */
+.wm-focusctl {
+  padding: 10px 12px;
+  background: var(--wm-glass);
+  border: 1px solid var(--wm-glass-border);
+  border-radius: var(--wm-radius);
+  box-shadow: var(--wm-glass-shadow);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  font-size: 0.8rem;
+  color: var(--wm-ink-2);
+}
+
+.wm-focusctl .wm-colorby-note a {
+  color: #8fb4ff;
+}
+
+.wm-focus-cats li {
+  padding: 1px 0;
+}
+
+.wm-focus-cats label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.wm-focus-cats input {
+  margin: 0;
+  accent-color: var(--wm-accent);
+}
+
+.wm-focus-dot {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(8, 13, 24, 0.8);
+}
+
+.wm-facility-image {
+  margin: -20px -22px 14px;
+}
+
+.wm-facility-image img {
+  display: block;
+  width: 100%;
+  max-height: 230px;
+  object-fit: cover;
+}
+
+.wm-facility-image figcaption {
+  padding: 3px 22px 0;
+  color: #5b6a86;
+  font-size: 0.68rem;
+}
+
+.wm-facility-image figcaption a {
+  color: #7d8fb0;
+}
+
+.wm-facility-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 6px;
+  padding: 2px 8px;
+  border: 1px solid;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.wm-facility .wm-fact sup a {
+  margin-left: 2px;
+  color: #8fb4ff;
+  font-size: 0.7rem;
+  text-decoration: none;
+}
+
+.wm-refs {
+  margin: 0;
+  padding-left: 20px !important;
+  font-size: 0.85rem;
+}
+
+.wm-refs li {
+  padding: 4px 0;
+  scroll-margin-top: 20px;
+}
+
+.wm-refs li:target {
+  background: rgba(224, 164, 58, 0.12);
+  border-radius: 4px;
+}
+
+.wm-search-sub {
+  color: var(--wm-ink-3);
+  font-size: 0.8rem;
+}
+
+/* Several focuses: the buttons wrap onto a second row rather than squeezing */
+.wm-focusctl .wm-seg-buttons {
+  flex-wrap: wrap;
+}
+
+.wm-focusctl .wm-seg-buttons button {
+  flex: 1 0 auto;
+  padding: 4px 8px;
+}

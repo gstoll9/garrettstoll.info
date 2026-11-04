@@ -651,7 +651,7 @@ function Resume() {
     </div>
   );
 
-  return StandardLayout({ main: page, variant: "plain" });
+  return StandardLayout({ main: page, variant: "plain", brandImage: "/GS.png" });
 }
 
 export default Resume;

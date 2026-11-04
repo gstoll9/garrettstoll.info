@@ -137,6 +137,13 @@ const PLOT_W    = CW - MARGIN_L - MARGIN_R;
 const STRIP_TOP = 28;
 const STRIP_H   = 120;
 
+// The canvas is drawn in fixed 1000-unit logical coordinates and scaled to fit, so on a
+// narrow screen everything shrinks with it. `k` (logical units per CSS px, ≥ 1) scales
+// text, strokes, label spacing and hit tolerance back up to their desktop on-screen size,
+// and the canvas grows taller below the strip to fit the larger labels.
+const labelScale = (cssWidth: number) => Math.min(3, Math.max(1, CW / Math.max(1, cssWidth)));
+const canvasHeight = (k: number) => Math.round(STRIP_TOP + STRIP_H + (CH - STRIP_TOP - STRIP_H) * k);
+
 // Hydrogen's own lines (Lyman..Humphreys) all fall within 80-20000nm, the plot's original
 // range. Real NIST lines run wider on the short end (Li II's 1s²→1s3p line sits at 17.8nm,
 // He I's resonance lines around 52-58nm) -- widening NM_MIN only for real-element mode keeps
@@ -259,15 +266,17 @@ function drawCanvas(
   canvas: HTMLCanvasElement,
   visible: SpectralLine[],
   hov: SpectralLine | null,
-  nmMin: number
+  nmMin: number,
+  k: number
 ) {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
   const toX = (nm: number) => nmToX(nm, nmMin);
+  const H = canvas.height;
 
-  ctx.clearRect(0, 0, CW, CH);
+  ctx.clearRect(0, 0, CW, H);
   ctx.fillStyle = '#080808';
-  ctx.fillRect(0, 0, CW, CH);
+  ctx.fillRect(0, 0, CW, H);
 
   // ── EM gradient strip ─────────────────────────────────────────────────────
   const grad = ctx.createLinearGradient(MARGIN_L, 0, MARGIN_L + PLOT_W, 0);
@@ -289,11 +298,11 @@ function drawCanvas(
   [380, 750, 1400, 3000].forEach(nm => {
     const x = toX(nm);
     ctx.strokeStyle = 'rgba(255,255,255,0.15)';
-    ctx.lineWidth = 0.7;
+    ctx.lineWidth = 0.7 * k;
     ctx.setLineDash([]);
     ctx.beginPath();
     ctx.moveTo(x, STRIP_TOP);
-    ctx.lineTo(x, STRIP_TOP + STRIP_H + 32);
+    ctx.lineTo(x, STRIP_TOP + STRIP_H + 32 * k);
     ctx.stroke();
   });
 
@@ -305,11 +314,17 @@ function drawCanvas(
     [1400, 3000,  'Mid-IR'],
     [3000, 20000, 'Far-IR'],
   ];
-  ctx.font = '9px Arial';
+  ctx.font = `${9 * k}px Arial`;
   ctx.textAlign = 'center';
   ctx.fillStyle = 'rgba(255,255,255,0.38)';
+  let lastRegionRight = -Infinity;
   regionRanges.forEach(([nm0, nm1, label]) => {
-    ctx.fillText(label, (toX(nm0) + toX(nm1)) / 2, STRIP_TOP + STRIP_H + 40);
+    // Skip a label that would collide with its neighbour (narrow regions on small screens).
+    const cx = (toX(nm0) + toX(nm1)) / 2;
+    const w = ctx.measureText(label).width;
+    if (cx - w / 2 < lastRegionRight + 6 * k) return;
+    lastRegionRight = cx + w / 2;
+    ctx.fillText(label, cx, STRIP_TOP + STRIP_H + 40 * k);
   });
 
   // ── Series endpoint wavelength labels (collision-aware 2-row) ─────────────
@@ -334,22 +349,30 @@ function drawCanvas(
   });
   endpointLabels.sort((a, b) => a.x - b.x);
   const tickY = STRIP_TOP + STRIP_H;
-  const labelY = tickY + 14;
-  const MIN_GAP = 30;
+  const labelY = tickY + 14 * k;
+  const MIN_GAP = 30 * k;
+  let lastLabelRight = -Infinity;
   endpointLabels.forEach(({ x, label, color }, i) => {
     const hasCloseLeft  = i > 0 && x - endpointLabels[i - 1].x < MIN_GAP;
     const hasCloseRight = i < endpointLabels.length - 1 && endpointLabels[i + 1].x - x < MIN_GAP;
     const align: CanvasTextAlign = hasCloseRight ? 'right' : hasCloseLeft ? 'left' : 'center';
     ctx.strokeStyle = color + '88';
-    ctx.lineWidth = 0.8;
+    ctx.lineWidth = 0.8 * k;
     ctx.beginPath();
     ctx.moveTo(x, tickY);
-    ctx.lineTo(x, tickY + 5);
+    ctx.lineTo(x, tickY + 5 * k);
     ctx.stroke();
     ctx.fillStyle = color + 'BB';
-    ctx.font = '8px Arial';
-    ctx.textAlign = align;
-    ctx.fillText(label, x, labelY);
+    ctx.font = `${8 * k}px Arial`;
+    // Keep the label inside the canvas, and skip it (tick only) if it would overlap
+    // the previous one -- common on narrow screens with every series shown.
+    const w = ctx.measureText(label).width;
+    let left = align === 'right' ? x - w : align === 'left' ? x : x - w / 2;
+    left = Math.max(MARGIN_L, Math.min(CW - MARGIN_R - w, left));
+    if (left < lastLabelRight + 4 * k) return;
+    lastLabelRight = left + w;
+    ctx.textAlign = 'left';
+    ctx.fillText(label, left, labelY);
   });
 
   // ── Spectral emission lines ───────────────────────────────────────────────
@@ -360,9 +383,9 @@ function drawCanvas(
     const isHov = hov === line;
 
     ctx.shadowColor = isHov ? '#ffffff' : line.labelColor;
-    ctx.shadowBlur  = isHov ? 14 : 7;
+    ctx.shadowBlur  = (isHov ? 14 : 7) * k;
     ctx.strokeStyle = isHov ? 'rgba(255,255,255,0.95)' : line.labelColor + 'DD';
-    ctx.lineWidth   = isHov ? 3 : 2;
+    ctx.lineWidth   = (isHov ? 3 : 2) * Math.sqrt(k);
     ctx.beginPath();
     ctx.moveTo(x, yBot);
     ctx.lineTo(x, yTop);
@@ -381,6 +404,15 @@ interface HydrogenSpectrumProps {
 
 export default function HydrogenSpectrum({ Z = 1 }: HydrogenSpectrumProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [k, setK] = useState(1);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ro = new ResizeObserver(([entry]) => setK(labelScale(entry.contentRect.width)));
+    ro.observe(canvas);
+    return () => ro.disconnect();
+  }, []);
   const isHydrogen = Z === 1;
   const nmMin = isHydrogen ? NM_MIN_HYDROGEN : NM_MIN_REAL;
 
@@ -422,8 +454,8 @@ export default function HydrogenSpectrum({ Z = 1 }: HydrogenSpectrumProps) {
   );
 
   useEffect(() => {
-    if (canvasRef.current) drawCanvas(canvasRef.current, visibleLines, hovered, nmMin);
-  }, [visibleLines, hovered, nmMin]);
+    if (canvasRef.current) drawCanvas(canvasRef.current, visibleLines, hovered, nmMin, k);
+  }, [visibleLines, hovered, nmMin, k]);
 
   useEffect(() => {
     if (!visibleLines.length) {
@@ -437,7 +469,7 @@ export default function HydrogenSpectrum({ Z = 1 }: HydrogenSpectrumProps) {
 
   const getClosestLine = useCallback((logicalX: number): SpectralLine | null => {
     let closest: SpectralLine | null = null;
-    let minDist = 10;
+    let minDist = 10 * k;
     visibleLines.forEach(line => {
       const dist = Math.abs(nmToX(line.wavelength, nmMin) - logicalX);
       if (dist < minDist) {
@@ -446,7 +478,7 @@ export default function HydrogenSpectrum({ Z = 1 }: HydrogenSpectrumProps) {
       }
     });
     return closest;
-  }, [visibleLines, nmMin]);
+  }, [visibleLines, nmMin, k]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (!canvasRef.current) return;
@@ -563,7 +595,7 @@ export default function HydrogenSpectrum({ Z = 1 }: HydrogenSpectrumProps) {
         <canvas
           ref={canvasRef}
           width={CW}
-          height={CH}
+          height={canvasHeight(k)}
           style={{ width: '100%', height: 'auto', display: 'block' }}
         />
         {/* transparent hit overlay */}
@@ -579,9 +611,12 @@ export default function HydrogenSpectrum({ Z = 1 }: HydrogenSpectrumProps) {
           const rect = canvasRef.current?.getBoundingClientRect();
           const containerW = rect?.width ?? CW;
           const tooltipW = 210;
-          const left = tooltipPos.x + 16 + tooltipW > containerW
-            ? tooltipPos.x - tooltipW - 12
-            : tooltipPos.x + 16;
+          // Flip to the cursor's left near the right edge; clamp so it never runs off
+          // either side when the spectrum is narrower than ~2 tooltips (phones).
+          const left = Math.max(0, Math.min(containerW - tooltipW,
+            tooltipPos.x + 16 + tooltipW > containerW
+              ? tooltipPos.x - tooltipW - 12
+              : tooltipPos.x + 16));
           const rows: [string, React.ReactNode][] = [
             ['Region',     hovered.emRegion],
             ['Wavelength', hovered.wavelength < 1000
@@ -670,13 +705,17 @@ export default function HydrogenSpectrum({ Z = 1 }: HydrogenSpectrumProps) {
           <div style={{ color: 'rgba(255,255,255,0.82)', fontSize: '12px', marginBottom: '8px' }}>
             Transition Cloud Cross-Sections ({activeTransition.n2}{orbitalLetter(upperState.l)} → {activeTransition.n1}{orbitalLetter(lowerState.l)})
           </div>
-          <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+          {/* Cards shrink to share one row on narrow screens rather than wrapping
+              the "Final" card under the arrow. */}
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
             <div style={{
               border: '1px solid rgba(255,255,255,0.14)',
               borderRadius: '8px',
               background: '#04070d',
               padding: '6px',
-              width: `${SLICE_SIZE + 12}px`
+              width: `${SLICE_SIZE + 12}px`,
+              minWidth: 0,
+              flexShrink: 1,
             }}>
               {upperSliceUrl && (
                 // next/image isn't a fit here: this is a client-generated data URL
@@ -687,7 +726,7 @@ export default function HydrogenSpectrum({ Z = 1 }: HydrogenSpectrumProps) {
                   alt={`Upper state ${upperState.n}${orbitalLetter(upperState.l)} cross-section`}
                   width={SLICE_SIZE}
                   height={SLICE_SIZE}
-                  style={{ display: 'block', width: `${SLICE_SIZE}px`, height: `${SLICE_SIZE}px`, borderRadius: '5px' }}
+                  style={{ display: 'block', width: '100%', maxWidth: `${SLICE_SIZE}px`, height: 'auto', aspectRatio: '1', borderRadius: '5px' }}
                 />
               )}
               <div style={{ marginTop: '5px', fontSize: '11px', color: 'rgba(255,255,255,0.66)', textAlign: 'center' }}>
@@ -702,7 +741,9 @@ export default function HydrogenSpectrum({ Z = 1 }: HydrogenSpectrumProps) {
               borderRadius: '8px',
               background: '#04070d',
               padding: '6px',
-              width: `${SLICE_SIZE + 12}px`
+              width: `${SLICE_SIZE + 12}px`,
+              minWidth: 0,
+              flexShrink: 1,
             }}>
               {lowerSliceUrl && (
                 // next/image isn't a fit here: this is a client-generated data URL
@@ -713,7 +754,7 @@ export default function HydrogenSpectrum({ Z = 1 }: HydrogenSpectrumProps) {
                   alt={`Lower state ${lowerState.n}${orbitalLetter(lowerState.l)} cross-section`}
                   width={SLICE_SIZE}
                   height={SLICE_SIZE}
-                  style={{ display: 'block', width: `${SLICE_SIZE}px`, height: `${SLICE_SIZE}px`, borderRadius: '5px' }}
+                  style={{ display: 'block', width: '100%', maxWidth: `${SLICE_SIZE}px`, height: 'auto', aspectRatio: '1', borderRadius: '5px' }}
                 />
               )}
               <div style={{ marginTop: '5px', fontSize: '11px', color: 'rgba(255,255,255,0.66)', textAlign: 'center' }}>
